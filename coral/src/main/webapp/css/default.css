@@ -1,0 +1,143 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Sunflower:300&display=swap');
+
+*{
+	font-family: 'Sunflower', 'Righteous', 'Do Hyeon', sans-serif;
+	border:0;
+	padding:0;
+	margin:0;
+	text-align:center;
+	background:none;
+}
+*:focus {outline:0;}
+a:link, a:visited, a:hover, a:active {
+  text-decoration: none;
+  color: #333;
+  
+}
+
+body{
+	background-color:#f1f3f3;
+}
+header{
+	background-color:#fe6f5e;
+	height:130px;
+	border-bottom: 1px solid #e1e1ea;
+	margin-bottom: 15px;
+}
+.logo{
+	height:100%;
+	width:100%;
+	font-size:69.25px;
+	font-weight:600;
+	padding-top:20px;
+	vertical-align: middle;
+	box-sizing :border-box;
+}
+.Search{
+	position: absolute;
+	width:924px;
+	height:70px;
+	background-color:#fe6f5e;
+	border: 1px solid #e1e1ea;
+}
+.Search > input{
+	width:70%;
+	height:80%;
+	position:absolute;
+	top:10%;
+	left:5%;
+	font-size:2em;
+	text-align:left;
+}
+.icon_search_btn{
+	position:absolute;
+	width:40px;
+	height:40px;
+	right:2%;
+	top:50%;
+	transform:translate(0,-50%);
+	background-image:url("/resources/icon/magnifying-glass.png");
+	background-size:40px;
+}
+.user_sub{
+	position: absolute;
+	top:0;
+	right:0;
+	width:461px;
+	height:473px;
+	background-color:white;
+	border: 1px solid #e1e1ea;
+}
+footer{
+	background-color:white;
+	height:250px;
+	border-top: 1px solid #e1e1ea;
+}
+@media screen and (min-width: 1600px) {
+header{
+	width:100%;
+}
+.base_{
+	position:relative;
+	width:1400px;
+	left:50%;
+	transform: translate(-50%);
+	margin-bottom: 15px;
+}
+footer{
+	width:100%;
+}
+}
+
+@media screen and (max-width: 1598px) {
+header{
+	width:1598px;
+}
+.base_{
+	position:relative;
+	width:1400px;
+	left:99px;
+	margin-bottom: 15px;
+}
+footer{
+	width:1598px;
+}
+}
+
+
+.notice{
+	height:15%;
+	width:100%;
+	border-bottom: 1px solid #e1e1ea;
+}
+.external_link{
+	height:30%;
+	width:100%;
+	border-bottom: 1px solid #e1e1ea;
+	font-size:25px;
+}
+.external_link a > img{
+	padding:7px 15px 0 15px;
+	box-sizing :content-box;
+}
+.info{
+	height:55%;
+	width:100%;
+	padding:0 auto 0 auto;
+}
+.ScrollUpButton{
+	position:fixed;
+	bottom: 3vw;
+	right: 3vw;
+	height:60px;
+	width:60px;
+	background-color:white;
+	border-bottom: 1px solid #e1e1ea;
+	border-radius: 30px;
+	opacity:0.5;
+	font-size:2.5em;
+	box-shadow: 0 0 5px 5px rgba(60,64,66,0.2);
+}

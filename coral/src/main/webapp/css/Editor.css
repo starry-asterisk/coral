@@ -1,0 +1,9 @@
+@charset "UTF-8";
+.board{
+	width:924px;
+	background-color:white;
+	border: 1px solid #e1e1ea;
+}
+.ck-editor__editable_inline {
+    min-height: 800px;
+}
