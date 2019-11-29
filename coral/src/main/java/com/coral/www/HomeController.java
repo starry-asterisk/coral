@@ -23,16 +23,4 @@ public class HomeController {
 	public String main() {
 		return "main";
 	}
-	@Inject
-	UserService userService;
-	
-	@RequestMapping("/login")
-	public String login(@RequestParam String id, @RequestParam String pw, HttpServletRequest request) {
-		UserDTO dto = new UserDTO();
-		logger.info(id+"/"+pw);
-		dto.setId(id);
-		dto.setPw(pw);
-		userService.login(dto, request);
-		return "main";
-	}
 }

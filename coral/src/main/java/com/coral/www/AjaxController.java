@@ -7,8 +7,12 @@ package com.coral.www;
 
 
 
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -49,6 +53,21 @@ public class AjaxController {
 		
 		returnObj.put("result",result);
 		returnObj.put("success", true);
+		return returnObj.toJSONString();
+	}
+	@Inject
+	UserService userService;
+	@ResponseBody
+	@RequestMapping("/login")
+	public String login(@RequestParam String json, HttpServletRequest request) throws ParseException {
+		UserDTO dto = new UserDTO();
+		JSONParser p = new JSONParser();
+		JSONObject receive = (JSONObject) p.parse(json);
+		dto.setId((String) receive.get("id"));
+		dto.setPw((String) receive.get("pw"));
+		dto = userService.login(dto, request);
+		JSONObject returnObj = new JSONObject();
+		returnObj.put("success", dto.getLogin_status()==1?true:false);
 		return returnObj.toJSONString();
 	}
 }

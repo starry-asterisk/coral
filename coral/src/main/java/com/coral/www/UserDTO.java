@@ -27,6 +27,7 @@ public class UserDTO {
 	private Date date;
 	private String ip;
 	private String platform;
+	private int login_status;
 	public String getId() {
 		return id;
 	}
@@ -128,6 +129,12 @@ public class UserDTO {
 	}
 	public void setPlatform(String platform) {
 		this.platform = platform;
+	}
+	public int getLogin_status() {
+		return login_status;
+	}
+	public void setLogin_status(int login_status) {
+		this.login_status = login_status;
 	}
 	
 }

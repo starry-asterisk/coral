@@ -36,10 +36,7 @@ $(document).ready(function(){
 	
 });
 
-function login(){
-	$(".login").css("display","none");
-	$(".loginAfter").css("display","block");
-}
+
 
 function logout(){
 	$(".login").css("display","block");
