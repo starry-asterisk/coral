@@ -4,6 +4,6 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 public interface UserService {
-	public UserDTO login(UserDTO dto, HttpServletRequest request);
-
+	public UserDTO getInfo(UserDTO dto);
+	public UserDTO login(UserDTO dto);
 }

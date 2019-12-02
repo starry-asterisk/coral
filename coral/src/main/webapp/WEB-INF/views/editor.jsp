@@ -27,7 +27,7 @@
 <div class="base_">
 	<div class="board">
 		<textarea name="content" id="editor">
-			&lt;p&gt;This is some sample content.&lt;/p&gt;
+			${content }
 		</textarea>	
     	<script>
     		ClassicEditor

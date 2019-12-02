@@ -12,23 +12,31 @@ public class UserServiceImpl implements UserService {
 	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	@Inject
 	UserDAO dao;
-	public UserDTO login(UserDTO dto, HttpServletRequest request) {
+	public UserDTO getInfo(UserDTO dto) {
+		try {
+			if(dao.isLogin(dto)) {
+				dto = dao.getInfo(dto);
+			}else {
+				dto.setMsg("부정한 로그인 시도");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+	public UserDTO login(UserDTO dto) {
 		try {
 			if(dao.isId(dto)) {
-				dto.setIp(request.getRemoteAddr());
-				dto.setPlatform(request.getHeader("user-agent"));
 				if(dao.isLogin(dto)) {
-					dto.setLogin_status(1);
 					dao.insertHistory(dto);
-					dto = dao.getInfo(dto);
-					dto.setLogin_status(1);
+					dto = dto.getLogin_status()==1?dao.getInfo(dto):dto;
 				}else {
 					dto.setLogin_status(0);
 					dao.insertHistory(dto);
-					logger.warn("부정한 로그인 시도");
+					dto.setMsg("부정한 로그인 시도");
 				}
 			}else {
-				logger.warn("Id오류");
+				dto.setMsg("Id오류");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

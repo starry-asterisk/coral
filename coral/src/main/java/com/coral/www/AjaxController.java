@@ -9,6 +9,7 @@ package com.coral.www;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -16,6 +17,7 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -59,15 +61,39 @@ public class AjaxController {
 	UserService userService;
 	@ResponseBody
 	@RequestMapping("/login")
-	public String login(@RequestParam String json, HttpServletRequest request) throws ParseException {
-		UserDTO dto = new UserDTO();
+	public String login(@RequestParam String json, 
+						@RequestHeader("user-agent") String agent,
+						HttpServletRequest request,
+						HttpSession session) throws ParseException {
+		
 		JSONParser p = new JSONParser();
 		JSONObject receive = (JSONObject) p.parse(json);
-		dto.setId((String) receive.get("id"));
-		dto.setPw((String) receive.get("pw"));
-		dto = userService.login(dto, request);
 		JSONObject returnObj = new JSONObject();
-		returnObj.put("success", dto.getLogin_status()==1?true:false);
+		UserDTO dto = new UserDTO();
+		dto.setIp(request.getRemoteAddr());
+		dto.setPlatform(agent);
+		if(session.getAttribute("login")==null) {
+			
+			dto.setId((String) receive.get("id"));
+			dto.setPw((String) receive.get("pw"));
+			dto.setLogin_status(1);
+			dto = userService.login(dto);
+			if(dto.getMsg()==null) {
+				session.setAttribute("login", true);
+				session.setAttribute("id", receive.get("id"));
+				session.setAttribute("pw", receive.get("pw"));
+				session.setAttribute("user-agent", agent);
+				session.setAttribute("ip", request.getRemoteAddr());
+				returnObj.put("success", true);
+			}else {
+				returnObj.put("success", false);
+				returnObj.put("errorMsg",dto.getMsg());
+			}
+		}else {
+			dto.setId((String) session.getAttribute("id"));
+			dto.setPw((String) session.getAttribute("pw"));
+			dto = userService.getInfo(dto);
+		}
 		return returnObj.toJSONString();
 	}
 }

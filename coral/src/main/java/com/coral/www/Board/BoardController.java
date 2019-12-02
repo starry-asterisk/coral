@@ -59,7 +59,6 @@ public class BoardController {
 	DAO dao;
 	@RequestMapping(value = "/editor", method = { RequestMethod.GET, RequestMethod.POST})
 	public String editor(Model model) {
-		System.out.print(dao.getCount());
 		return "editor";
 	}
 }

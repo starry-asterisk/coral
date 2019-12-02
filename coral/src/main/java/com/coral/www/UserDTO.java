@@ -28,6 +28,7 @@ public class UserDTO {
 	private String ip;
 	private String platform;
 	private int login_status;
+	private String msg;
 	public String getId() {
 		return id;
 	}
@@ -135,6 +136,12 @@ public class UserDTO {
 	}
 	public void setLogin_status(int login_status) {
 		this.login_status = login_status;
+	}
+	public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 	
 }
