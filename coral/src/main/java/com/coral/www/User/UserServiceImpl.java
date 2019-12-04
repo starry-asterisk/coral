@@ -1,13 +1,10 @@
 package com.coral.www.User;
 
 import javax.inject.Inject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
-	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	@Inject
 	UserDAO dao;
 	public UserDTO getInfo(UserDTO dto) {
