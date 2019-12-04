@@ -25,7 +25,7 @@ public class Cmd{
 		ProcessBuilder processBuilder = new ProcessBuilder();
 
         // Run this on Windows, cmd, /c = terminate after this run
-        processBuilder.command("cmd.exe", "/c", "C: && cd coding  &&"+command);
+        processBuilder.command("cmd.exe", "/c", "C: && cd /coding  &&"+command);
         
 
         try {

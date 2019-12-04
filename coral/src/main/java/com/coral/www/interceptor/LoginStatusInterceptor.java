@@ -43,7 +43,6 @@ public class LoginStatusInterceptor extends HandlerInterceptorAdapter{
         	/*쿠키 가져오기*/
         	Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
         	/*쿠기 존재시에 자동 로그인 처리*/
-        	System.out.println(loginCookie);
         	if(loginCookie!=null) {
         		/*쿠기 값, 토큰, 고유키 가져오기 & 선언*/
         		JSONObject cookievalue = (JSONObject) new JSONParser().parse(URLDecoder.decode(loginCookie.getValue(), "UTF-8"));
