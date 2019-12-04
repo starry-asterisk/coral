@@ -1,4 +1,4 @@
-package com.coral.www.interceptor;
+package com.coral.www.application;
 
 import org.springframework.context.ApplicationContext;
 

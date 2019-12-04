@@ -1,4 +1,4 @@
-package com.coral.www;
+package com.coral.www.User;
 
 import java.util.Date;
 

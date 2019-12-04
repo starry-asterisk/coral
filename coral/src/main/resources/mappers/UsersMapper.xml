@@ -3,16 +3,16 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.coral.www.mappers.UsersMapper">
-  	<select id="isLogin" resultType="int" parameterType="com.coral.www.UserDTO">
+  	<select id="isLogin" resultType="int" parameterType="com.coral.www.User.UserDTO">
   		select count(*) from USERS WHERE U_ID=#{id} AND U_PW=#{pw}
   	</select>
-  	<select id="getInfo" resultType="com.coral.www.UserDTO" parameterType="com.coral.www.UserDTO">
+  	<select id="getInfo" resultType="com.coral.www.User.UserDTO" parameterType="com.coral.www.User.UserDTO">
   		select U_ID AS "id", U_NAME AS "name", U_GENDER AS "gender", U_PW AS "pw"  from USERS WHERE U_ID=#{id}
   	</select>
-  	<select id="isId" resultType="int" parameterType="com.coral.www.UserDTO">
+  	<select id="isId" resultType="int" parameterType="com.coral.www.User.UserDTO">
   		select count(*) from USERS WHERE U_ID=#{id}
   	</select>
-  	<insert id="insertHistory" parameterType="com.coral.www.UserDTO">
+  	<insert id="insertHistory" parameterType="com.coral.www.User.UserDTO">
   		insert into user_history(uh_uid,uh_ip,uh_platform,uh_status) values(#{id},#{ip},#{platform},#{login_status})
   	</insert>
   </mapper>

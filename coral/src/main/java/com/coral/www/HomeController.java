@@ -27,19 +27,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.WebUtils;
 
-import com.coral.www.interceptor.BeanUtils;
+import com.coral.www.Cookie.CookieService;
+import com.coral.www.User.UserDTO;
+import com.coral.www.User.UserService;
+import com.coral.www.application.BeanUtils;
 
 @Controller
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
+	@Inject
+	UserService userService;
+	@Inject
+	CookieService cookieService;
+	
 	@RequestMapping(value = "/", method = { RequestMethod.GET, RequestMethod.POST})
 	public String main(HttpServletRequest request) {
 		return "main";
 	}
-	@Inject
-	UserService userService;
+	
 	@RequestMapping("/login")
 	public String login(
 						@RequestHeader("user-agent") String agent,
@@ -74,14 +81,7 @@ public class HomeController {
 				session.setAttribute("ip", request.getRemoteAddr());
 				if((boolean)receive.get("remember_me")) {
 					/*쿠키생성*/
-					String value = "{\"id\":\""+(String)receive.get("id")+
-							"\",\"series\":\""+UUID.randomUUID().toString()+
-							"\",\"token\":\""+session.getId()+"\"}";
-					Cookie loginCookie = new Cookie("loginCookie",URLEncoder.encode(value, "UTF-8"));
-					loginCookie.setDomain("www.coralprogram.com");
-					loginCookie.setPath("/");
-					loginCookie.setMaxAge(604800);
-					response.addCookie(loginCookie);
+					cookieService.create(response, session);
 				}
 			}else {
 				
@@ -90,6 +90,7 @@ public class HomeController {
 		}
 		return "redirect:"+REFERER;
 	}
+	
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse reponse) throws ParseException, UnsupportedEncodingException {
 		String REFERER = (String)request.getHeader("REFERER");
@@ -102,25 +103,14 @@ public class HomeController {
 		Object obj = session.getAttribute("id");
 		if (obj != null) {
 			try {
-				UserDTO dto = new UserDTO();
-				dto.setLogin_status(-1);
-				dto.setId((String) session.getAttribute("id"));
-				dto.setPlatform((String) session.getAttribute("user-agent"));
-				dto.setIp((String) session.getAttribute("ip"));
-				userService.login(dto);
 				session.invalidate();
-				/*쿠키 가져오기*/
-	        	Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
-	        	if(loginCookie!=null) {
-	        		loginCookie.setPath("/");
-	        		loginCookie.setMaxAge(0);
-	        		reponse.addCookie(loginCookie);
-	        	}
+				Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
+				cookieService.delete(reponse, loginCookie);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
+		request.setAttribute("loginform", "include/loginForm");
 		return "redirect:"+REFERER;
 	}
 }

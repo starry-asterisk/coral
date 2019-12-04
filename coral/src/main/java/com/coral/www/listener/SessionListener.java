@@ -1,18 +1,16 @@
-package com.coral.www.interceptor;
+package com.coral.www.listener;
 
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+import com.coral.www.User.UserDAO;
+import com.coral.www.User.UserDTO;
+import com.coral.www.application.BeanUtils;
 
-import com.coral.www.UserDAO;
-import com.coral.www.UserDTO;
-
-
-import javax.servlet.annotation.WebListener;
 import javax.servlet.http.*;
 
 
-@WebListener
+
 public class SessionListener implements HttpSessionListener {
 	private UserDAO dao;
 	/**
@@ -38,13 +36,7 @@ public class SessionListener implements HttpSessionListener {
 				dto.setId((String) session.getAttribute("id"));
 				dto.setPlatform((String) session.getAttribute("user-agent"));
 				dto.setIp((String) session.getAttribute("ip"));
-				
-				if(dao.isLogin(dto)) {
-					dao.insertHistory(dto);
-				}else {
-					dto.setLogin_status(0);
-					dao.insertHistory(dto);
-				}
+				dao.insertHistory(dto);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

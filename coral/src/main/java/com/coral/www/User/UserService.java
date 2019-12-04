@@ -1,4 +1,4 @@
-package com.coral.www;
+package com.coral.www.User;
 
 public interface UserService {
 	public UserDTO getInfo(UserDTO dto);

@@ -1,4 +1,4 @@
-package com.coral.www;
+package com.coral.www.Cookie;
 
 import java.util.Date;
 

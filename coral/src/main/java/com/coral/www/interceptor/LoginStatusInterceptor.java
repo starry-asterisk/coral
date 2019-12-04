@@ -2,6 +2,8 @@ package com.coral.www.interceptor;
 
 import java.io.PrintWriter;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.http.Cookie;
@@ -15,14 +17,17 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.util.WebUtils;
 
-import com.coral.www.UserDTO;
-import com.coral.www.UserService;
+import com.coral.www.Cookie.CookieService;
+import com.coral.www.User.UserDTO;
+import com.coral.www.User.UserService;
 
 public class LoginStatusInterceptor extends HandlerInterceptorAdapter{
 	
     // preHandle() : 컨트롤러보다 먼저 수행되는 메서드
 	@Inject
 	UserService userService;
+	@Inject
+	CookieService cookieService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
@@ -41,6 +46,7 @@ public class LoginStatusInterceptor extends HandlerInterceptorAdapter{
         	/*쿠키 가져오기*/
         	Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
         	/*쿠기 존재시에 자동 로그인 처리*/
+        	System.out.println(loginCookie);
         	if(loginCookie!=null) {
         		/*쿠기 값, 토큰, 고유키 가져오기 & 선언*/
         		JSONObject cookievalue = (JSONObject) new JSONParser().parse(URLDecoder.decode(loginCookie.getValue(), "UTF-8"));
@@ -56,9 +62,11 @@ public class LoginStatusInterceptor extends HandlerInterceptorAdapter{
     			if(dto!=null){
     				dto = userService.getInfo(dto);
     				session.setAttribute("id", dto.getId());
-        			session.setAttribute("user-agent", request.getRemoteAddr());
-        			session.setAttribute("ip", request.getHeader("user-agent"));
+        			session.setAttribute("user-agent", request.getHeader("user-agent"));
+        			session.setAttribute("ip", request.getRemoteAddr());
         			request.setAttribute("loginform", "include/loginAfter");
+        			/*쿠키갱신*/
+        			cookieService.refresh(response, loginCookie);
     			}else {
     				request.setAttribute("errorMsg", "로그인에 실패했습니다...");
     				request.setAttribute("loginform", "include/loginForm");
