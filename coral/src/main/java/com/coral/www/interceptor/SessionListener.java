@@ -3,12 +3,6 @@ package com.coral.www.interceptor;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.coral.www.UserDAO;
 import com.coral.www.UserDTO;

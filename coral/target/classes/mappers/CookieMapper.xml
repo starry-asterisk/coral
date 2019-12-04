@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.coral.www.mappers.CookieMapper">
+  	<select id="selectSeries" resultType="int" parameterType="com.coral.www.CookieDTO">
+  		select count(*) from USER_persistent WHERE up_series=#{series}
+  	</select>
+  	<select id="selectToken" resultType="com.coral.www.CookieDTO" parameterType="com.coral.www.CookieDTO">
+  		select up_uid as "id" ,up_series as "series" ,up_token as "token" ,up_lastused as "lastused" from USER_persistent WHERE up_series=#{series} and up_token=#{token}
+  	</select>
+  	<insert id="insert" parameterType="com.coral.www.UserDTO">
+  		insert into user_history(up_uid,up_series,up_token,up_lastused) values(#{id},#{series},#{token},SYSDATE)
+  	</insert>
+  	<update id="update">
+  		update user_persistent SET up_lastused=SYSDATE, up_token=#{token} where up_series=#{series}
+  	</update>
+  	<delete id="delete">
+  		delete from user_persistent where up_series = #{series}
+  	</delete>
+  </mapper>
+  
+  
