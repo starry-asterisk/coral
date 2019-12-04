@@ -35,14 +35,13 @@ public class SessionListener implements HttpSessionListener {
 	public void sessionDestroyed(HttpSessionEvent event) {
 		HttpSession session = event.getSession();
 		System.out.println(session.getId()+" :세션 종료됨");
-		Object obj = session.getAttribute("login");
+		Object obj = session.getAttribute("id");
 		if (obj != null) {
 			dao = (UserDAO) BeanUtils.getBean("userDAO");
 			try {
 				UserDTO dto = new UserDTO();
 				dto.setLogin_status(-1);
 				dto.setId((String) session.getAttribute("id"));
-				dto.setPw((String) session.getAttribute("pw"));
 				dto.setPlatform((String) session.getAttribute("user-agent"));
 				dto.setIp((String) session.getAttribute("ip"));
 				

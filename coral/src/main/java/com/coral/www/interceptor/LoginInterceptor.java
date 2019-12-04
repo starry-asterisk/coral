@@ -13,9 +13,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
+    	/*선언*/
     	HttpSession session = request.getSession();
+    	Object obj =  session.getAttribute("id");
+    	/*생명주기 설정*/
     	session.setMaxInactiveInterval(5);
-        Object obj =  session.getAttribute("login");
+        /*로그인 중 인가?*/
         if ( obj == null ){
             response.sendRedirect("/");
             return false; 

@@ -7,8 +7,14 @@ package com.coral.www;
 
 
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.UUID;
+
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -55,45 +61,6 @@ public class AjaxController {
 		
 		returnObj.put("result",result);
 		returnObj.put("success", true);
-		return returnObj.toJSONString();
-	}
-	@Inject
-	UserService userService;
-	@ResponseBody
-	@RequestMapping("/login")
-	public String login(@RequestParam String json, 
-						@RequestHeader("user-agent") String agent,
-						HttpServletRequest request,
-						HttpSession session) throws ParseException {
-		
-		JSONParser p = new JSONParser();
-		JSONObject receive = (JSONObject) p.parse(json);
-		JSONObject returnObj = new JSONObject();
-		UserDTO dto = new UserDTO();
-		dto.setIp(request.getRemoteAddr());
-		dto.setPlatform(agent);
-		if(session.getAttribute("login")==null) {
-			
-			dto.setId((String) receive.get("id"));
-			dto.setPw((String) receive.get("pw"));
-			dto.setLogin_status(1);
-			dto = userService.login(dto);
-			if(dto.getMsg()==null) {
-				session.setAttribute("login", true);
-				session.setAttribute("id", receive.get("id"));
-				session.setAttribute("pw", receive.get("pw"));
-				session.setAttribute("user-agent", agent);
-				session.setAttribute("ip", request.getRemoteAddr());
-				returnObj.put("success", true);
-			}else {
-				returnObj.put("success", false);
-				returnObj.put("errorMsg",dto.getMsg());
-			}
-		}else {
-			dto.setId((String) session.getAttribute("id"));
-			dto.setPw((String) session.getAttribute("pw"));
-			dto = userService.getInfo(dto);
-		}
 		return returnObj.toJSONString();
 	}
 }

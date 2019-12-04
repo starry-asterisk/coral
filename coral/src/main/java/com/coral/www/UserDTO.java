@@ -10,9 +10,9 @@ public class UserDTO {
 	private String id;
 	private String pw;
 	private String name;
-	@DateTimeFormat(pattern="yy-MM-dd")
+	@DateTimeFormat(pattern="yy-MM-dd HH:mm:ss")
 	private Date regdate;
-	@DateTimeFormat(pattern="yy-MM-dd")
+	@DateTimeFormat(pattern="yy-MM-dd HH:mm:ss")
 	private Date birth;
 	private String gender;
 	private String phone;
@@ -23,7 +23,7 @@ public class UserDTO {
 	private String mail;
 	private char privacy;
 	private String status;
-	@DateTimeFormat(pattern="yy-MM-dd")
+	@DateTimeFormat(pattern="yy-MM-dd HH:mm:ss")
 	private Date date;
 	private String ip;
 	private String platform;

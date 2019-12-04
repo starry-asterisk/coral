@@ -7,7 +7,7 @@
   		select count(*) from USERS WHERE U_ID=#{id} AND U_PW=#{pw}
   	</select>
   	<select id="getInfo" resultType="com.coral.www.UserDTO" parameterType="com.coral.www.UserDTO">
-  		select U_ID AS "id", U_NAME AS "name", U_GENDER AS "gender"  from USERS WHERE U_ID=#{id}
+  		select U_ID AS "id", U_NAME AS "name", U_GENDER AS "gender", U_PW AS "pw"  from USERS WHERE U_ID=#{id}
   	</select>
   	<select id="isId" resultType="int" parameterType="com.coral.www.UserDTO">
   		select count(*) from USERS WHERE U_ID=#{id}

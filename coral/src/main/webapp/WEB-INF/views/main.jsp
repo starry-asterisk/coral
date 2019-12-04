@@ -48,13 +48,7 @@
 	</div>
 	<div class="user_sub">
 			<div class="login">
-				<div class="id" spellcheck="False"><input type="text" id="id"></div>
-				<div class="password"><input type="password" id="password"></div>
-				<button id="login">로그인</button>
-			</div>
-			<div class="loginAfter" style="display:none;">
-				<span onClick="logout()" class="spanBtn">Sign Out</span>
-				<hr/>
+				<jsp:include page="${loginform }.jsp" ></jsp:include>
 			</div>
 	</div>
 	<div class="feed_sub">

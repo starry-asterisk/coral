@@ -43,32 +43,25 @@ $(document).ready(function(){
 			});
 		});
 		$("#login").click(function(){
-			var ajax = new Object();
-			ajax.id = $("#id").val();
-			ajax.pw = $("#password").val();
-			jsonSEND = JSON.stringify(ajax);
-			//<ajax> 사용하기
-			$.ajax({
-				// 전송방식을 지정한다(GET, POST)
-				type : "POST",
-				// 호출 URL을 설정한다.
-				// GET 방식일 경우 뒤에 파라미터를 붙여서 사용해도 된다.
-				url : "/ajax/login",
-				data : {json:jsonSEND},  // 전송할 내용(폼태그)
-				error : function(){
-					alert("통신상태가 완활하지 않습니다");
-				},
-				success : function(obj){
-					var data = JSON.parse(obj);
-					if(data.success){
-						$("#id").val("");
-						$("#password").val("");
-						$(".login").css("display","none");
-						$(".loginAfter").css("display","block");
-					}else{
-						alert("로그인 실패!");
-					}
-				}
-			});
+			login();
 		});
 	});
+
+
+function login(){
+	var ajax = new Object();
+	ajax.id = $("#id").val();
+	ajax.pw = $("#password").val();
+	ajax.remember_me = $("#remember-me").is(":checked");
+	ajax = JSON.stringify(ajax);
+	var form = document.createElement("form");
+	form.setAttribute("method","POST");
+	form.setAttribute("action","/login");
+	var input = document.createElement("input");
+	input.setAttribute("type","hidden");
+	input.setAttribute("name","json");
+	input.value = ajax;
+	form.appendChild(input);
+	document.body.appendChild(form);
+	form.submit();
+}
