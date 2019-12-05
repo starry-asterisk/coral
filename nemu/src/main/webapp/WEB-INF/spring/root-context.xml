@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+		<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
+	  <property value="oracle.jdbc.driver.OracleDriver" name="driverClassName" />
+	  <property value="jdbc:oracle:thin:@192.168.0.204:1521:xe" name="url" />
+<!--  <property value="oracle.jdbc.driver.OracleDriver" name="driverClassName" />
+	  <property value="jdbc:oracle:thin:@192.168.0.216:1521:xe" name="url" />  -->
+	  <!-- 오라클 사용자 이름 -->
+	  <property value="book_ex" name="username" />
+	  <!-- 오라클 사용자 비밀번호 -->
+	  <property value="book_ex" name="password" />
+	</bean>
 </beans>

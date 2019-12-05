@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -34,6 +36,12 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "home";
+	}
+	@RequestMapping(value = "/accessError", method = RequestMethod.GET)
+	public String home(HttpServletRequest request) {
+		logger.info((String) request.getParameter("javax.servlet.error.status_code"));
+		logger.info((String) request.getAttribute("javax.servlet.error.status_code"));
+		return "error";
 	}
 	
 }

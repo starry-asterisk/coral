@@ -10,7 +10,8 @@
 	Hello world!  
 </h1>
 
-<P>  Error </P>
+<P>  The time on the server is ${serverTime}. </P>
+<h1>접속을 환영합니다. 테스트</h1>
 
 </body>
 </html>
