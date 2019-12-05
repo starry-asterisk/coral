@@ -6,20 +6,15 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.WebUtils;
 
 @Service
 public class CookieServiceImpl implements CookieService {
-	private static final Logger logger = LoggerFactory.getLogger(CookieServiceImpl.class);
 	@Inject
 	private CookieDAO dao;
 	private CookieDTO dto ;
@@ -80,7 +75,6 @@ public class CookieServiceImpl implements CookieService {
 	@Override
 	public Boolean create(HttpServletResponse response, HttpSession session) {
 		try {
-			System.out.println("-----------------------new--------------------------");
 			dto = new CookieDTO();
 			dto.setId((String) session.getAttribute("id"));
 			dto.setSeries(UUID.randomUUID().toString());
@@ -99,12 +93,4 @@ public class CookieServiceImpl implements CookieService {
 			return false;
 		}
 	}
-
-	@Override
-	public JSONObject info(HttpServletResponse reponse, HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-
 }

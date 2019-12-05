@@ -8,8 +8,6 @@ package com.coral.www.Board;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +19,6 @@ import com.coral.www.dao.DAO;
 @Controller
 public class BoardController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 	@RequestMapping(value = "/teacher", method = { RequestMethod.GET, RequestMethod.POST})
 	public String teacher(Model model, HttpServletRequest request) {
