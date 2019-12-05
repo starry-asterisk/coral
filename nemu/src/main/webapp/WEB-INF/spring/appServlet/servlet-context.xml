@@ -23,6 +23,6 @@
 	
 	<context:component-scan base-package="com.coralprogram.nemu" />
 	
-	
+	<security:global-method-security pre-post-annotation="enabled" secured-annotation="enabled"/>
 	
 </beans:beans>

@@ -48,29 +48,33 @@ public class LoginStatusInterceptor extends HandlerInterceptorAdapter{
         	/*쿠기 존재시에 자동 로그인 처리*/
         	System.out.println(loginCookie);
         	if(loginCookie!=null) {
-        		/*쿠기 값, 토큰, 고유키 가져오기 & 선언*/
-        		JSONObject cookievalue = (JSONObject) new JSONParser().parse(URLDecoder.decode(loginCookie.getValue(), "UTF-8"));
-        		UserDTO dto = new UserDTO();
-        		
-        		/*DB처리*/
-        		dto.setIp(request.getRemoteAddr());
-        		dto.setPlatform(request.getHeader("user-agent"));
-    			dto.setId((String) cookievalue.get("id"));
-    			dto.setLogin_status(1);
-    			dto = userService.insertHistory(dto);
-    			/*세션에 로그인 정보 저장*/
-    			if(dto!=null){
-    				dto = userService.getInfo(dto);
-    				session.setAttribute("id", dto.getId());
-        			session.setAttribute("user-agent", request.getHeader("user-agent"));
-        			session.setAttribute("ip", request.getRemoteAddr());
-        			request.setAttribute("loginform", "include/loginAfter");
-        			/*쿠키갱신*/
-        			cookieService.refresh(response, loginCookie);
-    			}else {
-    				request.setAttribute("errorMsg", "로그인에 실패했습니다...");
-    				request.setAttribute("loginform", "include/loginForm");
-    			}
+        		if(cookieService.refresh(response, loginCookie)) {
+        			/*쿠기 값, 토큰, 고유키 가져오기 & 선언*/
+            		JSONObject cookievalue = (JSONObject) new JSONParser().parse(URLDecoder.decode(loginCookie.getValue(), "UTF-8"));
+            		UserDTO dto = new UserDTO();
+            		
+            		/*DB처리*/
+            		dto.setIp(request.getRemoteAddr());
+            		dto.setPlatform(request.getHeader("user-agent"));
+        			dto.setId((String) cookievalue.get("id"));
+        			dto.setLogin_status(1);
+        			dto = userService.insertHistory(dto);
+        			/*세션에 로그인 정보 저장*/
+        			if(dto!=null){
+        				dto = userService.getInfo(dto);
+        				session.setAttribute("id", dto.getId());
+            			session.setAttribute("user-agent", request.getHeader("user-agent"));
+            			session.setAttribute("ip", request.getRemoteAddr());
+            			request.setAttribute("loginform", "include/loginAfter");
+            			/*쿠키갱신*/
+            			
+        			}else {
+        				request.setAttribute("errorMsg", "로그인에 실패했습니다...");
+        				request.setAttribute("loginform", "include/loginForm");
+        			}
+        		}else {
+        			request.setAttribute("loginform", "include/loginForm");
+        		}
         	}else {
         		request.setAttribute("loginform", "include/loginForm");
         	}

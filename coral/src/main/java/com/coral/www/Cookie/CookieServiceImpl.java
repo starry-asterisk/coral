@@ -66,7 +66,8 @@ public class CookieServiceImpl implements CookieService {
 						dao.update(dto);
 						return true;
 	    			}else {
-	    				return delete(response, loginCookie);
+	    				delete(response, loginCookie);
+	    				return false;
 	    			}
 	    		}
 	    	}
