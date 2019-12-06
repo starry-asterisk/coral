@@ -34,7 +34,6 @@ public class AjaxController {
 			result += tester.java();
 			tester.close();
 		}catch(Exception e) {}
-		
 		returnObj.put("result",result);
 		returnObj.put("success", true);
 		return returnObj.toJSONString();

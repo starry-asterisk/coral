@@ -6,4 +6,10 @@
   	<select id="Count" resultType="int" >
   		select count(*) from BOARD
   	</select>
+  	
+  	<select id="listPage" resultType="com.coral.www.Board.BoardDTO" >
+  	<![CDATA[
+  	select B_NO as "no", B_TITLE AS "title", B_UID AS "id", B_REGDATE as "regdate" from (select B.* , ROWNUM as RNUM from B) WHERE rnum >= ((#{page}-1)*#{amount}) and rnum <= (#{page}*#{amount});
+  	]]>
+  	</select>
   </mapper>

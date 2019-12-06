@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ErrorController {
 	
 	
-	@RequestMapping(value = "/error")
+	@RequestMapping("/error")
 	public String main(HttpServletRequest request) {
 		int ErrorCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
 		String msg;

@@ -90,7 +90,7 @@
 
            maxThreads="150" SSLEnabled="true" scheme="https" secure="true"
 			
-           keystoreFile="C:/config/keys/keystore" keystorePass="1234"
+           keystoreFile="C:/config/keys/certificate.jks" keystorePass="980502"
 
            clientAuth="false" sslProtocol="TLS" />
     <!-- Define a SSL/TLS HTTP/1.1 Connector on port 8443 with HTTP/2

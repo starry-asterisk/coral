@@ -1,23 +1,42 @@
 package com.coral.www.Board;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class BoardDTO {
-	private int count;
+	private int no;
+	private String category;
+	private String tag;
 	private String title;
-	private String name;
-	private int bno;
-	private int thumb;
-	private String time;
-	public int getThumb() {
-		return thumb;
+	private String contents;
+	private String id;
+	@DateTimeFormat(pattern="yy-MM-dd HH:mm:ss")
+	private Date regdate;
+	@DateTimeFormat(pattern="yy-MM-dd HH:mm:ss")
+	private Date upddate;
+	private int views;
+	private char attachment;
+	private char status;
+	private int recommends;
+	private int selection;
+	public int getNo() {
+		return no;
 	}
-	public void setThumb(int thumb) {
-		this.thumb = thumb;
+	public void setNo(int no) {
+		this.no = no;
 	}
-	public int getCount() {
-		return count;
+	public String getCategory() {
+		return category;
 	}
-	public void setCount(int count) {
-		this.count = count;
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public String getTag() {
+		return tag;
+	}
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
 	public String getTitle() {
 		return title;
@@ -25,23 +44,59 @@ public class BoardDTO {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getName() {
-		return name;
+	public String getContents() {
+		return contents;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setContents(String contents) {
+		this.contents = contents;
 	}
-	public int getBno() {
-		return bno;
+	public String getId() {
+		return id;
 	}
-	public void setBno(int bno) {
-		this.bno = bno;
+	public void setId(String id) {
+		this.id = id;
 	}
-	public String getTime() {
-		return time;
+	public Date getRegdate() {
+		return regdate;
 	}
-	public void setTime(String time) {
-		this.time = time;
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
 	}
-
+	public Date getUpddate() {
+		return upddate;
+	}
+	public void setUpddate(Date upddate) {
+		this.upddate = upddate;
+	}
+	public int getViews() {
+		return views;
+	}
+	public void setViews(int views) {
+		this.views = views;
+	}
+	public char getAttachment() {
+		return attachment;
+	}
+	public void setAttachment(char attachment) {
+		this.attachment = attachment;
+	}
+	public char getStatus() {
+		return status;
+	}
+	public void setStatus(char status) {
+		this.status = status;
+	}
+	public int getRecommends() {
+		return recommends;
+	}
+	public void setRecommends(int recommends) {
+		this.recommends = recommends;
+	}
+	public int getSelection() {
+		return selection;
+	}
+	public void setSelection(int selection) {
+		this.selection = selection;
+	}
+	
 }

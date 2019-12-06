@@ -38,7 +38,7 @@
 			com.coral.www.listener.SessionListener
 		</listener-class>
 	</listener>
-	<!--  
+	
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Secured</web-resource-name>
@@ -47,5 +47,5 @@
 		<user-data-constraint>
 			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 		</user-data-constraint>
-	</security-constraint>-->
+	</security-constraint>
 </web-app>
