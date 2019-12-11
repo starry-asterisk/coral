@@ -4,68 +4,55 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
+<!-- JQuery -->
+<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<!-- 외부 css -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/15.0.0/classic/ckeditor.js"></script>
+
+<!-- 내부 css -->
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/default.css"/>
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/Editor.css"/>
+
 <head>
 <meta charset="UTF-8">
 <title>Coral - 목록</title>
 </head>
+
 <body>
 
-<header>
-	<div class="logo">
-	<a href="/" title="메인 화면으로 이동">코딩중계사 코랄</a>
-	</div>
-</header>
+<jsp:include page="${contextPath }\common\header2.jsp"></jsp:include>
 
 
 <div class="base_">
 	<div class="board">
+		<input type="text" class="title_area" placeholder="제목">
 		<textarea name="content" id="editor">
 			${content }
-		</textarea>	
-    	<script>
-    		ClassicEditor
-        		.create( document.querySelector( '#editor' ) )
-        		.catch( error => {
-            		console.error( error );
-        		} );
-		</script>
+		</textarea>
 	</div>
-	<div class="user_sub"></div>
+	<div class="user_sub">
+		<input type="text" class="basic_input" placeholder="카테고리">
+		<input type="text" class="basic_input" placeholder="예약일자">
+		<input type="text" class="basic_input" placeholder="첨부파일">
+		<div class="tag_form"><input type="text"></div>
+		<button type="button" class="basic_button">발행</button>
+		<button type="button" class="basic_button">임시저장</button>
+	</div>
 	${attachment}
 </div>
 
 
-<footer>
-	<div class="notice">
-	<a href="/" style="font-weight:600;line-height:37.34px;">공지사항</a>
-	</div>
-	<div class="external_link">
-		&#60;
-		<a href="https://www.youtube.com/"><img title="유튜브홍보링크" alt="youtube" width="60px" height="60px" src="/resources/icon/youtube.png"></a>
-		
-		<a href="https://github.com/"><img title="깃헙링크" alt="github" width="60px" height="60px"  src="/resources/icon/github.png"></a>
-		
-		<a href="https://www.naver.com/"><img title="네이버" alt="naver" width="60px" height="60px"  src="/resources/icon/naver.png"></a>
-		
-		<a href="http://www.moel.go.kr/"><img title="고용노동부" alt="moel" width="60px" height="60px"  src="/resources/icon/government.png"></a>
-		
-		<a href="http://www.icia.co.kr/"><img title="icia교육원" alt="icia" width="60px" height="60px"  src="/resources/icon/icia.png"></a>
-		&#62;
-	</div>
-	<div class="info">
-	사이트소개 | 이용안내 | 이용약관 | 제작인원 소개<br/>
-	Copyrightⓒ2019 Coral All rights reserved
-	</div>
-</footer>
+<jsp:include page="${contextPath }\common\footer.jsp"></jsp:include>
 
-<button class="ScrollUpButton" title="맨 위로 이동">&#10514;</button>
 
 </body>
+<!-- 외부 js -->
+<script src="https://cdn.ckeditor.com/ckeditor5/15.0.0/classic/ckeditor.js"></script>
+
+<!-- 내부 js -->
+<script src="${contextPath }/js/editor.js"></script>
+<script src="${contextPath}/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
 </html>

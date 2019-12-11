@@ -20,6 +20,8 @@ public class BoardDTO {
 	private char status;
 	private int recommends;
 	private int selection;
+	private int amount;
+	private int page;
 	public int getNo() {
 		return no;
 	}
@@ -97,6 +99,18 @@ public class BoardDTO {
 	}
 	public void setSelection(int selection) {
 		this.selection = selection;
+	}
+	public int getAmount() {
+		return amount;
+	}
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
 	}
 	
 }

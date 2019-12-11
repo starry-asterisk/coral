@@ -10,6 +10,6 @@
 <hr>
 대부분은 버그입니다
 <br>
-
+<jsp:include page="${contextPath }\common\footer.jsp"></jsp:include>
 </body>
 </html>

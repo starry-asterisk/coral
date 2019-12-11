@@ -7,3 +7,5 @@ a:hover{
 cursor:pointer;
 }
 </style>
+<jsp:include page="${contextPath }\include\footer.jsp"></jsp:include>
+<script src="${contextPath}/js/web-functions.js" type="text/javascript" charset="utf-8"></script>

@@ -17,24 +17,22 @@
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/main-page.css"/>
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/list-style.css"/>
 
-
 <head>
 <meta charset="UTF-8">
 <title>Coral - Main</title>
 </head>
 <body>
 
-<header>
-	<div class="logo">
-	<a href="/" title="메인 화면으로 이동">코딩중계사 코랄</a>
-	</div>
-	<div class="bar">
-	</div>
-</header>
+<jsp:include page="${contextPath }\common\header1.jsp"></jsp:include>
 
+<button class="main_sub_sideBtn square_btn" id="codeRun" title="실행버튼" style='margin-top:160px'>▷</button>
+<button class="main_sub_sideBtn square_btn" id="Boardlist" title="게시글 목록" style='margin-top:80px'>▷</button>
+<button class="main_sub_sideBtn square_btn" id="memo" title="메모장">▷</button>
 
 <div class="base_">
 	<div class="main_sub">
+		<div class="Board_List" style="display:none">a</div>
+		<div class="Board_List" style="display:none">b</div>
 		<div class="Board_List">
 			<!-- ACE에디터  -->
 			<pre id="editor">public class HelloWorld {
@@ -53,6 +51,8 @@
 	</div>
 	<div class="feed_sub">
 		<div class="feed_sub_main">
+		<br/>
+		　　<a class="calendar" width="500px" data-header=true></a>
 		</div>
 		<div class="feed_sub_side">
 			<div id="side1">
@@ -65,33 +65,7 @@
 	</div>
 </div>
 
-<button class="ScrollUpButton" title="맨 위로 이동">&#10514;</button>
-<button class="main_sub_sideBtn" title="실행버튼">▷</button>
-
-<footer>
-	<div class="notice">
-	<a href="/" style="font-weight:600;line-height:37.34px;">공지사항</a>
-	</div>
-	<div class="external_link">
-		&#60;
-		<a href="https://www.youtube.com/"><img title="유튜브홍보링크" alt="youtube" width="60px" height="60px" src="/resources/icon/youtube.png"></a>
-		
-		<a href="https://github.com/"><img title="깃헙링크" alt="github" width="60px" height="60px"  src="/resources/icon/github.png"></a>
-		
-		<a href="https://www.naver.com/"><img title="네이버" alt="naver" width="60px" height="60px"  src="/resources/icon/naver.png"></a>
-		
-		<a href="http://www.moel.go.kr/"><img title="고용노동부" alt="moel" width="60px" height="60px"  src="/resources/icon/government.png"></a>
-		
-		<a href="http://www.icia.co.kr/"><img title="icia교육원" alt="icia" width="60px" height="60px"  src="/resources/icon/icia.png"></a>
-		&#62;
-	</div>
-	<div class="info">
-	사이트소개 | 이용안내 | 이용약관 | 제작인원 소개<br/>
-	Copyrightⓒ2019 Coral All rights reserved
-	</div>
-</footer>
-
-
+<jsp:include page="${contextPath }\common\footer.jsp"></jsp:include>
 
 </body>
 <!-- ACE에디터  -->
@@ -105,7 +79,7 @@
 </script>
 
 <!-- 내부 js -->
-<script src="js/web-functions.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/ajax.js" type="text/javascript" charset="utf-8"></script>
+<script src="${contextPath}/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
+<script src="${contextPath}/js/ajax.js" type="text/javascript" charset="utf-8"></script>
 
 </html>

@@ -11,11 +11,11 @@
 	</tr>
 	<c:forEach var= "list" items="${BoardList}">
 		<tr>
-			<td>${list.bno }</td>
-			<td><a href="/board/detail?bno=${list.bno }">${list.title }</a></td>
-			<td>${list.name }</td>
-			<td>${list.time }</td>
-			<td>${list.count }</td>
+			<td>${list.no }</td>
+			<td><a href="/board/detail?bno=${list.no }">${list.title }</a></td>
+			<td>${list.id }</td>
+			<td>${list.regdate }</td>
+			<td>${list.views }</td>
 		</tr>
 	</c:forEach>
 </table>
