@@ -138,8 +138,11 @@ function mkPop(e, msg){
 	popup.css("left",e.pageX-95);
 	popup.attr("tabindex",-1).focus();
 	popup.append(document.createElement("div"));
-	$('.popup div').html(msg);
+	$('.popup div').html(msg+"<br/>"+"<input type='text' placeholder='연도'>"+"<input type='text' placeholder='월'>"+"<button>move!</button>");
+	$('.popup div button').on("click",function(){
+		CalendarMove($(".popup div input[placeholder='연도']").val(),$(".popup div input[placeholder='월']").val()-1);
+	});
 	popup.focusout(function(){
-		popup.remove();
+		//popup.remove();
 	});
 }
