@@ -1,0 +1,179 @@
+@charset "UTF-8";
+
+header {
+	height: 200px;
+}
+
+.logo {
+	height: 75%;
+	padding-top: 40px;
+}
+
+.bar {
+	height: 25%;
+	width: 100%;
+}
+
+.logo img:hover {
+	transform: rotate(720deg);
+	transition: all 3s;
+}
+
+.logo img {
+	transition: all 3s;
+}
+
+.base_ {
+	height: 1220px;
+}
+
+.main_sub {
+	position: absolute;
+	width: 924px;
+	height: 473px;
+}
+
+.Board_List {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 388px;
+	background-color: white;
+	border: 1px solid #e1e1ea;
+}
+
+.Search {
+	bottom: 0px;
+}
+
+.login {
+	width: 441px;
+	height: 454px;
+	margin-bottom: 10px;
+	position: relative;
+	left: 10px;
+	top: 10px;
+	background-color: #323640;
+	box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.2) inset;
+}
+
+.login div {
+	width: 353px;
+	height: 60px;
+	position: relative;
+	left: 44px;
+	top: 40px;
+	margin-bottom: 20px;
+	background-color: #8fc1c1;
+}
+
+.login button {
+	width: 353px;
+	height: 60px;
+	position: relative;
+	top: 80px;
+	background-color: #8fc1c1;
+}
+
+.login div:focus, .login div:hover {
+	outline: white solid 1px;
+}
+
+.login div input {
+	width: 90%;
+	padding-top: 18px;
+	height: 42px;
+	font-size: 24px;
+	text-align: left;
+	vertical-align: middle;
+}
+
+.login button:active {
+	box-shadow: 0 0 13px 3px rgba(0, 0, 0, 0.5) inset;
+	outline: white solid 1px;
+}
+
+.login button:hover {
+	outline: white solid 1px;
+}
+
+.feed_sub {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 60%;
+}
+
+.feed_sub_main {
+	position: absolute;
+	width: 66%;
+	height: 100%;
+	background-color: white;
+	border: 1px solid #e1e1ea;
+}
+
+.feed_sub_side {
+	position: absolute;
+	right: 0;
+	width: 34%;
+	height: 100%;
+	padding-left: 15px;
+	box-sizing: border-box;
+}
+
+.feed_sub_side div {
+	width: 100%;
+	height: 234px;
+	background-color: white;
+	border: 1px solid #e1e1ea;
+}
+
+#side1 {
+	margin-bottom: 15px;
+	vertical-align: top;
+}
+
+#side2 {
+	margin-bottom: 15px;
+	vertical-align: middle;
+}
+
+#side3 {
+	vertical-align: bottom;
+}
+
+.spanBtn:hover {
+	cursor: pointer;
+}
+
+#editor {
+	margin: 0;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+#editor * {
+	text-align: left;
+	font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.main_sub_sideBtn{
+	position:absolute;
+	top: 215px;
+}
+
+@media screen and (min-width: 1600px) {
+	.main_sub_sideBtn{
+		left:50%;
+		transform:translate(-775px);
+	}
+}
+@media screen and (max-width: 1598px) {
+	.main_sub_sideBtn{
+		left:24px;
+	}
+}

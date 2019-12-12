@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.coral.www.mappers.BoardMapper">
+  	<select id="total" resultType="int" >
+  		select count(*) from B
+  	</select>
+  	
+  	<select id="listPage" parameterType="com.coral.www.Board.BoardDTO" resultType="com.coral.www.Board.BoardDTO" >
+  	<![CDATA[
+  	select B_NO as "no", B_TITLE AS "title", B_UID AS "id", B_REGDATE as "regdate", B_VIEWS as "views" from (select B.* , ROWNUM as RNUM from B) WHERE rnum >= ((#{page}-1)*#{amount}) and rnum <= (#{page}*#{amount}) ORDER BY "no"
+  	]]>
+  	</select>
+  </mapper>
