@@ -122,17 +122,24 @@ function BuildCalendar(date){
 		alert(msg);
 	});
 	$("table.calendar td[colspan]").on("click", function(e){
-		/*클릭시의 이벤트를 지정가능합니다*/
-		var popup = document.createElement("div");
-		popup.setAttribute("class","popup");
-		$('body').append(popup);
-		popup = $('.popup');
-		popup.css("position","absolute");
-		popup.css("top",e.pageY+38);
-		popup.css("left",e.pageX-95);
-		popup.attr("tabindex",-1).focus();
-		popup.focusout(function(){
-			popup.remove();
-		});
+		var msg ="오늘은 12월 입니다."
+		mkPop(e, msg);
+	});
+}
+
+function mkPop(e, msg){
+	/*클릭시의 이벤트를 지정가능합니다*/
+	var popup = document.createElement("div");
+	popup.setAttribute("class","popup");
+	$('body').append(popup);
+	popup = $('.popup');
+	popup.css("position","absolute");
+	popup.css("top",e.pageY+38);
+	popup.css("left",e.pageX-95);
+	popup.attr("tabindex",-1).focus();
+	popup.append(document.createElement("div"));
+	$('.popup div').html(msg);
+	popup.focusout(function(){
+		popup.remove();
 	});
 }

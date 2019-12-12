@@ -213,16 +213,29 @@ footer{
     vertical-align: top;
 }
 .popup{
+	font-family: 'Sunflower', 'Righteous', 'Do Hyeon', sans-serif;
 	padding:0;
 	margin:0;
-	width:390px;
-	height:195px;
-	border-color:grey;
-	border-radius:15px;
-	background-color:grey;
-	z-index:1000;
+	min-width:400px;
+	min-height:200px;
+	z-index:998;
+	background: #eee;
+	border-color: #eee;
+    border-radius: 7px;
+    font-size:1.5em;
+    color: #000;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
 }
-.popup:after{
+.popup div{
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+	overflow:hidden;
+	z-index:1000;
+	word-break:keep-all;
+}
+.popup:before{
 	content:" ";
 	position:absolute;
 	width:0;
