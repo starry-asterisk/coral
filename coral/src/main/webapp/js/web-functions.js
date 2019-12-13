@@ -86,12 +86,14 @@ function BuildCalendar(date){
 		calendar.append(document.createElement("tr"));
 		var tr = $("table.calendar tr");
 		tr.append(document.createElement("td"));
+		tr.children("td").last().html("&#60;");
 		tr.children("td").last().attr("onClick","CalendarMove("+origin.Year+","+(origin.Month-1)+")");
 		tr.append(document.createElement("td"));
 		tr.children("td").last().attr("colspan","5");
 		tr.children("td").last().html("<span style='font-weight:900;font-size:2.5em;color:#51565d;'>"+(origin.Month+1)+"</span><br/>"+origin.Year);
 		tr.append(document.createElement("td"));
 		tr.children("td").last().attr("onClick","CalendarMove("+origin.Year+","+(origin.Month+1)+")");
+		tr.children("td").last().html("&#62;");
 		tr.children("td").css("height","2em");
 		tr.children("td").css("border","0");
 		tr.children("td").css("text-align","center");
@@ -122,12 +124,31 @@ function BuildCalendar(date){
 		alert(msg);
 	});
 	$("table.calendar td[colspan]").on("click", function(e){
-		var msg ="오늘은 12월 입니다."
-		mkPop(e, msg);
+		var contents = document.createElement("div");
+		contents = $(contents);
+		contents.html("오늘은 "+(origin.Month+1)+"월 입니다.<br/>");
+		contents.append(document.createElement("input"));
+		contents.children("input").attr("type","text");
+		contents.children("input").attr("placeholder","YYYY-MM");
+		contents.append(document.createElement("button"));
+		contents.children("button").html("해당 월로 이동");
+		contents.children("button").on("click",function(){
+			var pattern = /[^0-9]/gi;
+			var value = contents.children("input").val().replace(pattern,"");
+			if(value.length<4){
+				CalendarMove(origin.Year,value-1);
+			}else if(value.length==4){
+				CalendarMove(value,origin.Month);
+			}else{
+				CalendarMove(value.substring(0,4),value.substring(4)-1);
+			}
+			delPop();
+		});
+		mkPop(e, contents);
 	});
 }
 
-function mkPop(e, msg){
+function mkPop(e, contents){
 	/*클릭시의 이벤트를 지정가능합니다*/
 	var popup = document.createElement("div");
 	popup.setAttribute("class","popup");
@@ -136,13 +157,14 @@ function mkPop(e, msg){
 	popup.css("position","absolute");
 	popup.css("top",e.pageY+38);
 	popup.css("left",e.pageX-95);
-	popup.attr("tabindex",-1).focus();
-	popup.append(document.createElement("div"));
-	$('.popup div').html(msg+"<br/>"+"<input type='text' placeholder='연도'>"+"<input type='text' placeholder='월'>"+"<button>move!</button>");
-	$('.popup div button').on("click",function(){
-		CalendarMove($(".popup div input[placeholder='연도']").val(),$(".popup div input[placeholder='월']").val()-1);
+	popup.append(contents);
+	popup.after(document.createElement("div"));
+	$(".popup+div").addClass("popup_back");
+	$(".popup_back").click(function(){
+		delPop();
 	});
-	popup.focusout(function(){
-		//popup.remove();
-	});
+}
+function delPop(){
+	$(".popup").remove();
+	$(".popup_back").remove();
 }
