@@ -175,12 +175,14 @@ footer{
     box-shadow: 0 0 25px 5px rgba(254,111,94,0.3);
 }
 .calendar {
+	position: relative;
     border-collapse: collapse;
     table-layout: fixed;
     background-color:white;
     border-radius:1em;
     box-shadow: 0 0 25px 5px rgba(60,64,66,0.05);
     overflow:hidden;
+    z-index:1;
 }
 .calendar * {
     text-align: center;
@@ -208,30 +210,52 @@ footer{
 .calendar tr:not(:nth-child(1)) td:nth-child(7):not(.none) {
     color: #4786ff;
 }
-.calendar tr:nth-child(1) td:nth-child(1), .calendar tr:nth-child(1) td:nth-child(3){
-	font-size:2em;
-	padding-top:0.55em;
-	margin-top:10px;
-} 
 .calendar td {
    	text-align: right;
     vertical-align: top;
 }
+.C_side{
+	background:#eee;
+	position: absolute;
+	border-radius:0 1em 1em 0;
+    box-shadow: 0 0 25px 5px rgba(60,64,66,0.05);
+    z-index:0;
+    transition: left 2s;
+    overflow-y:auto;
+}
+table.calendar .job{
+	height:1em;
+	width:100%;
+}
 .popup{
 	font-family: 'Sunflower', 'Righteous', 'Do Hyeon', sans-serif;
-	padding:0;
+	padding:10px;
 	margin:0;
-	min-width:400px;
-	min-height:200px;
+	min-width:200px;
+	min-height:100px;
 	z-index:999;
 	background: #eee;
-	border-color: #eee;
     border-radius: 7px;
-    font-size:1.5em;
+    border: 1px solid #ddd;
+    font-size:1em;
     color: #000;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
 }
-
+.popup:after{
+	content:" ";
+	position:absolute;
+	width:0;
+	height:0;
+	border:20px solid;
+	border-color:inherit;
+	border-bottom-color: transparent;
+	border-left-color: transparent;
+	border-right-color: transparent;
+	transform:rotate(45deg);
+	z-index:-10;
+	left:40px;
+	top:-21px;
+}
 .popup_back{
 	position:fixed;
 	width:100%;
@@ -242,27 +266,4 @@ footer{
 	background:black;
 	opacity:0;
 }
-.popup:after{
-	content:" ";
-	position:absolute;
-	width:0;
-	height:0;
-	border:30px solid;
-	border-color:inherit;
-	border-bottom-color: transparent;
-	border-left-color: transparent;
-	border-right-color: transparent;
-	transform:rotate(45deg);
-	z-index:-1;
-	left:70px;
-	top:-25px;
-}
 
-.popup div{
-	position:absolute;
-	top:50%;
-	left:50%;
-	transform:translate(-50%,-50%);
-	z-index:1000;
-	word-break:keep-all;
-}
