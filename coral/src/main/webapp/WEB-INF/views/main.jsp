@@ -52,7 +52,7 @@
 	<div class="feed_sub">
 		<div class="feed_sub_main">
 		<br/>
-		　　<a class="calendar" width="500" data-header=true></a>
+		　　<a class="calendar" width="500" data-header=true schedule="${ pre_schedule}"></a>
 		</div>
 		<div class="feed_sub_side">
 			<div id="side1">

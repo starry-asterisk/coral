@@ -266,4 +266,47 @@ table.calendar .job{
 	background:black;
 	opacity:0;
 }
+.C_side{
+	transform:translate(-95%);
+	transition:transform 1s;
+}
+.C_side:hover{
+	transform:translate(-5%);
+	transition:transform 1s;
+}
+.C_side table{
+	position:absolute;
+	left: 5%;
+	width:95%;
+	height:100%;
+}
+.C_side tr+tr{
+	border-top: 1px solid #ddd;
+	width:100%;
+}
+.C_side tr:nth-Child(1){
+	height:10%;
+	font-size:2em;
+	line-height:100%;
+}
+.C_side tr:nth-Child(1) td{
+	width:10%;
+	text-align:end;
+}
+.C_side tr:nth-Child(1) button{
+	width: 25%
+}
+.C_side tr:nth-Child(2){
+	height:62%;
+	overflow-y:scroll;
+}
+.C_side tr:nth-Child(3){
+	height:28%;
+}
 
+
+.popup input , .C_side input{
+	border: 1px solid #ccc;
+    border-radius: 0.1em;
+    background: white;
+}

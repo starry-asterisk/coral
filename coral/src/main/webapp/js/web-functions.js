@@ -57,6 +57,9 @@ function BuildCalendar(JqueryName, date){
 	//달력 헤더 유무
 	var header = place.data("header");
 	
+	//달력 스케쥴 목록을 받아옴
+	var ScheduleList = place.attr("schedule");
+	
 	//요일 배열
 	var Day = ["SUN","MON","TUE","WEN","THU","FRI","SAT"];
 	
@@ -181,80 +184,114 @@ function BuildCalendar(JqueryName, date){
 		
 		date.setDate(date.getDate()+1);
 	}
-	$("table.calendar tr:not(.head) td:not(.none)").on("click", function(){
-		/*클릭시의 이벤트를 지정가능합니다*/
-		var Poffset = body.parent().offset();
-		var Coffset = body.offset();
-		var td_date = $(this).attr("id");
-		var temp;
-		
-		if($(".C_side").html()==undefined){
-			var contents = $(document.createElement("div"));
-			
-			contents.addClass("C_side");
-			
-			contents.width(width*0.4+25);
-			contents.height(width*(0.82-(header?0:0.18))+"px");
-			
-			contents.css("left",Coffset.left+parseInt(width)-Poffset.left-25);
-			contents.css("top",Coffset.top-Poffset.top);
-			
-			contents.append("<br/>");
-			
-			temp = $(document.createElement("label"));
-			temp.attr("for","start_day");
-			temp.html("시작일");
-			contents.append(temp);
-			
-			temp = $(document.createElement("input"));
-			temp.attr("id","start_day")
-			temp.val(origin.Year+"-"+(origin.Month+1)+"-"+td_date);
-			contents.append(temp);
-			
-			contents.append("<br/>");
-			
-			temp = $(document.createElement("label"));
-			temp.attr("for","end_day");
-			temp.html("종료일");
-			contents.append(temp);
-			
-			temp= $(document.createElement("input"));
-			temp.attr("id","end_day");
-			contents.append(temp);
-			
-			
-			body.parent().prepend(contents);
-		}else{
-			$("#end_day").val(origin.Year+"-"+(origin.Month+1)+"-"+td_date);
-			
-			var start_day = $("#start_day").val().split("-");
-			start_day = new Date(start_day[0],start_day[1]-1,start_day[2]);
-			var end_day = new Date(origin.Year,origin.Month,td_date);
-			
-			
-			if(end_day<start_day){
-				temp = start_day;
-				start_day = end_day;
-				end_day = temp;	
-			}
-			
-			var sum = (end_day-start_day)/24/60/60/1000;
-			if(new Date(end_day.getFullYear(),end_day.getMonth(),1)>start_day){
-				start_day = 1;
-			}else{
-				start_day = start_day.getDate();
-			}
-			$(".C_side").append("<br/><button onClick='$(\".C_side\").remove()'>"+sum+"일 소요 예상 </button><br/>");
-			var color = "#"+parseInt(Math.random() * 0xffffff).toString(16);
-			for(i = start_day;i<=end_day.getDate();i++){
-				var job = "<div class='job' style='background:"+color+"'></div>";
-				$("table.calendar #"+i+"").append(job);
-			}
-		}
-	});
 	td = $(".calendar").children("tr:not(:nth-child(1)):not(:nth-child(2))").children("td");
 	if(header){
+		var addSchedule = function(td_date){
+			
+			/*클릭시의 이벤트를 지정가능합니다*/
+			var temp;
+			var contents = $(".C_side");
+			
+			if(contents.html()==undefined){
+				contents = mkSide(body, width, height);
+				contents.append(document.createElement("table"));
+				contents.children().append(document.createElement("tr"));
+				contents.children().append(document.createElement("tr"));
+				contents.children().append(document.createElement("tr"));
+				contents.find("tr").append(document.createElement("td"));
+				contents.find("tr:first-child td").append("<button onClick='$(\".C_side\").remove()'> × </button>");
+				
+				
+				
+				temp = $(document.createElement("label"));
+				temp.attr("for","start_day");
+				temp.html("시작일");
+				contents.find("tr:last-child td").append(temp);
+				
+				temp = $(document.createElement("input"));
+				temp.attr("id","start_day")
+				contents.find("tr:last-child td").append(temp);
+				
+				contents.find("tr:last-child td").append("<br/>");
+				
+				temp = $(document.createElement("label"));
+				temp.attr("for","end_day");
+				temp.html("종료일");
+				contents.find("tr:last-child td").append(temp);
+				
+				temp= $(document.createElement("input"));
+				temp.attr("id","end_day");
+				contents.find("tr:last-child td").append(temp);
+				
+			}
+			if($("#start_day").val()==""){
+				$("#start_day").val(origin.Year+"-"+(origin.Month+1)+"-"+td_date);
+			}else if($("#end_day").val()==""){
+				$("#end_day").val(origin.Year+"-"+(origin.Month+1)+"-"+td_date);
+
+				var start_day = $("#start_day").val().split("-");
+				start_day = new Date(start_day[0],start_day[1]-1,start_day[2]);
+				var end_day = new Date(origin.Year,origin.Month,td_date);
+				
+				
+				if(end_day<start_day){
+					temp = start_day;
+					start_day = end_day;
+					end_day = temp;	
+				}
+				var color = "#"+parseInt(Math.random() * 0xffffff).toString(16);
+				var move = new Date(origin.Year,origin.Month,1);
+				var sum = (end_day-start_day)/1000/60/60/24;
+				while(move<=end_day&&move.getMonth()==origin.Month){
+					if(move>=start_day){
+						var job = $(document.createElement("div"));
+						job.addClass("job");
+						job.css("background",color);
+						day = $("table.calendar #"+move.getDate()+"");
+						if(day.html().split("+")[1]!=undefined){
+							data=day.html().split("+");
+							day.html(data[0]);
+							job.css("display","none");
+							day.append(job);
+							day.append("+"+(parseInt(data[1])+1));
+							
+						}else if(day.children("div").length==4){
+							day.children("div:nth-child(3)").css("display","none");
+							day.children("div:nth-child(4)").css("display","none");
+							job.css("display","none");
+							day.append(job);
+							day.append("+3");
+						}else{
+							day.append(job);
+						}
+					}
+					move.setDate(move.getDate()+1);
+				}
+				$(".C_side").find("tr:nth-child(2) td").append((start_day.getMonth()+1)+"/"+start_day.getDate()+"-"+(end_day.getMonth()+1)+"/"+end_day.getDate()+":"+(sum+1)+"day<br/>");
+				body.attr("schedule",
+						(body.attr("schedule")!=undefined?body.attr("schedule"):"")+
+						start_day.getFullYear()+"/"+start_day.getMonth()+"/"+start_day.getDate()+
+						"/"+end_day.getFullYear()+"/"+end_day.getMonth()+"/"+end_day.getDate()+";");
+				$("#start_day").val("");
+				$("#end_day").val("");
+			}
+		};
 		td.height(td.height());
+		$("table.calendar tr:not(.head) td:not(.none)").on("click", function(){
+			var td_date = $(this).attr("id");
+			addSchedule(td_date);
+		});
+		if(ScheduleList!=""){
+			ScheduleList = ScheduleList.split(";");
+			console.log(ScheduleList);
+			for(i=0;i<ScheduleList.length-1;i++){
+				var st_ed = ScheduleList[i].split("/");
+				if(origin.Year>=st_ed[0]&&origin.Year<=st_ed[3]&&origin.Month>=st_ed[1]&&origin.Month<=st_ed[4]){
+					addSchedule(st_ed[2]);
+					addSchedule(st_ed[5]);
+				}
+			}
+		}
 	}else{
 		$(".calendar").find("td").height(td.height());
 	}
@@ -268,12 +305,32 @@ function BuildCalendar(JqueryName, date){
 			$(JqueryName).remove();
 			$(".C_side").remove();
 		},
-		
+		addSchedule: function(date){
+			addSchedule(date);
+		},
+		ScheduleList: ScheduleList,
 		month: origin.Month,
 		year: origin.Year
 	}
 }
-
+function mkSide(body, width, height){
+	var Poffset = body.parent().offset();
+	var Coffset = body.offset();
+	
+	var contents = $(document.createElement("div"));
+	
+	contents.addClass("C_side");
+	
+	contents.width(width*0.4);
+	contents.height(height);
+	
+	contents.css("left",Coffset.left+parseInt(width)-Poffset.left);
+	contents.css("top",Coffset.top-Poffset.top-body.parent().css("border-width").replace("px",""));
+	
+	body.parent().prepend(contents);
+	
+	return contents;
+}
 function mkPop(e, contents){
 	/*클릭시의 이벤트를 지정가능합니다*/
 	contents.addClass("popup");
