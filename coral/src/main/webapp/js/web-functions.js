@@ -289,6 +289,11 @@ function BuildCalendar(JqueryName, date){
 				if(origin.Year>=st_ed[0]&&origin.Year<=st_ed[3]&&origin.Month>=st_ed[1]&&origin.Month<=st_ed[4]){
 					addSchedule(st_ed[2]);
 					addSchedule(st_ed[5]);
+				}else{
+					body.attr("schedule",
+							(body.attr("schedule")!=undefined?body.attr("schedule"):"")+
+							st_ed[0]+"/"+st_ed[1]+"/"+st_ed[2]+"/"+
+							st_ed[3]+"/"+st_ed[4]+"/"+st_ed[5]+";");
 				}
 			}
 		}

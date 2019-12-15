@@ -310,3 +310,9 @@ table.calendar .job{
     border-radius: 0.1em;
     background: white;
 }
+.C_side input{
+	width:75%;
+}
+.C_side label{
+	width:25%;
+}
