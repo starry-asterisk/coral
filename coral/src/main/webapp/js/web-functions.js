@@ -80,6 +80,7 @@ function BuildCalendar(JqueryName, date){
 	//달력 객체 생성
 	var body = $(document.createElement("table"));
 	body.addClass("calendar");
+	$(".C_side").find("tr:nth-child(2) td").html("");
 	
 	body.attr("width",width);
 	body.attr("data-header",header);
@@ -199,7 +200,7 @@ function BuildCalendar(JqueryName, date){
 				contents.children().append(document.createElement("tr"));
 				contents.children().append(document.createElement("tr"));
 				contents.find("tr").append(document.createElement("td"));
-				contents.find("tr:first-child td").append("<button onClick='$(\".C_side\").remove()'> × </button>");
+				contents.find("tr:first-child td").append("<button onClick='$(\".C_side\").css(\"display\",\"none\")'> × </button>");
 				
 				
 				
@@ -223,15 +224,17 @@ function BuildCalendar(JqueryName, date){
 				temp.attr("id","end_day");
 				contents.find("tr:last-child td").append(temp);
 				
+			}else if(contents.css("display")=="none"){
+				contents.css("display","");
 			}
 			if($("#start_day").val()==""){
-				$("#start_day").val(origin.Year+"-"+(origin.Month+1)+"-"+td_date);
+				$("#start_day").val(td_date.getFullYear()+"-"+(td_date.getMonth()+1)+"-"+td_date.getDate());
 			}else if($("#end_day").val()==""){
-				$("#end_day").val(origin.Year+"-"+(origin.Month+1)+"-"+td_date);
+				$("#end_day").val(td_date.getFullYear()+"-"+(td_date.getMonth()+1)+"-"+td_date.getDate());
 
 				var start_day = $("#start_day").val().split("-");
 				start_day = new Date(start_day[0],start_day[1]-1,start_day[2]);
-				var end_day = new Date(origin.Year,origin.Month,td_date);
+				var end_day = new Date(td_date.getFullYear(),td_date.getMonth(),td_date.getDate());
 				
 				
 				if(end_day<start_day){
@@ -279,22 +282,14 @@ function BuildCalendar(JqueryName, date){
 		td.height(td.height());
 		$("table.calendar tr:not(.head) td:not(.none)").on("click", function(){
 			var td_date = $(this).attr("id");
-			addSchedule(td_date);
+			addSchedule(new Date(origin.Year,origin.Month,td_date));
 		});
-		if(ScheduleList!=""){
+		if(ScheduleList!=undefined){
 			ScheduleList = ScheduleList.split(";");
-			console.log(ScheduleList);
 			for(i=0;i<ScheduleList.length-1;i++){
 				var st_ed = ScheduleList[i].split("/");
-				if(origin.Year>=st_ed[0]&&origin.Year<=st_ed[3]&&origin.Month>=st_ed[1]&&origin.Month<=st_ed[4]){
-					addSchedule(st_ed[2]);
-					addSchedule(st_ed[5]);
-				}else{
-					body.attr("schedule",
-							(body.attr("schedule")!=undefined?body.attr("schedule"):"")+
-							st_ed[0]+"/"+st_ed[1]+"/"+st_ed[2]+"/"+
-							st_ed[3]+"/"+st_ed[4]+"/"+st_ed[5]+";");
-				}
+				addSchedule(new Date(st_ed[0],st_ed[1],st_ed[2]));
+				addSchedule(new Date(st_ed[3],st_ed[4],st_ed[5]));
 			}
 		}
 	}else{
