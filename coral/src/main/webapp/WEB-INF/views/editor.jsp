@@ -37,7 +37,7 @@
 		<input type="text" class="basic_input" placeholder="카테고리">
 		<input type="text" class="basic_input" placeholder="예약일자">
 		<input type="text" class="basic_input" placeholder="첨부파일">
-		<div class="tag_form"><input type="text"></div>
+		<div class="tag_form"><input type="text" value=""></div>
 		<button type="button" class="basic_button">발행</button>
 		<button type="button" class="basic_button">임시저장</button>
 	</div>

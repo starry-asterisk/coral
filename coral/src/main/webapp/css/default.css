@@ -83,6 +83,7 @@ header{
 .base_{
 	position:relative;
 	width:1400px;
+	min-height:600px;
 	left:50%;
 	transform: translate(-50%);
 	margin-bottom: 15px;
@@ -97,6 +98,7 @@ header{
 	width:1598px;
 }
 .base_{
+	min-height:600px;
 	position:relative;
 	width:1400px;
 	left:99px;

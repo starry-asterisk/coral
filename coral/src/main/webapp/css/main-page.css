@@ -58,7 +58,7 @@ header {
 	box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.2) inset;
 }
 
-.login div {
+.login div.id, .login div.password{
 	width: 353px;
 	height: 60px;
 	position: relative;
@@ -68,7 +68,7 @@ header {
 	background-color: #8fc1c1;
 }
 
-.login button {
+.login button#login {
 	width: 353px;
 	height: 60px;
 	position: relative;
@@ -76,11 +76,11 @@ header {
 	background-color: #8fc1c1;
 }
 
-.login div:focus, .login div:hover {
+.login div.id:focus, .login div.id:hover, .login div.password:focus, .login div.password:hover {
 	outline: white solid 1px;
 }
 
-.login div input {
+.login div.id input, .login div.password input {
 	width: 90%;
 	padding-top: 18px;
 	height: 42px;
@@ -89,12 +89,12 @@ header {
 	vertical-align: middle;
 }
 
-.login button:active {
+.login button#login :active {
 	box-shadow: 0 0 13px 3px rgba(0, 0, 0, 0.5) inset;
 	outline: white solid 1px;
 }
 
-.login button:hover {
+.login button#login :hover {
 	outline: white solid 1px;
 }
 

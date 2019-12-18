@@ -196,6 +196,7 @@ function BuildCalendar(JqueryName, date){
 			if(contents.html()==undefined){
 				contents = mkSide(body, width, height);
 				contents.append(document.createElement("table"));
+				contents.css("font-size",width*0.02);
 				contents.children().append(document.createElement("tr"));
 				contents.children().append(document.createElement("tr"));
 				contents.children().append(document.createElement("tr"));
@@ -242,7 +243,8 @@ function BuildCalendar(JqueryName, date){
 					start_day = end_day;
 					end_day = temp;	
 				}
-				var color = "#"+parseInt(Math.random() * 0xffffff).toString(16);
+				var color = parseInt(Math.random() * 0xffffff).toString(16);
+				var color = "#"+(6-color.length)*"0"+color;
 				var move = new Date(origin.Year,origin.Month,1);
 				var sum = (end_day-start_day)/1000/60/60/24;
 				while(move<=end_day&&move.getMonth()==origin.Month){
@@ -250,6 +252,7 @@ function BuildCalendar(JqueryName, date){
 						var job = $(document.createElement("div"));
 						job.addClass("job");
 						job.css("background",color);
+						console.log(color);
 						day = $("table.calendar #"+move.getDate()+"");
 						if(day.html().split("+")[1]!=undefined){
 							data=day.html().split("+");

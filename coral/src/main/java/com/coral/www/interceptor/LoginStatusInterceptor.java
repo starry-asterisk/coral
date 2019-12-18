@@ -61,21 +61,13 @@ public class LoginStatusInterceptor extends HandlerInterceptorAdapter{
         				session.setAttribute("id", dto.getId());
             			session.setAttribute("user-agent", request.getHeader("user-agent"));
             			session.setAttribute("ip", request.getRemoteAddr());
-            			request.setAttribute("loginform", "include/loginAfter");
             			/*쿠키갱신*/
             			
         			}else {
         				request.setAttribute("errorMsg", "로그인에 실패했습니다...");
-        				request.setAttribute("loginform", "include/loginForm");
         			}
-        		}else {
-        			request.setAttribute("loginform", "include/loginForm");
         		}
-        	}else {
-        		request.setAttribute("loginform", "include/loginForm");
         	}
-        }else {
-        	request.setAttribute("loginform", "include/loginAfter");
         }
         
         

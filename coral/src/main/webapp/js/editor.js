@@ -1,4 +1,24 @@
-
+function addTag(value){
+	var span = $(document.createElement("span"));
+    var btn = $(document.createElement("button"));
+	span.attr("class","tag_element");
+    btn.attr("class","deleteBtn");
+    $(".tag_form input").before(span);
+    span.append(value);
+    span.append(btn);
+    btn.attr("type","button");
+    btn.html("&#215;");
+    $(".tag_form input").val("");
+    $(".deleteBtn").click(function(){
+    	$(this).parent().remove();
+    });
+}
+if($(".tag_form input").val()!=""){
+	var array = $(".tag_form input").val().split(" ");
+	for(i=0;i<array.length;i++){
+		addTag(array[i]);
+	}
+}
 $(".tag_form").click(function(){
 			$(".tag_form input").focus();
 });
@@ -6,19 +26,13 @@ $(".tag_form input").keydown(function (key) {
 	if(key.keyCode == 13 || key.keyCode == 188){
 		if($(".tag_form input").val()!=""){
 			key.preventDefault();
-		    var span = document.createElement("span");
-		    var btn = document.createElement("button");
-		    btn.innerHTML="&#215;";
-		    span.innerHTML=$(".tag_form input").val();
-		    $(".tag_form input").before(span);
-		    $(".tag_form span:last").append(btn);
-		    $(".tag_form span:last").attr("class","tag_element");
-		    $(".tag_form span:last button").attr("class","deleteBtn");
-		    $(".tag_form span:last button").attr("type","button");
-		    $(".tag_form input").val("");
-		    $(".deleteBtn").click(function(){
-		    	$(this).parent().remove();
-		    });
+			var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/gi;
+			var array = $(".tag_form input").val().replace(regExp,'').split(" ");
+			for(i=0;i<array.length;i++){
+				if(array[i]!=""){
+					addTag(array[i]);
+				}
+			}
 		}else{
 			alert("태그 이름을 입력해 주세요!");
 		}

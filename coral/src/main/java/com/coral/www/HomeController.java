@@ -32,7 +32,17 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = { RequestMethod.GET, RequestMethod.POST})
 	public String main(HttpServletRequest request) {
+		
+		if(request.getSession().getAttribute("id")!=null) {
+			request.setAttribute("loginform", "include/loginAfter");
+		}else {
+			request.setAttribute("loginform", "include/loginForm");
+		}
 		return "main";
+	}
+	@RequestMapping(value = "/signUp", method = { RequestMethod.GET, RequestMethod.POST})
+	public void signUp(HttpServletRequest request) {
+		request.setAttribute("is", request.getParameter("is")!=null?"":"none");
 	}
 	
 	@RequestMapping("/login")

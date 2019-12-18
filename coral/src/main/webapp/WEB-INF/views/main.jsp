@@ -46,13 +46,12 @@
 	</div>
 	<div class="user_sub">
 			<div class="login">
-				<jsp:include page="${loginform }.jsp" ></jsp:include>
+				<jsp:include page="${contextPath }${loginform }.jsp" ></jsp:include>
 			</div>
 	</div>
 	<div class="feed_sub">
 		<div class="feed_sub_main">
-		<br/>
-		　　<a class="calendar" width="500" data-header=true schedule="${ pre_schedule}"></a>
+		<a href="/signUp">sdasddasdd</a>
 		</div>
 		<div class="feed_sub_side">
 			<div id="side1">
