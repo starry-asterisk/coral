@@ -4,6 +4,8 @@ package com.coral.www;
 
 
 import java.io.UnsupportedEncodingException;
+import java.util.Enumeration;
+
 import javax.inject.Inject;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +45,18 @@ public class HomeController {
 	@RequestMapping(value = "/signUp", method = { RequestMethod.GET, RequestMethod.POST})
 	public void signUp(HttpServletRequest request) {
 		request.setAttribute("is", request.getParameter("is")!=null?"":"none");
+	}
+	
+	@RequestMapping(value = "/signUpComplete", method = { RequestMethod.GET, RequestMethod.POST})
+	public void signUpComplete(HttpServletRequest request) throws UnsupportedEncodingException {
+		request.setCharacterEncoding("UTF-8");
+		Enumeration params = request.getParameterNames();
+		System.out.println("----------------------------");
+		while (params.hasMoreElements()){
+		    String name = (String)params.nextElement();
+		    System.out.println(name + " : " +request.getParameter(name));
+		}
+		System.out.println("----------------------------");
 	}
 	
 	@RequestMapping("/login")

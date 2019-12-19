@@ -1,7 +1,25 @@
 /**
  * 
  */
-
+function mkForm(action, method){
+		var form = $(document.createElement("form"));
+		$('body').append(form);
+		form.attr("method",method);
+		form.attr("action",action);
+		return {
+			submit:function(){
+				form.submit();
+			},
+			addValue:function(name,value){
+				var input = $(document.createElement("input"));
+				input.attr("type","hidden");
+				input.attr("name",name);
+				input.val(value);
+				form.append(input);
+			}
+			
+		}
+	}
 
 $(document).ready(function(){
 	$(window).scroll(function(){

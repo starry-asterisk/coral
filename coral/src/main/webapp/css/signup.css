@@ -1,0 +1,71 @@
+
+.form {
+	width: 60%;
+	min-height: 800px;
+	position:relative;
+	left:20%;
+	text-align: center;
+	background: white;
+	border: 1px solid;
+}
+
+.form * {
+	height: 2.5rem;
+	line-height: 2.5rem;
+	vertical-align: middle;
+}
+
+.form select{
+	width:30%;
+}
+.form select+input, .form select+input+input{
+	width:30%;
+}
+.form tr:nth-child(9) input:first-child{
+	width:40%;
+}
+.form tr:nth-child(10) input{
+	width:100%;
+}
+.form tr:nth-child(11) input{
+	width:100%;
+}
+.form input[name="email_front"], .form input[name="email_behind"]{
+	width:40%;
+}
+
+.form table {
+	width: 70%;
+	position: relative;
+	left:50%;
+	transform:translate(-50%);
+}
+
+.form table td {
+	height: 4rem;
+}
+.form table td:first-child{
+	width: 30%;
+	padding-right:4%;
+	text-align: right;
+}
+.form table td:nth-child(2){
+	width: 44%;
+	text-align: left;
+}
+.form table td:nth-child(3){
+	width: 22%;
+	text-align: right;
+}
+.form input {
+	height: 3rem;
+	margin: 0;
+}
+
+.form input:not([type="checkbox"]), .form select {
+	border: 1px solid #777;
+	border-radius: 0.3rem;
+	background: #ddd;
+	box-shadow: 0 0 13px 3px rgba(0, 0, 0, 0.1) inset;
+	outline: white solid 1px;
+}

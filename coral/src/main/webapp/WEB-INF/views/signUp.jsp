@@ -21,7 +21,8 @@
 	href="${contextPath}/css/default.css" />
 <link rel="stylesheet" type="text/css"
 	href="${contextPath}/css/Editor.css" />
-
+<link rel="stylesheet" type="text/css"
+	href="${contextPath}/css/signup.css" />
 <head>
 <meta charset="UTF-8">
 <title>Coral - 목록</title>
@@ -38,102 +39,105 @@
 			<table>
 				<tr>
 					<td>아이디</td>
-					<td><input type="text" maxlength="20" minlength="8" name="id">
-					</td>
+					<td><input autocomplete="off" type="text" maxlength="20" minlength="8" name="id" >
+					</td><td></td>
 				</tr>
 				<tr>
 					<td>비밀번호</td>
-					<td><input type="password" maxlength="25" minlength="8"
-						name="password"></td>
+					<td><input autocomplete="off" type="password" maxlength="25" minlength="8"
+						name="password"  autocomplete="nope"></td><td></td>
 				</tr>
 				<tr>
 					<td>비밀번호 재입력</td>
 					<td><input type="password" maxlength="25" minlength="8"
-						name="passwordRe"></td>
+						name="passwordRe"></td><td></td>
 				</tr>
 				<tr>
 					<td>성명</td>
 					<td><input type="text" maxlength="5" minlength="2" name="name">
-					</td>
+					</td><td></td>
 				</tr>
 				<tr>
 					<td>생년월일</td>
-					<td><input type="date" name="birth"></td>
+					<td><input type="date" name="birth"></td><td></td>
 				</tr>
 				<tr>
 					<td>성별</td>
 					<td><select name="gender">
 							<option hidden selected>----</option>
-							<option>남자</option>
-							<option>여자</option>
-							<option>기타</option>
-					</select></td>
+							<option value="ma">남자</option>
+							<option value="fe">여자</option>
+							<option value="et">기타</option>
+					</select></td><td></td>
 				</tr>
 				<tr>
 					<td>핸드폰 번호</td>
 					<td><select name="phone_front">
 							<option hidden selected>----</option>
-							<option>010</option>
-							<option>011</option>
-							<option>016</option>
-							<option>017</option>
-							<option>019</option>
-					</select>-<input type="text" maxlength="4" minlength="4" name="phone_middle">-<input
-						type="text" maxlength="4" minlength="4" name="phone_behind">
-					</td>
+							<option value="010">010</option>
+							<option value="011">011</option>
+							<option value="016">016</option>
+							<option value="017">017</option>
+							<option value="019">019</option>
+					</select> - <input type="text" maxlength="4" minlength="4" name="phone_middle"> - 
+					<input type="text" maxlength="4" minlength="4" name="phone_behind">
+					</td><td></td>
 				</tr>
 				<tr style="display:${is}">
 					<td>회사 명</td>
 					<td><input type="text" maxlength="50" minlength="1"
-						name="company_name"></td>
+						name="company_name"></td><td></td>
 				</tr>
 				<tr style="display:${is}">
-					<td>회사 주소</td>
-					<td><input type="text" readonly name="address" value=""
-						></td>
+					<td>회사 우편 번호</td>
+					<td><input type="text" readonly name="zipcode" value=""> 
+					<button type="button" onclick="execDaumPostcode()">찾기</button></td><td></td>
+				</tr>
+				<tr style="display:${is}">
+					<td>회사 기본 주소</td>
+					<td><input type="text" readonly name="address" value=""></td><td></td>
 				</tr>
 				<tr style="display:${is}">
 					<td>회사 주소 상세</td>
 					<td><input type="text" maxlength="50" minlength="0"
-						name="address_detail" value=""></td>
+						name="address_detail" value=""></td><td></td>
 				</tr>
 				<tr style="display:${is}">
 					<td>회사 연락처</td>
 					<td><select name="tel_front">
 							<option hidden selected>----</option>
-							<option>02</option>
-							<option>031</option>
-							<option>032</option>
-							<option>033</option>
-							<option>041</option>
-							<option>043</option>
-							<option>042</option>
-							<option>044</option>
-							<option>051</option>
-							<option>052</option>
-							<option>053</option>
-							<option>054</option>
-							<option>055</option>
-							<option>061</option>
-							<option>062</option>
-							<option>063</option>
-							<option>064</option>
-							<option>070</option>
-					</select>-<input type="text" maxlength="4"
-						minlength="3" name="tel_middle">-<input
+							<option value="02">02</option>
+							<option value="031">031</option>
+							<option value="032">032</option>
+							<option value="033">033</option>
+							<option value="041">041</option>
+							<option value="043">043</option>
+							<option value="042">042</option>
+							<option value="044">044</option>
+							<option value="051">051</option>
+							<option value="052">052</option>
+							<option value="053">053</option>
+							<option value="054">054</option>
+							<option value="055">055</option>
+							<option value="061">061</option>
+							<option value="062">062</option>
+							<option value="063">063</option>
+							<option value="064">064</option>
+							<option value="070">070</option>
+					</select> - <input type="text" maxlength="4" minlength="3" name="tel_middle"> - <input
 						 type="text" maxlength="4" minlength="4"
-						name="tel_behind"></td>
+						name="tel_behind"></td><td></td>
 				</tr>
 				<tr>
 					<td>이메일 주소</td>
 					<td><input type="text" maxlength="40" minlength="1"
 						name="email_front">@<input type="text" maxlength="40"
-						minlength="1" name="email_behind"></td>
+						minlength="1" name="email_behind"></td><td></td>
 				</tr>
 				<tr>
 					<td>개인정보 제공 동의</td>
-					<td>동의합니다<input type="checkbox" value=true name="agree">
-					</td>
+					<td>동의합니다<input type="checkbox" value=true name="agreement">
+					</td><td></td>
 				</tr>
 				<tr>
 					<td></td>
@@ -152,84 +156,97 @@
 
 
 </body>
-<style>
-.form {
-	width: 60%;
-	min-height: 800px;
-	position:relative;
-	left:20%;
-	text-align: center;
-	background: white;
-	border: 1px solid;
-}
 
-.form * {
-	height: 2.5rem;
-	line-height: 2.5rem;
-	vertical-align: middle;
-}
+<!-- 외부 js -->
+<script
+	src="https://cdn.ckeditor.com/ckeditor5/15.0.0/classic/ckeditor.js"></script>
 
-.form table {
-	width: 70%;
-	position: relative;
-	left:50%;
-	transform:translate(-50%);
-}
-
-.form table td {
-	height: 4rem;
-}
-.form table td:first-child{
-	width: 30%;
-	padding-right:3%;
-	text-align: right;
-}
-.form table td:not(:first-child){
-	width: 67%;
-	text-align: left;
-}
-.form input {
-	height: 3rem;
-	margin: 0;
-}
-
-.form input:not([type="chekcbox"] ), .form select {
-	border: 1px solid;
-	border-radius: 0.3rem;
-	background: grey;
-}
-</style>
+<!-- 내부 js -->
+<script src="${contextPath}/js/web-functions.js" type="text/javascript"
+	charset="utf-8"></script>
+	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
+function execDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var addr = ''; // 주소 변수
+            var extraAddr = ''; // 참고항목 변수
+
+            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                addr = data.roadAddress;
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                addr = data.jibunAddress;
+            }
+
+            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+            if(data.userSelectedType === 'R'){
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraAddr !== ''){
+                    extraAddr = ' (' + extraAddr + ')';
+                }
+                // 조합된 참고항목을 해당 필드에 넣는다.
+                $("input[name=address]").val(extraAddr);
+            
+            } else {
+            	$("input[name=address]").val('');
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            $('input[name=zipcode]').val(data.zonecode);
+            $("input[name=address]").val(addr);
+            // 커서를 상세주소 필드로 이동한다.
+            $("input[name=address_detail]").focus();
+        }
+    }).open();
+}
 $(".reset").on("click",function(){
 	location.href='<%=(request.getHeader("referer") == null
 					? "https://www.coralprogram.com"
 					: request.getHeader("referer"))%>';
 					});
 	$(".submit").on("click", function() {
-		var form = $(document.createElement("form"));
-		var value = new Object();
+		
+		
 		if ($(".form input, .form select").hasClass("pass")) {
-			alert("지나가시게 젊은이");
+			var form = mkForm("/signUpComplete","post");
+			form.addValue('id',$('input[name=id]').val());
+			form.addValue('pw',$('input[name=password]').val());
+			form.addValue('name',$('input[name=name]').val());
+			form.addValue('birth',$('input[name=birth]').val());
+			form.addValue('gender',$('select[name=gender] option:not([hidden]):selected').val());
+			form.addValue(
+					'phone',
+					$('select[name=phone_front] option:not([hidden]):selected').val()+
+					"-"+$('input[name=phone_middle]').val()+
+					"-"+$('input[name=phone_behind]').val()
+			);
+			form.addValue('address',$('input[name=zipcode]').val()+"/"+$('input[name=address]').val()+"/"+$('input[name=address_detail]').val());
+			form.addValue('tel',$('select[name=tel_front] option:not([hidden]):selected').val()+"-"+$('input[name=tel_middle]').val()+"-"+$('input[name=tel_behind]').val());
+			form.addValue('name',$('input[name=name]').val());
+			form.addValue('company',$('input[name=company_name]').val());
+			form.addValue('mail',$('input[name=email_front]').val()+"@"+$('input[name=email_behind]').val());
+			
+			form.submit();
 		} else {
 			alert("입구컷");
 		}
-		value.id = $("input[name='id']").val();
-		value.password = $("input[name='password']").val();
-		value.passwordRe = $("input[name='passwordRe']").val();
-		value.name = $("input[name='name']").val();
-		value.gender = $("select[name='gender']").val();
-		value.phone_front = $("select[name='phone_front']").val();
-		value.phone_middle = $("input[name='phone_middle']").val();
-		value.phone_behind = $("input[name='phone_behind']").val();
-		value.address = $("input[name='address']").val();
-		value.address_detail = $("input[name='address_detail']").val();
-		value.company_name = $("input[name='company_name']").val();
-		value.tel_front = $("select[name='tel_front']").val();
-		value.tel_middle = $("input[name='tel_middle']").val();
-		value.tel_behind = $("input[name='tel_behind']").val();
-		value.agree = $("input[name='agree']").val();
-		console.log(value);
+		
 	});
+	
 	var check = new Object;
 	check.mail = /^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/;
 	check.URL = /^(file|gopher|news|nntp|telnet|https?|ftps?|sftp):\/\/([a-z0-9-]+\.)+[a-z0-9]{2,4}.*$/;
@@ -238,44 +255,76 @@ $(".reset").on("click",function(){
 	check.tail = /([^\s]+(?=\.(jpg|gif|png))\.\2)/;
 	check.id = /(?=.*\d)(?=.*[a-zA-Z]).{8,15}/;
 	check.name = /[가-힣]{1,5}/;
-	$("input[name='name']").focusout(function() {
-		if (check.name.test($(this).val())) {
-			$(this).addClass("pass");
-		} else {
-			alert("영 안좋은 이름이야");
-			$(this).val("");
-		}
-	});
-	$("input[name='id']").focusout(function() {
-		if (check.id.test($(this).val())) {
-			$(this).addClass("pass");
-		} else {
-			alert("영 안좋은 아이디이야");
-			$(this).val("");
-		}
-	});
-	$("input[name='password']").focusout(function() {
-		if (check.id.test($(this).val())) {
-			$(this).addClass("pass");
-		} else {
-			alert("이 비밀번호 난 반대 일세");
-			$(this).val("");
-		}
-	});
-	$("input[name='passwordRe']").focusout(function() {
-		if ($(this).val() == $("input[name='password']").val()) {
-			$(this).addClass("pass");
-		} else {
-			alert("서로 맞닿지 아니하며");
-			$(this).val("");
+	
+	$(".form input, .form select").focusout(function(){
+		$(this).removeClass("pass");
+		switch($(this).attr("name")){
+			case 'id':
+				if(check.id.test($(this).val())){
+					$(this).addClass("pass");
+				}
+				break;
+			case 'password':
+				if(check.id.test($(this).val())){
+					$(this).addClass("pass");
+				}
+				break;
+			case 'passwordRe':
+				if(check.id.test($(this).val())){
+					if($(this).val()==$("input[name=password]").val()){
+						$(this).addClass("pass");
+					}
+				}
+				break;
+			case 'name':
+				if(check.name.test($(this).val())){
+					$(this).addClass("pass");
+				}
+				break;
+			case 'birth':
+				if($(this).val()!=""){
+					$(this).addClass("pass");
+				}
+				break;
+			case 'gender':
+				if($(this).children("option:not([hidden]):selected").val()!=undefined){
+					$(this).addClass("pass");
+				}
+				break;
+			case 'phone_front':
+				if($(this).children("option:not([hidden]):selected").val()!=undefined){
+					$(this).addClass("pass");
+				}
+				break;
+			case 'phone_middle':
+				if($(this).val()!=""){
+					$(this).addClass("pass");
+				}
+				break;
+			case 'phone_behind':
+				if($(this).val()!=""){
+					$(this).addClass("pass");
+				}
+				break;
+			case 'email_front':
+				if(check.mail.test($(this).val()+"@coralprogram.com")){
+					$(this).addClass("pass");
+				}
+				break;
+			case 'email_behind':
+				if(check.mail.test("test001@"+$(this).val())){
+					$(this).addClass("pass");
+				}
+				break;
+			case 'agreement':
+				if($(this).is(":checked")){
+					$(this).addClass("pass");
+				}
+				break;
+			default:
+				$(this).addClass("pass");
+				break;
 		}
 	});
 </script>
-<!-- 외부 js -->
-<script
-	src="https://cdn.ckeditor.com/ckeditor5/15.0.0/classic/ckeditor.js"></script>
-
-<!-- 내부 js -->
-<script src="${contextPath}/js/web-functions.js" type="text/javascript"
-	charset="utf-8"></script>
 </html>
