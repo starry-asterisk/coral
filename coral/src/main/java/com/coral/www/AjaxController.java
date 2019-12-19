@@ -1,5 +1,7 @@
 package com.coral.www;
 
+import javax.inject.Inject;
+
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.coral.www.User.UserService;
 import com.coral.www.application.JTester;
 
 @Controller
@@ -37,5 +40,12 @@ public class AjaxController {
 		returnObj.put("result",result);
 		returnObj.put("success", true);
 		return returnObj.toJSONString();
+	}
+	@Inject
+	UserService service;
+	@ResponseBody
+	@RequestMapping(value = "/idExit", method = RequestMethod.POST, produces="application/text;charset=utf-8")
+	public String idExit(@RequestParam("id")String id) {
+		return service.isId(id)+"";
 	}
 }

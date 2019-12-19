@@ -44,5 +44,10 @@ public class UserServiceImpl implements UserService {
 		}
 		return dto;
 	}
+	public boolean isId(String id) {
+		UserDTO dto = new UserDTO();
+		dto.setId(id);
+		return dao.isId(dto);
+	}
 
 }

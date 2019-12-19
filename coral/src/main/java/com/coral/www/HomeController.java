@@ -4,7 +4,6 @@ package com.coral.www;
 
 
 import java.io.UnsupportedEncodingException;
-import java.util.Enumeration;
 
 import javax.inject.Inject;
 import javax.servlet.http.Cookie;
@@ -43,20 +42,28 @@ public class HomeController {
 		return "main";
 	}
 	@RequestMapping(value = "/signUp", method = { RequestMethod.GET, RequestMethod.POST})
-	public void signUp(HttpServletRequest request) {
-		request.setAttribute("is", request.getParameter("is")!=null?"":"none");
+	public String signUp(HttpServletRequest request) {
+		String page;
+		switch(request.getParameter("grade")){
+			case "student":
+				request.setAttribute("is", "none");
+				page = "";
+				break;
+			case "teacher":
+				request.setAttribute("is", "");
+				page = "";
+				break;
+			default:
+				page = "redirect:/error?errorcode=405";
+				break;
+				
+		}
+		return page;
 	}
 	
-	@RequestMapping(value = "/signUpComplete", method = { RequestMethod.GET, RequestMethod.POST})
-	public void signUpComplete(HttpServletRequest request) throws UnsupportedEncodingException {
-		request.setCharacterEncoding("UTF-8");
-		Enumeration params = request.getParameterNames();
-		System.out.println("----------------------------");
-		while (params.hasMoreElements()){
-		    String name = (String)params.nextElement();
-		    System.out.println(name + " : " +request.getParameter(name));
-		}
-		System.out.println("----------------------------");
+	@RequestMapping(value = "/signUpComplete", method = { RequestMethod.GET, RequestMethod.POST}, produces="application/text;charset=utf-8")
+	public void signUpComplete(UserDTO dto) throws UnsupportedEncodingException {
+		System.out.print(dto.toString());
 	}
 	
 	@RequestMapping("/login")

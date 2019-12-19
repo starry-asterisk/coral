@@ -6,21 +6,22 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDTO {
+public class UserDTO{
 	private String id;
 	private String pw;
 	private String name;
-	@DateTimeFormat(pattern="yy-MM-dd HH:mm:ss")
-	private Date regdate;
-	@DateTimeFormat(pattern="yy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date birth;
 	private String gender;
 	private String phone;
 	private String address;
 	private String company;
 	private String tel;
-	private String grade;
 	private String mail;
+	
+	@DateTimeFormat(pattern="yy-MM-dd HH:mm:ss")
+	private Date regdate;
+	private String grade;
 	private char privacy;
 	private String status;
 	@DateTimeFormat(pattern="yy-MM-dd HH:mm:ss")
@@ -46,12 +47,6 @@ public class UserDTO {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public Date getRegdate() {
-		return regdate;
-	}
-	public void setRegdate(Date regdate) {
-		this.regdate = regdate;
 	}
 	public Date getBirth() {
 		return birth;
@@ -89,17 +84,23 @@ public class UserDTO {
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
-	public String getGrade() {
-		return grade;
-	}
-	public void setGrade(String grade) {
-		this.grade = grade;
-	}
 	public String getMail() {
 		return mail;
 	}
 	public void setMail(String mail) {
 		this.mail = mail;
+	}
+	public Date getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
+	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
 	}
 	public char getPrivacy() {
 		return privacy;
@@ -143,5 +144,12 @@ public class UserDTO {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-	
+	@Override
+	public String toString() {
+		return "UserDTO [id=" + id + ", pw=" + pw + ", name=" + name + ", birth=" + birth + ", gender=" + gender
+				+ ", phone=" + phone + ", address=" + address + ", company=" + company + ", tel=" + tel + ", mail="
+				+ mail + ", regdate=" + regdate + ", grade=" + grade + ", privacy=" + privacy + ", status=" + status
+				+ ", date=" + date + ", ip=" + ip + ", platform=" + platform + ", login_status=" + login_status
+				+ ", msg=" + msg + "]";
+	}
 }
