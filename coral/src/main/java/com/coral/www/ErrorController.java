@@ -15,7 +15,7 @@ public class ErrorController {
 	
 	
 	@RequestMapping("/error")
-	public String main(HttpServletRequest request) {
+	public String main(HttpServletRequest request) throws Exception{
 		int ErrorCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
 		String msg;
 		switch(ErrorCode){

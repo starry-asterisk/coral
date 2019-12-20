@@ -15,6 +15,9 @@
   	<insert id="insertHistory" parameterType="com.coral.www.User.UserDTO">
   		insert into user_history(uh_uid,uh_ip,uh_platform,uh_status) values(#{id},#{ip},#{platform},#{login_status})
   	</insert>
+  	<insert id="newUser" parameterType="com.coral.www.User.UserDTO">
+  		insert into u(U_ID,U_PW,U_NAME,U_BIRTH,U_GENDER,U_PHONE,U_ADDRESS,U_COMPANY,U_TEL,U_GRADE,U_MAIL,U_PRIVACY) values(#{id},#{pw},#{name},#{birth},#{gender},#{phone},#{address},#{company},#{tel},#{grade},#{mail},#{privacy})
+  	</insert>
   </mapper>
   
   

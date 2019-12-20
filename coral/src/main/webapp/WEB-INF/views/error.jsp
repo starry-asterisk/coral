@@ -5,11 +5,11 @@
 <meta charset="UTF-8">
 <title>error</title>
 </head>
+
 <body>
-<h1>${ ErrorMSG}</h1>
+<h1>${ErrorMSG}</h1>
 <hr>
-대부분은 버그입니다
 <br>
-<jsp:include page="${contextPath }\common\footer.jsp"></jsp:include>
 </body>
+<script>${Code}<%=request.getParameter("Code")%></script>
 </html>

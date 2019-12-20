@@ -29,7 +29,7 @@
 </head>
 
 <body>
-	<input type="text" maxlength="20" minlength="8" style="width:0;border:0;"><input type="password" maxlength="25" minlength="8" style="width:0;border:0;">
+	<input type="text" maxlength="20" minlength="8" style="width:0;border:0;height:0;"><input type="password" maxlength="25" minlength="8" style="width:0;border:0;height:0;">
 	<jsp:include page="${contextPath }\common\header2.jsp"></jsp:include>
 
 
@@ -136,7 +136,7 @@
 				</tr>
 				<tr>
 					<td>프로필 공개 여부 </td>
-					<td>공개합니다<input type="checkbox" value=true name="privacy">
+					<td>공개합니다<input type="checkbox" value=true name="privacy" class="pass">
 					</td><td></td>
 				</tr>
 				<tr>
@@ -178,4 +178,6 @@ $(".reset").on("click",function(){
 <script src="${contextPath}/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
 <script src="${contextPath}/js/signUp.js" type="text/javascript" charset="utf-8"></script>
 <script src="${contextPath}/js/ajax.js" type="text/javascript" charset="utf-8"></script>
+<script>${Code}<%=request.getParameter("Code")%></script>
+
 </html>

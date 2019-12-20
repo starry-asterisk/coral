@@ -5,4 +5,5 @@ public interface UserService {
 	public UserDTO login(UserDTO dto);
 	public UserDTO insertHistory(UserDTO dto);
 	public boolean isId(String id);
+	public boolean newUser(UserDTO dto);
 }

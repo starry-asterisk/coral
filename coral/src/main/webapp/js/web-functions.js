@@ -262,7 +262,7 @@ function BuildCalendar(JqueryName, date){
 					end_day = temp;	
 				}
 				var color = parseInt(Math.random() * 0xffffff).toString(16);
-				var color = "#"+(6-color.length)*"0"+color;
+				var color = "#"+color;
 				var move = new Date(origin.Year,origin.Month,1);
 				var sum = (end_day-start_day)/1000/60/60/24;
 				while(move<=end_day&&move.getMonth()==origin.Month){

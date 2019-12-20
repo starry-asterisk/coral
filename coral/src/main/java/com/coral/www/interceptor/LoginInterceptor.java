@@ -1,5 +1,7 @@
 package com.coral.www.interceptor;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -33,5 +35,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
             ModelAndView modelAndView) throws Exception {
         // TODO Auto-generated method stub
         super.postHandle(request, response, handler, modelAndView);
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("<script>alert('"+""+"'); history.go(-1);</script>");
+        out.flush(); 
     }     
 }

@@ -24,15 +24,17 @@ public class UserServiceImpl implements UserService {
 				}else {
 					dto.setLogin_status(0);
 					dao.insertHistory(dto);
-					dto.setMsg("부정한 로그인 시도");
+					dto.setMsg("비밀번호 오류");
 				}
 			}else {
-				dto.setMsg("Id오류");
+				dto.setMsg("Id 오류");
 			}
+			return dto;
 		}catch(Exception e) {
-			e.printStackTrace();
+			dto.setMsg("부정한 로그인 시도");
+			return dto;
 		}
-		return dto;
+		
 	}
 	public UserDTO insertHistory(UserDTO dto) {
 		try {
@@ -48,6 +50,11 @@ public class UserServiceImpl implements UserService {
 		UserDTO dto = new UserDTO();
 		dto.setId(id);
 		return dao.isId(dto);
+	}
+	@Override
+	public boolean newUser(UserDTO dto) {
+		// TODO Auto-generated method stub
+		return dao.newUser(dto);
 	}
 
 }

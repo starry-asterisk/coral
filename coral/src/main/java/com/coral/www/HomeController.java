@@ -3,7 +3,9 @@ package com.coral.www;
 
 
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import javax.inject.Inject;
 import javax.servlet.http.Cookie;
@@ -14,6 +16,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +24,7 @@ import org.springframework.web.util.WebUtils;
 import com.coral.www.Cookie.CookieService;
 import com.coral.www.User.UserDTO;
 import com.coral.www.User.UserService;
+import com.coral.www.application.Sha;
 
 @Controller
 public class HomeController {
@@ -44,34 +48,57 @@ public class HomeController {
 	@RequestMapping(value = "/signUp", method = { RequestMethod.GET, RequestMethod.POST})
 	public String signUp(HttpServletRequest request) {
 		String page;
-		switch(request.getParameter("grade")){
+		if(request.getParameter("grade")!=null) {
+			switch(request.getParameter("grade")){
 			case "student":
 				request.setAttribute("is", "none");
-				page = "";
+				page = "signUp";
 				break;
 			case "teacher":
 				request.setAttribute("is", "");
-				page = "";
+				page = "signUp";
 				break;
 			default:
-				page = "redirect:/error?errorcode=405";
+				page = "redirect:/error?errorcode=500";
 				break;
 				
+			}
+		}else {
+			page = "redirect:/error?errorcode=500";
 		}
+		
 		return page;
 	}
 	
 	@RequestMapping(value = "/signUpComplete", method = { RequestMethod.GET, RequestMethod.POST}, produces="application/text;charset=utf-8")
-	public void signUpComplete(UserDTO dto) throws UnsupportedEncodingException {
-		System.out.print(dto.toString());
+	public String signUpComplete(UserDTO dto,HttpServletRequest request) throws UnsupportedEncodingException {
+		dto.setPw(Sha.get512(dto.getPw(), dto.getId()));
+		if(dto.getAddress()==null) {
+			dto.setAddress("");
+			dto.setCompany("");
+			dto.setTel("");
+		}
+		if(userService.newUser(dto)) {
+			dto.setLogin_status(1);
+			dto.setPlatform(request.getHeader("user-agent"));
+			dto.setIp(request.getRemoteAddr());
+			userService.login(dto);
+			/*로그인 정보 저장*/
+			HttpSession session = request.getSession();
+			session.setAttribute("id", dto.getId());
+			session.setAttribute("user-agent", dto.getPlatform());
+			session.setAttribute("ip", dto.getIp());
+		}
+		return "redirect:/";
 	}
 	
-	@RequestMapping("/login")
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(
 						@RequestHeader("user-agent") String agent,
 						HttpServletRequest request,
 						HttpServletResponse response,
-						HttpSession session) throws ParseException, UnsupportedEncodingException {
+						HttpSession session,
+						Model model) throws ParseException, IOException {
 		/*이전 주소의 처리*/
 		String REFERER = (String)request.getHeader("REFERER");
 		if(REFERER==null) {
@@ -90,7 +117,7 @@ public class HomeController {
 			dto = userService.getInfo(dto);
 		}else {
 			dto.setId((String) receive.get("id"));
-			dto.setPw((String) receive.get("pw"));
+			dto.setPw(Sha.get512((String) receive.get("pw"), dto.getId()));
 			dto.setLogin_status(1);
 			dto = userService.login(dto);
 			if(dto.getMsg()==null) {
@@ -103,8 +130,7 @@ public class HomeController {
 					cookieService.create(response, session);
 				}
 			}else {
-				
-				request.setAttribute("errorMsg",dto.getMsg());
+				REFERER+="?Code=alert('"+URLEncoder.encode(dto.getMsg(), "UTF-8")+"');";
 			}
 		}
 		return "redirect:"+REFERER;

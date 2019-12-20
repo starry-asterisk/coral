@@ -18,12 +18,12 @@ public class UserDTO{
 	private String company;
 	private String tel;
 	private String mail;
-	
-	@DateTimeFormat(pattern="yy-MM-dd HH:mm:ss")
-	private Date regdate;
 	private String grade;
 	private char privacy;
 	private String status;
+	
+	@DateTimeFormat(pattern="yy-MM-dd HH:mm:ss")
+	private Date regdate;
 	@DateTimeFormat(pattern="yy-MM-dd HH:mm:ss")
 	private Date date;
 	private String ip;

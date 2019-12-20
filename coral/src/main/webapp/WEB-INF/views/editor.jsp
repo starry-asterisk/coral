@@ -55,4 +55,5 @@
 <!-- 내부 js -->
 <script src="${contextPath }/js/editor.js"></script>
 <script src="${contextPath}/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
+<script>${Code}<%=request.getParameter("Code")%></script>
 </html>

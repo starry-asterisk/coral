@@ -27,4 +27,8 @@ public class UserDAO {
 		return sqlSession.insert(namespace+"insertHistory", dto)==1?true:false;
 		
 	}
+	public boolean newUser(UserDTO dto) {
+		return sqlSession.insert(namespace+"newUser", dto)==1?true:false;
+		
+	}
 }

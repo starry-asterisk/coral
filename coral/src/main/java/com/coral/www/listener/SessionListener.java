@@ -7,6 +7,8 @@ import com.coral.www.User.UserDAO;
 import com.coral.www.User.UserDTO;
 import com.coral.www.application.BeanUtils;
 
+import java.util.UUID;
+
 import javax.servlet.http.*;
 
 
@@ -21,6 +23,7 @@ public class SessionListener implements HttpSessionListener {
 	public void sessionCreated(HttpSessionEvent event) {
 		HttpSession session = event.getSession();
 		System.out.println(session.getId()+" :세션 생성됨");
+		session.setAttribute("uuid", UUID.randomUUID().toString());
 	}
 	
 	@Override

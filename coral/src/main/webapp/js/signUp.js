@@ -83,7 +83,7 @@ $(function(){
 				form.addValue('grade','교사');
 			}
 			form.addValue('mail',$('input[name=email_front]').val()+"@"+$('input[name=email_behind]').val());
-			form.addValue('privacy',$("input[name=privacy]").is(":checked")?'Y':'N');
+			form.addValue('privacy',$("input[name=privacy]").is(":checked")?'O':'X');
 			
 			
 			form.submit();
