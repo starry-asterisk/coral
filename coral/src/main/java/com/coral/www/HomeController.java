@@ -45,7 +45,7 @@ public class HomeController {
 		}
 		return "main";
 	}
-	@RequestMapping(value = "/signUp", method = { RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/signUp", method = { RequestMethod.GET })
 	public String signUp(HttpServletRequest request) {
 		String page;
 		if(request.getParameter("grade")!=null) {
@@ -70,9 +70,9 @@ public class HomeController {
 		return page;
 	}
 	
-	@RequestMapping(value = "/signUpComplete", method = { RequestMethod.GET, RequestMethod.POST}, produces="application/text;charset=utf-8")
+	@RequestMapping(value = "/signUp", method = {RequestMethod.POST}, produces="application/text;charset=utf-8")
 	public String signUpComplete(UserDTO dto,HttpServletRequest request) throws UnsupportedEncodingException {
-		dto.setPw(Sha.get512(dto.getPw(), dto.getId()));
+		dto.setPw(Sha.get256(dto.getPw(), dto.getId()));
 		if(dto.getAddress()==null) {
 			dto.setAddress("");
 			dto.setCompany("");
@@ -105,6 +105,9 @@ public class HomeController {
 			REFERER = "/";
 		}else {
 			REFERER = REFERER.replaceAll("http://www.coralprogram.com", "");
+			if(REFERER.contains("?")) {
+				REFERER = REFERER.split("\\?")[0];
+			}
 		}
 		JSONParser p = new JSONParser();
 		UserDTO dto = new UserDTO();
@@ -112,12 +115,9 @@ public class HomeController {
 		JSONObject receive = (request.getParameter("json")!=null)?(JSONObject) p.parse(request.getParameter("json")):new JSONObject();
 		dto.setIp(request.getRemoteAddr());
 		dto.setPlatform(agent);
-		if(session.getAttribute("id")!=null){
-			dto.setId((String) session.getAttribute("id"));
-			dto = userService.getInfo(dto);
-		}else {
+		if(session.getAttribute("id")==null) {
 			dto.setId((String) receive.get("id"));
-			dto.setPw(Sha.get512((String) receive.get("pw"), dto.getId()));
+			dto.setPw(Sha.get256((String) receive.get("pw"), dto.getId()));
 			dto.setLogin_status(1);
 			dto = userService.login(dto);
 			if(dto.getMsg()==null) {
@@ -132,6 +132,8 @@ public class HomeController {
 			}else {
 				REFERER+="?Code=alert('"+URLEncoder.encode(dto.getMsg(), "UTF-8")+"');";
 			}
+		}else {
+			REFERER+="?Code=alert('"+URLEncoder.encode("이미 로그인중 입니다", "UTF-8")+"');";
 		}
 		return "redirect:"+REFERER;
 	}

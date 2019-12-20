@@ -1,7 +1,8 @@
 package com.coral.www.interceptor;
 
-import java.io.PrintWriter;
+
 import java.net.URLDecoder;
+
 import javax.inject.Inject;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,7 @@ import com.coral.www.Cookie.CookieService;
 import com.coral.www.User.UserDTO;
 import com.coral.www.User.UserService;
 
-public class LoginStatusInterceptor extends HandlerInterceptorAdapter{
+public class CookieLoginInterceptor extends HandlerInterceptorAdapter{
 	
     // preHandle() : 컨트롤러보다 먼저 수행되는 메서드
 	@Inject
@@ -30,14 +31,6 @@ public class LoginStatusInterceptor extends HandlerInterceptorAdapter{
             throws Exception {
     	/*선언*/
     	HttpSession session = request.getSession();
-    	String msg = (String)request.getAttribute("errorMsg");
-    	/*에러메시지 띄우기*/
-        if(msg!=null) {
-        	PrintWriter printwriter = response.getWriter();
-            printwriter.print("<script>alert('"+msg+"');</script>");
-            printwriter.flush();
-            printwriter.close();
-        }
         /*세션이 null인 경우 작동*/
         if(session.getAttribute("id")==null) {
         	/*쿠키 가져오기*/
@@ -64,7 +57,7 @@ public class LoginStatusInterceptor extends HandlerInterceptorAdapter{
             			/*쿠키갱신*/
             			
         			}else {
-        				request.setAttribute("errorMsg", "로그인에 실패했습니다...");
+        				request.setAttribute("Code", "alert('로그인에 실패했습니다...');");
         			}
         		}
         	}

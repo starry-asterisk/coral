@@ -62,7 +62,7 @@ $(function(){
 			}
 		});
 		if (pass) {
-			var form = mkForm("/signUpComplete","post");
+			var form = mkForm("/signUp","post");
 			form.addValue('id',$('input[name=id]').val());
 			form.addValue('pw',$('input[name=password]').val());
 			form.addValue('name',$('input[name=name]').val());
@@ -78,9 +78,9 @@ $(function(){
 				form.addValue('address',$('input[name=zipcode]').val()+"/"+$('input[name=address]').val()+"/"+$('input[name=address_detail]').val());
 				form.addValue('tel',$('select[name=tel_front] option:not([hidden]):selected').val()+"-"+$('input[name=tel_middle]').val()+"-"+$('input[name=tel_behind]').val());
 				form.addValue('company',$('input[name=company_name]').val());
-				form.addValue('grade','학생');
-			}else{
 				form.addValue('grade','교사');
+			}else{
+				form.addValue('grade','학생');
 			}
 			form.addValue('mail',$('input[name=email_front]').val()+"@"+$('input[name=email_behind]').val());
 			form.addValue('privacy',$("input[name=privacy]").is(":checked")?'O':'X');
@@ -108,7 +108,7 @@ $(function(){
 		switch($(this).attr("name")){
 			case 'id':
 				if(check.id.test($(this).val())){
-					if(idExit($(this).val())){
+					if(idExit($(this).val())=='true'){
 						$(this).addClass("pass");
 						msg = "<span style='color:green'>정상!</span>";
 					}else{

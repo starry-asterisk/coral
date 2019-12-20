@@ -29,10 +29,9 @@
 </head>
 
 <body>
-	<input type="text" maxlength="20" minlength="8" style="width:0;border:0;height:0;"><input type="password" maxlength="25" minlength="8" style="width:0;border:0;height:0;">
 	<jsp:include page="${contextPath }\common\header2.jsp"></jsp:include>
 
-
+	<input type="text" maxlength="20" minlength="8" style="position: absolute;"><input type="password" maxlength="25" minlength="8" style="position: absolute;">
 	<div class="base_">
 		<div class="form">
 			<hr>

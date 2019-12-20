@@ -56,6 +56,13 @@ header {
 	top: 10px;
 	background-color: #323640;
 	box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.2) inset;
+	
+}
+.login *{
+	vertical-align: middle;
+}
+#remember-me{
+	margin:0;
 }
 
 .login div.id, .login div.password{
@@ -89,12 +96,12 @@ header {
 	vertical-align: middle;
 }
 
-.login button#login :active {
+.login button#login:active {
 	box-shadow: 0 0 13px 3px rgba(0, 0, 0, 0.5) inset;
 	outline: white solid 1px;
 }
 
-.login button#login :hover {
+.login button#login:hover {
 	outline: white solid 1px;
 }
 

@@ -42,7 +42,7 @@ $(document).ready(function(){
 					},
 					success : function(obj){
 						var data = JSON.parse(obj);
-						alert("통신데이터 값 : " + data.success);
+						//alert("통신데이터 값 : " + data.success);
 						alert(data.result);
 					}
 				});

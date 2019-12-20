@@ -23,6 +23,7 @@ public class SessionListener implements HttpSessionListener {
 	public void sessionCreated(HttpSessionEvent event) {
 		HttpSession session = event.getSession();
 		System.out.println(session.getId()+" :세션 생성됨");
+		session.setMaxInactiveInterval(3600);
 		session.setAttribute("uuid", UUID.randomUUID().toString());
 	}
 	

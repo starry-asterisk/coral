@@ -46,6 +46,6 @@ public class AjaxController {
 	@ResponseBody
 	@RequestMapping(value = "/idExit", method = RequestMethod.POST, produces="application/text;charset=utf-8")
 	public String idExit(@RequestParam("id")String id) {
-		return service.isId(id)+"";
+		return !service.isId(id)+"";
 	}
 }

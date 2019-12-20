@@ -31,12 +31,12 @@
 	<!-- 인터셉터 객체 생성 -->
 	<beans:bean id="LoginInterceptor" class="com.coral.www.interceptor.LoginInterceptor"/>
 	
-	<beans:bean id="LoginStatusInterceptor" class="com.coral.www.interceptor.LoginStatusInterceptor"/>
+	<beans:bean id="CookieLoginInterceptor" class="com.coral.www.interceptor.CookieLoginInterceptor"/>
 	<!-- Interceptor 설정 -->
 	<interceptors>
     	<interceptor>
         	<mapping path="/"/>         
-        	<beans:ref bean="LoginStatusInterceptor"/>
+        	<beans:ref bean="CookieLoginInterceptor"/>
     	</interceptor>
 	</interceptors>
 	

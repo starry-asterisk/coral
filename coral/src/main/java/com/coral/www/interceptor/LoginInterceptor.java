@@ -19,7 +19,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
     	HttpSession session = request.getSession();
     	Object obj =  session.getAttribute("id");
     	/*생명주기 설정*/
-    	session.setMaxInactiveInterval(5);
+    	session.setMaxInactiveInterval(3600);
         /*로그인 중 인가?*/
         if ( obj == null ){
             response.sendRedirect("/");
@@ -35,9 +35,5 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
             ModelAndView modelAndView) throws Exception {
         // TODO Auto-generated method stub
         super.postHandle(request, response, handler, modelAndView);
-        response.setContentType("text/html; charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        out.println("<script>alert('"+""+"'); history.go(-1);</script>");
-        out.flush(); 
     }     
 }

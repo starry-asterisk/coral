@@ -51,7 +51,6 @@
 	</div>
 	<div class="feed_sub">
 		<div class="feed_sub_main">
-		<a href="/signUp">sdasddasdd</a>
 		</div>
 		<div class="feed_sub_side">
 			<div id="side1">
