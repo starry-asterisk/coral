@@ -21,7 +21,28 @@
 		&#62;
 	</div>
 	<div class="info">
-	사이트소개 | 이용안내 | 이용약관 | 제작인원 소개<br/>
+	사이트소개 | 이용안내 | <button onclick="reciepeDetail();">이용약관</button> | 제작인원 소개<br/>
 	Copyrightⓒ2019 Coral All rights reserved
 	</div>
 </footer>
+
+ <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h4 class="modal-title">이용약관</h4>
+        </div>
+        <div class="modal-body">
+          <p style="text-align:left;word-break:keep-all;">텍스트를 입력하세요.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>

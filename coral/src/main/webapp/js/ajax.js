@@ -23,11 +23,7 @@ $(document).ready(function(){
 		});
 		
 		$("#codeRun").click(function(){
-			if($(".Board_List:nth-child(3)").css("display")=="none"){
-				$(".Board_List:nth-child(1)").css("display","none")
-				$(".Board_List:nth-child(2)").css("display","none")
-				$(".Board_List:nth-child(3)").css("display","")
-			}else{
+			if($(".Board_List:nth-child(3)").css("display")!="none"){
 				var code = editor.getValue();
 				//<ajax> 사용하기
 				$.ajax({
@@ -46,6 +42,8 @@ $(document).ready(function(){
 						alert(data.result);
 					}
 				});
+			}else{
+				$(".Board_List:nth-child(3)").css("display","");
 			}
 		});
 		$("#login").click(function(){

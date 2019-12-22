@@ -139,8 +139,8 @@
 					</td><td></td>
 				</tr>
 				<tr>
-					<td>개인정보 제공 동의</td>
-					<td>동의합니다<input type="checkbox" value=true name="agreement">
+					<td>개인정보 제공 및 이용약관 동의</td>
+					<td>동의합니다<input type="checkbox" value=true name="agreement"><button onclick="reciepeDetail();" style="float:right;">&lt;상세보기</button>
 					</td><td></td>
 				</tr>
 				<tr>
@@ -157,7 +157,6 @@
 
 
 	<jsp:include page="${contextPath }\common\footer.jsp"></jsp:include>
-
 
 </body>
 

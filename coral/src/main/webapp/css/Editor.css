@@ -32,12 +32,20 @@
     margin: 15px 0 15px 0;
     box-shadow: 0 0 25px 5px rgba(60,64,66,0.05);
 	word-wrap: break-word;
-	padding:8px;
+	padding:3px 8px 3px 8px;
 	margin-left:5%;
 	line-height:29px;
 }
+.placeholder{
+	position:absolute;
+	left:50%;
+	margin:0;
+	transform:translate(-50%);
+	
+	color:#757575;
+}
 .tag_form input{
-	width:auto;
+	width:40%;
 }
 .tag_element{
 	background-color:rgba(15,15,15,0.1);

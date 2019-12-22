@@ -25,9 +25,9 @@
 
 <jsp:include page="${contextPath }\common\header1.jsp"></jsp:include>
 
-<button class="main_sub_sideBtn square_btn" id="codeRun" title="실행버튼" style='margin-top:160px'>▷</button>
-<button class="main_sub_sideBtn square_btn" id="Boardlist" title="게시글 목록" style='margin-top:80px'>▷</button>
-<button class="main_sub_sideBtn square_btn" id="memo" title="메모장">▷</button>
+<button class="main_sub_sideBtn square_btn" id="codeRun" title="실행버튼" style='margin-top:160px'>Java</button>
+<button class="main_sub_sideBtn square_btn" id="Boardlist" title="게시글 목록" style='margin-top:80px'>게시글</button>
+<button class="main_sub_sideBtn square_btn" id="memo" title="메모장">Memo</button>
 
 <div class="base_">
 	<div class="main_sub">

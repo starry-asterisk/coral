@@ -27,6 +27,17 @@ header{
 	border-bottom: 1px solid #e1e1ea;
 	margin-bottom: 15px;
 }
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  transition: background-color 5000s ease-in-out 0s;
+}
 .logo{
 	height:100%;
 	width:100%;
@@ -148,11 +159,32 @@ footer{
 .square_btn{
 	height:60px;
 	width:60px;
-	background-color:#161616;
+	background-color:#333;
+	color:#777;
+	text-shadow: 0 0 5px black;
+	transition:color 0.3s,box-shadow 0.3s;
 	border-radius: 5px;
-	opacity:0.5;
-	font-size:2.5em;
+	font-size:1.2em;
 	box-shadow: 0 0 5px 5px rgba(60,64,66,0.2);
+}
+.square_btn:hover{
+	color:#444;
+	box-shadow: 0 0 25px 5px rgba(254,111,94,0.7);
+	transition:color 0.3s,box-shadow 0.3s;
+	
+}
+.square_btn:after{
+	display:none;
+	z-index:10;
+	content:"";
+	width:100%;
+	height:100%;
+	position:absolute;
+	top:0;
+	left:0;
+	border-radius:5px;
+	box-shadow: 0 0 25px 5px rgba(0,0,0,0.7) inset;
+	
 }
 .basic_button {
     margin: 0 15px 15px 15px;
@@ -171,9 +203,8 @@ footer{
     margin: 15px 0 15px 0;
     box-shadow: 0 0 25px 5px rgba(60,64,66,0.05);
 }
-.basic_input:focus{
+.basic_input:focus, .focus{
 	border: 1px solid rgba(254,111,94,0.4);
-    border-radius: 3px;
     box-shadow: 0 0 25px 5px rgba(254,111,94,0.3);
 }
 .calendar {
@@ -184,6 +215,7 @@ footer{
     border-radius:1em;
     box-shadow: 0 0 25px 5px rgba(60,64,66,0.05);
     overflow:hidden;
+    display: inline-table;
     z-index:1;
 }
 .calendar * {

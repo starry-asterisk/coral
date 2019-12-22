@@ -22,6 +22,33 @@ if($(".tag_form input").val()!=""){
 $(".tag_form").click(function(){
 			$(".tag_form input").focus();
 });
+var placeholder = $(".tag_form").attr("placeholder");
+if(placeholder!=undefined&&placeholder!=""){
+	if($(".tag_form span").length=="0"){
+		$(".tag_form").append(document.createElement("a"));
+		$(".tag_form a").addClass("placeholder");
+		$(".tag_form a").html(placeholder);
+		$(".tag_form a").css("padding","0");
+	}
+}
+
+$(".tag_form input").focus(function(){
+	var tag = $(".tag_form");
+	tag.removeClass();
+	tag.addClass("focus tag_form");
+	$(".placeholder").remove();
+});
+$(".tag_form input").focusout(function(){
+	var tag = $(".tag_form");
+	tag.removeClass();
+	tag.addClass("tag_form");
+	if($(".tag_form span").length=="0"){
+		$(".tag_form").append(document.createElement("a"));
+		$(".tag_form a").addClass("placeholder");
+		$(".tag_form a").html(placeholder);
+		$(".tag_form a").css("padding","0");
+	}
+});
 $(".tag_form input").keydown(function (key) {
 	if(key.keyCode == 13 || key.keyCode == 188){
 		if($(".tag_form input").val()!=""){

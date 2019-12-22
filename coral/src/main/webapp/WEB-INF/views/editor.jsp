@@ -13,8 +13,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <!-- 내부 css -->
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/default.css"/>
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/Editor.css"/>
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/default.css"/>
+
 
 <head>
 <meta charset="UTF-8">
@@ -37,7 +38,7 @@
 		<input type="text" class="basic_input" placeholder="카테고리">
 		<input type="text" class="basic_input" placeholder="예약일자">
 		<input type="text" class="basic_input" placeholder="첨부파일">
-		<div class="tag_form"><input type="text" value=""></div>
+		<div class="tag_form" placeholder="태그 입력"><input type="text" value="" maxlength="25" ></div>
 		<button type="button" class="basic_button">발행</button>
 		<button type="button" class="basic_button">임시저장</button>
 	</div>
