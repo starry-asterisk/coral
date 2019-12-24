@@ -79,7 +79,8 @@ public class HomeController {
 			dto.setCompany("");
 			dto.setTel("");
 		}
-		dto.setMail("{verify-"+Sha.get512(dto.getId(), dto.getMail()).substring(0,16)+"}"+dto.getMail());
+		String mail = dto.getMail();
+		dto.setMail("{verify-"+Sha.get512(dto.getId(), dto.getMail()).substring(0,16)+"}"+mail);
 		if(userService.newUser(dto)) {
 			dto.setLogin_status(1);
 			dto.setPlatform(request.getHeader("user-agent"));
@@ -90,7 +91,7 @@ public class HomeController {
 			session.setAttribute("id", dto.getId());
 			session.setAttribute("user-agent", dto.getPlatform());
 			session.setAttribute("ip", dto.getIp());
-			
+			dto.setMail(mail);
 			userService.mail(dto);
 		}
 		return "redirect:/"+"?Code=alert('"+URLEncoder.encode("회원가입이 완료되었습니다. 인증메일이 발송 되었으니 인증을 해주시면 더 많은 서비스 이용이 가능합니다", "UTF-8")+"');";
@@ -144,11 +145,15 @@ public class HomeController {
 	
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse reponse) throws ParseException, UnsupportedEncodingException {
+		/*이전 주소의 처리*/
 		String REFERER = (String)request.getHeader("REFERER");
 		if(REFERER==null) {
 			REFERER = "/";
 		}else {
 			REFERER = REFERER.replaceAll("http://www.coralprogram.com", "");
+			if(REFERER.contains("?")) {
+				REFERER = REFERER.split("\\?")[0];
+			}
 		}
 		HttpSession session = request.getSession();
 		Object obj = session.getAttribute("id");
@@ -171,7 +176,6 @@ public class HomeController {
 		dto.setId(id);
 		dto.setMail(email);
 		dto.setMsg(authkey.substring(0,16));
-		model.addAttribute("isSuccess",userService.mailVerify(dto));
-		return "verified";
+		return "redirect:/"+"?Code=alert('"+URLEncoder.encode("이메일 인증에 "+(userService.mailVerify(dto)?"성공":"실패")+"했습니다!", "UTF-8")+"');";
 	}
 }

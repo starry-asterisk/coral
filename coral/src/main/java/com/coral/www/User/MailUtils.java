@@ -72,7 +72,7 @@ public class MailUtils {
             msg.setSentDate(new Date());
              
             // 이메일 헤더
-            msg.setHeader("content-Type", "text/html");
+            msg.setHeader("content-Type", "text/html; charset=UTF-8");
              
             //메일보내기
             SMTPTransport t=(SMTPTransport)session.getTransport("smtps");
@@ -80,7 +80,6 @@ public class MailUtils {
             t.connect("smtp.gmail.com", "coral15798", "ralco1579*");
             t.sendMessage(msg, msg.getAllRecipients());
             t.close();
-            System.out.println("assad");
              
         }catch (AddressException addr_e) {
             addr_e.printStackTrace();

@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
 		sendMail.setSubject("회원가입 이메일 인증");
 		sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
 				.append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
-				.append("<a href='http://www.coralprogram/emailConfirm?id=")
+				.append("<a href='https://www.coralprogram.com/emailConfirm?id=")
 				.append(dto.getId())
 				.append("&email=")
 				.append(dto.getMail())

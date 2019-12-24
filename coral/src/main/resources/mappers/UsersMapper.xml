@@ -19,7 +19,7 @@
   		select count(*) from USERS WHERE U_MAIL = '{verify-'||#{msg}||'}'||#{mail} and U_ID = #{id}
   	</select>
   	<update id="Verify_success" parameterType="com.coral.www.User.UserDTO">
-  		update USERS SET U_MAI = #{mail}  WHERE U_MAIL = '{verify-'||#{msg}||'}'||#{mail} and U_ID = #{id}
+  		update USERS SET U_MAIL = #{mail}  WHERE U_MAIL = '{verify-'||#{msg}||'}'||#{mail} and U_ID = #{id}
   	</update>
   	<insert id="insertHistory" parameterType="com.coral.www.User.UserDTO">
   		insert into user_history(uh_uid,uh_ip,uh_platform,uh_status) values(#{id},#{ip},#{platform},#{login_status})

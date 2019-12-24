@@ -15,7 +15,7 @@
 	<!-- 오라클 DB와 연동 -->
 	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
 	  <property value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" name="driverClassName" />
-	  <property value="jdbc:log4jdbc:oracle:thin:@192.168.0.216:1521:xe" name="url" />
+	  <property value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe" name="url" />
 <!--  <property value="oracle.jdbc.driver.OracleDriver" name="driverClassName" />
 	  <property value="jdbc:oracle:thin:@192.168.0.216:1521:xe" name="url" />  -->
 	  <!-- 오라클 사용자 이름 -->
@@ -34,20 +34,5 @@
 		<constructor-arg name="sqlSessionFactory"	ref="sqlSessionFactory"/>
 	</bean>
 	
-	<!-- Mail 인증 관련 -->
-<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-	<property name="host" value="smtp.gmail.com" />
-	<property name="port" value="587" />
-	<property name="username" value="실제 관리자 계정" />
-	<property name="password" value="실제 관리자 " />
-	<property name="javaMailProperties">
-		<props>
-			<prop key="mail.transport.protocol">smtp</prop>
-			<prop key="mail.smtp.auth">true</prop>
-			<prop key="mail.smtp.starttls.enable">true</prop>
-			<prop key="mail.debug">true</prop>
-		</props>
-	</property>
-</bean>
 		
 </beans>

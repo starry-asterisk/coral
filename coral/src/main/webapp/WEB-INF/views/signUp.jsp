@@ -63,7 +63,7 @@
 				<tr>
 					<td>성별</td>
 					<td><select name="gender">
-							<option hidden selected>----</option>
+							<option hidden="hidden" selected>----</option>
 							<option value="ma">남자</option>
 							<option value="fe">여자</option>
 							<option value="et">기타</option>
@@ -72,7 +72,7 @@
 				<tr>
 					<td>핸드폰 번호</td>
 					<td><select name="phone_front">
-							<option hidden selected>----</option>
+							<option hidden="hidden" selected>----</option>
 							<option value="010">010</option>
 							<option value="011">011</option>
 							<option value="016">016</option>
@@ -104,7 +104,7 @@
 				<tr style="display:${is}">
 					<td>회사 연락처</td>
 					<td><select name="tel_front">
-							<option hidden selected>----</option>
+							<option hidden="hidden" selected>----</option>
 							<option value="02">02</option>
 							<option value="031">031</option>
 							<option value="032">032</option>
