@@ -13,7 +13,7 @@
 		<tr>
 			<td>${list.no }</td>
 			<td><a href="/board/detail?bno=${list.no }">${list.title }</a></td>
-			<td>${list.id }</td>
+			<td><span>${list.id }</span><button class="report"></button></td>
 			<td>${list.regdate }</td>
 			<td>${list.views }</td>
 		</tr>
@@ -22,3 +22,12 @@
 <c:forEach var= "idx" begin="${Firstpage}" end="${Lastpage}" step="1">
 <a href="/board?page=${idx}"> ${idx} </a>
 </c:forEach>
+<script>
+$(".report").click(function(){
+	var a = [['a0','광고성 글'],['a1','욕설, 비하발언'],['a2','사유3'],['a3','테스입니다'],['a4','오늘은국밥']];
+	var result = report($(this).prev().html(),'이창현',a);
+	$("button.btn.btn-default").on("click",function(){
+		reportSubmit(result.id , result.reason());
+	});
+});
+</script>

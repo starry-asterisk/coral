@@ -34,13 +34,12 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">×</button>
-          <h4 class="modal-title">이용약관</h4>
+          <h4 class="modal-title"></h4>
         </div>
         <div class="modal-body">
-          <p style="text-align:left;word-break:keep-all;">텍스트를 입력하세요.</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal"></button>
         </div>
       </div>
       

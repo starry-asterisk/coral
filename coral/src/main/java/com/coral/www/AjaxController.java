@@ -48,4 +48,10 @@ public class AjaxController {
 	public String idExit(@RequestParam("id")String id) {
 		return !service.isId(id)+"";
 	}
+	@ResponseBody
+	@RequestMapping(value = "/report", method = RequestMethod.POST, produces="application/text;charset=utf-8")
+	public String report(@RequestParam("id")String id,@RequestParam("rscode")String rscode) {
+		System.out.println("\n"+id+"/"+rscode);
+		return true+"";
+	}
 }

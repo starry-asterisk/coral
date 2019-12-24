@@ -88,3 +88,27 @@ function login(){
 	document.body.appendChild(form);
 	form.submit();
 }
+
+function reportSubmit(identifier, reason){
+	if(identifier!=undefined&&identifier!=""){
+		if(reason!=undefined&&reason!=""){
+			$.ajax({
+				// 전송방식을 지정한다(GET, POST)
+				type : "POST",
+				// 호출 URL을 설정한다.
+				// GET 방식일 경우 뒤에 파라미터를 붙여서 사용해도 된다.
+				url : "/ajax/report",
+				data : {"id":identifier,"rscode":reason},  // 전송할 내용(폼태그)
+				async: false,
+				error : function(){
+					alert("통신상태가 완활하지 않습니다");
+				},
+				success : function(obj){
+					alert("신고가 접수되었습니다!");
+				}
+			});
+		}else{
+			alert("사유를 선택해 주세요!");
+		}
+	}
+}
