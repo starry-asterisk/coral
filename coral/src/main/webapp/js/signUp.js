@@ -178,14 +178,32 @@ $(function(){
 				break;
 			case 'email_front':
 				if(check.mail.test($(this).val()+"@coralprogram.com")){
-					$(this).addClass("pass");
+					if($("input[name='email_behind']").val()!=undefined&&$("input[name='email_behind']").val()!=""){
+						if(mailExit($(this).val()+"@"+$("input[name='email_behind']").val())=='true'){
+							$(this).addClass("pass");
+							msg = "<span style='color:green'>정상!</span>";
+						}else{
+							msg = "중복";
+						}
+					}else{
+						$(this).addClass("pass");
+					}
 				}else{
 					msg = "옳바른 이메일 양식이 아닙니다";
 				}
 				break;
 			case 'email_behind':
 				if(check.mail.test("test001@"+$(this).val())){
-					$(this).addClass("pass");
+					if($("input[name='email_front']").val()!=undefined&&$("input[name='email_front']").val()!=""){
+						if(mailExit($("input[name='email_front']").val()+"@"+$(this).val())=='true'){
+							$(this).addClass("pass");
+							msg = "<span style='color:green'>정상!</span>";
+						}else{
+							msg = "중복";
+						}
+					}else{
+						$(this).addClass("pass");
+					}
 				}else{
 					msg = "옳바른 이메일 양식이 아닙니다";
 				}

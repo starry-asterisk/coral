@@ -20,6 +20,10 @@ public class UserDAO {
 		int result = sqlSession.selectOne(namespace+"isId",dto);
 		return result==1?true:false;
 	}
+	public boolean isMail(UserDTO dto) {
+		int result = sqlSession.selectOne(namespace+"isMail",dto);
+		return result==1?true:false;
+	}
 	public UserDTO getInfo(UserDTO dto) {
 		return sqlSession.selectOne(namespace+"getInfo",dto);
 	}
@@ -29,6 +33,14 @@ public class UserDAO {
 	}
 	public boolean newUser(UserDTO dto) {
 		return sqlSession.insert(namespace+"newUser", dto)==1?true:false;
+		
+	}
+	public boolean Verify(UserDTO dto) {
+		int result = sqlSession.selectOne(namespace+"Verify", dto);
+		return result==1?true:false;
+	}
+	public boolean Verify_success(UserDTO dto) {
+		return sqlSession.update(namespace+"Verify_success", dto)==1?true:false;
 		
 	}
 }

@@ -33,5 +33,21 @@
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"	destroy-method="clearCache">
 		<constructor-arg name="sqlSessionFactory"	ref="sqlSessionFactory"/>
 	</bean>
+	
+	<!-- Mail 인증 관련 -->
+<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	<property name="host" value="smtp.gmail.com" />
+	<property name="port" value="587" />
+	<property name="username" value="실제 관리자 계정" />
+	<property name="password" value="실제 관리자 " />
+	<property name="javaMailProperties">
+		<props>
+			<prop key="mail.transport.protocol">smtp</prop>
+			<prop key="mail.smtp.auth">true</prop>
+			<prop key="mail.smtp.starttls.enable">true</prop>
+			<prop key="mail.debug">true</prop>
+		</props>
+	</property>
+</bean>
 		
 </beans>

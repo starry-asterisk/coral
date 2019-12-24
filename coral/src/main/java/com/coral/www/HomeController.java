@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.WebUtils;
 import com.coral.www.Cookie.CookieService;
 import com.coral.www.User.UserDTO;
@@ -71,13 +72,14 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/signUp", method = {RequestMethod.POST}, produces="application/text;charset=utf-8")
-	public String signUpComplete(UserDTO dto,HttpServletRequest request) throws UnsupportedEncodingException {
+	public String signUpComplete(UserDTO dto,HttpServletRequest request) throws Exception {
 		dto.setPw(Sha.get256(dto.getPw(), dto.getId()));
 		if(dto.getAddress()==null) {
 			dto.setAddress("");
 			dto.setCompany("");
 			dto.setTel("");
 		}
+		dto.setMail("{verify-"+Sha.get512(dto.getId(), dto.getMail()).substring(0,16)+"}"+dto.getMail());
 		if(userService.newUser(dto)) {
 			dto.setLogin_status(1);
 			dto.setPlatform(request.getHeader("user-agent"));
@@ -88,8 +90,10 @@ public class HomeController {
 			session.setAttribute("id", dto.getId());
 			session.setAttribute("user-agent", dto.getPlatform());
 			session.setAttribute("ip", dto.getIp());
+			
+			userService.mail(dto);
 		}
-		return "redirect:/";
+		return "redirect:/"+"?Code=alert('"+URLEncoder.encode("회원가입이 완료되었습니다. 인증메일이 발송 되었으니 인증을 해주시면 더 많은 서비스 이용이 가능합니다", "UTF-8")+"');";
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -159,5 +163,15 @@ public class HomeController {
 		}
 		request.setAttribute("loginform", "include/loginForm");
 		return "redirect:"+REFERER;
+	}
+	
+	@RequestMapping("/emailConfirm")
+	public String emailConfirm(Model model, @RequestParam String id, @RequestParam String email, @RequestParam String authkey ) throws Exception{
+		UserDTO dto = new UserDTO();
+		dto.setId(id);
+		dto.setMail(email);
+		dto.setMsg(authkey.substring(0,16));
+		model.addAttribute("isSuccess",userService.mailVerify(dto));
+		return "verified";
 	}
 }

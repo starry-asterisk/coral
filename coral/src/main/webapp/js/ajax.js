@@ -71,6 +71,27 @@ function idExit(id){
 	return answer;
 }
 
+function mailExit(mail){
+	var answer;
+	$.ajax({
+		// 전송방식을 지정한다(GET, POST)
+		type : "POST",
+		// 호출 URL을 설정한다.
+		// GET 방식일 경우 뒤에 파라미터를 붙여서 사용해도 된다.
+		url : "/ajax/mailExit",
+		data : {"mail":mail},  // 전송할 내용(폼태그)
+		async: false,
+		error : function(){
+			alert("통신상태가 완활하지 않습니다");
+		},
+		success : function(obj){
+			answer = obj;
+		}
+	});
+	
+	return answer;
+}
+
 function login(){
 	var ajax = new Object();
 	ajax.id = $("#id").val();
