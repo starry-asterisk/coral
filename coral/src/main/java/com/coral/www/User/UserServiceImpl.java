@@ -1,5 +1,9 @@
 package com.coral.www.User;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -83,19 +87,31 @@ public class UserServiceImpl implements UserService {
 
 		// mail 작성 관련 
 		MailUtils sendMail = new MailUtils();
-
-
+		
+		//파일 객체 생성
+        File file = new File("C:\\coding\\rel\\mailVerification.html");
+        //입력 스트림 생성
+        FileReader filereader = new FileReader(file);
+        //입력 버퍼 생성
+        BufferedReader bufReader = new BufferedReader(filereader);
+        String line;
+        String WLine = "";
+        while((line = bufReader.readLine()) != null){
+        	WLine += line;
+        }
+        //.readLine()은 끝에 개행문자를 읽지 않는다.            
+        bufReader.close();
+        
+        WLine = WLine.replace("[link]","https://www.coralprogram.com/emailConfirm?id="
+				+ dto.getId()
+				+"&email="
+				+dto.getMail()
+				+"&authkey="
+				+authkey
+				);
+        
 		sendMail.setSubject("회원가입 이메일 인증");
-		sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
-				.append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
-				.append("<a href='https://www.coralprogram.com/emailConfirm?id=")
-				.append(dto.getId())
-				.append("&email=")
-				.append(dto.getMail())
-				.append("&authkey=")
-				.append(authkey)
-				.append("' target='_blenk'>이메일 인증 확인</a>")
-				.toString());
+		sendMail.setText(WLine);
 		sendMail.setTo(dto.getMail());
 		sendMail.send();
 	}

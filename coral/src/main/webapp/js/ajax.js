@@ -110,7 +110,7 @@ function login(){
 	form.submit();
 }
 
-function reportSubmit(identifier, reason){
+function reportSubmit(identifier, type, reason){
 	if(identifier!=undefined&&identifier!=""){
 		if(reason!=undefined&&reason!=""){
 			$.ajax({
@@ -119,7 +119,7 @@ function reportSubmit(identifier, reason){
 				// 호출 URL을 설정한다.
 				// GET 방식일 경우 뒤에 파라미터를 붙여서 사용해도 된다.
 				url : "/ajax/report",
-				data : {"id":identifier,"rscode":reason},  // 전송할 내용(폼태그)
+				data : {"id":identifier,"rscode":reason,"type":type},  // 전송할 내용(폼태그)
 				async: false,
 				error : function(){
 					alert("통신상태가 완활하지 않습니다");

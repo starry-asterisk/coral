@@ -58,8 +58,8 @@ public class AjaxController {
 	}
 	@ResponseBody
 	@RequestMapping(value = "/report", method = RequestMethod.POST, produces="application/text;charset=utf-8")
-	public String report(@RequestParam("id")String id,@RequestParam("rscode")String rscode) {
-		System.out.println("\n"+id+"/"+rscode);
+	public String report(@RequestParam("id")String id,@RequestParam("rscode")String rscode,@RequestParam("type")String type) {
+		System.out.println("\n"+id+"/"+type+"/"+rscode);
 		return true+"";
 	}
 }

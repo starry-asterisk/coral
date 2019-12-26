@@ -61,6 +61,8 @@ public class CookieLoginInterceptor extends HandlerInterceptorAdapter{
         			}
         		}
         	}
+        }else {
+        	request.setAttribute("id", session.getAttribute("id"));
         }
         
         

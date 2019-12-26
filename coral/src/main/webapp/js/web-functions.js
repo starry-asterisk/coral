@@ -2,7 +2,7 @@
  * 
  */
 
-function report(identifier, reporter, resons){
+function report(identifier, identifier_type, reporter, resons){
 	$("#myModal").modal();
 	$("button.btn.btn-default").off("click");
 	var body = $(".modal-body");
@@ -26,6 +26,7 @@ function report(identifier, reporter, resons){
 	createSelect(body.children(".custom-select"));
 	return{
 		id:identifier,
+		type:identifier_type,
 		reason:function(){
 			return $('.custom-select select option:selected').val();
 		}

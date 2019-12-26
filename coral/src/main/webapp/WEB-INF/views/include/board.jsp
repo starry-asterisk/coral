@@ -14,7 +14,7 @@
 			<td>${list.no }</td>
 			<td><a href="/board/detail?bno=${list.no }">${list.title }</a></td>
 			<td><span>${list.id }</span><button class="report"></button></td>
-			<td>${list.regdate }</td>
+			<td><fmt:formatDate pattern = "yyyy-MM-dd HH:mm" value = "${list.regdate }" /></td>
 			<td>${list.views }</td>
 		</tr>
 	</c:forEach>
@@ -23,11 +23,16 @@
 <a href="/board?page=${idx}"> ${idx} </a>
 </c:forEach>
 <script>
+var reporter = "${id}";
 $(".report").click(function(){
-	var a = [['a0','광고성 글'],['a1','욕설, 비하발언'],['a2','사유3'],['a3','테스입니다'],['a4','오늘은국밥']];
-	var result = report($(this).prev().html(),'이창현',a);
-	$("button.btn.btn-default").on("click",function(){
-		reportSubmit(result.id , result.reason());
-	});
+	var reanson = [['a0','광고성 글'],['a1','욕설, 비하발언'],['a2','사유3'],['a3','테스입니다'],['a4','오늘은국밥']];
+	if(reporter!=undefined&&reporter!=""){
+		var result = report($(this).prev().html(),"u",reporter,reanson);
+		$("button.btn.btn-default").on("click",function(){
+			reportSubmit(result.id , result.type , result.reason());
+		});
+	}else{
+		alert("로그인 이후에 신고기능을 이용할 수 있습니다.");
+	}
 });
 </script>

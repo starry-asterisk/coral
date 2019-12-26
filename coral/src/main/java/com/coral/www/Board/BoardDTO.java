@@ -5,7 +5,7 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class BoardDTO {
-	private int no;
+	private String no;
 	private String category;
 	private String tag;
 	private String title;
@@ -22,10 +22,10 @@ public class BoardDTO {
 	private int selection;
 	private int amount;
 	private int page;
-	public int getNo() {
+	public String getNo() {
 		return no;
 	}
-	public void setNo(int no) {
+	public void setNo(String no) {
 		this.no = no;
 	}
 	public String getCategory() {
