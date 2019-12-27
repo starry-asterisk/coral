@@ -25,7 +25,7 @@
 <script>
 var reporter = "${id}";
 $(".report").click(function(){
-	var reanson = [['a0','광고성 글'],['a1','욕설, 비하발언'],['a2','사유3'],['a3','테스입니다'],['a4','오늘은국밥']];
+	var reanson = getReason('R');
 	if(reporter!=undefined&&reporter!=""){
 		var result = report($(this).prev().html(),"u",reporter,reanson);
 		$("button.btn.btn-default").on("click",function(){

@@ -49,6 +49,12 @@ $(document).ready(function(){
 		$("#login").click(function(){
 			login();
 		});
+		$("#password").keypress(function(){
+			 if (window.event.keyCode == 13) {
+	             // 엔터키가 눌렸을 때 실행할 내용
+	             login();
+	        }
+		});
 	});
 function idExit(id){
 	var answer;
@@ -86,6 +92,30 @@ function mailExit(mail){
 		},
 		success : function(obj){
 			answer = obj;
+		}
+	});
+	
+	return answer;
+}
+
+function getReason(identifier){
+	var answer;
+	$.ajax({
+		// 전송방식을 지정한다(GET, POST)
+		type : "POST",
+		// 호출 URL을 설정한다.
+		// GET 방식일 경우 뒤에 파라미터를 붙여서 사용해도 된다.
+		url : "/ajax/getReason",
+		data : {"identifier":identifier},  // 전송할 내용(폼태그)
+		async: false,
+		error : function(){
+			alert("통신상태가 완활하지 않습니다");
+		},
+		success : function(obj){
+			answer = JSON.parse(obj);
+			if(answer.success=="true"){
+				answer = answer.result;
+			}
 		}
 	});
 	

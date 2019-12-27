@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.coral.www.Report.ReportService;
 import com.coral.www.User.UserDTO;
 import com.coral.www.User.UserService;
 import com.coral.www.application.JTester;
@@ -55,6 +56,16 @@ public class AjaxController {
 		UserDTO dto = new UserDTO();
 		dto.setMail(mail);
 		return !service.isMail(dto)+"";
+	}
+	@Inject
+	ReportService rservice;
+	@ResponseBody
+	@RequestMapping(value = "/getReason", method = RequestMethod.POST, produces="application/text;charset=utf-8")
+	public String getReason(@RequestParam("identifier")char identifier) {
+		JSONObject returnObj = new JSONObject();
+		returnObj.put("result",rservice.getRsList(identifier));
+		returnObj.put("success", true);
+		return returnObj.toJSONString();
 	}
 	@ResponseBody
 	@RequestMapping(value = "/report", method = RequestMethod.POST, produces="application/text;charset=utf-8")
