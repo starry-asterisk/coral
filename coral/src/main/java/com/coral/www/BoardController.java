@@ -1,4 +1,4 @@
-package com.coral.www.Board;
+package com.coral.www;
 
 
 
@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.coral.www.Board.BoardService;
 
 @RequestMapping("/board")
 @Controller

@@ -14,8 +14,8 @@ public class ReportDAO {
 	SqlSession sqlSession;
 	static final String namespace="com.coral.www.mappers.ReportMapper.";
 	
-	public List<ReportDTO> Rslist(char identifier) {
-		List<ReportDTO> returns = sqlSession.selectList(namespace+"selectRsList",identifier);
+	public List<ReportDTO> reasonList(char identifier) {
+		List<ReportDTO> returns = sqlSession.selectList(namespace+"reasonList",identifier);
 		return returns; 
 	}
 }

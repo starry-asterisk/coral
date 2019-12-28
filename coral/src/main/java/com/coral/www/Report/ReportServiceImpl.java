@@ -2,6 +2,7 @@ package com.coral.www.Report;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -14,7 +15,7 @@ public class ReportServiceImpl implements ReportService {
 	ReportDAO dao;
 	
 	@Override
-	public ArrayList<ReportDTO> getRsList(char identifier) {
-		return (ArrayList<ReportDTO>) dao.Rslist(identifier);
+	public List<ReportDTO> reasonList(char identifier) {
+		return (ArrayList<ReportDTO>) dao.reasonList(identifier);
 	}
 }

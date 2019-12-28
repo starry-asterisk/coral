@@ -36,10 +36,8 @@ $(document).ready(function(){
 					error : function(){
 						alert("통신상태가 완활하지 않습니다");
 					},
-					success : function(obj){
-						var data = JSON.parse(obj);
-						//alert("통신데이터 값 : " + data.success);
-						alert(data.result);
+					success : function(result){
+						alert(result);
 					}
 				});
 			}else{
@@ -113,31 +111,13 @@ function getReason(identifier){
 		},
 		success : function(obj){
 			answer = JSON.parse(obj);
-			if(answer.success=="true"){
+			if(answer.success==true){
 				answer = answer.result;
 			}
 		}
 	});
 	
 	return answer;
-}
-
-function login(){
-	var ajax = new Object();
-	ajax.id = $("#id").val();
-	ajax.pw = $("#password").val();
-	ajax.remember_me = $("#remember-me").is(":checked");
-	ajax = JSON.stringify(ajax);
-	var form = document.createElement("form");
-	form.setAttribute("method","POST");
-	form.setAttribute("action","/login");
-	var input = document.createElement("input");
-	input.setAttribute("type","hidden");
-	input.setAttribute("name","json");
-	input.value = ajax;
-	form.appendChild(input);
-	document.body.appendChild(form);
-	form.submit();
 }
 
 function reportSubmit(identifier, type, reason){
@@ -162,4 +142,15 @@ function reportSubmit(identifier, type, reason){
 			alert("사유를 선택해 주세요!");
 		}
 	}
+}
+
+
+
+
+function login(){
+	var form = mkForm("/login","POST");
+	form.addValue("id",$("#id").val());
+	form.addValue("pw",$("#password").val());
+	form.addValue("remember_me",$("#remember-me").is(":checked"));
+	form.submit();
 }

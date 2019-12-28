@@ -1,8 +1,9 @@
 package com.coral.www.Report;
 
-import java.util.ArrayList;
+
+import java.util.List;
 
 public interface ReportService {
 
-	public ArrayList<ReportDTO> getRsList(char identifier);
+	public List<ReportDTO> reasonList(char identifier);
 }

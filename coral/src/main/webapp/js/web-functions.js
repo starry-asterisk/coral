@@ -1,5 +1,13 @@
 /**
  * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
  */
 
 function report(identifier, identifier_type, reporter, resons){
@@ -21,7 +29,7 @@ function report(identifier, identifier_type, reporter, resons){
 	body.children(".custom-select").append("<select></select>");
 	body.find("select").append("<option value=''>사유를 선택해 주세요</option>");
 	for(i=0;i<resons.length;i++){
-		body.find("select").append("<option value='"+resons[i][0]+"'>"+resons[i][1]+"</option>");
+		body.find("select").append("<option value='"+resons[i].split(":")[0]+"'>"+resons[i].split(":")[1]+"</option>");
 	}
 	createSelect(body.children(".custom-select"));
 	return{

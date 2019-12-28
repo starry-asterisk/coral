@@ -5,10 +5,12 @@ import java.io.File;
 import java.io.FileReader;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.coral.www.application.MailUtils;
 import com.coral.www.application.Sha;
 
 @Service
@@ -27,17 +29,20 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public UserDTO login(UserDTO dto) {
+	public UserDTO login(UserDTO dto, HttpSession session) {
 		try {
 			if(dao.isId(dto)) {
-				if(dao.isLogin(dto)||(dto.getLogin_status()==-1)) {
-					dao.insertHistory(dto);
-					dto = dto.getLogin_status()==1?dao.getInfo(dto):null;
-				}else {
+				if(!dao.isLogin(dto)&&dto.getLogin_status()!=-1) {
 					dto.setLogin_status(0);
 					dao.insertHistory(dto);
 					dto.setMsg("비밀번호 오류");
+				}else if(session!=null){
+					/*로그인 정보 저장*/
+					session.setAttribute("id", dto.getId());
+					session.setAttribute("user-agent", dto.getPlatform());
+					session.setAttribute("ip", dto.getIp());
 				}
+				dao.insertHistory(dto);
 			}else {
 				dto.setMsg("Id 오류");
 			}
@@ -69,8 +74,8 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public boolean newUser(UserDTO dto) {
-		return dao.newUser(dto);
+	public boolean addUser(UserDTO dto) {
+		return dao.addUser(dto);
 	}
 	
 	@Override
@@ -118,10 +123,6 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public boolean mailVerify(UserDTO dto) throws Exception{
-		if(dao.Verify(dto)&&dao.Verify_success(dto)) {
-			return true;
-		}else {
-			return false;
-		}
+		return dao.mailVerify(dto);
 	}
 }

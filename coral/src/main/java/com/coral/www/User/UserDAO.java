@@ -31,16 +31,13 @@ public class UserDAO {
 		return sqlSession.insert(namespace+"insertHistory", dto)==1?true:false;
 		
 	}
-	public boolean newUser(UserDTO dto) {
-		return sqlSession.insert(namespace+"newUser", dto)==1?true:false;
+	public boolean addUser(UserDTO dto) {
+		return sqlSession.insert(namespace+"insertUser", dto)==1?true:false;
 		
 	}
-	public boolean Verify(UserDTO dto) {
-		int result = sqlSession.selectOne(namespace+"Verify", dto);
-		return result==1?true:false;
-	}
-	public boolean Verify_success(UserDTO dto) {
-		return sqlSession.update(namespace+"Verify_success", dto)==1?true:false;
+	
+	public boolean mailVerify(UserDTO dto) {
+		return sqlSession.update(namespace+"mailVerify", dto)==1?true:false;
 		
 	}
 }

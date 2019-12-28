@@ -3,30 +3,27 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.coral.www.mappers.UsersMapper">
+  	<select id="isId" resultType="int" parameterType="com.coral.www.User.UserDTO">
+  		select count(*) from USERS WHERE U_ID=#{id}
+  	</select>
   	<select id="isLogin" resultType="int" parameterType="com.coral.www.User.UserDTO">
   		select count(*) from USERS WHERE U_ID=#{id} AND U_PW=#{pw}
   	</select>
   	<select id="getInfo" resultType="com.coral.www.User.UserDTO" parameterType="com.coral.www.User.UserDTO">
   		select U_ID AS "id", U_NAME AS "name", U_GENDER AS "gender", U_PW AS "pw"  from USERS WHERE U_ID=#{id}
   	</select>
-  	<select id="isId" resultType="int" parameterType="com.coral.www.User.UserDTO">
-  		select count(*) from USERS WHERE U_ID=#{id}
-  	</select>
-  	<select id="isMail" resultType="int" parameterType="com.coral.www.User.UserDTO">
-  		select count(*) from USERS WHERE U_MAIL=#{mail} or U_MAIL LIKE '{verify-%}'||#{mail}
-  	</select>
-  	<select id="Verify" resultType="int" parameterType="com.coral.www.User.UserDTO">
-  		select count(*) from USERS WHERE U_MAIL = '{verify-'||#{msg}||'}'||#{mail} and U_ID = #{id}
-  	</select>
-  	<update id="Verify_success" parameterType="com.coral.www.User.UserDTO">
-  		update USERS SET U_MAIL = #{mail}  WHERE U_MAIL = '{verify-'||#{msg}||'}'||#{mail} and U_ID = #{id}
-  	</update>
   	<insert id="insertHistory" parameterType="com.coral.www.User.UserDTO">
   		insert into user_history(uh_uid,uh_ip,uh_platform,uh_status) values(#{id},#{ip},#{platform},#{login_status})
   	</insert>
-  	<insert id="newUser" parameterType="com.coral.www.User.UserDTO">
+  	<insert id="insertUser" parameterType="com.coral.www.User.UserDTO">
   		insert into u(U_ID,U_PW,U_NAME,U_BIRTH,U_GENDER,U_PHONE,U_ADDRESS,U_COMPANY,U_TEL,U_GRADE,U_MAIL,U_PRIVACY) values(#{id},#{pw},#{name},#{birth},#{gender},#{phone},#{address},#{company},#{tel},#{grade},#{mail},#{privacy})
   	</insert>
+  	<select id="isMail" resultType="int" parameterType="com.coral.www.User.UserDTO">
+  		select count(*) from USERS WHERE U_MAIL=#{mail} or U_MAIL LIKE '{verify-%}'||#{mail}
+  	</select>
+  	<update id="mailVerify" parameterType="com.coral.www.User.UserDTO">
+  		update USERS SET U_MAIL = #{mail}  WHERE U_MAIL = '{verify-'||#{msg}||'}'||#{mail} and U_ID = #{id}
+  	</update>
   </mapper>
   
   

@@ -3,8 +3,9 @@ package com.coral.www.listener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import com.coral.www.User.UserDAO;
+
 import com.coral.www.User.UserDTO;
+import com.coral.www.User.UserService;
 import com.coral.www.application.BeanUtils;
 
 import java.util.UUID;
@@ -14,7 +15,7 @@ import javax.servlet.http.*;
 
 
 public class SessionListener implements HttpSessionListener {
-	private UserDAO dao;
+	private UserService userService;
 	/**
      * Initialize the UserDAO once the application has started
      */
@@ -33,14 +34,14 @@ public class SessionListener implements HttpSessionListener {
 		System.out.println(session.getId()+" :세션 종료됨");
 		Object obj = session.getAttribute("id");
 		if (obj != null) {
-			dao = (UserDAO) BeanUtils.getBean("userDAO");
+			userService = (UserService) BeanUtils.getBean("userService");
 			try {
 				UserDTO dto = new UserDTO();
 				dto.setLogin_status(-1);
 				dto.setId((String) session.getAttribute("id"));
 				dto.setPlatform((String) session.getAttribute("user-agent"));
 				dto.setIp((String) session.getAttribute("ip"));
-				dao.insertHistory(dto);
+				userService.login(dto, null);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
