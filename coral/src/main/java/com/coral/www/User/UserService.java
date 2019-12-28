@@ -2,6 +2,7 @@ package com.coral.www.User;
 
 import javax.servlet.http.HttpSession;
 
+
 public interface UserService {
 	public UserDTO getInfo(UserDTO dto);
 	public UserDTO login(UserDTO dto, HttpSession session);

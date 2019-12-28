@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 	public UserDTO login(UserDTO dto, HttpSession session) {
 		try {
 			if(dao.isId(dto)) {
-				if(!dao.isLogin(dto)&&dto.getLogin_status()!=-1) {
+				if(dto.getLogin_status()!=-1&&!dao.isLogin(dto)) {
 					dto.setLogin_status(0);
 					dao.insertHistory(dto);
 					dto.setMsg("비밀번호 오류");

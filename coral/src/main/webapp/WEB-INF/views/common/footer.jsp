@@ -45,3 +45,5 @@
       
     </div>
   </div>
+  
+  <script>${Code}<%=request.getParameter("Code")%></script>

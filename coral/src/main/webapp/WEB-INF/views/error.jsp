@@ -11,5 +11,4 @@
 <hr>
 <br>
 </body>
-<script>${Code}<%=request.getParameter("Code")%></script>
 </html>

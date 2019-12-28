@@ -34,7 +34,7 @@ public class SessionListener implements HttpSessionListener {
 		System.out.println(session.getId()+" :세션 종료됨");
 		Object obj = session.getAttribute("id");
 		if (obj != null) {
-			userService = (UserService) BeanUtils.getBean("userService");
+			userService = (UserService) BeanUtils.getBean("userServiceImpl");
 			try {
 				UserDTO dto = new UserDTO();
 				dto.setLogin_status(-1);
