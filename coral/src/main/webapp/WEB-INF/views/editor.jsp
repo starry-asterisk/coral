@@ -35,25 +35,17 @@
 		</textarea>
 	</div>
 	<div class="user_sub">
+		<input type="text" class="basic_input" placeholder="작성자" readonly value="${id}">
+		<input type="text" class="basic_input" placeholder="예약일자">
+		<input type="text" class="basic_input" placeholder="첨부파일">
 		<div class="custom-select">
   		<select>
     		<option>카테고리 선택:</option>
-    		<option value="1">Audi</option>
-    		<option value="2">BMW</option>
-    		<option value="3">Citroen</option>
-    		<option value="4">Ford</option>
-    		<option value="5">Honda</option>
-    		<option value="6">Jaguar</option>
-    		<option value="7">Land Rover</option>
-    		<option value="8">Mercedes</option>
-    		<option value="9">Mini</option>
-    		<option value="10">Nissan</option>
-    		<option value="11">Toyota</option>
-    		<option value="12">Volvo</option>
+    		<c:forEach var= "list" items="${Category}">
+				<option value="${list.code}">${list.name}</option>
+			</c:forEach>
   		</select>
 		</div>
-		<input type="text" class="basic_input" placeholder="예약일자">
-		<input type="text" class="basic_input" placeholder="첨부파일">
 		<div class="tag_form" placeholder="태그 입력"><input type="text" value="" maxlength="25" ></div>
 		<button type="button" class="basic_button">발행</button>
 		<button type="button" class="basic_button">임시저장</button>
@@ -68,6 +60,7 @@
 </body>
 <!-- 외부 js -->
 <script src="https://cdn.ckeditor.com/ckeditor5/15.0.0/classic/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/15.0.0/classic/translations/ko.js"></script>
 
 <!-- 내부 js -->
 <script src="${contextPath }/js/editor.js"></script>

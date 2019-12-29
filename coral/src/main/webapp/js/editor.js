@@ -42,7 +42,7 @@ $(".tag_form input").focusout(function(){
 	var tag = $(".tag_form");
 	tag.removeClass();
 	tag.addClass("tag_form");
-	if($(".tag_form span").length=="0"){
+	if($(".tag_form input").val()==""&&$(".tag_form span").length=="0"){
 		$(".tag_form").append(document.createElement("a"));
 		$(".tag_form a").addClass("placeholder");
 		$(".tag_form a").html(placeholder);
@@ -65,8 +65,15 @@ $(".tag_form input").keydown(function (key) {
 		}
 	}
 });
+var myEditor;
 ClassicEditor
-.create( document.querySelector( '#editor' ) )
+.create( document.querySelector( '#editor' ), {
+	language: 'ko'
+} )
+.then( editor => {
+            myEditor = editor;
+        } )
 .catch( error => {
 	console.error( error );
 } );
+

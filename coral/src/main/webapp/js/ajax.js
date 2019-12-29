@@ -154,3 +154,5 @@ function login(){
 	form.addValue("remember_me",$("#remember-me").is(":checked"));
 	form.submit();
 }
+
+
