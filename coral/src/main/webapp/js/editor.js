@@ -66,6 +66,7 @@ $(".tag_form input").keydown(function (key) {
 	}
 });
 var myEditor;
+/*myEditor.getData();데이터 가져오기*/
 ClassicEditor
 .create( document.querySelector( '#editor' ), {
 	language: 'ko'
