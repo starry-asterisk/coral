@@ -103,9 +103,8 @@ public class AjaxController {
 	@RequestMapping("/upload")
 	public String upload(HttpServletRequest request,@RequestParam(required=false) List<MultipartFile> files) {
 		String url="";
-		System.out.println(request.getParameter("files"));
 		for(MultipartFile file:files) {
-			url = fileUploadService.restore(file)+";";
+			url += fileUploadService.restore(file)+";";
 		}
 		return url;
 	}

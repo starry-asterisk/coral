@@ -38,7 +38,7 @@
 	<div class="user_sub">
 		<input type="text" class="basic_input" placeholder="작성자" readonly value="${id}">
 		<input type="text" class="basic_input" placeholder="예약일자">
-		<input name="file" type="file" class="basic_input" placeholder="첨부파일" multiple>
+		<div class="basic_input" style="margin-bottom:30px"><input name="files" type="file"placeholder="첨부파일" multiple></div>
 		<div class="custom-select">
   		<select>
     		<option>카테고리 선택:</option>

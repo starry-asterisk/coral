@@ -146,21 +146,34 @@ function reportSubmit(identifier, type, reason){
 
 function FileUpload(){
 	var form = mkForm("/ajax/upload","POST");
-	var value;
 	form.attr("enctype","multipart/form-data");
-	form.append($("input[type=file]"));
-	form.form.ajaxForm({
+	files = $("input[type=file]");
+	place = $(document.createElement("place"));
+	files.before(place);
+	form.append(files);
+	form = form.form;
+	form.ajaxForm({
 		url : "/ajax/upload",
         enctype : "multipart/form-data",
 		error : function(){
 			alert("통신상태가 완활하지 않습니다");
 		},
 		success : function(obj){
-			alert(obj);
-			value = obj;
+			var url = obj;
+			if(url!=undefined&&url!=""){
+				url = url.split(";");
+				url.forEach(function(el){
+					if(el!=undefined&&el!=""){
+						myEditor.setData(myEditor.getData()+"<p><img alt='img' src='"+el+"'></img></p>");
+					}
+				});
+			}
 		}
 	});
-	return value;
+	form.submit();
+	place.after(files);
+	place.remove();
+	form.remove();
 }
 
 function login(){

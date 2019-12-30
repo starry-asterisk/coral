@@ -187,7 +187,7 @@ footer{
 	
 }
 .basic_button {
-    margin: 0 15px 15px 15px;
+    margin: 15px 15px 15px 15px;
     height: 35px;
     width: 120px;
     border-radius: 18px;
@@ -200,12 +200,26 @@ footer{
     height: 36px;
     border: 1px solid #e1e1ea;
     border-radius: 3px;
-    margin: 15px 0 15px 0;
+    margin: 15px 5% 15px 5%;
     box-shadow: 0 0 25px 5px rgba(60,64,66,0.05);
+}
+div.basic_input input[type="file"]{
+	opacity:0;
+	width:100%;
+	height:100%;
+}
+div.basic_input input[type="file"]:hover{
+	cursor:pointer;
+}
+div.basic_input:hover{
+	border: 1px solid rgba(254,111,94,0.4);
+    box-shadow: 0 0 25px 5px rgba(254,111,94,0.3);
+    transition:all 0.3s;
 }
 .basic_input:focus, .focus{
 	border: 1px solid rgba(254,111,94,0.4);
     box-shadow: 0 0 25px 5px rgba(254,111,94,0.3);
+    transition:all 0.3s;
 }
 .custom-select { 
 	text-align-last:center;
@@ -268,6 +282,7 @@ footer{
 .select-arrow-active{
 	border-color: rgba(254,111,94,0.4);
     box-shadow: 0 0 25px 5px rgba(254,111,94,0.3);
+    transition:all 0.3s;
 }
 
 /* Style items (options): */
