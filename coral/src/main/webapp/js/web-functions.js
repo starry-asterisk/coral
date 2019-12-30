@@ -282,8 +282,12 @@ function reciepeDetail(){
 function mkForm(action, method){
 		var form = $(document.createElement("form"));
 		$('body').append(form);
-		form.attr("method",method);
-		form.attr("action",action);
+		if(method!=undefined&&method!=null){
+			form.attr("method",method);
+		}
+		if(action!=undefined&&action!=null){
+			form.attr("action",action);
+		}
 		return {
 			submit:function(){
 				form.submit();
@@ -300,7 +304,12 @@ function mkForm(action, method){
 			},
 			attr:function(name,value){
 				form.attr(name,value);
-			}
+			},
+			get:function(){
+				var formData = new FormData(form[0]);
+				return formData;
+			},
+			form:form
 		}
 	}
 

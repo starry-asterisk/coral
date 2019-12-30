@@ -2,7 +2,10 @@ package com.coral.www;
 
 
 
+import java.util.List;
+
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
@@ -12,12 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.coral.www.Report.ReasonDTO;
 import com.coral.www.Report.ReportDTO;
 import com.coral.www.Report.ReportService;
 import com.coral.www.User.UserDTO;
 import com.coral.www.User.UserService;
+import com.coral.www.application.FileUploadService;
 import com.coral.www.application.JTester;
 
 @Controller
@@ -28,6 +33,8 @@ public class AjaxController {
 	UserService userService;
 	@Inject
 	ReportService reportService;
+	@Inject
+	FileUploadService fileUploadService;
 	
 	@ResponseBody
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
@@ -91,5 +98,15 @@ public class AjaxController {
 			value = "true";
 		}
 		return value;
+	}
+	@ResponseBody
+	@RequestMapping("/upload")
+	public String upload(HttpServletRequest request,@RequestParam(required=false) List<MultipartFile> files) {
+		String url="";
+		System.out.println(request.getParameter("files"));
+		for(MultipartFile file:files) {
+			url = fileUploadService.restore(file)+";";
+		}
+		return url;
 	}
 }

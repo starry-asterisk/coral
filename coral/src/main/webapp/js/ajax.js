@@ -144,8 +144,24 @@ function reportSubmit(identifier, type, reason){
 	}
 }
 
-
-
+function FileUpload(){
+	var form = mkForm("/ajax/upload","POST");
+	var value;
+	form.attr("enctype","multipart/form-data");
+	form.append($("input[type=file]"));
+	form.form.ajaxForm({
+		url : "/ajax/upload",
+        enctype : "multipart/form-data",
+		error : function(){
+			alert("통신상태가 완활하지 않습니다");
+		},
+		success : function(obj){
+			alert(obj);
+			value = obj;
+		}
+	});
+	return value;
+}
 
 function login(){
 	var form = mkForm("/login","POST");

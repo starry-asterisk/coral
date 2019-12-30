@@ -6,6 +6,7 @@
 <html>
 <!-- JQuery -->
 <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="/js/jquery.form.js"></script>
 
 <!-- 외부 css -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -37,7 +38,7 @@
 	<div class="user_sub">
 		<input type="text" class="basic_input" placeholder="작성자" readonly value="${id}">
 		<input type="text" class="basic_input" placeholder="예약일자">
-		<input name="file" type="file" class="basic_input" placeholder="첨부파일">
+		<input name="file" type="file" class="basic_input" placeholder="첨부파일" multiple>
 		<div class="custom-select">
   		<select>
     		<option>카테고리 선택:</option>
@@ -65,4 +66,5 @@
 <!-- 내부 js -->
 <script src="${contextPath }/js/editor.js"></script>
 <script src="${contextPath}/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
+<script src="${contextPath }/js/ajax.js"></script>
 </html>

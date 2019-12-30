@@ -70,7 +70,8 @@ var myEditor;
 /*;데이터 가져오기*/
 ClassicEditor
 .create( document.querySelector( '#editor' ), {
-	language: 'ko'
+	language: 'ko',
+	filebrowserUploadUrl : 'https://coralprogram.com/board/upload'
 } )
 .then( editor => {
             myEditor = editor;
@@ -100,3 +101,14 @@ function upload(status){
 	}
 	form.submit();
 }
+$("input[name=file]").on("change",function(){
+	var url = FileUpload();
+	/*
+	if(url!=undefined&&url!=""){
+		myEditor.setData(myEditor.getData()+"<p><img alt='naver' src='"+url+"'></img></p>");
+	}*/
+	
+	myEditor.setData(myEditor.getData()+"<p><img alt='naver' src='"+url+"'></img></p>");
+	
+});
+
