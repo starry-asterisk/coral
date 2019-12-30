@@ -3,6 +3,7 @@ package com.coral.www;
 
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.coral.www.Report.ReasonDTO;
 import com.coral.www.Report.ReportDTO;
 import com.coral.www.Report.ReportService;
 import com.coral.www.User.UserDTO;
@@ -69,7 +71,7 @@ public class AjaxController {
 	public String getReason(@RequestParam("identifier")char identifier) {
 		JSONObject returnObj = new JSONObject();
 		JSONArray returnlist = new JSONArray();
-		for(ReportDTO dto:reportService.reasonList(identifier)) {
+		for(ReasonDTO dto:reportService.reasonList(identifier)) {
 			returnlist.add(dto.getCode()+":"+dto.getContent());
 		}
 		returnObj.put("result",returnlist);
@@ -78,8 +80,16 @@ public class AjaxController {
 	}
 	@ResponseBody
 	@RequestMapping(value = "/report", method = RequestMethod.POST, produces="application/text;charset=utf-8")
-	public String report(@RequestParam("id")String id,@RequestParam("rscode")String rscode,@RequestParam("type")String type) {
-		System.out.println("\n"+id+"/"+type+"/"+rscode);
-		return true+"";
+	public String report(@RequestParam("id")String object,@RequestParam("rscode")String rscode,@RequestParam("type")String code,HttpSession session) {
+		String value = "false";
+		ReportDTO dto = new ReportDTO();
+		dto.setRscode(rscode);
+		dto.setCode(code);
+		dto.setObject(object);
+		dto.setId((String) session.getAttribute("id"));
+		if(reportService.insertReport(dto)!=null) {
+			value = "true";
+		}
+		return value;
 	}
 }

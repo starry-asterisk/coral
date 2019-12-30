@@ -21,4 +21,7 @@ public class BoardDAO {
 	public List<BoardDTO> listPage(BoardDTO dto) {
 		return sqlSession.selectList(namespace+"listPage",dto);
 	}
+	public List<CategoryDTO> categorylist() {
+		return sqlSession.selectList(namespace+"categorylist");
+	}
 }

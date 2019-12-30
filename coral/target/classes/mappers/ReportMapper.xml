@@ -3,10 +3,15 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.coral.www.mappers.ReportMapper">
-  <select id="reasonList" resultType="com.coral.www.Report.ReportDTO">
+  <select id="reasonList" resultType="com.coral.www.Report.ReasonDTO">
   	SELECT RS_CODE AS "code", RS_CONTENT AS "content", RS_DUE AS "due" FROM RS WHERE RS_CODE LIKE #{identifier}||'%'
   </select>
-  
+  <insert id="report_insert" parameterType="com.coral.www.Report.ReportDTO">
+  insert into RP(RP_UID,RP_OBJECT,RP_CODE,RP_RSCODE) values(#{id},#{object},#{code},#{rscode})
+  </insert>
+  <delete id="report_delete" parameterType="com.coral.www.Report.ReportDTO">
+  delete from RP where RP_UID=#{id},RP_OBJECT=#{object}
+  </delete>
 </mapper>
   
   

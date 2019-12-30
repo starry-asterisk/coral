@@ -15,4 +15,8 @@
   	]]>
   	</select>
   	
+  	<select id="categorylist" resultType="com.coral.www.Board.CategoryDTO" >
+  		select CA_CODE AS "code", CA_NAME AS "name", CA_PERMISSION AS "permission" from CA
+  	</select>
+  	
   </mapper>

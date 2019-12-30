@@ -2,6 +2,7 @@ function addTag(value){
 	var span = $(document.createElement("span"));
     var btn = $(document.createElement("button"));
 	span.attr("class","tag_element");
+	span.val("#"+value);
     btn.attr("class","deleteBtn");
     $(".tag_form input").before(span);
     span.append(value);
@@ -66,7 +67,7 @@ $(".tag_form input").keydown(function (key) {
 	}
 });
 var myEditor;
-/*myEditor.getData();데이터 가져오기*/
+/*;데이터 가져오기*/
 ClassicEditor
 .create( document.querySelector( '#editor' ), {
 	language: 'ko'
@@ -77,4 +78,25 @@ ClassicEditor
 .catch( error => {
 	console.error( error );
 } );
-
+function getTag(){
+	var values = $(".tag_form span");
+	var returnValue = "";
+	for(i=0;i<values.length;i++){
+		returnValue += $(values[i]).val();
+	}
+	returnValue +="#";
+	return returnValue;
+}
+function upload(status){
+	var form = mkForm("/board/upload","POST");
+	form.attr("enctype","multipart/form-data");
+	form.append($("input[type=file]"));
+	form.addValue("title",$(".title_area").val());
+	form.addValue("content",myEditor.getData());
+	form.addValue("tag",getTag());
+	form.addValue("category",$('.custom-select select option:selected').val());
+	if(status!=undefined&&status!=""){
+		form.addValue("status",status);
+	}
+	form.submit();
+}

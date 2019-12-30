@@ -37,7 +37,7 @@
 	<div class="user_sub">
 		<input type="text" class="basic_input" placeholder="작성자" readonly value="${id}">
 		<input type="text" class="basic_input" placeholder="예약일자">
-		<input type="text" class="basic_input" placeholder="첨부파일">
+		<input name="file" type="file" class="basic_input" placeholder="첨부파일">
 		<div class="custom-select">
   		<select>
     		<option>카테고리 선택:</option>
@@ -47,8 +47,8 @@
   		</select>
 		</div>
 		<div class="tag_form" placeholder="태그 입력"><input type="text" value="" maxlength="25" ></div>
-		<button type="button" class="basic_button">발행</button>
-		<button type="button" class="basic_button">임시저장</button>
+		<button type="button" class="basic_button" onclick="upload()">발행</button>
+		<button type="button" class="basic_button" onclick="upload('S')">임시저장</button>
 	</div>
 	${attachment}
 </div>

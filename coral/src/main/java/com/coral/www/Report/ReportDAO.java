@@ -14,8 +14,11 @@ public class ReportDAO {
 	SqlSession sqlSession;
 	static final String namespace="com.coral.www.mappers.ReportMapper.";
 	
-	public List<ReportDTO> reasonList(char identifier) {
-		List<ReportDTO> returns = sqlSession.selectList(namespace+"reasonList",identifier);
+	public List<ReasonDTO> reasonList(char identifier) {
+		List<ReasonDTO> returns = sqlSession.selectList(namespace+"reasonList",identifier);
 		return returns; 
+	}
+	public boolean insertReport(ReportDTO dto) {
+		return sqlSession.insert(namespace+"report_insert",dto) ==1? true:false;
 	}
 }

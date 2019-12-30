@@ -54,6 +54,7 @@
 		</div>
 		<div class="feed_sub_side">
 			<div id="side1">
+			${url}
 			</div>
 			<div id="side2">
 			</div>

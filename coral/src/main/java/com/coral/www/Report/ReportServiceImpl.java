@@ -15,7 +15,18 @@ public class ReportServiceImpl implements ReportService {
 	ReportDAO dao;
 	
 	@Override
-	public List<ReportDTO> reasonList(char identifier) {
-		return (ArrayList<ReportDTO>) dao.reasonList(identifier);
+	public List<ReasonDTO> reasonList(char identifier) {
+		return (ArrayList<ReasonDTO>) dao.reasonList(identifier);
+	}
+	@Override
+	public ReportDTO insertReport(ReportDTO dto) {
+		try {
+			if(!dao.insertReport(dto)) {
+				dto = null;
+			};
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 }

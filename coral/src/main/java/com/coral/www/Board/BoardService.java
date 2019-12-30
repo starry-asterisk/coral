@@ -2,6 +2,8 @@ package com.coral.www.Board;
 
 
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,5 +33,8 @@ public class BoardService {
 		model.addAttribute("BoardList", dao.listPage(dto));
 	}
 	
+	public List<CategoryDTO> categorylist() {
+		return dao.categorylist();
+	}
 
 }

@@ -19,6 +19,7 @@
 	<resources mapping="/.well-known/**" location="/ssl/" />
 	<resources mapping="/src-noconflict/**" location="/src-noconflict/" />
 	<resources mapping="/favicon.ico" location="/resources/favicon.ico" />
+	<resources location="file:C:/coding/upload/" mapping="/upload/*"/>
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

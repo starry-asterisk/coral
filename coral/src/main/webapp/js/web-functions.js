@@ -294,8 +294,13 @@ function mkForm(action, method){
 				input.attr("name",name);
 				input.val(value);
 				form.append(input);
+			},
+			append:function(Object){
+				form.append(Object);
+			},
+			attr:function(name,value){
+				form.attr(name,value);
 			}
-			
 		}
 	}
 
