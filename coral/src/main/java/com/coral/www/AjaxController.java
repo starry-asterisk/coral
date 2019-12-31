@@ -2,7 +2,9 @@ package com.coral.www;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -17,12 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.coral.www.File.FileDTO;
+import com.coral.www.File.FileService;
 import com.coral.www.Report.ReasonDTO;
 import com.coral.www.Report.ReportDTO;
 import com.coral.www.Report.ReportService;
 import com.coral.www.User.UserDTO;
 import com.coral.www.User.UserService;
-import com.coral.www.application.FileUploadService;
 import com.coral.www.application.JTester;
 
 @Controller
@@ -34,7 +37,7 @@ public class AjaxController {
 	@Inject
 	ReportService reportService;
 	@Inject
-	FileUploadService fileUploadService;
+	FileService fileUploadService;
 	
 	@ResponseBody
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
@@ -101,11 +104,14 @@ public class AjaxController {
 	}
 	@ResponseBody
 	@RequestMapping("/upload")
-	public String upload(HttpServletRequest request,@RequestParam(required=false) List<MultipartFile> files) {
-		String url="";
+	public List<FileDTO> upload(HttpServletRequest request,@RequestParam(required=false) List<MultipartFile> files) {
+		List<FileDTO> list = new ArrayList<FileDTO>();
+		String pattern = "^\\S+.(?i)(exe)$";
 		for(MultipartFile file:files) {
-			url += fileUploadService.restore(file)+";";
+			if(!Pattern.matches(pattern,file.getOriginalFilename().replace(" ","_").toLowerCase())) {
+				list.add(fileUploadService.restore(file));
+			}
 		}
-		return url;
+		return list;
 	}
 }

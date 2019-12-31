@@ -38,7 +38,7 @@
 	<div class="user_sub">
 		<input type="text" class="basic_input" placeholder="작성자" readonly value="${id}">
 		<input type="text" class="basic_input" placeholder="예약일자">
-		<div class="basic_input" style="margin-bottom:30px"><input name="files" type="file"placeholder="첨부파일" multiple></div>
+		<div class="basic_input" style="margin-bottom:30px"><input name="files" type="file" placeholder="첨부파일" multiple></div>
 		<div class="custom-select">
   		<select>
     		<option>카테고리 선택:</option>
@@ -60,8 +60,7 @@
 
 </body>
 <!-- 외부 js -->
-<script src="https://cdn.ckeditor.com/ckeditor5/15.0.0/classic/ckeditor.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/15.0.0/classic/translations/ko.js"></script>
+<jsp:include page="${contextPath }${include }.jsp" ></jsp:include>
 
 <!-- 내부 js -->
 <script src="${contextPath }/js/editor.js"></script>

@@ -66,18 +66,7 @@ $(".tag_form input").keydown(function (key) {
 		}
 	}
 });
-var myEditor;
-/*;데이터 가져오기*/
-ClassicEditor
-.create( document.querySelector( '#editor' ), {
-	language: 'ko'
-} )
-.then( editor => {
-            myEditor = editor;
-        } )
-.catch( error => {
-	console.error( error );
-} );
+
 function getTag(){
 	var values = $(".tag_form span");
 	var returnValue = "";
@@ -100,7 +89,15 @@ function upload(status){
 	}
 	form.submit();
 }
+
 $("input[name=files]").on("change",function(){
 	FileUpload();
 });
-
+function ckaddIMG(el){
+	if(check.tail.test(el)){
+		myEditor.setData(myEditor.getData()+"<p><img alt='img' src='"+el+"'></img></p>");
+	}else{
+		alert("이미지 아님 : "+el)
+	}
+	
+}

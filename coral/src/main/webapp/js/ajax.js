@@ -143,11 +143,18 @@ function reportSubmit(identifier, type, reason){
 		}
 	}
 }
-
+var fileData="null";
 function FileUpload(){
 	var form = mkForm("/ajax/upload","POST");
 	form.attr("enctype","multipart/form-data");
-	files = $("input[type=file]");
+	files = $("input[name=files]");
+	for(i=0;i<files[0].files.length;i++){
+		var fileName = files[0].files[i].name;
+		if(check.exe.test(fileName)&&false){
+			alert("exe파일은 전송 할수 없습니다\n파일이름 : "+fileName);
+			return false;
+		}
+	}
 	place = $(document.createElement("place"));
 	files.before(place);
 	form.append(files);
@@ -155,19 +162,23 @@ function FileUpload(){
 	form.ajaxForm({
 		url : "/ajax/upload",
         enctype : "multipart/form-data",
+        dataType : "json",
 		error : function(){
 			alert("통신상태가 완활하지 않습니다");
 		},
-		success : function(obj){
-			var url = obj;
-			if(url!=undefined&&url!=""){
-				url = url.split(";");
-				url.forEach(function(el){
-					if(el!=undefined&&el!=""){
-						myEditor.setData(myEditor.getData()+"<p><img alt='img' src='"+el+"'></img></p>");
-					}
-				});
+		success : function(data){
+			if(fileData!="null"){
+				data.forEach(function(item){
+					fileData.push(item);
+				})
+			}else{
+				fileData = data;
 			}
+			data.forEach(function(item){
+				if(item.path!=undefined&&item.path!=""){
+					ckaddIMG(item.path);
+				}
+			});
 		}
 	});
 	form.submit();

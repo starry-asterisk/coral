@@ -17,7 +17,7 @@ import javax.servlet.http.*;
 public class SessionListener implements HttpSessionListener {
 	private UserService userService;
 	/**
-     * Initialize the UserDAO once the application has started
+     * Initialize the UserService once the application has started
      */
 	
 	@Override

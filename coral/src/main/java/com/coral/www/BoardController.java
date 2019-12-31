@@ -33,9 +33,15 @@ public class BoardController {
 		return "detail";
 	}
 	@RequestMapping("/editor")
-	public String editor(Model model, HttpSession session) {
+	public String editor(Model model, HttpServletRequest requeset) {
 		model.addAttribute("Category", service.categorylist());
-		model.addAttribute("id", session.getAttribute("id"));
+		model.addAttribute("id", requeset.getSession().getAttribute("id"));
+		String agent = requeset.getHeader("user-agent");
+		if(agent.contains("MSIE")||agent.contains("Trident")) {
+			model.addAttribute("include", "include/ckEdit4");
+		}else {
+			model.addAttribute("include", "include/ckEdit5");
+		}
 		return "editor";
 	}
 }

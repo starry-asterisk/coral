@@ -93,14 +93,7 @@ $(function(){
 		
 	});
 	
-	var check = new Object;
-	check.mail = /^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/;
-	check.URL = /^(file|gopher|news|nntp|telnet|https?|ftps?|sftp):\/\/([a-z0-9-]+\.)+[a-z0-9]{2,4}.*$/;
-	check.tel = /(\d{3}).*(\d{3}).*(\d{4})/;
-	check.date = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
-	check.tail = /([^\s]+(?=\.(jpg|gif|png))\.\2)/;
-	check.id = /(?=.*\d)(?=.*[a-zA-Z]).{8,15}/;
-	check.name = /[가-힣]{1,5}/;
+	
 	
 	$(".form input, .form select").focusout(function(){
 		$(this).removeClass("pass");
