@@ -99,5 +99,4 @@ function ckaddIMG(el){
 	}else{
 		alert("이미지 아님 : "+el)
 	}
-	
 }
