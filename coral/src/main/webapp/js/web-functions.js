@@ -9,7 +9,6 @@
  * 
  * 
  */
-
 var check = new Object;
 	check.mail = /^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/;
 	check.URL = /^(file|gopher|news|nntp|telnet|https?|ftps?|sftp):\/\/([a-z0-9-]+\.)+[a-z0-9]{2,4}.*$/;
@@ -39,7 +38,7 @@ function report(identifier, identifier_type, reporter, resons){
 	body.children(".custom-select").append("<select></select>");
 	body.find("select").append("<option value=''>사유를 선택해 주세요</option>");
 	for(i=0;i<resons.length;i++){
-		body.find("select").append("<option value='"+resons[i].split(":")[0]+"'>"+resons[i].split(":")[1]+"</option>");
+		body.find("select").append("<option value='"+resons[i].code+"'>"+resons[i].content+"</option>");
 	}
 	createSelect(body.children(".custom-select"));
 	return{
@@ -641,7 +640,7 @@ function mkSide(body, width, height){
 	contents.css("left",Coffset.left+parseInt(width)-Poffset.left);
 	contents.css("top",Coffset.top-Poffset.top-body.parent().css("border-width").replace("px",""));
 	
-	body.parent().prepend(contents);
+	body.before(contents);
 	
 	return contents;
 }

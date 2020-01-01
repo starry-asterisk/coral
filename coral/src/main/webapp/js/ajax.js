@@ -15,8 +15,7 @@ $(document).ready(function(){
 				error : function(){
 					alert("통신상태가 완활하지 않습니다");
 				},
-				success : function(obj){
-					var data = JSON.parse(obj);
+				success : function(data){
 					alert(data.result);
 				}
 			});
@@ -32,7 +31,7 @@ $(document).ready(function(){
 					// 호출 URL을 설정한다.
 					// GET 방식일 경우 뒤에 파라미터를 붙여서 사용해도 된다.
 					url : "/ajax/runCode",
-					data : {json:code},  // 전송할 내용(폼태그)
+					data : {"code":code},  // 전송할 내용(폼태그)
 					error : function(){
 						alert("통신상태가 완활하지 않습니다");
 					},
@@ -105,15 +104,13 @@ function getReason(identifier){
 		// GET 방식일 경우 뒤에 파라미터를 붙여서 사용해도 된다.
 		url : "/ajax/getReason",
 		data : {"identifier":identifier},  // 전송할 내용(폼태그)
+		dataType : "json",
 		async: false,
 		error : function(){
 			alert("통신상태가 완활하지 않습니다");
 		},
 		success : function(obj){
-			answer = JSON.parse(obj);
-			if(answer.success==true){
-				answer = answer.result;
-			}
+			answer = obj;
 		}
 	});
 	
@@ -123,19 +120,26 @@ function getReason(identifier){
 function reportSubmit(identifier, type, reason){
 	if(identifier!=undefined&&identifier!=""){
 		if(reason!=undefined&&reason!=""){
+			var json = new Object();
+			json.object = identifier;
+			json.rscode = reason;
+			json.code = type;
 			$.ajax({
 				// 전송방식을 지정한다(GET, POST)
 				type : "POST",
 				// 호출 URL을 설정한다.
 				// GET 방식일 경우 뒤에 파라미터를 붙여서 사용해도 된다.
 				url : "/ajax/report",
-				data : {"id":identifier,"rscode":reason,"type":type},  // 전송할 내용(폼태그)
+				data : json,  // 전송할 내용(폼태그)
+				dataType : "json",
 				async: false,
 				error : function(){
 					alert("통신상태가 완활하지 않습니다");
 				},
 				success : function(obj){
-					alert("신고가 접수되었습니다!");
+					if(obj=="true"){
+						alert("신고가 접수되었습니다!");
+					}
 				}
 			});
 		}else{
@@ -150,7 +154,7 @@ function FileUpload(){
 	files = $("input[name=files]");
 	for(i=0;i<files[0].files.length;i++){
 		var fileName = files[0].files[i].name;
-		if(check.exe.test(fileName)&&false){
+		if(check.exe.test(fileName)){
 			alert("exe파일은 전송 할수 없습니다\n파일이름 : "+fileName);
 			return false;
 		}
@@ -182,8 +186,7 @@ function FileUpload(){
 		}
 	});
 	form.submit();
-	place.after(files);
-	place.remove();
+	place.replaceWith(files);
 	form.remove();
 }
 

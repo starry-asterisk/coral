@@ -29,7 +29,7 @@ import com.coral.www.User.UserService;
 import com.coral.www.application.JTester;
 
 @Controller
-@RequestMapping("/ajax")
+@RequestMapping(value = "/ajax", method = RequestMethod.POST)
 public class AjaxController {
 	
 	@Inject
@@ -40,16 +40,16 @@ public class AjaxController {
 	FileService fileUploadService;
 	
 	@ResponseBody
-	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public String search(@RequestParam("json")String receive) {
+	@RequestMapping(value = "/search")
+	public JSONObject search(@RequestParam("json")String receive) {
 		JSONObject returnObj = new JSONObject();
 		returnObj.put("success", true);
-		return returnObj.toJSONString();
+		return returnObj;
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/runCode", method = RequestMethod.POST, produces="application/text;charset=utf-8")
-	public String runCode(@RequestParam("json")String receive) {
+	@RequestMapping(value = "/runCode", produces="application/text;charset=utf-8")
+	public String runCode(@RequestParam("code")String receive) {
 		String result="옳바르게 클래스 이름을 작성해 주세요";
 		String fileName;
 		try {
@@ -64,12 +64,12 @@ public class AjaxController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/idExit", method = RequestMethod.POST, produces="application/text;charset=utf-8")
+	@RequestMapping(value = "/idExit", produces="application/text;charset=utf-8")
 	public String idExit(@RequestParam("id")String id) {
 		return !userService.isId(id)+"";
 	}
 	@ResponseBody
-	@RequestMapping(value = "/mailExit", method = RequestMethod.POST, produces="application/text;charset=utf-8")
+	@RequestMapping(value = "/mailExit", produces="application/text;charset=utf-8")
 	public String mailExit(@RequestParam("mail")String mail) {
 		UserDTO dto = new UserDTO();
 		dto.setMail(mail);
@@ -77,30 +77,16 @@ public class AjaxController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/getReason", method = RequestMethod.POST, produces="application/text;charset=utf-8")
-	public String getReason(@RequestParam("identifier")char identifier) {
-		JSONObject returnObj = new JSONObject();
-		JSONArray returnlist = new JSONArray();
-		for(ReasonDTO dto:reportService.reasonList(identifier)) {
-			returnlist.add(dto.getCode()+":"+dto.getContent());
-		}
-		returnObj.put("result",returnlist);
-		returnObj.put("success", true);
-		return returnObj.toJSONString();
+	@RequestMapping(value = "/getReason")
+	public List<ReasonDTO> getReason(@RequestParam("identifier")char identifier) {
+		List<ReasonDTO> list = reportService.reasonList(identifier);
+		return list;
 	}
 	@ResponseBody
-	@RequestMapping(value = "/report", method = RequestMethod.POST, produces="application/text;charset=utf-8")
-	public String report(@RequestParam("id")String object,@RequestParam("rscode")String rscode,@RequestParam("type")String code,HttpSession session) {
-		String value = "false";
-		ReportDTO dto = new ReportDTO();
-		dto.setRscode(rscode);
-		dto.setCode(code);
-		dto.setObject(object);
+	@RequestMapping(value = "/report", produces="application/text;charset=utf-8")
+	public String report(ReportDTO dto,HttpSession session) {
 		dto.setId((String) session.getAttribute("id"));
-		if(reportService.insertReport(dto)!=null) {
-			value = "true";
-		}
-		return value;
+		return (reportService.insertReport(dto)!=null)+"";
 	}
 	@ResponseBody
 	@RequestMapping("/upload")

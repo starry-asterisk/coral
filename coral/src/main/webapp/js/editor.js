@@ -79,9 +79,9 @@ function getTag(){
 function upload(status){
 	var form = mkForm("/board/upload","POST");
 	form.attr("enctype","multipart/form-data");
-	form.append($("input[type=file]"));
+	form.addValue("files",JSON.stringify(fileData));
 	form.addValue("title",$(".title_area").val());
-	form.addValue("content",myEditor.getData());
+	form.addValue("contents",myEditor.getData());
 	form.addValue("tag",getTag());
 	form.addValue("category",$('.custom-select select option:selected').val());
 	if(status!=undefined&&status!=""){
@@ -94,7 +94,7 @@ $("input[name=files]").on("change",function(){
 	FileUpload();
 });
 function ckaddIMG(el){
-	if(check.tail.test(el)){
+	if(check.tail.test(el.toLowerCase())){
 		myEditor.setData(myEditor.getData()+"<p><img alt='img' src='"+el+"'></img></p>");
 	}else{
 		alert("이미지 아님 : "+el)
