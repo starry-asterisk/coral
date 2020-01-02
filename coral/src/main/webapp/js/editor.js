@@ -77,11 +77,12 @@ function getTag(){
 	return returnValue;
 }
 function upload(status){
-	var form = mkForm("/board/upload","POST");
+	var form = mkForm("/board/write","POST");
 	form.attr("enctype","multipart/form-data");
-	form.addValue("files",JSON.stringify(fileData));
+	$("input[name=files]")[0].remove();
+	form.append($("input[name=files]"));
 	form.addValue("title",$(".title_area").val());
-	form.addValue("contents",myEditor.getData());
+	form.addValue("contents",myEditor.getData().replace(check.dataUrl,"<img:>"));
 	form.addValue("tag",getTag());
 	form.addValue("category",$('.custom-select select option:selected').val());
 	if(status!=undefined&&status!=""){
@@ -91,12 +92,29 @@ function upload(status){
 }
 
 $("input[name=files]").on("change",function(){
-	FileUpload();
+	/*FileUpload();*/
+	var fileList = $(this)[0].files;
+	for(i=0;i<fileList.length;i++){
+		if(check.exe.test(fileList[i].name.toLowerCase())){
+			alert("exe파일은 사용할 수 없습니다!");
+			return;
+		}
+    }
+	
+	var clone  = $(this).clone();
+	clone.css("display","none");
+	$(this).after(clone);
+	// 읽기
+    for(i=0;i<fileList.length;i++){
+    	if(check.tail.test(fileList[i].name.toLowerCase())){
+    		var reader = new FileReader();
+        	reader.readAsDataURL(fileList[i]);
+        	reader.onload = function(e){ckAddIMG(e.target.result);}
+    	}else{
+    		alert("이미지 가 아닌 첨부파일 : "+fileList[i].name)
+    	}
+    }
 });
-function ckaddIMG(el){
-	if(check.tail.test(el.toLowerCase())){
-		myEditor.setData(myEditor.getData()+"<p><img alt='img' src='"+el+"'></img></p>");
-	}else{
-		alert("이미지 아님 : "+el)
-	}
+function ckAddIMG(el){
+	myEditor.setData(myEditor.getData()+"<p><img alt='img' src='"+el+"'></img></p>");
 }

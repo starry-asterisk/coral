@@ -3,5 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.coral.www.mappers.FileMapper">
-  	
+  	<insert id="insert" parameterType="com.coral.www.File.FileDTO">
+  	INSERT INTO 
+  	AF(AF_BNO,AF_KEYNAME,AF_NAME,AF_SIZE,AF_ORDER,AF_PATH)
+  	VALUES(#{bno},#{keyname},#{name},#{size},#{order},#{path})
+  	</insert>
   </mapper>

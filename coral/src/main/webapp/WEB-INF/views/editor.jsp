@@ -48,7 +48,7 @@
   		</select>
 		</div>
 		<div class="tag_form" placeholder="태그 입력"><input type="text" value="" maxlength="25" ></div>
-		<button type="button" class="basic_button" onclick="upload()">발행</button>
+		<button type="button" class="basic_button" onclick="upload('P')">발행</button>
 		<button type="button" class="basic_button" onclick="upload('S')">임시저장</button>
 	</div>
 	${attachment}

@@ -147,48 +147,6 @@ function reportSubmit(identifier, type, reason){
 		}
 	}
 }
-var fileData="null";
-function FileUpload(){
-	var form = mkForm("/ajax/upload","POST");
-	form.attr("enctype","multipart/form-data");
-	files = $("input[name=files]");
-	for(i=0;i<files[0].files.length;i++){
-		var fileName = files[0].files[i].name;
-		if(check.exe.test(fileName)){
-			alert("exe파일은 전송 할수 없습니다\n파일이름 : "+fileName);
-			return false;
-		}
-	}
-	place = $(document.createElement("place"));
-	files.before(place);
-	form.append(files);
-	form = form.form;
-	form.ajaxForm({
-		url : "/ajax/upload",
-        enctype : "multipart/form-data",
-        dataType : "json",
-		error : function(){
-			alert("통신상태가 완활하지 않습니다");
-		},
-		success : function(data){
-			if(fileData!="null"){
-				data.forEach(function(item){
-					fileData.push(item);
-				})
-			}else{
-				fileData = data;
-			}
-			data.forEach(function(item){
-				if(item.path!=undefined&&item.path!=""){
-					ckaddIMG(item.path);
-				}
-			});
-		}
-	});
-	form.submit();
-	place.replaceWith(files);
-	form.remove();
-}
 
 function login(){
 	var form = mkForm("/login","POST");

@@ -36,8 +36,6 @@ public class AjaxController {
 	UserService userService;
 	@Inject
 	ReportService reportService;
-	@Inject
-	FileService fileUploadService;
 	
 	@ResponseBody
 	@RequestMapping(value = "/search")
@@ -87,17 +85,5 @@ public class AjaxController {
 	public String report(ReportDTO dto,HttpSession session) {
 		dto.setId((String) session.getAttribute("id"));
 		return (reportService.insertReport(dto)!=null)+"";
-	}
-	@ResponseBody
-	@RequestMapping("/upload")
-	public List<FileDTO> upload(HttpServletRequest request,@RequestParam(required=false) List<MultipartFile> files) {
-		List<FileDTO> list = new ArrayList<FileDTO>();
-		String pattern = "^\\S+.(?i)(exe)$";
-		for(MultipartFile file:files) {
-			if(!Pattern.matches(pattern,file.getOriginalFilename().replace(" ","_").toLowerCase())) {
-				list.add(fileUploadService.restore(file));
-			}
-		}
-		return list;
 	}
 }

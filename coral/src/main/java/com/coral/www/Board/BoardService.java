@@ -36,5 +36,8 @@ public class BoardService {
 	public List<CategoryDTO> categorylist() {
 		return dao.categorylist();
 	}
-
+	public String write(BoardDTO dto) {
+		dto.setNo(dao.newBno());
+		return dao.write(dto)?dto.getNo():null;
+	}
 }

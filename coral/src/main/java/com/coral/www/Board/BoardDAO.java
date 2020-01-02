@@ -24,4 +24,11 @@ public class BoardDAO {
 	public List<CategoryDTO> categorylist() {
 		return sqlSession.selectList(namespace+"categorylist");
 	}
+	public boolean write(BoardDTO dto) {
+		int result = sqlSession.insert(namespace+"write",dto);
+		return result==1;
+	}
+	public String newBno() {
+		return sqlSession.selectOne(namespace+"newBno");
+	}
 }

@@ -197,7 +197,7 @@ footer{
 }
 .basic_input{
 	width: 90%;
-    height: 36px;
+    min-height: 36px;
     border: 1px solid #e1e1ea;
     border-radius: 3px;
     margin: 15px 5% 15px 5%;

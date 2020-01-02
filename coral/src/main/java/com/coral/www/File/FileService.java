@@ -2,8 +2,13 @@ package com.coral.www.File;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
+
+import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +20,9 @@ public class FileService {
 	// 따라서 workspace가 C드라이브에 있다면 C드라이브에 upload 폴더를 생성해 놓아야 한다.
 	private static final String SAVE_PATH = "C:/coding/upload";
 	private static final String PREFIX_URL = "/upload/";
+	
+	@Inject
+	FileDAO dao;
 	
 	public FileDTO restore(MultipartFile multipartFile) {
 		FileDTO dto = null;
@@ -67,8 +75,7 @@ public class FileService {
 	
 	
 	// 파일을 실제로 write 하는 메서드
-	private boolean writeFile(MultipartFile multipartFile, String saveFileName)
-								throws IOException{
+	private boolean writeFile(MultipartFile multipartFile, String saveFileName) throws IOException{
 		boolean result = false;
 
 		try {
@@ -81,6 +88,27 @@ public class FileService {
 			
 		}
 		
+		return result;
+	}
+	
+	public boolean insert(List<MultipartFile> files, String bno){
+		boolean result = true;
+		if(bno!=null) {
+			int count = 0;
+			List<FileDTO> list = new ArrayList<FileDTO>();
+			String pattern = "^\\S+.(?i)(exe)$";
+			for(MultipartFile file:files) {
+				if(!Pattern.matches(pattern,file.getOriginalFilename().replace(" ","_").toLowerCase())) {
+					list.add(restore(file));
+					list.get(count).setBno(bno);
+					list.get(count).setOrder(count);
+					result = dao.insert(list.get(count))&&result;
+					count++;
+				}
+			}
+		}else {
+			result = false;
+		}
 		return result;
 	}
 }

@@ -14,6 +14,32 @@
 ) WHERE rnum >= ((#{page}-1)*#{amount}) and rnum <= (#{page}*#{amount}) 
   	]]>
   	</select>
+  	<select id="newBno" resultType="java.lang.String">
+  		select 'B'||LPAD(B_SEQ.NEXTVAL,8,0) from dual
+  	</select>
+  	<insert id="write" parameterType="com.coral.www.Board.BoardDTO">
+  		INSERT INTO 
+  				B(
+  					B_NO,
+  					B_CATEGORY,
+  					B_TAG,
+  					B_TITLE,
+  					B_CONTENTS,
+  					B_UID,
+  					B_STATUS,
+  					B_ATTACHMENT
+  				) 
+  				VALUES(
+  					#{no},
+  					#{category},
+  					#{tag},
+  					#{title},
+  					#{contents},
+  					#{id},
+  					#{status},
+  					#{attachment}
+  				)
+  	</insert>
   	
   	<select id="categorylist" resultType="com.coral.www.Board.CategoryDTO" >
   		select CA_CODE AS "code", CA_NAME AS "name", CA_PERMISSION AS "permission" from CA

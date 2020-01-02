@@ -18,6 +18,7 @@ var check = new Object;
 	check.exe = /([^\s]+(?=\.(exe))\.\2)/;
 	check.id = /(?=.*\d)(?=.*[a-zA-Z]).{8,15}/;
 	check.name = /[가-힣]{1,5}/;
+	check.dataUrl = /\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,[a-z0-9\!\$\&\'\,\(\)\*\+\,\;\=\-\.\_\~\:\@\/\?\%\s]*\s*/gi;
 
 function report(identifier, identifier_type, reporter, resons){
 	$("#myModal").modal();
