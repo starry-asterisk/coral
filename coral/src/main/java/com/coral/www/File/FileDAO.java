@@ -19,10 +19,14 @@ public class FileDAO {
 		return result==1?true:false;
 	}
 	public boolean delete(FileDTO dto) {
-		int result = sqlSession.delete(namespace+"delete",dto);
+		int result = sqlSession.delete(namespace+"deleteOne",dto);
 		return result==1?true:false;
 	}
-	public List<FileDTO> select(FileDTO dto) {
-		return sqlSession.selectList(namespace+"select",dto);
+	public boolean delete(String no) {
+		int result = sqlSession.delete(namespace+"deleteAll",no);
+		return result!=0?true:false;
+	}
+	public List<FileDTO> getList(String bno) {
+		return sqlSession.selectList(namespace+"selectList",bno);
 	}
 }

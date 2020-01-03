@@ -28,7 +28,14 @@ public class BoardDAO {
 		int result = sqlSession.insert(namespace+"write",dto);
 		return result==1;
 	}
+	public BoardDTO detail(String no) {
+		return sqlSession.selectOne(namespace+"detail",no);
+	}
 	public String newBno() {
 		return sqlSession.selectOne(namespace+"newBno");
+	}
+	public boolean viewCntUpd(String no) {
+		int result = sqlSession.update(namespace+"viewCntUpd",no);
+		return result==1;
 	}
 }

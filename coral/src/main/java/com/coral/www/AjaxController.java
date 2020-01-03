@@ -2,25 +2,18 @@ package com.coral.www;
 
 
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.coral.www.File.FileDTO;
-import com.coral.www.File.FileService;
 import com.coral.www.Report.ReasonDTO;
 import com.coral.www.Report.ReportDTO;
 import com.coral.www.Report.ReportService;

@@ -8,4 +8,11 @@
   	AF(AF_BNO,AF_KEYNAME,AF_NAME,AF_SIZE,AF_ORDER,AF_PATH)
   	VALUES(#{bno},#{keyname},#{name},#{size},#{order},#{path})
   	</insert>
+  	<select id="selectList" resultType="com.coral.www.File.FileDTO">
+  	SELECT 
+  	AF_BNO AS "bno",AF_KEYNAME AS "keyname",AF_NAME AS "name",AF_SIZE AS "size",AF_ORDER AS "order",AF_PATH AS "path" 
+  	FROM AF
+  	WHERE AF_BNO = #{bno} 
+  	ORDER BY "order"
+  	</select>
   </mapper>

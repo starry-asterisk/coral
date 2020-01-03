@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.coral.www.application.JFileWriter;
+
 @Service
 public class BoardService {
 	@Inject
@@ -36,8 +38,21 @@ public class BoardService {
 	public List<CategoryDTO> categorylist() {
 		return dao.categorylist();
 	}
+	public BoardDTO detail(String no) {
+		dao.viewCntUpd(no);
+		return dao.detail(no);
+	}
 	public String write(BoardDTO dto) {
-		dto.setNo(dao.newBno());
-		return dao.write(dto)?dto.getNo():null;
+		try {
+			dto.setNo(dao.newBno());
+			if(dto.getContents().getBytes().length>1000) {
+				new JFileWriter("board\\"+dto.getNo()+".txt",dto.getContents());
+				dto.setContents("${linked}board\\"+dto.getNo()+".txt");
+			}
+			return dao.write(dto)?dto.getNo():null;
+		}catch(Exception e) {
+			new JFileWriter().delFile("board\\"+dto.getNo()+".txt");
+			return null;
+		}
 	}
 }

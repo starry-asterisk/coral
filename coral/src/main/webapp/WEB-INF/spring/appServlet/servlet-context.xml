@@ -45,7 +45,7 @@
 	<!-- Interceptor 설정 -->
 	<interceptors>
     	<interceptor>
-        	<mapping path="/board/editor"/>         
+        	<mapping path="/board/write"/>         
         	<beans:ref bean="LoginInterceptor"/>
     	</interceptor>
 	</interceptors>

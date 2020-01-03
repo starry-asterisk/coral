@@ -17,6 +17,9 @@
   	<select id="newBno" resultType="java.lang.String">
   		select 'B'||LPAD(B_SEQ.NEXTVAL,8,0) from dual
   	</select>
+  	<select id="detail" resultType="com.coral.www.Board.BoardDTO">
+  		select B_NO as "no", B_CATEGORY as "category", B_TAG as "tag", B_TITLE as "title", B_CONTENTS as "contents", B_VIEWS as "views", B_ATTACHMENT as "attachment" from b where B_NO = #{no}
+  	</select>
   	<insert id="write" parameterType="com.coral.www.Board.BoardDTO">
   		INSERT INTO 
   				B(
@@ -43,6 +46,9 @@
   	
   	<select id="categorylist" resultType="com.coral.www.Board.CategoryDTO" >
   		select CA_CODE AS "code", CA_NAME AS "name", CA_PERMISSION AS "permission" from CA
+  	</select>
+  	<select id="viewCntUpd">
+  		UPDATE B SET B_VIEWS = B_VIEWS + 1 WHERE B_NO = #{no}
   	</select>
   	
   </mapper>

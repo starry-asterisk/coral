@@ -63,6 +63,11 @@
 <jsp:include page="${contextPath }${include }.jsp" ></jsp:include>
 
 <!-- 내부 js -->
+<script type="text/javascript">
+var CK_Config = new Object;
+CK_Config.display= '';
+CK_Config.isReadonly = false;
+</script>
 <script src="${contextPath }/js/editor.js"></script>
 <script src="${contextPath}/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
 <script src="${contextPath }/js/ajax.js"></script>

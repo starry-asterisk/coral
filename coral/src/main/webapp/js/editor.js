@@ -79,8 +79,11 @@ function getTag(){
 function upload(status){
 	var form = mkForm("/board/write","POST");
 	form.attr("enctype","multipart/form-data");
-	$("input[name=files]")[0].remove();
-	form.append($("input[name=files]"));
+	attachmentList.forEach(function(item){
+		form.addValue("filesName",item[0]);
+		form.addValue("filesType",item[1]);
+		form.addValue("files",item[2]);
+	});
 	form.addValue("title",$(".title_area").val());
 	form.addValue("contents",myEditor.getData().replace(check.dataUrl,"<img:>"));
 	form.addValue("tag",getTag());
@@ -90,7 +93,7 @@ function upload(status){
 	}
 	form.submit();
 }
-
+var attachmentList = [];
 $("input[name=files]").on("change",function(){
 	/*FileUpload();*/
 	var fileList = $(this)[0].files;
@@ -100,21 +103,27 @@ $("input[name=files]").on("change",function(){
 			return;
 		}
     }
-	
 	var clone  = $(this).clone();
 	clone.css("display","none");
 	$(this).after(clone);
 	// 읽기
     for(i=0;i<fileList.length;i++){
-    	if(check.tail.test(fileList[i].name.toLowerCase())){
-    		var reader = new FileReader();
-        	reader.readAsDataURL(fileList[i]);
-        	reader.onload = function(e){ckAddIMG(e.target.result);}
-    	}else{
-    		alert("이미지 가 아닌 첨부파일 : "+fileList[i].name)
+    	var reader = new FileReader();
+    	reader.readAsDataURL(fileList[i]);
+    	reader.name = fileList[i].name;
+    	reader.onload = function(e){
+    		addAttach(e.target.result, e.target.name);
     	}
+    	
     }
 });
-function ckAddIMG(el){
-	myEditor.setData(myEditor.getData()+"<p><img alt='img' src='"+el+"'></img></p>");
+
+function addAttach(data_url, name){
+	if(check.tail.test(name.toLowerCase())){
+		myEditor.setData(myEditor.getData()+"<p><img alt='img' src='"+data_url+"'></img></p>");
+	}else{
+		alert("이미지 가 아닌 첨부파일 : "+name)
+	}
+	attachmentList.push([name,data_url.split(",")[0],data_url.split(",")[1]]);
+	
 }

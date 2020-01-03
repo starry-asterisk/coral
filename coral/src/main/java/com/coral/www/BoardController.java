@@ -10,15 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.coral.www.Board.BoardDTO;
 import com.coral.www.Board.BoardService;
+import com.coral.www.File.FileDTO;
 import com.coral.www.File.FileService;
+import com.coral.www.application.JFileWriter;
 
 @RequestMapping("/board")
 @Controller
@@ -27,7 +30,7 @@ public class BoardController {
 	BoardService service;
 
 	@Inject
-	FileService fileUploadService;
+	FileService fileService;
 
 	@RequestMapping("")
 	public String board(Model model, HttpServletRequest request) {
@@ -37,10 +40,27 @@ public class BoardController {
 		return "list";
 	}
 	@RequestMapping("/detail")
-	public String detail(Model model, HttpServletRequest request) {
-		model.addAttribute("bno", request.getParameter("bno"));
+	public String detail(Model model, @RequestParam String bno, @RequestHeader("user-agent") String agent) {
+		BoardDTO boarddto = service.detail(bno);
+		if(boarddto.getContents().contains("${linked}")) {
+			boarddto.setContents(new JFileWriter().readFile(boarddto.getContents().replace("${linked}", "")));
+		}
+		if(boarddto.getAttachment()=='P') {
+			List<FileDTO> list = fileService.getAttachment(boarddto.getNo());
+			model.addAttribute("attachment", list);
+			for(FileDTO filedto:list) {
+				boarddto.setContents(boarddto.getContents().replaceFirst("<img:>", filedto.getPath()));
+			}
+		}
+		model.addAttribute("board", boarddto);
+		if(agent.contains("MSIE")||agent.contains("Trident")) {
+			model.addAttribute("include", "include/ckEdit4");
+		}else {
+			model.addAttribute("include", "include/ckEdit5");
+		}
 		return "detail";
 	}
+	
 	@RequestMapping(value="/write",method = { RequestMethod.GET })
 	public String editor(Model model, HttpServletRequest request) {
 		model.addAttribute("Category", service.categorylist());
@@ -54,10 +74,11 @@ public class BoardController {
 		return "editor";
 	}
 	
+	@Transactional
 	@RequestMapping(value="/write",method = { RequestMethod.POST })
-	public String upload(BoardDTO dto,@RequestParam(required=false) List<MultipartFile> files, HttpServletRequest request) throws ParseException, UnsupportedEncodingException{
-		dto.setAttachment(files.size()!=0?'P':'N');
+	public String upload(BoardDTO dto,@RequestParam(required=false) String[] files,@RequestParam(required=false) String[] filesName,@RequestParam(required=false) String[] filesType, HttpServletRequest request) throws ParseException, UnsupportedEncodingException{
+		dto.setAttachment(files!=null?'P':'N');
 		dto.setId((String) request.getSession().getAttribute("id"));
-		return "redirect:/board"+"?Code=alert('"+URLEncoder.encode(fileUploadService.insert(files , service.write(dto))?"게시글이 등록되었습니다":"등록에 실패했습니다", "UTF-8")+"');";
+		return "redirect:/board"+"?Code=alert('"+URLEncoder.encode(fileService.insert(files , filesType , filesName , service.write(dto))?"게시글이 등록되었습니다":"등록에 실패했습니다", "UTF-8")+"');";
 	}
 }

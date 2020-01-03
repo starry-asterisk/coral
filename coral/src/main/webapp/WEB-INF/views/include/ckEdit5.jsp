@@ -9,11 +9,11 @@ var myEditor;
 ClassicEditor
 .create( document.querySelector( '#editor' ), {
 	language: 'ko'
-} )
-.then( editor => {
+} ).then( editor => {
             myEditor = editor;
-        } )
-.catch( error => {
+            editor.isReadOnly = CK_Config.isReadonly;
+            $(".ck.ck-editor__top.ck-reset_all").css("display",CK_Config.display);
+        } ).catch( error => {
 	console.error( error );
 } );
 </script>

@@ -1,8 +1,8 @@
 package com.coral.www.File;
 
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FileService {
@@ -24,34 +23,34 @@ public class FileService {
 	@Inject
 	FileDAO dao;
 	
-	public FileDTO restore(MultipartFile multipartFile) {
+	public FileDTO restore(String filename, byte[] file) {
 		FileDTO dto = null;
 		
 		try {
 			// 파일 정보
-			String originFilename = multipartFile.getOriginalFilename();
-			String extName
-				= originFilename.substring(originFilename.lastIndexOf("."), originFilename.length());
-			Long size = multipartFile.getSize();
+			Long size = (long) file.length;
+			String extName="";
+			if(filename.lastIndexOf(".")!=-1) {
+				extName = filename.substring(filename.lastIndexOf("."), filename.length());
+			}
 			
-			// 서버에서 저장 할 파일 이름
 			String saveFileName = genSaveFileName(extName);
 			
-			if(writeFile(multipartFile, saveFileName)) {
+			// 서버에서 저장 할 파일 이름
+			
+			
+			if(writeToFile(saveFileName, file)) {
 				dto = new FileDTO();
 				dto.setKeyname(saveFileName);
-				dto.setName(originFilename);
+				if(filename.getBytes().length>100) {
+					filename = "ToolongNameFile"+extName;
+				}
+				dto.setName(filename);
 				dto.setPath(PREFIX_URL + saveFileName);
 				dto.setSize(size.toString());
 			}
-			return dto;
-		}
-		catch (IOException e) {
-			// 원래라면 RuntimeException 을 상속받은 예외가 처리되어야 하지만
-			// 편의상 RuntimeException을 던진다.
-			// throw new FileUploadException();	
-			throw new RuntimeException(e);
-		}
+		}catch(Exception e) {}
+		return dto;
 	}
 	
 	
@@ -73,42 +72,51 @@ public class FileService {
 		return fileName;
 	}
 	
-	
-	// 파일을 실제로 write 하는 메서드
-	private boolean writeFile(MultipartFile multipartFile, String saveFileName) throws IOException{
+	public boolean writeToFile(String filename, byte[] file){
 		boolean result = false;
-
-		try {
-			byte[] data = multipartFile.getBytes();
-			FileOutputStream fos = new FileOutputStream(SAVE_PATH + "/" + saveFileName);
-			fos.write(data);
-			fos.close();
-			result = true;
-		}catch(Exception e) {
-			
-		}
-		
-		return result;
+	    if(file != null){
+	    	try{
+		        FileOutputStream lFileOutputStream = new FileOutputStream(SAVE_PATH + "/" + filename);
+		        lFileOutputStream.write(file);
+		        lFileOutputStream.close();
+		        result = true;
+		    }catch(Throwable e){
+		        e.printStackTrace(System.out);
+		    }
+	    }
+	    return result;
 	}
 	
-	public boolean insert(List<MultipartFile> files, String bno){
+	public boolean insert(String[] files, String[] filesType, String[] filesName, String bno){
 		boolean result = true;
-		if(bno!=null) {
-			int count = 0;
-			List<FileDTO> list = new ArrayList<FileDTO>();
-			String pattern = "^\\S+.(?i)(exe)$";
-			for(MultipartFile file:files) {
-				if(!Pattern.matches(pattern,file.getOriginalFilename().replace(" ","_").toLowerCase())) {
-					list.add(restore(file));
-					list.get(count).setBno(bno);
-					list.get(count).setOrder(count);
-					result = dao.insert(list.get(count))&&result;
-					count++;
-				}
-			}
-		}else {
+		if(bno==null){
 			result = false;
+		}else if(files!=null&&filesName.length==filesType.length&&filesType.length==files.length) {
+			try {
+				int count = 0;
+				List<FileDTO> list = new ArrayList<FileDTO>();
+				String pattern = "^\\S+.(?i)(exe)$";
+				for(String file:files) {
+					System.out.println(files[count]);
+					if(!Pattern.matches(pattern,filesType[count].replace(" ","_").toLowerCase())) {
+						list.add(restore(filesName[count],Base64.getMimeDecoder().decode(file)));
+						list.get(count).setBno(bno);
+						list.get(count).setOrder(count);
+						result = dao.insert(list.get(count))&&result;
+						count++;
+					}
+				}
+			}catch(Exception e) {
+				e.printStackTrace(System.out);
+				result = false;
+				//실패시 파일 삭제 구현해 주세요
+			}
 		}
 		return result;
+	}
+
+
+	public List<FileDTO> getAttachment(String no) {
+		return dao.getList(no);
 	}
 }
