@@ -9,10 +9,6 @@
 	border-bottom: 1px solid #e1e1ea;
 	
 }
-.list_TYPE1 td + td{
-	border-left: 1px solid #e1e1ea;
-	
-}
 .list_TYPE2{
 	width:100%;
 }

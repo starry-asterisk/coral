@@ -19,19 +19,10 @@ public class BoardService {
 	public void addList(Model model, HttpServletRequest request) {
 		BoardDTO dto = new BoardDTO();
 		dto.setPage(request.getParameter("page")==null?1:Integer.parseInt(request.getParameter("page")));
-		dto.setAmount(50);
-		int Firstpage = dto.getPage()-5;
-		int Lastpage = (int) Math.ceil((double)dao.total()/(double)dto.getAmount());
-		if(Firstpage<1) {
-			Firstpage = 1;
-		}
-		if((Lastpage-Firstpage)>9) {
-			Lastpage = Firstpage+9;
-		}else if(Lastpage<dto.getPage()) {
-			Lastpage = dto.getPage();
-		}
-		model.addAttribute("Firstpage", Firstpage);
-		model.addAttribute("Lastpage", Lastpage);
+		dto.setAmount(request.getParameter("amount")==null?50:Integer.parseInt(request.getParameter("amount")));
+		model.addAttribute("amount", dto.getAmount());
+		model.addAttribute("Endpage", (int) Math.ceil((double)dao.total()/(double)dto.getAmount()));
+		model.addAttribute("Currentpage", dto.getPage());
 		model.addAttribute("BoardList", dao.listPage(dto));
 	}
 	

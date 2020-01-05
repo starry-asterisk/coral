@@ -97,7 +97,6 @@ public class FileService {
 				List<FileDTO> list = new ArrayList<FileDTO>();
 				String pattern = "^\\S+.(?i)(exe)$";
 				for(String file:files) {
-					System.out.println(files[count]);
 					if(!Pattern.matches(pattern,filesType[count].replace(" ","_").toLowerCase())) {
 						list.add(restore(filesName[count],Base64.getMimeDecoder().decode(file)));
 						list.get(count).setBno(bno);

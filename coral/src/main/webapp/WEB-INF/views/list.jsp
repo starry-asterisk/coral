@@ -4,8 +4,11 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
+<head>
+
 <!-- JQuery -->
 <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="${contextPath}/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
 
 <!-- 외부 css -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -17,7 +20,6 @@
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/List.css"/>
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/list-style.css"/>
 
-<head>
 <meta charset="UTF-8">
 <title>Coral - 목록</title>
 </head>
@@ -40,7 +42,7 @@
 </body>
 
 <!-- 내부 js -->
-<script src="${contextPath}/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
+
 <script src="${contextPath}/js/ajax.js" type="text/javascript" charset="utf-8"></script>
 
 </html>

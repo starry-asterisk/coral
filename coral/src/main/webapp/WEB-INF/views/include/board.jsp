@@ -2,31 +2,39 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <table class="list_TYPE1">
-	<tr>
-		<td>번호</td>
+	<tr height="3em">
+		<td width="15%">NO</td>
 		<td>제목</td>
-		<td>글쓴이</td>
-		<td>작성시간</td>
-		<td>조회수</td>
+		<td width="15%">작성자</td>
+		<td width="10%">날짜</td>
+		<td width="8%">조회수</td>
+		<td width="8%">추천수</td>
 	</tr>
 	<c:forEach var= "list" items="${BoardList}">
 		<tr>
 			<td>${list.no }</td>
 			<td><a href="/board/detail?bno=${list.no }">${list.title }</a></td>
 			<td><span>${list.id }</span><button class="report"></button></td>
-			<td><fmt:formatDate pattern = "yyyy-MM-dd HH:mm" value = "${list.regdate }" /></td>
+			<td><fmt:formatDate pattern = "MM-dd HH:mm" value = "${list.regdate }" /></td>
 			<td>${list.views }</td>
+			<td>${list.recommends }</td>
 		</tr>
 	</c:forEach>
+	<tr height="3em">
+		<td colspan="6" class="swipeBtnArea">
+		
+		</td>
+	</tr>
 </table>
 <c:forEach var= "idx" begin="${Firstpage}" end="${Lastpage}" step="1">
 <a href="/board?page=${idx}"> ${idx} </a>
 </c:forEach>
 <script>
+mkPageBtn(".swipeBtnArea",${Currentpage},${Endpage},${amount});
 var reporter = "${id}";
 $(".report").click(function(){
-	var reanson = getReason('R');
 	if(reporter!=undefined&&reporter!=""){
+		var reanson = getReason('R');
 		var result = report($(this).prev().html(),"u",reporter,reanson);
 		$("button.btn.btn-default").on("click",function(){
 			reportSubmit(result.id , result.type , result.reason());

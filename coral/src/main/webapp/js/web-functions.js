@@ -20,6 +20,40 @@ var check = new Object;
 	check.name = /[가-힣]{1,5}/;
 	check.dataUrl = /\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,[a-z0-9\!\$\&\'\,\(\)\*\+\,\;\=\-\.\_\~\:\@\/\?\%\s]*\s*/gi;
 
+function mkPageBtn(area,currentPage,EndPage,amount){
+	if(amount==undefined){
+		amount = "";
+	}
+	if(currentPage<1){
+		currentPage = 1;
+	}
+	if(EndPage<currentPage){
+		EndPage = currentPage;
+	}
+	var start = currentPage - 5;
+	if(start<1){
+		start = 1;
+	}
+	var end = currentPage + 5;
+	if(end>EndPage){
+		end = EndPage;
+	}
+	area = $(area);
+	area.append(document.createElement("a"));
+	area.children().last().attr("href","/board?page="+1+(amount==""?"":"&amount="+amount));
+	area.children().last().html("<");
+	for(i=start;i<=end;i++){
+		area.append(document.createElement("a"));
+		area.children().last().attr("href","/board?page="+i+(amount==""?"":"&amount="+amount));
+		area.children().last().html(i);
+		if(i==currentPage){
+			area.children().last().css("font-weight","bold");
+		}
+	}
+	area.append(document.createElement("a"));
+	area.children().last().attr("href","/board?page="+EndPage+(amount==""?"":"&amount="+amount));
+	area.children().last().html(">");
+}
 function report(identifier, identifier_type, reporter, resons){
 	$("#myModal").modal();
 	$("button.btn.btn-default").off("click");
