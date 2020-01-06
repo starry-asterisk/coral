@@ -46,4 +46,17 @@
     </div>
   </div>
   
-  <script>${Code}<%=request.getParameter("Code")%></script>
+  <script>
+  var isReload = false;
+  alert(window.onpopstate);
+  window.onpopstate = function (event) {
+	  alert(event.state);
+	  if (event.state) {
+	    // history changed because of pushState/replaceState
+		  isReload = true;
+	  }
+	}
+  if(!isReload){
+	  ${Code}<%=request.getParameter("Code")%>
+  }
+  </script>

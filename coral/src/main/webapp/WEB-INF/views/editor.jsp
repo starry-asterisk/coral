@@ -38,7 +38,8 @@
 	<div class="user_sub">
 		<input type="text" class="basic_input" placeholder="작성자" readonly value="${id}">
 		<input type="text" class="basic_input" placeholder="예약일자">
-		<div class="basic_input" style="margin-bottom:30px"><input name="files" type="file" placeholder="첨부파일" multiple></div>
+		<div class="basic_input" style="margin-bottom:30px;overflow: hidden;"><div class="fileList"></div><input name="files" type="file" placeholder="첨부파일" id="input-image" multiple data-image=true><label for="input-image">업로드</label></div>
+		<div class="basic_input" style="margin-bottom:30px;overflow: hidden;"><div class="fileList"></div><input name="files" type="file" placeholder="첨부파일" id="input-file" multiple data-image=false><label for="input-file">업로드</label></div>
 		<div class="custom-select">
   		<select>
     		<option>카테고리 선택:</option>
@@ -59,8 +60,6 @@
 
 
 </body>
-<!-- 외부 js -->
-<jsp:include page="${contextPath }${include }.jsp" ></jsp:include>
 
 <!-- 내부 js -->
 <script type="text/javascript">
@@ -68,6 +67,7 @@ var CK_Config = new Object;
 CK_Config.display= '';
 CK_Config.isReadonly = false;
 </script>
+<jsp:include page="${contextPath }${include }.jsp" ></jsp:include>
 <script src="${contextPath }/js/editor.js"></script>
 <script src="${contextPath}/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
 <script src="${contextPath }/js/ajax.js"></script>

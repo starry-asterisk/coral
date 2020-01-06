@@ -4,8 +4,9 @@
 <table class="list_TYPE1">
 	<tr height="3em">
 		<td width="15%">NO</td>
-		<td>제목</td>
-		<td width="15%">작성자</td>
+		<td width="47%">제목</td>
+		<td width="10%">작성자</td>
+		<td width="2%"></td>
 		<td width="10%">날짜</td>
 		<td width="8%">조회수</td>
 		<td width="8%">추천수</td>
@@ -13,8 +14,9 @@
 	<c:forEach var= "list" items="${BoardList}">
 		<tr>
 			<td>${list.no }</td>
-			<td><a href="/board/detail?bno=${list.no }">${list.title }</a></td>
-			<td><span>${list.id }</span><button class="report"></button></td>
+			<td><a href="/board/detail?bno=${list.no }" title="${list.title }">${list.title }</a></td>
+			<td><span>${list.id }</span></td>
+			<td><button class="report"></button></td>
 			<td><fmt:formatDate pattern = "MM-dd HH:mm" value = "${list.regdate }" /></td>
 			<td>${list.views }</td>
 			<td>${list.recommends }</td>

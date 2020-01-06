@@ -1,6 +1,7 @@
 @charset "UTF-8";
 .list_TYPE1{
 	width:100%;
+	table-layout: fixed;
 }
 .list_TYPE1 *{
 	vertical-align: middle;
@@ -8,6 +9,14 @@
 .list_TYPE1 tr:first-child td{
 	border-bottom: 1px solid #e1e1ea;
 	
+}
+.list_TYPE1 tr td:nth-child(2) a{
+	display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width:100%;
+    margin:0;
 }
 .list_TYPE2{
 	width:100%;

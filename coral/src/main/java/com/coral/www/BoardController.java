@@ -49,6 +49,8 @@ public class BoardController {
 			List<FileDTO> list = fileService.getAttachment(boarddto.getNo());
 			model.addAttribute("attachment", list);
 			for(FileDTO filedto:list) {
+				boarddto.setContents(boarddto.getContents().replaceFirst("<img:"+filedto.getOrder()+">", filedto.getPath()));
+				/*기존 게시물 때문에 달림 나중에 정식판에선 삭제할것*/
 				boarddto.setContents(boarddto.getContents().replaceFirst("<img:>", filedto.getPath()));
 			}
 		}
