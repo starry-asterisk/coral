@@ -36,7 +36,7 @@
 	<!-- Interceptor 설정 -->
 	<interceptors>
     	<interceptor>
-        	<mapping path="/"/>         
+        	<mapping path="/*"/>         
         	<beans:ref bean="CookieLoginInterceptor"/>
     	</interceptor>
 	</interceptors>

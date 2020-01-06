@@ -73,7 +73,7 @@ public class UserController {
 			dto.setMail(mail);
 			userService.mail(dto);
 		}
-		return "redirect:/"+"?Code=alert('"+URLEncoder.encode("회원가입이 완료되었습니다. 인증메일이 발송 되었으니 인증을 해주시면 더 많은 서비스 이용이 가능합니다", "UTF-8")+"');";
+		return "redirect:/"+"?Code=alert('"+URLEncoder.encode("회원가입이 완료되었습니다. 인증메일이 발송 되었으니 인증을 해주시면 더 많은 서비스 이용이 가능합니다", "UTF-8")+"')";
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -104,10 +104,10 @@ public class UserController {
 					cookieService.create(response, session);
 				}
 			}else {
-				REFERER+="?Code=alert('"+URLEncoder.encode(dto.getMsg(), "UTF-8")+"');";
+				REFERER+="?Code=alert('"+URLEncoder.encode(dto.getMsg(), "UTF-8")+"')";
 			}
 		}else {
-			REFERER+="?Code=alert('"+URLEncoder.encode("이미 로그인중 입니다", "UTF-8")+"');";
+			REFERER+="?Code=alert('"+URLEncoder.encode("이미 로그인중 입니다", "UTF-8")+"')";
 		}
 		return "redirect:"+REFERER;
 	}
@@ -142,6 +142,6 @@ public class UserController {
 		dto.setId(id);
 		dto.setMail(email);
 		dto.setMsg(authkey.substring(0,16));
-		return "redirect:/"+"?Code=alert('"+URLEncoder.encode("이메일 인증에 "+(userService.mailVerify(dto)?"성공":"실패")+"했습니다!", "UTF-8")+"');";
+		return "redirect:/"+"?Code=alert('"+URLEncoder.encode("이메일 인증에 "+(userService.mailVerify(dto)?"성공":"실패")+"했습니다!", "UTF-8")+"')";
 	}
 }

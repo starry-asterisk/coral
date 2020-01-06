@@ -29,6 +29,7 @@ public class CookieLoginInterceptor extends HandlerInterceptorAdapter{
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
+        request.setAttribute("servletPath", request.getServletPath());
     	/*선언*/
     	HttpSession session = request.getSession();
         /*세션이 null인 경우 작동*/
@@ -57,7 +58,7 @@ public class CookieLoginInterceptor extends HandlerInterceptorAdapter{
             			/*쿠키갱신*/
             			
         			}else {
-        				request.setAttribute("Code", "alert('로그인에 실패했습니다...');");
+        				request.setAttribute("Code", "alert('로그인에 실패했습니다...')");
         			}
         		}
         	}
@@ -73,6 +74,5 @@ public class CookieLoginInterceptor extends HandlerInterceptorAdapter{
             ModelAndView modelAndView) throws Exception {
         // TODO Auto-generated method stub
         super.postHandle(request, response, handler, modelAndView);
-        
     }     
 }

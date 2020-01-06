@@ -47,16 +47,15 @@
   </div>
   
   <script>
-  var isReload = false;
-  alert(window.onpopstate);
-  window.onpopstate = function (event) {
-	  alert(event.state);
-	  if (event.state) {
-	    // history changed because of pushState/replaceState
-		  isReload = true;
-	  }
-	}
-  if(!isReload){
-	  ${Code}<%=request.getParameter("Code")%>
+  var isActive = "${Code}<%=request.getParameter("Code")%>";
+  isActive = isActive=='null'?false:true;
+  if(isActive){
+	  history.replaceState({}, '', '${servletPath}');
+	  window.onpopstate = function() {
+		  isActive = false;
+		  history.back();
+		};
+	  <%=request.getParameter("Code")%>;
+	  ${Code};
   }
   </script>
