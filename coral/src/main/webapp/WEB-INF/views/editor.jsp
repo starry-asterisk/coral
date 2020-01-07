@@ -38,11 +38,23 @@
 	<div class="user_sub">
 		<input type="text" class="basic_input" placeholder="작성자" readonly value="${id}">
 		<input type="text" class="basic_input" placeholder="예약일자">
-		<div class="basic_input" style="margin-bottom:30px;overflow: hidden;"><div class="fileList"></div><input name="files" type="file" placeholder="첨부파일" id="input-image" multiple data-image=true><label for="input-image">업로드</label></div>
-		<div class="basic_input" style="margin-bottom:30px;overflow: hidden;"><div class="fileList"></div><input name="files" type="file" placeholder="첨부파일" id="input-file" multiple data-image=false><label for="input-file">업로드</label></div>
+		<div class="basic_input" style="margin-bottom:30px;overflow: hidden;">
+			<button class="reset" onclick="$($('.fileList')[0]).find('button').trigger('click')">리셋</button>
+    		<button class="fold">접기</button>
+			<div class="fileList"></div>
+			<input name="files" type="file" placeholder="첨부파일" id="input-image" multiple data-image=true>
+			<label for="input-image">이미지 업로드</label>
+		</div>
+		<div class="basic_input" style="margin-bottom:30px;overflow: hidden;">
+			<button class="reset" onclick="$($('.fileList')[0]).find('button').trigger('click')">리셋</button>
+    		<button class="fold">접기</button>
+			<div class="fileList"></div>
+			<input name="files" type="file" placeholder="첨부파일" id="input-file" multiple data-image=false>
+			<label for="input-file">첨부파일 업로드</label>
+		</div>
 		<div class="custom-select">
   		<select>
-    		<option>카테고리 선택:</option>
+    		<option value="">카테고리 선택:</option>
     		<c:forEach var= "list" items="${Category}">
 				<option value="${list.code}">${list.name}</option>
 			</c:forEach>

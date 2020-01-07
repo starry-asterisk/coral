@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <table class="list_TYPE1">
-	<tr height="3em">
+	<tr>
 		<td width="15%">NO</td>
 		<td width="47%">제목</td>
 		<td width="10%">작성자</td>
@@ -23,16 +23,13 @@
 		</tr>
 	</c:forEach>
 	<tr height="3em">
-		<td colspan="6" class="swipeBtnArea">
+		<td colspan="7" class="swipeBtnArea btnRow">
 		
 		</td>
 	</tr>
 </table>
-<c:forEach var= "idx" begin="${Firstpage}" end="${Lastpage}" step="1">
-<a href="/board?page=${idx}"> ${idx} </a>
-</c:forEach>
 <script>
-mkPageBtn(".swipeBtnArea",${Currentpage},${Endpage},${amount});
+mkPageBtn(".swipeBtnArea","/board",${Currentpage},${Endpage},${amount});
 var reporter = "${id}";
 $(".report").click(function(){
 	if(reporter!=undefined&&reporter!=""){

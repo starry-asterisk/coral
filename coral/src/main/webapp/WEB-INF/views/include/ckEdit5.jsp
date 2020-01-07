@@ -16,4 +16,6 @@ ClassicEditor
         } ).catch( error => {
 	console.error( error );
 } );
+
+$("#cke_1_contents").height('500px');
 </script>

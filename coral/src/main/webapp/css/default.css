@@ -186,6 +186,40 @@ footer{
 	box-shadow: 0 0 25px 5px rgba(0,0,0,0.7) inset;
 	
 }
+.btnRow button{
+	width:5%;
+	border:1px solid #ccc;
+	border-right-width:0;
+	margin: 5px 0 5px 0;
+	color:#fe6f5e;
+	background:white;
+}
+.btnRow button:active{
+	box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+}
+.btnRow button:not([disabled]):hover{
+	background:#fe6f5e;
+	border-color:#fe6f5e;
+	color:white;
+}
+.btnRow button:not([disabled]):hover+button{
+	border-left-color:#fe6f5e;
+}
+.btnRow button:first-child{
+	border-radius: 4px;
+	border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.btnRow button:last-child{
+	border-right-width:1px;
+	border-radius: 4px;
+	border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.btnRow button[disabled]{
+	background:#ccc;
+	color:white;
+}
 .basic_button {
     margin: 15px 15px 15px 15px;
     height: 35px;
@@ -196,6 +230,7 @@ footer{
     box-shadow: 0 0 25px 5px rgba(60,64,66,0.05);
 }
 .basic_input{
+	position:relative;
 	width: 90%;
     min-height: 36px;
     border: 1px solid #e1e1ea;
@@ -214,6 +249,23 @@ div.basic_input input[type="file"]{
 	border: 0;
 }
 
+div.basic_input button.fold:active , div.basic_input button.reset:active{
+	box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+}
+div.basic_input button.fold{
+	position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: .5em .75em;
+    border-left: 1px solid #ddd;
+}
+div.basic_input button.reset{
+	position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: .5em .75em;
+    border-right: 1px solid #ddd;
+}
 div.basic_input input[type="file"]+label {
 	width: 100%;
     display: inline-block;
@@ -223,7 +275,12 @@ div.basic_input input[type="file"]+label {
     font-weight: normal;
     margin-bottom: 0;
     border-top: 1px solid #ddd;
-	
+}
+div.basic_input input[type="file"]+label {
+	outline:pink;
+}
+div.basic_input input[type="file"]+label {
+	outline:yellow;
 }
 div.basic_input div.fileList{
 	min-height:30px;
@@ -231,6 +288,16 @@ div.basic_input div.fileList{
 	box-shadow: 0 0 10px 1px rgba(0,0,0,0.05) inset;
 	text-align:left;
 	padding:5px;
+	transition:height 1s;
+}
+.fileList.folded:after{
+	content:'접힌 파일목록';
+	position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+.fileList.folded *{
+	display:none;
 }
 div.basic_input div.fileList hr{
 	margin: 5px;

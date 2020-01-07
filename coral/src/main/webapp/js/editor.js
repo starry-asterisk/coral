@@ -80,6 +80,17 @@ function upload(status){
 	var form = mkForm("/board/write","POST");
 	form.attr("enctype","multipart/form-data");
 	var contents = myEditor.getData().replace(check.dataUrl,"<img:>");
+	if($(".title_area").val()==undefined||$(".title_area").val()==""){
+		alert("제목을 입력하세요");
+		$(".title_area").focus();
+		return;
+	}else if($('.custom-select select option:selected').val()==""){
+		alert("카테고리를 선택하세요");
+		return;
+	}else if(contents==""){
+		alert("내용을 입력하세요");
+		return;
+	}
 	attachmentList.forEach(function(item,index){
 		if(item!=undefined){
 			form.addValue("filesName",item[0]);
@@ -119,13 +130,16 @@ $("input[name=files]").on("change",function(){
     		addAttach(e.target.result, e.target.name, e.target.isImage);
     	}
     }
+    this.type='text';
+    this.value='';
+    this.type='file';
 });
 function delAttach(button){
 	if(button==undefined){
 		$("div.fileList").html("");
 		attachmentList = [];
 	}else{
-		var i = button.data("index");
+		var i = button.data("index")-1;
 		if(attachmentList[i][1].indexOf("image")>-1){
 			var targetIdx = myEditor.getData().indexOf($("img[alt='img']").eq(0).attr("src"));
 			var toIdx = myEditor.getData().indexOf("figure",targetIdx);
@@ -161,3 +175,18 @@ function addAttach(data_url, name, isImage){
 String.prototype.replaceAt = function(fromIdx, toIdx, replacement){
 	return this.substr(0, fromIdx) + replacement+ this.substr(toIdx);
 }
+$("button.fold").click(function(){
+	if($(this).next().hasClass('folded')){
+		$(this).next().removeClass('folded');
+	}else{
+		$(this).next().addClass('folded');
+	}
+});
+$('.user_sub').css({
+    'transition': 'all 1.5s' 
+});
+$(window).scroll(function(){
+    $('.user_sub').css({
+        'top': $(this).scrollTop()
+    });
+});

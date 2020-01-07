@@ -3,6 +3,8 @@ package com.coral.www.User;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -124,5 +126,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean mailVerify(UserDTO dto) throws Exception{
 		return dao.mailVerify(dto);
+	}
+	
+	@Override
+	public boolean checkGrade(String id, String grade) {
+		UserDTO dto = new UserDTO();
+		dto.setId(id);
+		Map<String,Integer> gradeMap = new HashMap<String,Integer>();
+		gradeMap.put("관리자", 3);
+		gradeMap.put("교사", 2);
+		gradeMap.put("학생", 1);
+		return gradeMap.get(dao.getInfo(dto).getGrade())>=gradeMap.get(grade);
 	}
 }

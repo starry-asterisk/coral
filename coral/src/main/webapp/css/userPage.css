@@ -1,0 +1,31 @@
+@charset "UTF-8";
+.userSide{
+	position:fixed;
+	width:250px;
+	min-height:100%;
+	background:grey;
+	left:0;
+	z-index:99;
+}
+.background{
+	padding-left:250px;
+}
+.workSpace{
+	position:relative;
+	width:100%;
+	min-height:1000px;
+	background:inherit;
+	z-index:1;
+}
+footer{
+	position:fixed;
+	bottom:-212.5px;
+	z-index:100;
+	transition:bottom 1.5s;
+	width:100%;
+}
+footer:hover{
+	position:fixed;
+	bottom:-50px;
+	transition:bottom 1.5s;
+}

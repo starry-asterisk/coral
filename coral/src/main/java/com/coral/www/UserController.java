@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.WebUtils;
 import com.coral.www.Cookie.CookieService;
+import com.coral.www.File.FileService;
 import com.coral.www.User.UserDTO;
 import com.coral.www.User.UserService;
 import com.coral.www.application.Sha;
@@ -30,7 +31,8 @@ public class UserController {
 	UserService userService;
 	@Inject
 	CookieService cookieService;
-	
+	@Inject
+	FileService fileService;
 	
 	@RequestMapping(value = "/signUp", method = { RequestMethod.GET })
 	public String signUp(HttpServletRequest request) {
@@ -143,5 +145,20 @@ public class UserController {
 		dto.setMail(email);
 		dto.setMsg(authkey.substring(0,16));
 		return "redirect:/"+"?Code=alert('"+URLEncoder.encode("이메일 인증에 "+(userService.mailVerify(dto)?"성공":"실패")+"했습니다!", "UTF-8")+"')";
+	}
+	
+	@RequestMapping("/userPage")
+	public String userPage(@RequestParam String id,Model model) {
+		
+		return "";
+	}
+	
+	@RequestMapping("/myPage")
+	public String myPage(HttpSession session,Model model) {
+		UserDTO dto = new UserDTO();
+		dto.setId((String)session.getAttribute("id"));
+		model.addAttribute("userInfo", userService.getInfo(dto));
+		model.addAttribute("profileImage", fileService.getAttachment(dto.getId()));
+		return "myPage";
 	}
 }

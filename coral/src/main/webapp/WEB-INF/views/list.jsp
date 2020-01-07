@@ -44,5 +44,14 @@
 <!-- 내부 js -->
 
 <script src="${contextPath}/js/ajax.js" type="text/javascript" charset="utf-8"></script>
-
+<script type="text/javascript">
+$('.user_sub').css({
+    'transition': 'all 1.5s' 
+});
+$(window).scroll(function(){
+    $('.user_sub').css({
+        'top': $(this).scrollTop()
+    });
+});
+</script>
 </html>

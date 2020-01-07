@@ -20,7 +20,7 @@ var check = new Object;
 	check.name = /[가-힣]{1,5}/;
 	check.dataUrl = /\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,[a-z0-9\!\$\&\'\,\(\)\*\+\,\;\=\-\.\_\~\:\@\/\?\%\s]*\s*/gi;
 
-function mkPageBtn(area,currentPage,EndPage,amount){
+function mkPageBtn(area,location,currentPage,EndPage,amount){
 	if(amount==undefined){
 		amount = "";
 	}
@@ -39,20 +39,25 @@ function mkPageBtn(area,currentPage,EndPage,amount){
 		end = EndPage;
 	}
 	area = $(area);
-	area.append(document.createElement("a"));
-	area.children().last().attr("href","/board?page="+1+(amount==""?"":"&amount="+amount));
-	area.children().last().html("<");
+	if(currentPage>1){
+		area.append(document.createElement("button"));
+		area.children().last().attr("onclick","location.href='"+location+"?page="+1+(amount==""?"":"&amount="+amount+"'"));
+		area.children().last().html("<");
+	}
 	for(i=start;i<=end;i++){
-		area.append(document.createElement("a"));
-		area.children().last().attr("href","/board?page="+i+(amount==""?"":"&amount="+amount));
+		area.append(document.createElement("button"));
+		area.children().last().attr("onclick","location.href='"+location+"?page="+i+(amount==""?"":"&amount="+amount+"'"));
 		area.children().last().html(i);
 		if(i==currentPage){
-			area.children().last().css("font-weight","bold");
+			area.children().last().attr("disabled","true");
 		}
 	}
-	area.append(document.createElement("a"));
-	area.children().last().attr("href","/board?page="+EndPage+(amount==""?"":"&amount="+amount));
-	area.children().last().html(">");
+	if(currentPage<EndPage){
+		area.append(document.createElement("button"));
+		area.children().last().attr("onclick","location.href='"+location+"?page="+EndPage+(amount==""?"":"&amount="+amount+"'"));
+		area.children().last().html(">");
+	}
+	$(area).find("button").height($(area).parent().width()/20);
 }
 function report(identifier, identifier_type, reporter, resons){
 	$("#myModal").modal();
@@ -361,9 +366,9 @@ $(document).ready(function(){
 	$(window).scroll(function(){
 		if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
 			$(".ScrollUpButton").css("display","");
-		  } else {
-			  $(".ScrollUpButton").css("display","none");
-		  }
+		} else {
+			$(".ScrollUpButton").css("display","none");
+		}
 	});
 	$(".ScrollUpButton").click(function(){
 		  document.body.scrollTop = 0; // For Safari

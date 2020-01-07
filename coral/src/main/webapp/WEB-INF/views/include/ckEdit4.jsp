@@ -10,7 +10,7 @@ var myEditor = CKEDITOR.replace(document.querySelector( '#editor' ),{
 	   {
 	      // Hide the editor top bar.
 		  $('.cke_top').css('display',CK_Config.display);
-	      console.log(evt);
+		  $("#cke_1_contents").height('500px');
 	   }
 	}
 });

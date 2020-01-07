@@ -8,7 +8,11 @@
 }
 .list_TYPE1 tr:first-child td{
 	border-bottom: 1px solid #e1e1ea;
-	
+	height:30px;	
+}
+.list_TYPE1 tr:last-child td{
+	border-top: 1px solid #e1e1ea;
+	height:30px;
 }
 .list_TYPE1 tr td:nth-child(2) a{
 	display: block;

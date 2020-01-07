@@ -12,4 +12,5 @@ public interface UserService {
 	public boolean isMail(UserDTO dto);
 	public void mail(UserDTO dto) throws Exception;
 	boolean mailVerify(UserDTO dto) throws Exception;
+	public boolean checkGrade(String id, String grade);
 }

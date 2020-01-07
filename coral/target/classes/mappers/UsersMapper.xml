@@ -10,7 +10,14 @@
   		select count(*) from USERS WHERE U_ID=#{id} AND U_PW=#{pw}
   	</select>
   	<select id="getInfo" resultType="com.coral.www.User.UserDTO" parameterType="com.coral.www.User.UserDTO">
-  		select U_ID AS "id", U_NAME AS "name", U_GENDER AS "gender", U_PW AS "pw"  from USERS WHERE U_ID=#{id}
+  		select 
+  			U_ID AS "id", 
+  			U_NAME AS "name", 
+  			U_GENDER AS "gender", 
+  			U_GRADE as "grade",
+  			U_PW AS "pw"  
+  		from 
+  			USERS WHERE U_ID=#{id}
   	</select>
   	<insert id="insertHistory" parameterType="com.coral.www.User.UserDTO">
   		insert into user_history(uh_uid,uh_ip,uh_platform,uh_status) values(#{id},#{ip},#{platform},#{login_status})
