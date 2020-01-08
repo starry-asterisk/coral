@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 import com.coral.www.Cookie.CookieService;
 import com.coral.www.File.FileService;
@@ -147,18 +148,20 @@ public class UserController {
 		return "redirect:/"+"?Code=alert('"+URLEncoder.encode("이메일 인증에 "+(userService.mailVerify(dto)?"성공":"실패")+"했습니다!", "UTF-8")+"')";
 	}
 	
-	@RequestMapping("/userPage")
+	@RequestMapping("/userpage")
 	public String userPage(@RequestParam String id,Model model) {
 		
 		return "";
 	}
 	
-	@RequestMapping("/myPage")
+	@RequestMapping("/mypage")
 	public String myPage(HttpSession session,Model model) {
 		UserDTO dto = new UserDTO();
 		dto.setId((String)session.getAttribute("id"));
-		model.addAttribute("userInfo", userService.getInfo(dto));
 		model.addAttribute("profileImage", fileService.getAttachment(dto.getId()));
+		dto = userService.getInfo(dto);
+		dto.setDate(userService.lastLogin(dto.getId()));
+		model.addAttribute("userInfo", dto);
 		return "myPage";
 	}
 }

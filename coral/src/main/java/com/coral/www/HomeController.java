@@ -15,7 +15,6 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = { RequestMethod.GET, RequestMethod.POST})
 	public String main(HttpServletRequest request) {
-		
 		if(request.getSession().getAttribute("id")!=null) {
 			request.setAttribute("loginform", "include/loginAfter");
 		}else {

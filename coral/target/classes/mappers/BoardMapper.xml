@@ -6,20 +6,26 @@
   	<select id="total" resultType="int" >
   		select count(*) from B where B_STATUS = 'P'
   	</select>
-  	
   	<select id="listPage" parameterType="com.coral.www.Board.BoardDTO" resultType="com.coral.www.Board.BoardDTO" >
-  	<![CDATA[
   		SELECT 
-  		B_NO as "no", 
-  		B_TITLE AS "title", 
-  		B_UID AS "id", 
-  		B_REGDATE as "regdate", 
-  		B_VIEWS as "views", 
-  		B_STATUS as "status" ,
-  		B_RECOMMENDS as "recommends"
-		FROM (SELECT  (RANK() OVER(ORDER BY B_NO DESC))ROWNUMS, B.* FROM B WHERE B_STATUS = 'P' ORDER BY B_NO DESC) 
-		WHERE ROWNUMS > ((#{page}-1)*#{amount}) and ROWNUMS <= (#{page}*#{amount})
-  	]]>
+  			B_NO as "no", 
+  			B_TITLE AS "title", 
+  			B_UID AS "id", 
+  			B_REGDATE as "regdate", 
+  			B_VIEWS as "views", 
+  			B_STATUS as "status" ,
+  			B_RECOMMENDS as "recommends"
+		FROM (
+			SELECT  (RANK() OVER(ORDER BY B_NO DESC))ROWNUMS, B.* 
+			FROM B 
+			WHERE 
+				B_STATUS = 'P'
+			ORDER BY 
+				B_NO DESC) 
+		<![CDATA[
+		WHERE 
+			ROWNUMS > ((#{page}-1)*#{amount}) and ROWNUMS <= (#{page}*#{amount})
+		]]>
   	</select>
   	<select id="newBno" resultType="java.lang.String">
   		select 'B'||LPAD(B_SEQ.NEXTVAL,8,0) from dual

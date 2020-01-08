@@ -1,5 +1,7 @@
 package com.coral.www.User;
 
+import java.util.Date;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -39,5 +41,8 @@ public class UserDAO {
 	public boolean mailVerify(UserDTO dto) {
 		return sqlSession.update(namespace+"mailVerify", dto)==1?true:false;
 		
+	}
+	public UserDTO lastLogin(String id) {
+		return sqlSession.selectOne(namespace+"lastLogin",id);
 	}
 }

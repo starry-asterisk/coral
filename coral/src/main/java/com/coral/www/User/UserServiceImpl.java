@@ -3,6 +3,7 @@ package com.coral.www.User;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -137,5 +138,10 @@ public class UserServiceImpl implements UserService {
 		gradeMap.put("교사", 2);
 		gradeMap.put("학생", 1);
 		return gradeMap.get(dao.getInfo(dto).getGrade())>=gradeMap.get(grade);
+	}
+
+	@Override
+	public Date lastLogin(String id) {
+		return dao.lastLogin(id).getDate();
 	}
 }

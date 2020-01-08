@@ -15,13 +15,21 @@
   			U_NAME AS "name", 
   			U_GENDER AS "gender", 
   			U_GRADE as "grade",
-  			U_PW AS "pw"  
+  			U_PW AS "pw"  ,
+  			U_MAIL AS "mail",
+  			U_PHONE AS "phone"
   		from 
   			USERS WHERE U_ID=#{id}
   	</select>
   	<insert id="insertHistory" parameterType="com.coral.www.User.UserDTO">
   		insert into user_history(uh_uid,uh_ip,uh_platform,uh_status) values(#{id},#{ip},#{platform},#{login_status})
   	</insert>
+  	<select id="lastLogin" parameterType="java.lang.String" resultType="com.coral.www.User.UserDTO">
+  		SELECT UH_UID as "id", MAX(UH_DATE) as "date" FROM UH WHERE UH_UID=#{id} GROUP BY UH_UID
+  	</select>
+  	<select id="getHistory" resultType="com.coral.www.User.UserDTO" parameterType="com.coral.www.User.UserDTO">
+  		SELECT UH_UID, UH_DATE, UH_IP, UH_PLATFORM, UH_STATUS FROM UH WHERE UH_UID=#{id} ORDER BY UH_DATE DESC
+  	</select>
   	<insert id="insertUser" parameterType="com.coral.www.User.UserDTO">
   		insert into u(U_ID,U_PW,U_NAME,U_BIRTH,U_GENDER,U_PHONE,U_ADDRESS,U_COMPANY,U_TEL,U_GRADE,U_MAIL,U_PRIVACY) values(#{id},#{pw},#{name},#{birth},#{gender},#{phone},#{address},#{company},#{tel},#{grade},#{mail},#{privacy})
   	</insert>
