@@ -16,9 +16,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 import com.coral.www.Cookie.CookieService;
+import com.coral.www.File.FileDTO;
 import com.coral.www.File.FileService;
 import com.coral.www.User.UserDTO;
 import com.coral.www.User.UserService;
@@ -161,6 +161,10 @@ public class UserController {
 		model.addAttribute("profileImage", fileService.getAttachment(dto.getId()));
 		dto = userService.getInfo(dto);
 		dto.setDate(userService.lastLogin(dto.getId()));
+		for(FileDTO profile:fileService.getAttachment(dto.getId())) {
+			model.addAttribute("prof_image", profile.getPath());
+		}
+		model.addAttribute("userInfo", dto);
 		model.addAttribute("userInfo", dto);
 		return "myPage";
 	}

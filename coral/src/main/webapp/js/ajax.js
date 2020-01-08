@@ -155,5 +155,29 @@ function login(){
 	form.addValue("remember_me",$("#remember-me").is(":checked"));
 	form.submit();
 }
-
+function profileUpload(tag,image_place){
+	var formData = new FormData(document.createElement("form"));
+	formData.append("file", tag.files[0], tag.files[0].name);
+	$.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: "/ajax/newProfImg",
+        contentType: false,
+        processData: false,
+        data: formData,
+        success: function (data) {
+            console.log("SUCCESS : ", data);
+            $(image_place).html("");
+        	$(image_place).css("background-image","url("+data+")")
+        	$(image_place).css("background-size","cover");
+        },
+        error: function (e) {
+            console.log("ERROR : ", e);
+        }
+    });
+	tag.type = "text";
+	tag.value = undefined;
+	tag.type = "file";
+	
+}
 

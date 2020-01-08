@@ -2,18 +2,26 @@ package com.coral.www;
 
 
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.coral.www.Board.BoardDTO;
+import com.coral.www.File.FileService;
 import com.coral.www.Report.ReasonDTO;
 import com.coral.www.Report.ReportDTO;
 import com.coral.www.Report.ReportService;
@@ -29,6 +37,8 @@ public class AjaxController {
 	UserService userService;
 	@Inject
 	ReportService reportService;
+	@Inject
+	FileService fileService;
 	
 	@ResponseBody
 	@RequestMapping(value = "/search")
@@ -78,5 +88,11 @@ public class AjaxController {
 	public String report(ReportDTO dto,HttpSession session) {
 		dto.setId((String) session.getAttribute("id"));
 		return (reportService.insertReport(dto)!=null)+"";
+	}
+	@Transactional
+	@ResponseBody
+	@RequestMapping(value="/newProfImg",method = { RequestMethod.POST })
+	public String updProfImg(HttpSession session,@RequestParam("file") MultipartFile file) {
+		return fileService.newProfImg(file, (String)session.getAttribute("id"));
 	}
 }

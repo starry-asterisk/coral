@@ -32,10 +32,42 @@
 	box-shadow: 0 0 30px 20px rgba(60,64,66,0.1);
 }
 #profile_image button{
-	width:100%;
-	height:100%;
+	overflow: hidden;
+    width: 100%;
+    height: 100%;
+    box-sizing: content-box;
+    border: 4px solid white;
+    background: white;
+    border-radius: 50%;
+    position: relative;
+    top: -4px;
+    left: -4px;
+    z-index: 0;
 }
-#profile_image svg{
+#profile_image label{
+	position: absolute;
+    width: 25%;
+    height: 25%;
+    border-radius: 50%;
+    background: white;
+    bottom: 0;
+    right: 0;
+    margin: 0;
+    z-index: 1;
+}
+#profile_image>label>svg{
+	color: #aaa;
+    position: absolute;
+    height:1.5em;
+    width:1.5em;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+#profile_image label input{
+	display:none;
+}
+#profile_image>button>svg{
 	color: white;
     position: absolute;
     height:5em;

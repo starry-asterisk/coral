@@ -445,6 +445,37 @@ div.basic_input:hover{
    	text-align: right;
     vertical-align: top;
 }
+.calendar .head *{
+	height: 2em;
+	text-align: center;
+	border: 0;
+}
+.calendar .head td:not(:nth-child(2)){
+	font-size:2em;
+	padding-top:0.55em;
+	margin-top:10px;
+}
+.calendar .head span{
+	font-weight:900;
+	font-size:2.5em;
+	color:#51565d;
+}
+.calendar .head+tr{
+	height: 1em;
+}
+.calendar tr:first-child td:first-child{
+	border-top-left-radius: 1em;
+}
+.calendar tr:first-child td:last-child{
+	border-top-right-radius: 1em;
+}
+.calendar tr:last-child td:first-child{
+	border-bottom-left-radius: 1em;
+}
+.calendar tr:last-child td:last-child{
+	border-bottom-right-radius: 1em;
+}
+
 .C_side{
 	background:#eee;
 	position: absolute;

@@ -8,6 +8,16 @@
   	AF(AF_BNO,AF_KEYNAME,AF_NAME,AF_SIZE,AF_ORDER,AF_PATH)
   	VALUES(#{bno},#{keyname},#{name},#{size},#{order},#{path})
   	</insert>
+  	<update id="update" parameterType="com.coral.www.File.FileDTO">
+  	UPDATE AF  
+  	SET  
+  	AF_KEYNAME = #{keyname}, 
+  	AF_NAME = #{name}, 
+  	AF_SIZE = #{size}, 
+  	AF_ORDER = #{order}, 
+  	AF_PATH = #{path}
+  	WHERE AF_BNO = #{bno}
+  	</update>
   	<select id="selectList" resultType="com.coral.www.File.FileDTO">
   	SELECT 
   	AF_BNO AS "bno",AF_KEYNAME AS "keyname",AF_NAME AS "name",AF_SIZE AS "size",AF_ORDER AS "order",AF_PATH AS "path" 

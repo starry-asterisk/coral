@@ -37,7 +37,17 @@
 		<div class="profile_back"></div>
 		<div class="profile">
 			<div id="profile_image">
-				<button type="button" title="새로운 프로필 이미지"><i class="fas fa-user"></i></button>
+				<label><i class="fas fa-camera"></i><input type="file" id="prof_img_file" name="file" onChange="profileUpload(this,$('#profile_image button'))"></label>
+				<button type="button">
+				<c:choose>
+						<c:when test="${prof_image==''}">
+							<i class="fas fa-user" title="새로운 프로필 이미지"></i>
+						</c:when>
+						<c:otherwise>
+							<img alt="프로필이미지" src="${prof_image}" height="100%">
+						</c:otherwise>
+				</c:choose>
+				</button>
 			</div>
 			<table>
 				<tr>
@@ -95,5 +105,7 @@ $(window).scroll(function(){
 </script>
 <!-- 내부 js -->
 <script src="${contextPath}/js/web-functions.js" type="text/javascript"
+	charset="utf-8"></script>
+	<script src="${contextPath}/js/ajax.js" type="text/javascript"
 	charset="utf-8"></script>
 </html>

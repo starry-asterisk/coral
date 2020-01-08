@@ -467,21 +467,12 @@ function BuildCalendar(JqueryName, date){
 		td = $(document.createElement("td"));
 		tr.append(td);
 		td.attr("colspan","5");
-		td.html("<span style='font-weight:900;font-size:2.5em;color:#51565d;'>"+(origin.Month+1)+"</span><br/>"+origin.Year);
+		td.html("<span>"+(origin.Month+1)+"</span><br/>"+origin.Year);
 		
 		td = $(document.createElement("td"));
 		tr.append(td);
 		td.html("&#62;");
 		td.attr("onClick","calendar.move("+origin.Year+","+(origin.Month+1)+")");
-		
-		tr.children("td").css("height","2em");
-		tr.children("td").css("border","0");
-		tr.children("td").css("text-align","center");
-		
-		var C_btn = tr.children("td:not(:nth-child(2))");
-		C_btn.css("font-size","2em");
-		C_btn.css("padding-top","0.55em");
-		C_btn.css("margin-top","10px");
 		
 		tr = $(document.createElement("tr"));
 		body.append(tr);
@@ -527,15 +518,14 @@ function BuildCalendar(JqueryName, date){
 		tr.append(td);
 		
 		if(origin.Month != date.getMonth()){
-			tr.children("td").last().addClass("none");
-			tr.children("td").last().css("background-size",width*0.036+"px");
+			td.addClass("none");
+			td.css("background-size",width*0.036+"px");
 		}else{
-			tr.children("td").last().attr("id",date.getDate());
+			td.attr("id",date.getDate());
 		}
 		
 		date.setDate(date.getDate()+1);
 	}
-	td = $(".calendar").children("tr:not(:nth-child(1)):not(:nth-child(2))").children("td");
 	if(header){
 		var addSchedule = function(td_date){
 			
@@ -632,7 +622,6 @@ function BuildCalendar(JqueryName, date){
 				$("#end_day").val("");
 			}
 		};
-		td.height(td.height());
 		$("table.calendar tr:not(.head) td:not(.none)").on("click", function(){
 			var td_date = $(this).attr("id");
 			addSchedule(new Date(origin.Year,origin.Month,td_date));
@@ -645,8 +634,6 @@ function BuildCalendar(JqueryName, date){
 				addSchedule(new Date(st_ed[3],st_ed[4],st_ed[5]));
 			}
 		}
-	}else{
-		$(".calendar").find("td").height(td.height());
 	}
 	
 	return {

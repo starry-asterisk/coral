@@ -1,5 +1,6 @@
 package com.coral.www.File;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -11,6 +12,7 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FileService {
@@ -86,6 +88,18 @@ public class FileService {
 	    }
 	    return result;
 	}
+	public boolean delFile(String fileName){ 
+		File file = new File(SAVE_PATH+"/"+fileName);
+		boolean result = false;
+		try {
+			if( file.exists() ){ 
+				if(file.delete()){ 
+					result = true;
+				}
+			}
+		}catch(Exception e) {}
+		return result;
+	}
 	
 	public boolean insert(String[] files, String[] filesType, String[] filesName, String bno){
 		boolean result = true;
@@ -117,5 +131,36 @@ public class FileService {
 
 	public List<FileDTO> getAttachment(String no) {
 		return dao.getList(no);
+	}
+
+
+	public String newProfImg(MultipartFile file, String id) {
+		String result = null;
+		System.out.println("User ID       : "+id);
+		System.out.println("Name          : "+file.getName());
+		System.out.println("Size          : "+file.getSize());
+		System.out.println("Original Name : "+file.getOriginalFilename());
+		try {
+			FileDTO dto = new FileDTO();
+			String pattern = "^\\S+.(?i)(exe)$";
+			if(!Pattern.matches(pattern,file.getOriginalFilename().replace(" ","_").toLowerCase())) {
+				dto = restore(file.getOriginalFilename(),file.getBytes());
+				dto.setBno(id);
+				dto.setOrder(0);
+			}
+			if(getAttachment(id).size()<1) {
+				result = dao.insert(dto)?dto.getPath():null;
+			}else {
+				for(FileDTO files :getAttachment(id)) {
+					delFile(files.getKeyname());
+				}
+				result = dao.update(dto)?dto.getPath():null;
+			}
+		}catch(Exception e) {
+			e.printStackTrace(System.out);
+			//실패시 파일 삭제 구현해 주세요
+		}
+		
+		return result;
 	}
 }
