@@ -699,14 +699,16 @@ String.prototype.replaceAt = function(fromIdx, toIdx, replacement){
  * 
  * 
  */
-setInterval(function(){
-    var timer = new Date();
-    var on = clock(timer.getHours(),timer.getMinutes());
-    $("#clockKR td").css("color","black");
-    on.forEach(function(code){
-    	$("#clockKR td."+code).css("color","white");
-    });
-},1000);
+if($("#clockKR").length!=0){
+	setInterval(function(){
+	    var timer = new Date();
+	    var on = clock(timer.getHours(),timer.getMinutes());
+	    $("#clockKR td").css("color","black");
+	    on.forEach(function(code){
+	    	$("#clockKR td."+code).css("color","white");
+	    });
+	},1000);
+}
 
 function clock(hour, min){
 	var on = [];

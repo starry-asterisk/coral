@@ -46,6 +46,8 @@
 	<interceptors>
     	<interceptor>
         	<mapping path="/board/write"/>         
+        	<mapping path="/mypage"/> 
+        	<mapping path="/myApp/*"/> 
         	<beans:ref bean="LoginInterceptor"/>
     	</interceptor>
 	</interceptors>
