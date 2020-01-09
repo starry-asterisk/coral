@@ -55,6 +55,16 @@
 		</div>
 		<div class="feed_sub_side">
 			<div id="side1">
+				<table width="100%" height="100%">
+        			<tr height="80%">
+            			<td width="25%"></td>
+            			<td></td>
+            			<td width="25%"></td>
+        			</tr>
+        			<tr height="20%">
+            			<td colspan="3"></td>
+        			</tr>
+    			</table>
 			</div>
 			<div id="side2">
 			</div>
@@ -81,5 +91,5 @@
 <script src="/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
 <script src="/js/ajax.js" type="text/javascript" charset="utf-8"></script>
 <script src="/js/weather.js" type="text/javascript" charset="utf-8"></script>
-
+<script type="text/javascript">weather();</script>
 </html>

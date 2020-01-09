@@ -691,3 +691,69 @@ function delPop(){
 String.prototype.replaceAt = function(fromIdx, toIdx, replacement){
 	return this.substr(0, fromIdx) + replacement+ this.substr(toIdx);
 }
+
+/*
+ * 
+ * 한글 시계
+ * 
+ * 
+ * 
+ */
+setInterval(function(){
+    var timer = new Date();
+    var on = clock(timer.getHours(),timer.getMinutes());
+    $("#clockKR td").css("color","black");
+    on.forEach(function(code){
+    	$("#clockKR td."+code).css("color","white");
+    });
+},1000);
+
+function clock(hour, min){
+	var on = [];
+	if(hour==12&&min==0){
+		on = [25,31];
+	}else if(hour==24&&min==0){
+		on = [19,25];
+	}else{
+		on.push(18);
+		if(hour>=12){
+			hour = hour - 12;
+		}
+		if(hour==0){
+			on.push(15);
+			on.push(17);
+		}else if(hour <= 4){
+			on.push(hour);
+		}else if(hour <= 9){
+			on.push(hour*2-5);
+			on.push(hour*2-4);
+		}else{
+			on.push(15);
+			hour = hour - 10;
+			if(hour>0){
+				on.push(15+hour);
+			}
+		}
+		if(min!=0){
+			on.push(36);
+			if(min/10>=1){
+				on.push(24);
+				if(min/10>=2){
+					on.push(18+Math.floor(min/10));
+				}
+			}
+			if(min%10!=0){
+				if(min%10<=4){
+					on.push(25+(min%10));
+				}else if(min%10==5){
+					on.push(32);
+				}else if(min%10==6){
+					on.push(30);
+				}else{
+					on.push(26+(min%10));
+				}
+			}
+		}
+	}
+	return on;
+}

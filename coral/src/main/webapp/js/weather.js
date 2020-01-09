@@ -13,10 +13,8 @@ function weather(city){
 	}else{
 		$.getJSON("https://api.ipify.org?format=jsonp&callback=?",
 				function(json) {
-					console.log(json.ip);
 					$.get('https://ipapi.co/'+json.ip+'/latlong/', function(response){
 						  var latlong = response.split(',');
-						  console.log(latlong);
 						  $.getJSON('https://api.openweathermap.org/data/2.5/weather?lat=' + latlong[0] 
 						  + '&lon=' + latlong[1] 
 						  + '&appid=' + key
@@ -29,18 +27,42 @@ function weather(city){
 	}
 }
 function displayWeather(resp,div){
-	console.log(resp);
 	 var icon = getIcon(resp);
+	 var tag = [];
+	 tag.push($(document.createElement("table")));
+	 tag.push($(document.createElement("tr")));
+	 tag.push($(document.createElement("tr")));
+	 tag.push($(document.createElement("td")));
+	 tag.push($(document.createElement("td")));
+	 tag.push($(document.createElement("td")));
+	 tag.push($(document.createElement("td")));
 	 div.html("");
-	 div.html("<i class='"+icon+"'></i>");
-	 div.css("font-size","3em");
-	 div.append(resp);
-	 div.append(" "+resp.clouds.all+"%<br>");
-	 div.append(resp.main.humidity+"% ");
-	 div.append(resp.main.temp+"°C<br>");
-	 div.append(resp.sys.country);
-	 div.append("-"+resp.name+"<br>");
-	 
+	 div.append(tag[0]);
+	 tag[0].width("100%");
+	 tag[0].height("100%");
+	 tag[0].append(tag[1]);
+	 tag[1].height("80%");
+	 tag[1].append(tag[3]);
+	 tag[3].width("25%");
+	 tag[1].append(tag[4]);
+	 tag[1].append(tag[5]);
+	 tag[5].width("25%");
+	 tag[0].append(tag[2]);
+	 tag[2].height("20%");
+	 tag[2].append(tag[6]);
+	 tag[6].attr("colspan","3");
+	 tag[3].html("<i class='"+icon+"' style='font-size:3em'></i>");
+	 tag[4].append("<span style='font-size:2em'>"+resp.sys.country+" - "+resp.name+"</span><br>");
+	 tag[4].append("<span style='font-size:1.5em'>"+resp.weather[0].description+"</span><br>");
+	 tag[4].append("<span style='font-size:1.5em'>"+resp.main.humidity+"%"+"</span><br>");
+	 tag[4].append("<span style='font-size:1em'>체감온도 "+resp.main.feels_like+"°"+"</span><br>");
+	 tag[5].append("<span style='font-size:2em'>"+resp.main.temp+"°"+"</span><br>");
+	 tag[5].append("<span style='font-size:1em'>"+resp.main.temp_max+"° / "+resp.main.temp_min+"°"+"</span><br>");
+	 var time = new Date();
+	 tag[6].html("<p style='margin-left:2em;'> 날씨 제공 : OpenWeatherMap | 마지막 갱신 시간 "+time.getHours()+":"+time.getMinutes()+"</p>");
+	 tag[6].css("color","#ccc");
+	 tag[6].children("p").css("text-align","left");
+	 tag[4].css("text-align","left");
 }
 function getIcon(resp) {
 	

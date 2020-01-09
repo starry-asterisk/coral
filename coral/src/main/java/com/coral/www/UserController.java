@@ -178,4 +178,12 @@ public class UserController {
 		}
 		return "myApplication/map";
 	}
+	
+	@RequestMapping("/myApp/schedule")
+	public String schedule(HttpServletResponse response, HttpSession session) {
+		if(session.getAttribute("id")==null) {
+			response.setStatus(401);
+		}
+		return "myApplication/schedule";
+	}
 }
