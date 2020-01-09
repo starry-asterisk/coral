@@ -34,7 +34,9 @@ function displayWeather(resp,div){
 	 div.html("");
 	 div.html("<i class='"+icon+"'></i>");
 	 div.css("font-size","3em");
+	 div.append(resp);
 	 div.append(" "+resp.clouds.all+"%<br>");
+	 div.append(resp.main.humidity+"% ");
 	 div.append(resp.main.temp+"°C<br>");
 	 div.append(resp.sys.country);
 	 div.append("-"+resp.name+"<br>");
