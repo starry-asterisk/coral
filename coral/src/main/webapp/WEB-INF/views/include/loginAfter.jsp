@@ -3,4 +3,5 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <a href="/logout" style='color:white'>로그아웃</a>
 <hr/>
-<a class="calendar" width="400" data-header=true schedule="${ pre_schedule}"></a>
+<a href="mypage" style='color:white'>내정보로 이동</a>
+<hr/>

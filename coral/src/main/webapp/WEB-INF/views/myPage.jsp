@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <!-- JQuery -->
@@ -20,11 +19,11 @@
 <!-- 내부 css -->
 
 <link rel="stylesheet" type="text/css"
-	href="${contextPath}/css/default.css" />
+	href="/css/default.css" />
 <link rel="stylesheet" type="text/css"
-	href="${contextPath}/resources/fontawesome/css/all.css" />
+	href="/resources/ext/fontawesome/css/all.css" />
 <link rel="stylesheet" type="text/css"
-	href="${contextPath}/css/userPage.css" />
+	href="/css/userPage.css" />
 
 <head>
 <meta charset="UTF-8">
@@ -38,16 +37,19 @@
 		<div class="profile">
 			<div id="profile_image">
 				<label><i class="fas fa-camera"></i><input type="file" id="prof_img_file" name="file" onChange="profileUpload(this,$('#profile_image button'))"></label>
-				<button type="button">
 				<c:choose>
-						<c:when test="${prof_image==''}">
+					<c:when test="${empty prof_image}">
+						<button type="button" style="background-color:coral">
 							<i class="fas fa-user" title="새로운 프로필 이미지"></i>
-						</c:when>
-						<c:otherwise>
+						</button>
+					</c:when>
+					<c:otherwise>
+						<button type="button">
 							<img alt="프로필이미지" src="${prof_image}" height="100%">
-						</c:otherwise>
+						</button>
+					</c:otherwise>
 				</c:choose>
-				</button>
+				
 			</div>
 			<table>
 				<tr>
@@ -79,20 +81,30 @@
 				</tr>
 			</table>
 		</div>
-		<div class="toolbar btnRow">
-		<button type="button" style="height: 48.1px;">1</button><button type="button" style="height: 48.1px;">1</button><button type="button" style="height: 48.1px;">1</button><button type="button" style="height: 48.1px;">1</button><button type="button" style="height: 48.1px;">1</button><button type="button" style="height: 48.1px;">1</button>
+		<div class="toolbar">
+		<button type="button" onclick="myApp('map','.workSpace');" title="내 정보 관리"><i class="fas fa-users-cog"></i></button>
+		<button type="button" onclick="" title="수강관리"><i class="fas fa-school"></i></button>
+		<button type="button" onclick="" title="활동기록"><i class="fas fa-history"></i></button>
+		<button type="button" onclick="" title="보안"><i class="fas fa-lock"></i></button>
 		</div>
-		<div class="workSpace"></div>
+		<div class="workSpace">
+		<a class="calendar" width="400" data-header=true schedule="${ pre_schedule}"></a>
+		</div>
 	</div>
 
-	<jsp:include page="${contextPath }\common\footer.jsp"></jsp:include>
+	<jsp:include page="\common\footer.jsp"></jsp:include>
 
 
 </body>
 <!-- 외부 js -->
-<script src="${contextPath}/resources/fontawesome/js/all.js" type="text/javascript"
+<script src="/resources/ext/fontawesome/js/all.js" type="text/javascript"
 	charset="utf-8"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d23098cc45488875ac04e03d47349bfd"></script>
+<script type="text/javascript" src="/js/services.js"></script>
+<!-- 내부 js -->
 <script type="text/javascript">
+var address = '${userInfo.address}';
+var company = '${userInfo.company}';
 $('.profile').css({
     'transition': 'all 1s' 
 });
@@ -103,9 +115,8 @@ $(window).scroll(function(){
 });
 
 </script>
-<!-- 내부 js -->
-<script src="${contextPath}/js/web-functions.js" type="text/javascript"
+<script src="/js/web-functions.js" type="text/javascript"
 	charset="utf-8"></script>
-	<script src="${contextPath}/js/ajax.js" type="text/javascript"
+	<script src="/js/ajax.js" type="text/javascript"
 	charset="utf-8"></script>
 </html>

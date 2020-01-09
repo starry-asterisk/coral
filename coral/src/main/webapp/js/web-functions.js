@@ -688,3 +688,6 @@ function delPop(){
 	$(".popup").remove();
 	$(".popup_back").remove();
 }
+String.prototype.replaceAt = function(fromIdx, toIdx, replacement){
+	return this.substr(0, fromIdx) + replacement+ this.substr(toIdx);
+}

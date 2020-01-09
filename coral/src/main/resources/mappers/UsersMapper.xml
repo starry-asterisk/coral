@@ -17,7 +17,9 @@
   			U_GRADE as "grade",
   			U_PW AS "pw"  ,
   			U_MAIL AS "mail",
-  			U_PHONE AS "phone"
+  			U_PHONE AS "phone",
+  			U_ADDRESS AS "address",
+  			U_COMPANY AS "company"
   		from 
   			USERS WHERE U_ID=#{id}
   	</select>

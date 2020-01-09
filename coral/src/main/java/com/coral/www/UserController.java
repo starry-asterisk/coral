@@ -160,12 +160,22 @@ public class UserController {
 		dto.setId((String)session.getAttribute("id"));
 		model.addAttribute("profileImage", fileService.getAttachment(dto.getId()));
 		dto = userService.getInfo(dto);
+		if(dto.getMail().contains("{verify-")) {
+			dto.setMail("미인증 이메일");
+		}
 		dto.setDate(userService.lastLogin(dto.getId()));
 		for(FileDTO profile:fileService.getAttachment(dto.getId())) {
 			model.addAttribute("prof_image", profile.getPath());
 		}
 		model.addAttribute("userInfo", dto);
-		model.addAttribute("userInfo", dto);
 		return "myPage";
+	}
+	
+	@RequestMapping("/myApp/map")
+	public String map(HttpServletResponse response, HttpSession session) {
+		if(session.getAttribute("id")==null) {
+			response.setStatus(401);
+		}
+		return "myApplication/map";
 	}
 }

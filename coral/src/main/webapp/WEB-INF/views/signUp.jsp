@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <!-- JQuery -->
@@ -13,16 +12,16 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <!-- 내부 css -->
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/default.css" />
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/Editor.css" />
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/signup.css" />
+<link rel="stylesheet" type="text/css" href="/css/default.css" />
+<link rel="stylesheet" type="text/css" href="/css/Editor.css" />
+<link rel="stylesheet" type="text/css" href="/css/signup.css" />
 <head>
 <meta charset="UTF-8">
 <title>Coral - 목록</title>
 </head>
 
 <body>
-	<jsp:include page="${contextPath }\common\header2.jsp"></jsp:include>
+	<jsp:include page="\common\header2.jsp"></jsp:include>
 
 	<input type="text" maxlength="20" minlength="8" style="position: absolute;"><input type="password" maxlength="25" minlength="8" style="position: absolute;">
 	<div class="base_">
@@ -156,9 +155,9 @@
 <!-- 외부 js -->
 <script
 	src="https://cdn.ckeditor.com/ckeditor5/15.0.0/classic/ckeditor.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <!-- 내부 js -->
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 $(".reset").on("click",function(){
 	location.href='<%=(request.getHeader("referer") == null
@@ -166,8 +165,8 @@ $(".reset").on("click",function(){
 					: request.getHeader("referer"))%>';
 					});
 </script>
-<script src="${contextPath}/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
-<script src="${contextPath}/js/signUp.js" type="text/javascript" charset="utf-8"></script>
-<script src="${contextPath}/js/ajax.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/signUp.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/ajax.js" type="text/javascript" charset="utf-8"></script>
 
 </html>

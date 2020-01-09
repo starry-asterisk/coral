@@ -172,9 +172,7 @@ function addAttach(data_url, name, isImage){
 	
 	
 }
-String.prototype.replaceAt = function(fromIdx, toIdx, replacement){
-	return this.substr(0, fromIdx) + replacement+ this.substr(toIdx);
-}
+
 $("button.fold").click(function(){
 	if($(this).next().hasClass('folded')){
 		$(this).next().removeClass('folded');

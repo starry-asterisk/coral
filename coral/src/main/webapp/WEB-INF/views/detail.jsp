@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <!-- JQuery -->
@@ -14,8 +13,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <!-- 내부 css -->
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/Editor.css"/>
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/default.css"/>
+<link rel="stylesheet" type="text/css" href="/css/Editor.css"/>
+<link rel="stylesheet" type="text/css" href="/css/default.css"/>
 
 
 <head>
@@ -25,7 +24,7 @@
 
 <body>
 
-<jsp:include page="${contextPath }\common\header2.jsp"></jsp:include>
+<jsp:include page="\common\header2.jsp"></jsp:include>
 
 
 <div class="base_">
@@ -41,7 +40,7 @@
 </div>
 
 <a onclick="history.back()">돌아가기</a>
-<jsp:include page="${contextPath }\common\footer.jsp"></jsp:include>
+<jsp:include page="\common\footer.jsp"></jsp:include>
 
 
 </body>
@@ -51,8 +50,8 @@ var CK_Config = new Object;
 CK_Config.display= 'none';
 CK_Config.isReadonly = true;
 </script>
-<jsp:include page="${contextPath }${include }.jsp" ></jsp:include>
+<jsp:include page="${include }.jsp" ></jsp:include>
 
 <!-- 내부 js -->
-<script src="${contextPath}/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
 </html>

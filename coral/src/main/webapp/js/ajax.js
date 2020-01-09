@@ -156,6 +156,10 @@ function login(){
 	form.submit();
 }
 function profileUpload(tag,image_place){
+	if(!check.tail.test(tag.files[0].name)){
+		alert("이미지가 아닌 업로드 : "+tag.files[0].name);
+		return;
+	}
 	var formData = new FormData(document.createElement("form"));
 	formData.append("file", tag.files[0], tag.files[0].name);
 	$.ajax({
@@ -181,3 +185,35 @@ function profileUpload(tag,image_place){
 	
 }
 
+
+function myApp(servlet,div){
+	$.ajax({
+        type: "GET",
+        url: "/myApp/"+servlet,
+        success: function (data) {
+        	console.log("SUCCESS : True");
+        	/*addHtmlPage(data,div);*/
+        	$(div).html(data);
+        },
+        error: function (e) {
+            console.log("ERROR : ", e);
+        }
+    });
+}
+
+
+function addHtmlPage(data,div){
+	$(div).html("");
+    $(div).append(data.replaceAt(data.indexOf("<script"),data.lastIndexOf("</script>")+9,""));
+    while(data.includes("<script")){
+    	var line = data.substring(data.indexOf("<script"),data.indexOf("</script>")+9);
+    	data = data.replaceAt(data.indexOf("<script"),data.indexOf("</script>")+9);
+    	tag = document.createElement("script");
+    	if(line.indexOf("src=\"")>-1){
+    		tag.src = line.substring(line.indexOf("src=\"")+5, line.indexOf("\"",line.indexOf("src=\"")+5));
+    	}else{
+    		$(tag).html(line.substring(line.indexOf(">")+1,line.indexOf("</script",line.indexOf(">"))));
+    	}
+    	document.getElementsByTagName("head")[0].appendChild(tag);
+    }
+}

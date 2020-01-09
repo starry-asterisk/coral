@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <!-- JQuery -->
@@ -11,11 +10,13 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/resources/ext/fontawesome/css/all.css" />
 
 <!-- 내부 css -->
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/default.css"/>
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/main-page.css"/>
-<link rel="stylesheet" type="text/css" href="${contextPath}/css/list-style.css"/>
+<link rel="stylesheet" type="text/css" href="/css/default.css"/>
+<link rel="stylesheet" type="text/css" href="/css/main-page.css"/>
+<link rel="stylesheet" type="text/css" href="/css/list-style.css"/>
+<link rel="stylesheet" type="text/css" href="/resources/ext/weather-icons-master/css/weather-icons.css"/>
 
 <head>
 <meta charset="UTF-8">
@@ -23,7 +24,7 @@
 </head>
 <body>
 
-<jsp:include page="${contextPath }\common\header1.jsp"></jsp:include>
+<jsp:include page="\common\header1.jsp"></jsp:include>
 
 <button class="main_sub_sideBtn square_btn" id="codeRun" title="실행버튼" style='margin-top:160px'>Java</button>
 <button class="main_sub_sideBtn square_btn" id="Boardlist" title="게시글 목록" style='margin-top:80px'>게시글</button>
@@ -46,7 +47,7 @@
 	</div>
 	<div class="user_sub">
 			<div class="login">
-				<jsp:include page="${contextPath }${loginform }.jsp" ></jsp:include>
+				<jsp:include page="${loginform }.jsp" ></jsp:include>
 			</div>
 	</div>
 	<div class="feed_sub">
@@ -54,7 +55,6 @@
 		</div>
 		<div class="feed_sub_side">
 			<div id="side1">
-			${url}
 			</div>
 			<div id="side2">
 			</div>
@@ -64,11 +64,11 @@
 	</div>
 </div>
 
-<jsp:include page="${contextPath }\common\footer.jsp"></jsp:include>
+<jsp:include page="\common\footer.jsp"></jsp:include>
 
 </body>
 <!-- ACE에디터  -->
-<script src="src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="/resources/ext/ace/ace.js" type="text/javascript" charset="utf-8"></script>
 <script>
 	ace.require("ace/ext/language_tools");
     var editor = ace.edit("editor");
@@ -76,10 +76,10 @@
     editor.session.setMode("ace/mode/java");
     editor.setShowPrintMargin (false);
 </script>
-
+<script src="/resources/ext/fontawesome/js/all.js" type="text/javascript" charset="utf-8"></script>
 <!-- 내부 js -->
-<script src="${contextPath}/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
-<script src="${contextPath}/js/ajax.js" type="text/javascript" charset="utf-8"></script>
-
+<script src="/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/ajax.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/weather.js" type="text/javascript" charset="utf-8"></script>
 
 </html>
