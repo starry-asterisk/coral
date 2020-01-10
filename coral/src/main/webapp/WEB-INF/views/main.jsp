@@ -11,12 +11,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/resources/ext/fontawesome/css/all.css" />
-
+<link rel="stylesheet" type="text/css" href="/resources/ext/weather-icons-master/css/weather-icons.css"/>
 <!-- 내부 css -->
 <link rel="stylesheet" type="text/css" href="/css/default.css"/>
 <link rel="stylesheet" type="text/css" href="/css/main-page.css"/>
 <link rel="stylesheet" type="text/css" href="/css/list-style.css"/>
-<link rel="stylesheet" type="text/css" href="/resources/ext/weather-icons-master/css/weather-icons.css"/>
+
 
 <head>
 <meta charset="UTF-8">

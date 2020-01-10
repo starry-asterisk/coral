@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.coral.www.application.JFileWriter;
+import com.coral.www.like.LikeDTO;
 
 @Service
 public class BoardService {
@@ -32,6 +33,12 @@ public class BoardService {
 	public BoardDTO detail(String no) {
 		dao.viewCntUpd(no);
 		return dao.detail(no);
+	}
+	public boolean likeUpd(String no, int div) {
+		LikeDTO dto = new LikeDTO();
+		dto.setDiv(div);
+		dto.setNo(no);
+		return dao.likeCntUpd(dto);
 	}
 	public String write(BoardDTO dto) {
 		try {

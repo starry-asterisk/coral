@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.coral.www.mappers.ReplyMapper">
+  	<insert id="insert" parameterType="com.coral.www.like.ReplyDTO">
+  	INSERT INTO 
+  		RE(
+  		RE_BNO,
+		RE_NO,
+		RE_UID,
+		RE_CONTENT,
+		RE_STATUS)
+	VALUES(#{bno},#{no},#{id},#{content},'P')
+  	</insert>
+  	<update id="update" parameterType="com.coral.www.like.ReplyDTO">
+  	UPDATE RE SET 
+  	RE_UPDDATE = SYSDATE
+  	<if test="status!=' '">
+  		, RE_STATUS = #{status}
+  	</if>
+  	<if test="content!=null">
+  		, RE_CONTENT = #{content}
+  	</if>
+  	WHERE
+  	RE_BNO = #{bno} AND
+  	RE_NO = #{no} AND
+  	RE_UID = #{id}
+  	</update>
+  	<select id="select" resultType="com.coral.www.like.ReplyDTO">
+  	SELECT 
+  		RE_BNO AS "bno",
+		RE_NO AS "no",
+		RE_UID AS "id",
+		RE_REGDATE AS "regdate",
+		RE_CONTENT AS "content",
+		RE_STATUS AS "status",
+		RE_UPDDATE AS "upddate"
+	FROM
+		RE
+	WHERE
+		RE_BNO = #{bno}
+  	</select>
+  	<select id="count" resultType="int">
+  	SELECT 
+  		count(*)
+	FROM
+		RE
+	WHERE
+		RE_BNO = #{bno}
+  	</select>
+  </mapper>

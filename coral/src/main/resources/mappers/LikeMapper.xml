@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.coral.www.mappers.LikeMapper">
+  	<insert id="insert" parameterType="com.coral.www.like.LikeDTO">
+  	INSERT INTO LK(LK_BNO, LK_UID, LK_DIV) VALUES(#{no},#{id},#{div})
+  	</insert>
+  	<select id="select" resultType="com.coral.www.like.LikeDTO">
+  	SELECT LK_BNO AS "no", LK_UID AS "id", LK_DIV AS "div" FROM LK WHERE LK_BNO = #{no} AND LK_UID = #{id}
+  	<if test="div!=0">
+  		AND LK_DIV = #{div}
+  	</if>
+  	</select>
+  </mapper>

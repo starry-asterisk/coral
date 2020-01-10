@@ -3,5 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <a href="/logout" style='color:white'>로그아웃</a>
 <hr/>
-<a href="mypage" style='color:white'>내정보로 이동</a>
+<a href="/mypage" style='color:white'>내정보로 이동</a>
+<hr/>
+<a href="/board" style='color:white'>게시글 목록보기</a>
 <hr/>

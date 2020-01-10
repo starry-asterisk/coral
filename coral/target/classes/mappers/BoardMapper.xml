@@ -31,7 +31,7 @@
   		select 'B'||LPAD(B_SEQ.NEXTVAL,8,0) from dual
   	</select>
   	<select id="detail" resultType="com.coral.www.Board.BoardDTO">
-  		select B_NO as "no", B_CATEGORY as "category", B_TAG as "tag", B_TITLE as "title", B_CONTENTS as "contents", B_VIEWS as "views", B_ATTACHMENT as "attachment" from b where B_NO = #{no}
+  		select B_NO as "no", B_CATEGORY as "category", B_UID AS "id", B_TAG as "tag", B_TITLE as "title", B_CONTENTS as "contents", B_VIEWS as "views",B_RECOMMENDS as "recommends", B_ATTACHMENT as "attachment" from b where B_NO = #{no}
   	</select>
   	<insert id="write" parameterType="com.coral.www.Board.BoardDTO">
   		INSERT INTO 
@@ -63,5 +63,7 @@
   	<select id="viewCntUpd">
   		UPDATE B SET B_VIEWS = B_VIEWS + 1 WHERE B_NO = #{no}
   	</select>
-  	
+  	<update id="likeCntUpd" parameterType="com.coral.www.like.LikeDTO" >
+  		UPDATE B SET B_RECOMMENDS = B_RECOMMENDS +(#{div}) WHERE B_NO = #{no}
+  	</update>
   </mapper>

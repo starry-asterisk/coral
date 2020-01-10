@@ -48,6 +48,7 @@
         	<mapping path="/board/write"/>         
         	<mapping path="/mypage"/> 
         	<mapping path="/myApp/*"/> 
+        	<mapping path="/ajax/like"/> 
         	<beans:ref bean="LoginInterceptor"/>
     	</interceptor>
 	</interceptors>

@@ -703,7 +703,8 @@ if($("#clockKR").length!=0){
 	setInterval(function(){
 	    var timer = new Date();
 	    var on = clock(timer.getHours(),timer.getMinutes());
-	    $("#clockKR td").css("color","black");
+	    $("#clockKR td").css("transition","color 1s");
+	    $("#clockKR td").css("color","#333");
 	    on.forEach(function(code){
 	    	$("#clockKR td."+code).css("color","white");
 	    });

@@ -22,10 +22,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
     	session.setMaxInactiveInterval(3600);
         /*로그인 중 인가?*/
         if ( obj == null ){
-            response.sendRedirect("/");
+        	if(!request.getServletPath().contains("ajax")) {
+        		response.sendRedirect("/");
+        	}
             return false; 
         }
-         
         return true;
     }
   

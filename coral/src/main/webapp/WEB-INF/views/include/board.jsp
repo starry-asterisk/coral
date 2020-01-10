@@ -34,7 +34,7 @@ var reporter = "${id}";
 $(".report").click(function(){
 	if(reporter!=undefined&&reporter!=""){
 		var reanson = getReason('R');
-		var result = report($(this).prev().html(),"u",reporter,reanson);
+		var result = report($(this).parent().prev().children("span").html(),true,reporter,reanson);
 		$("button.btn.btn-default").on("click",function(){
 			reportSubmit(result.id , result.type , result.reason());
 		});
