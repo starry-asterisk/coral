@@ -260,9 +260,15 @@ function replyList(boardNum, callback){
 	});
 }
 
-function replySend(boardNum, content){
+function replySend(boardNum, place){
+	if(typeof(place)!='String'){
+		var content = $(place).html().replace(/<\/?[a-zA-Z]*\/?>/g,'');
+	}
 	if(content.length==0){
 		alert("내용을 작성하세요");
+		return;
+	}else if(content.length>200){
+		alert("덧글은 200자를 초과 할 수 없습니다");
 		return;
 	}
 	$.ajax({
@@ -277,7 +283,14 @@ function replySend(boardNum, content){
 			alert("통신상태가 완활하지 않습니다");
 		},
 		success : function(data){
-			console.log(data);
+			if(data){
+				alert("댓글 등록에 성공했습니다!");
+				$("#reply").html("");
+				replyList(bno,get);
+				$(place).html("");
+			}else{
+				alert("로그인후 덧글을 달아주시거나 다시 시도해 주세요");
+			}
 		}
 	});
 }
@@ -309,18 +322,24 @@ function replyUpd(value, bno, no){
 	});
 }
 
-function attReply(obj, place){
+function attReply(obj){
+	$("#reply").width("100%");
 	if(obj==false){
 		$("#reply").append(document.createElement("tr"));
 		$("#reply tr").append(document.createElement("td"));
 		$("#reply tr td ").append("댓글이 없습니다");
+		$("#reply tr td ").css("padding-bottom","25px");
+		$("#reply tr td ").css("padding-top","25px");
 	}else{
 		var tr = $(document.createElement("tr"));
-		$("#reply").append(tr);
-		tr.css("border-bottom","1px solid #eee")
+		$("#reply").prepend(tr);
+		if(obj.upddate==null){
+			obj.upddate = obj.regdate;
+		}
+		tr.append("<td>"+obj.upddate.getFullYear()+"/"+(obj.upddate.getMonth()+1)+"/"+obj.upddate.getDate()+" "+obj.upddate.getHours()+":"+obj.upddate.getMinutes()+"</td>");
+		tr = $(document.createElement("tr"));
+		$("#reply").prepend(tr);
 		tr.append("<td>"+obj.id+"</td>");
-		tr.append("<td>"+obj.content+"</td>");
-		tr.append("<td>"+obj.regdate+"</td>");
-		tr.append("<td>"+obj.upddate+"</td>");
+		tr.append("<td rowspan='2'>"+obj.content+"</td>");
 	}
 }

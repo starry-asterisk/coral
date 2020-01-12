@@ -48,7 +48,9 @@
         	<mapping path="/board/write"/>         
         	<mapping path="/mypage"/> 
         	<mapping path="/myApp/*"/> 
-        	<mapping path="/ajax/like"/> 
+        	<mapping path="/ajax/like"/>
+        	<mapping path="/ajax/replySend"/> 
+        	<mapping path="/ajax/replyUpd"/> 
         	<beans:ref bean="LoginInterceptor"/>
     	</interceptor>
 	</interceptors>

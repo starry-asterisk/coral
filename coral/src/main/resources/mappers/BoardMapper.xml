@@ -31,7 +31,7 @@
   		select 'B'||LPAD(B_SEQ.NEXTVAL,8,0) from dual
   	</select>
   	<select id="detail" resultType="com.coral.www.Board.BoardDTO">
-  		select B_NO as "no", B_CATEGORY as "category", B_UID AS "id", B_TAG as "tag", B_TITLE as "title", B_CONTENTS as "contents", B_VIEWS as "views",B_RECOMMENDS as "recommends", B_ATTACHMENT as "attachment" from b where B_NO = #{no}
+  		select B_NO as "no", B_CATEGORY as "category", B_REGDATE as "regdate", B_UID AS "id", B_TAG as "tag", B_TITLE as "title", B_CONTENTS as "contents", B_VIEWS as "views",B_RECOMMENDS as "recommends", B_ATTACHMENT as "attachment" from b where B_NO = #{no}
   	</select>
   	<insert id="write" parameterType="com.coral.www.Board.BoardDTO">
   		INSERT INTO 

@@ -34,6 +34,7 @@
 		<span style="margin:10px;font-size: 1.5em;font-weight:bold;">${board.title }</span>
 		<span style="margin-right:10px;float:right">추천수 : ${board.recommends }</span>
 		<span style="margin-right:10px;float:right">조회수 : ${board.views }</span>
+		<span style="margin-right:10px;float:right">작성일 : <fmt:formatDate pattern = "MM-dd HH:mm" value = "${board.regdate }" /></span>
 		</div>
 		<textarea name="content" id="editor">
 			${board.contents }
@@ -42,13 +43,13 @@
 	<div class="user_sub">
 	<br>
 	
-	<span style="float:left;text-align:left;margin-left:10px">게시글 번호 : ${board.no }<br>작성자        : <a href="/userpage?id=${board.id }">${board.id }</a></span>
-	<button type="button" class="likeBtn" id="report" style="margin-left: 20%;"><i class="fas fa-exclamation-triangle"></i></button>
-	<button type="button" class="likeBtn" id="like"><i class="far fa-thumbs-up"></i></button>
-	<button type="button" class="likeBtn" id="unlike"><i class="far fa-thumbs-down"></i></button>
+	<span style="float:left;text-align:left;margin-left:10px">게시글 번호 : ${board.no }<br>작성자: <a href="/userpage?id=${board.id }">${board.id }</a></span>
+	<button type="button" title="신고" class="likeBtn" id="report" style="margin-left: 20%;"><i class="fas fa-exclamation-triangle"></i></button>
+	<button type="button" title="추천" class="likeBtn" id="like"><i class="far fa-thumbs-up"></i></button>
+	<button type="button" title="비추천" class="likeBtn" id="unlike"><i class="far fa-thumbs-down"></i></button>
 	<br>
 	<hr>
-	<div class="basic_input" style="margin-bottom:30px;overflow: hidden;">
+	<div class="basic_input" style="overflow: hidden;">
 		<div class="fileList">
 			<c:forEach items="${attachment}" var="file" varStatus="status">
 				<c:if test="${status.index!=0}"><hr></c:if>
@@ -59,11 +60,11 @@
 	<hr class="tag">
 	<button id="tag" type="button" onclick="history.back()" style="height:56px;width:100%;margin:20px 0 20px 0;border:0px solid #eee;border-top-width:1px;border-bottom-width:1px;color:#337ab7">돌아가기</button>
 	<div id="newReply" contenteditable style="min-height:90px;padding: 0 70px 0 70px;" placeholder="댓글을 입력해 주세요">댓글을 입력해 주세요</div>
-	<button type="button" class="likeBtn" onclick="$('#newReply').html('');"style="margin-left:75%;"><i class="fas fa-toilet-paper"></i></button>
-	<button type="button" class="likeBtn" onclick="replySend(bno, $('#newReply').html());"><i class="fas fa-paper-plane"></i></button>
-	<hr>
-	<table id="reply">
-	</table>
+	<button type="button" title="글자수 재한" class="likeBtn" id="ReBytelimit" style="width:120px;margin-left: 20px;font-size:1.2em;font-weight:900;"><span>0</span>/200</button>
+	<button type="button" title="리셋 버튼" class="likeBtn" onclick="$('#newReply').html('');$('#ReBytelimit span').html(0);$('#ReBytelimit span').css('color','#333');" style="margin-left:44%;"><i class="fas fa-toilet-paper"></i></button>
+	<button type="button" title="덧글 전송" class="likeBtn" onclick="replySend(bno, $('#newReply'));"><i class="fas fa-paper-plane"></i></button>
+	<div style='overflow-x: hidden;
+    max-height: 438.5px;'><table id="reply"></table></div>
 	</div>
 </div>
 
@@ -119,18 +120,32 @@ $("#newReply").focusout(function(){
 		$(this).html($(this).attr("placeholder"));
 	}
 });
+$("#newReply").on("input",function(){
+	var length = $(this).html().replace(/<\/?[a-zA-Z]*\/?>/g,"").length;
+	$("#ReBytelimit span").html(length);
+	if(length>200){
+		$("#ReBytelimit span").css("color","red");
+	}else{
+		$("#ReBytelimit span").css("color","#333");
+	}
+	
+});
 
 function get(data){
 	if(data==false){
 		attReply(false);
 	}else{
 		data.forEach(function(obj, index){
-			attReply(obj, 'place')
+			obj.regdate = new Date(obj.regdate);
+			if(obj.update!=null&&obj.update!=undefined){
+				obj.update = new Date(obj.update);
+			}
+			attReply(obj);
 		});
 	}
 }
 $("#report").click(function(){
-	if(reporter!=undefined&&reporter!=""){
+	if(id!=undefined&&id!=""){
 		var reanson = getReason('R');
 		var result = report(bno,false,id,reanson);
 		$("button.btn.btn-default").on("click",function(){
@@ -140,6 +155,8 @@ $("#report").click(function(){
 		alert("로그인 이후에 신고기능을 이용할 수 있습니다.");
 	}
 });
+
+
 </script>
 <style>
 hr.tag:after {
@@ -150,6 +167,27 @@ hr.tag:after {
     left: 0;
     padding-top: 5px;
     padding-left: 15px;
+}
+#reply{
+	margin-top:20px;
+	width: 100%;
+    border-top: 1px solid #eee;
+}
+#reply td:nth-child(2){
+	word-break:break-all;
+	height:50px;
+	padding:5px;
+	width: 80%;
+}
+#reply td:not(:nth-child(2)){
+	padding:5px;
+	border-right: 1px solid #eee;
+}
+#reply tr{
+	border-bottom:1px solid #eee;
+}
+#reply tr:last-child{
+	border-bottom:0;
 }
 </style>
 </html>
