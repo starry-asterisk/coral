@@ -133,11 +133,11 @@
 		</div>
 		<div class="toolbar">
 		
-		<button type="button" onclick="myApp('schedule','.workSpace');" title="일정관리"><i class="fas fa-calendar-alt"></i></button>
-		<button type="button" onclick="myApp('map','.workSpace');" title="내 정보 관리"><i class="fas fa-users-cog"></i></button>
-		<button type="button" onclick="" title="수강관리"><i class="fas fa-school"></i></button>
-		<button type="button" onclick="" title="활동기록"><i class="fas fa-history"></i></button>
-		<button type="button" onclick="" title="보안"><i class="fas fa-lock"></i></button>
+		<button type="button" onclick="myApp('schedule','.workSpace');" data-toggle="tooltip" data-placement="bottom" title="일정관리"><i class="fas fa-calendar-alt"></i></button>
+		<button type="button" onclick="myApp('map','.workSpace');" data-toggle="tooltip" data-placement="bottom" title="내 정보 관리"><i class="fas fa-users-cog"></i></button>
+		<button type="button" onclick="" data-toggle="tooltip" data-placement="bottom" title="수강관리"><i class="fas fa-school"></i></button>
+		<button type="button" onclick="" data-toggle="tooltip" data-placement="bottom" title="활동기록"><i class="fas fa-history"></i></button>
+		<button type="button" onclick="" data-toggle="tooltip" data-placement="bottom" title="보안"><i class="fas fa-lock"></i></button>
 		</div>
 		<div class="workSpace">
 		
@@ -165,7 +165,7 @@ $(window).scroll(function(){
         'top': $(this).scrollTop()
     });
 });
-
+$('[data-toggle="tooltip"]').tooltip();
 </script>
 <script src="/js/web-functions.js" type="text/javascript"
 	charset="utf-8"></script>

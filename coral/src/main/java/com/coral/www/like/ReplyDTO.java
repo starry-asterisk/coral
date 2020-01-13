@@ -14,6 +14,7 @@ public class ReplyDTO {
 	@DateTimeFormat(pattern="yy-MM-dd HH:mm:ss")
 	private Date upddate;
 	private char status;
+	private String path;
 	public String getBno() {
 		return bno;
 	}
@@ -55,5 +56,11 @@ public class ReplyDTO {
 	}
 	public void setStatus(char status) {
 		this.status = status;
+	}
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
 	}
 }

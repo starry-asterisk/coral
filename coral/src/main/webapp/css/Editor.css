@@ -4,10 +4,20 @@
 }
 .ck-editor__editable_inline {
     min-height: 800px;
+    text-align:center;
+}
+.ck-editor__editable_inline * {
+    margin:auto;
+}
+.ck-editor__editable_inline[contenteditable=false] p:first-child{
+	text-align: left;
+    padding-bottom: 12.6px;
+    border-bottom: 1px solid #bbb;
+    margin-bottom:25px;
 }
 .title_area{
 	margin-bottom: 15px;
-    height: 50px;
+    min-height: 50px;
     text-align: left;
     background-color:white;
 	border: 1px solid #e1e1ea;
@@ -65,12 +75,18 @@
 	height:40px;
 	margin-right:10px;
 }
-.likeBtn:hover:not(:active){
+.likeBtn:hover:not(:active), .reEditBtn:hover:not(:active){
 	border-radius:0.5em;
 	border:3px solid skyblue;
 }
-.likeBtn:active{
+.likeBtn:active, .reEditBtn:active{
 	border-radius:0.5em;
 	border: 1px solid rgba(0,0,0,0.25);
 	box-shadow: 0 0 10px 1px rgba(0,0,0,0.2) inset;
+}
+.reEditBtn{
+	width: 2em;
+    height: 2em;
+    margin: 10px;
+    font-size: 3em;
 }

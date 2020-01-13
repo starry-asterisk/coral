@@ -65,7 +65,11 @@ function report(identifier, identifier_type, reporter, resons){
 	var body = $(".modal-body");
 	var title = $(".modal-title");
 	var button = $("button.btn.btn-default");
-	title.html("이용자 신고하기");
+	if(identifier_type){
+		title.html("이용자 신고하기");
+	}else{
+		title.html("게시물 신고하기");
+	}
 	button.html("신고");
 	body.html("");
 	body.append("<span style='line-height:46px;'>피 신고 대상</span>");
@@ -676,7 +680,7 @@ function mkPop(e, contents){
 	contents.addClass("popup");
 	$('body').append(contents);
 	contents.css("position","absolute");
-	contents.css("top",e.pageY+30);
+	contents.css("top",e.pageY+20);
 	contents.css("left",e.pageX-61);
 	$(".popup").after(document.createElement("div"));
 	$(".popup+div").addClass("popup_back");

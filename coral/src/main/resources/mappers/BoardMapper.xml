@@ -14,10 +14,11 @@
   			B_REGDATE as "regdate", 
   			B_VIEWS as "views", 
   			B_STATUS as "status" ,
-  			B_RECOMMENDS as "recommends"
+  			B_RECOMMENDS as "recommends",
+  			"replyCnt" as "amount"
 		FROM (
-			SELECT  (RANK() OVER(ORDER BY B_NO DESC))ROWNUMS, B.* 
-			FROM B 
+			SELECT  (RANK() OVER(ORDER BY B_NO DESC))ROWNUMS, BOARD_LIST.* 
+			FROM BOARD_LIST 
 			WHERE 
 				B_STATUS = 'P'
 			ORDER BY 

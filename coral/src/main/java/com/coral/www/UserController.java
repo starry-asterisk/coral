@@ -158,7 +158,6 @@ public class UserController {
 	public String myPage(HttpSession session,Model model) {
 		UserDTO dto = new UserDTO();
 		dto.setId((String)session.getAttribute("id"));
-		model.addAttribute("profileImage", fileService.getAttachment(dto.getId()));
 		dto = userService.getInfo(dto);
 		if(dto.getMail().contains("{verify-")) {
 			dto.setMail("미인증 이메일");

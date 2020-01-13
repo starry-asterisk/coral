@@ -14,7 +14,7 @@
 	<c:forEach var= "list" items="${BoardList}">
 		<tr>
 			<td>${list.no }</td>
-			<td><a href="/board/detail?bno=${list.no }" title="${list.title }">${list.title }</a></td>
+			<td><a href="/board/detail?bno=${list.no }" title="${list.title }(${list.amount })">${list.title }(${list.amount })</a></td>
 			<td><span>${list.id }</span></td>
 			<td><button class="report"></button></td>
 			<td><fmt:formatDate pattern = "MM-dd HH:mm" value = "${list.regdate }" /></td>

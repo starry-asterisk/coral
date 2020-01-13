@@ -30,13 +30,11 @@
 
 <div class="base_">
 	<div class="board">
-		<div class="title_area" style="line-height:50px">
-		<span style="margin:10px;font-size: 1.5em;font-weight:bold;">${board.title }</span>
-		<span style="margin-right:10px;float:right">추천수 : ${board.recommends }</span>
-		<span style="margin-right:10px;float:right">조회수 : ${board.views }</span>
-		<span style="margin-right:10px;float:right">작성일 : <fmt:formatDate pattern = "MM-dd HH:mm" value = "${board.regdate }" /></span>
+		<div class="title_area" style="line-height:50px;font-size: 1.5em;font-weight:bold;padding-left:25px;">
+		${board.title }
 		</div>
 		<textarea name="content" id="editor">
+		추천수 : ${board.recommends }           조회수 : ${board.views }           작성일 : <fmt:formatDate pattern = "MM-dd HH:mm" value = "${board.regdate }" />
 			${board.contents }
 		</textarea>
 	</div>
@@ -63,8 +61,9 @@
 	<button type="button" title="글자수 재한" class="likeBtn" id="ReBytelimit" style="width:120px;margin-left: 20px;font-size:1.2em;font-weight:900;"><span>0</span>/200</button>
 	<button type="button" title="리셋 버튼" class="likeBtn" onclick="$('#newReply').html('');$('#ReBytelimit span').html(0);$('#ReBytelimit span').css('color','#333');" style="margin-left:44%;"><i class="fas fa-toilet-paper"></i></button>
 	<button type="button" title="덧글 전송" class="likeBtn" onclick="replySend(bno, $('#newReply'));"><i class="fas fa-paper-plane"></i></button>
+	<hr style='margin-bottom:0;'>
 	<div style='overflow-x: hidden;
-    max-height: 438.5px;'><table id="reply"></table></div>
+    max-height: 390.5px;'><table id="reply"></table></div>
 	</div>
 </div>
 
@@ -121,7 +120,7 @@ $("#newReply").focusout(function(){
 	}
 });
 $("#newReply").on("input",function(){
-	var length = $(this).html().replace(/<\/?[a-zA-Z]*\/?>/g,"").length;
+	var length = $(this).html().replace( /[<][^>]*[>]/gi,"").length;
 	$("#ReBytelimit span").html(length);
 	if(length>200){
 		$("#ReBytelimit span").css("color","red");
@@ -169,22 +168,66 @@ hr.tag:after {
     padding-left: 15px;
 }
 #reply{
-	margin-top:20px;
 	width: 100%;
-    border-top: 1px solid #eee;
+	position: relative;
 }
-#reply td:nth-child(2){
-	word-break:break-all;
-	height:50px;
-	padding:5px;
-	width: 80%;
+#reply tr:nth-child(2n-1) td:nth-child(1) button{
+	width:60px;
+	height:60px;
+	overflow:hidden;
+	border-radius:100%;
+	border:1px solid #eee;
+	box-shadow: 0 0 17px 2px rgba(60,64,66,0.05);
+	margin:24px;
+	font-size: 2.5em;
+    font-weight: 900;
 }
-#reply td:not(:nth-child(2)){
-	padding:5px;
-	border-right: 1px solid #eee;
+#reply tr:nth-child(2n-1) td:nth-child(1) button img{
+	width:60px;
 }
-#reply tr{
+#reply tr:nth-child(2n){
 	border-bottom:1px solid #eee;
+}
+#reply tr:nth-child(2n-1) td:nth-child(2) button{
+	float: right;
+    margin-right: 5%;
+}
+#reply tr:nth-child(2n) td{
+	vertical-align:top;
+	text-align:left;
+	padding-bottom:20px;
+}
+#reply tr:nth-child(2n-1) td:nth-child(2){
+	padding-bottom: 10px;
+    padding-top: 30px;
+    height: 1.5em;
+    text-align:left;
+}
+#reply tr:nth-child(2n-1) td:nth-child(3){
+	position: absolute;
+    z-index: 2;
+    width: 0;
+    height: 100%;
+    right: 0;
+    background:pink;
+    transition: width 1s;
+    overflow:hidden;
+}
+#reply tr:nth-child(2n-1) td:nth-child(3) div{
+	position: absolute;
+    width: 459px;
+    max-width:100%;
+    height: 100%;
+    left: 0;
+}
+
+#reply tr:nth-child(2n-1) td:nth-child(1){
+	width:108px;
+	vertical-align: top;
+}
+#reply tr:nth-child(2n-1)>td>span{
+	margin-left: 5px;
+    color: #aaa;
 }
 #reply tr:last-child{
 	border-bottom:0;

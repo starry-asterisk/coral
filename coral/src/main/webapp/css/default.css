@@ -498,14 +498,14 @@ table.calendar .job{
 	min-width:200px;
 	min-height:100px;
 	z-index:999;
-	background: #eee;
+	background: white;
     border-radius: 7px;
     border: 1px solid #ddd;
     font-size:1em;
     color: #000;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 23px rgba(0, 0, 0, 0.18);
 }
-.popup:after{
+.popup:before{
 	content:" ";
 	position:absolute;
 	width:0;
@@ -515,10 +515,25 @@ table.calendar .job{
 	border-bottom-color: transparent;
 	border-left-color: transparent;
 	border-right-color: transparent;
-	transform:rotate(45deg);
+	transform:rotate(180deg);
 	z-index:-10;
 	left:40px;
-	top:-21px;
+	top:-40px;
+}
+.popup:after{
+	content: " ";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 19px solid;
+    border-color: white;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    transform: rotate(180deg);
+    z-index: -10;
+    left: 41px;
+    top: -38px;
 }
 .popup_back{
 	position:fixed;

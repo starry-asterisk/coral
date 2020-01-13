@@ -17,7 +17,6 @@
 	<resources mapping="/css/**" location="/css/" />
 	<resources mapping="/js/**" location="/js/" />
 	<resources mapping="/.well-known/**" location="/ssl/" />
-	<resources mapping="/src-noconflict/**" location="/src-noconflict/" />
 	<resources mapping="/favicon.ico" location="/resources/favicon.ico" />
 	<resources location="file:C:/coding/upload/" mapping="/upload/*"/>
 

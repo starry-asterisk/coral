@@ -16,7 +16,7 @@
   	<update id="update" parameterType="com.coral.www.like.ReplyDTO">
   	UPDATE RE SET 
   	RE_UPDDATE = SYSDATE
-  	<if test="status!=' '">
+  	<if test="status!=' ' and status!=null and status!=''">
   		, RE_STATUS = #{status}
   	</if>
   	<if test="content!=null">
@@ -35,11 +35,15 @@
 		RE_REGDATE AS "regdate",
 		RE_CONTENT AS "content",
 		RE_STATUS AS "status",
-		RE_UPDDATE AS "upddate"
+		RE_UPDDATE AS "upddate",
+		AF_PATH AS "path"
 	FROM
-		RE
+		REPLY_LIST
 	WHERE
 		RE_BNO = #{bno}
+	AND
+		RE_STATUS = 'P'
+	ORDER BY RE_REGDATE
   	</select>
   	<select id="count" resultType="int">
   	SELECT 
