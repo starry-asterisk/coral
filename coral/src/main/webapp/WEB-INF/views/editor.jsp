@@ -29,9 +29,9 @@
 
 <div class="base_">
 	<div class="board">
-		<input type="text" class="title_area" placeholder="제목">
+		<input type="text" class="title_area" placeholder="제목" value="${board.title }">
 		<textarea name="content" id="editor">
-			${content }
+			${contents }
 		</textarea>
 	</div>
 	<div class="user_sub">

@@ -34,7 +34,7 @@
 		${board.title }
 		</div>
 		<textarea name="content" id="editor">
-		추천수 : ${board.recommends }           조회수 : ${board.views }           작성일 : <fmt:formatDate pattern = "MM-dd HH:mm" value = "${board.regdate }" />
+		<p>추천수 : ${board.recommends } 조회수 : ${board.views } 작성일 : <fmt:formatDate pattern = "MM-dd HH:mm" value = "${board.regdate }" /></p>
 			${board.contents }
 		</textarea>
 	</div>
@@ -193,9 +193,11 @@ hr.tag:after {
     margin-right: 5%;
 }
 #reply tr:nth-child(2n) td{
-	vertical-align:top;
-	text-align:left;
-	padding-bottom:20px;
+	vertical-align: top;
+    text-align: left;
+    padding-bottom: 20px;
+    padding-right: 3%;
+    word-break: break-all;
 }
 #reply tr:nth-child(2n-1) td:nth-child(2){
 	padding-bottom: 10px;
@@ -215,12 +217,12 @@ hr.tag:after {
 }
 #reply tr:nth-child(2n-1) td:nth-child(3) div{
 	position: absolute;
-    width: 459px;
-    max-width:100%;
+    width: 442px;
+    min-width: 100%;
+    max-width: 459px;
     height: 100%;
     left: 0;
 }
-
 #reply tr:nth-child(2n-1) td:nth-child(1){
 	width:108px;
 	vertical-align: top;
