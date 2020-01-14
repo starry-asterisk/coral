@@ -11,7 +11,7 @@ public class JTester {
 		cmd = new Cmd();
 	}
 	public JTester(String fileName, String txt) {
-		fileWriter = new JFileWriter(fileName+".java",txt);
+		fileWriter = new JFileWriter(fileName+".java",txt,"EUC-KR");
 		this.fileName = fileName;
 		cmd = new Cmd();
 	}

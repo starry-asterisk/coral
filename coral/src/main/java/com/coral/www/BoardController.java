@@ -13,6 +13,7 @@ import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -124,6 +125,7 @@ public class BoardController {
 			filesType=null;
 		}
 		dto.setId((String) request.getSession().getAttribute("id"));
-		return "redirect:/board"+"?Code=alert('"+URLEncoder.encode(fileService.update(files , filesType , filesName , service.update(dto))?(dto.getStatus()=='N'?"게시글이 삭제되었습니다":"게시글이 등록되었습니다"):"등록에 실패했습니다", "UTF-8")+"');";
+		return "redirect:/board"+"?Code=alert('"+URLEncoder.encode(fileService.update(files , filesType , filesName , service.update(dto))?(dto.getStatus()=='N'?"게시글이 삭제되었습니다":"게시글이 수정되었습니다"):"수정에 실패했습니다", "UTF-8")+"');";
 	}
+
 }

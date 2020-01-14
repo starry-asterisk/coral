@@ -160,7 +160,7 @@ public class UserController {
 		dto.setId((String)session.getAttribute("id"));
 		dto = userService.getInfo(dto);
 		if(dto.getMail().contains("{verify-")) {
-			dto.setMail("미인증 이메일");
+			dto.setMail("P");
 		}
 		dto.setDate(userService.lastLogin(dto.getId()));
 		for(FileDTO profile:fileService.getAttachment(dto.getId())) {

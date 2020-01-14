@@ -171,7 +171,7 @@ function delAttach(button){
 	}else{
 		var i = button.data("index")-1;
 		if(attachmentList[i][3]){
-			var targetIdx = myEditor.getData().indexOf($("img[alt='img']").eq(0).attr("src"));
+			var targetIdx = myEditor.getData().indexOf(attachmentList[i][2]);
 			var toIdx = myEditor.getData().indexOf("figure",targetIdx);
 			var fromIdx = myEditor.getData().lastIndexOf("figure",targetIdx);
 			myEditor.setData(myEditor.getData().replaceAt(fromIdx,toIdx,""));

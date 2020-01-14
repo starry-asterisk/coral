@@ -67,14 +67,15 @@
   			B_ATTACHMENT = #{attachment}
   		WHERE 
   			B_UID = #{id} AND
-  			B_NO = #{no}
+  			B_NO = #{no} AND
+  			B_STATUS != 'N'
   	</update>
   	
   	<select id="categorylist" resultType="com.coral.www.Board.CategoryDTO" >
   		select CA_CODE AS "code", CA_NAME AS "name", CA_PERMISSION AS "permission" from CA
   	</select>
   	<select id="viewCntUpd">
-  		UPDATE B SET B_VIEWS = B_VIEWS + 1 WHERE B_NO = #{no}
+  		UPDATE B SET B_VIEWS = B_VIEWS + 1 WHERE B_NO = #{no} 
   	</select>
   	<update id="likeCntUpd" parameterType="com.coral.www.like.LikeDTO" >
   		UPDATE B SET B_RECOMMENDS = B_RECOMMENDS +(#{div}) WHERE B_NO = #{no}

@@ -71,7 +71,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>${userInfo.mail}</td>
+					<td>${userInfo.mail=="P"?"미인증 이메일":userInfo.mail}</td>
 				</tr>
 				<tr>
 					<td>${userInfo.phone}</td>
@@ -154,6 +154,10 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d23098cc45488875ac04e03d47349bfd"></script>
 <script type="text/javascript" src="/js/services.js"></script>
 <!-- 내부 js -->
+<script src="/js/web-functions.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="/js/ajax.js" type="text/javascript"
+	charset="utf-8"></script>
 <script type="text/javascript">
 var address = '${userInfo.address}';
 var company = '${userInfo.company}';
@@ -166,9 +170,6 @@ $(window).scroll(function(){
     });
 });
 $('[data-toggle="tooltip"]').tooltip();
+myApp('map','.workSpace');
 </script>
-<script src="/js/web-functions.js" type="text/javascript"
-	charset="utf-8"></script>
-	<script src="/js/ajax.js" type="text/javascript"
-	charset="utf-8"></script>
 </html>

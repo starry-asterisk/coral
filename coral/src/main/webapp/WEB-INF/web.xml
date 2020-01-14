@@ -66,4 +66,9 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	<error-page>
+		<location>/error</location>
+		<exception-type>org.springframework.web.multipart.MaxUploadSizeExceededException</exception-type>
+    	<location>/error?error=aaa</location>
+	</error-page>
 </web-app>

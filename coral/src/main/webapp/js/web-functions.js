@@ -617,7 +617,7 @@ function BuildCalendar(JqueryName, date){
 					}
 					move.setDate(move.getDate()+1);
 				}
-				$(".C_side").find("tr:nth-child(2) td").append((start_day.getMonth()+1)+"/"+start_day.getDate()+"-"+(end_day.getMonth()+1)+"/"+end_day.getDate()+":"+(sum+1)+"day<br/>");
+				contents.find("tr:nth-child(2) td").append((start_day.getMonth()+1)+"/"+start_day.getDate()+"-"+(end_day.getMonth()+1)+"/"+end_day.getDate()+":"+(sum+1)+"day<br/>");
 				body.attr("schedule",
 						(body.attr("schedule")!=undefined?body.attr("schedule"):"")+
 						start_day.getFullYear()+"/"+start_day.getMonth()+"/"+start_day.getDate()+

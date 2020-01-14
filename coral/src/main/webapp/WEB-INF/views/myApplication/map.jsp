@@ -2,7 +2,22 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-			<div id="map" style="width:30%;padding-top:30%;"></div>
+<table class="map">
+  <tr>
+    <td>프로필</td>
+    <td>기본연락처</td>
+  </tr>
+  <tr>
+  	<td>개인정보 공개여부</td>
+    <td>비밀번호 변경</td>
+  </tr>
+  <tr>
+    <td>회사연락처</td>
+    <td><div id="map"></div></td>
+  </tr>
+</table>
+
+			
 <script>
 		var container = document.getElementById('map');
 		var options = {
