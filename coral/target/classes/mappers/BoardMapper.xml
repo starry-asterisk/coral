@@ -57,6 +57,18 @@
   					#{attachment}
   				)
   	</insert>
+  	<update id="update" parameterType="com.coral.www.Board.BoardDTO">
+  		UPDATE B SET 
+  			B_CATEGORY = #{category},
+  			B_TAG = #{tag},
+  			B_TITLE = #{title},
+  			B_CONTENTS = #{contents},
+  			B_STATUS = #{status},
+  			B_ATTACHMENT = #{attachment}
+  		WHERE 
+  			B_UID = #{id} AND
+  			B_NO = #{no}
+  	</update>
   	
   	<select id="categorylist" resultType="com.coral.www.Board.CategoryDTO" >
   		select CA_CODE AS "code", CA_NAME AS "name", CA_PERMISSION AS "permission" from CA

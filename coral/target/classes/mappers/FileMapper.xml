@@ -22,7 +22,16 @@
   	SELECT 
   	AF_BNO AS "bno",AF_KEYNAME AS "keyname",AF_NAME AS "name",AF_SIZE AS "size",AF_ORDER AS "order",AF_PATH AS "path" 
   	FROM AF
-  	WHERE AF_BNO = #{bno} 
+  	WHERE AF_BNO = #{bno}
   	ORDER BY "order"
   	</select>
+  	<update id="delete">
+  	DELETE 
+  	FROM AF
+  	WHERE
+  		AF_BNO = #{bno}
+  	<if test="order!=-1">
+		AND AF_ORDER = #{order}
+  	</if>
+  	</update>
   </mapper>

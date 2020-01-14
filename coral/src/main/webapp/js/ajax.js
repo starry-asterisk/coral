@@ -159,7 +159,7 @@ function login(){
 	form.submit();
 }
 function profileUpload(tag,image_place){
-	if(!check.tail.test(tag.files[0].name)){
+	if(!check.tail.test(tag.files[0].name.toLowerCase())){
 		alert("이미지가 아닌 업로드 : "+tag.files[0].name);
 		return;
 	}

@@ -31,12 +31,12 @@
 	<div class="board">
 		<input type="text" class="title_area" placeholder="제목" value="${board.title }">
 		<textarea name="content" id="editor">
-			${contents }
+			${board.contents }
 		</textarea>
 	</div>
 	<div class="user_sub">
 		<input type="text" class="basic_input" placeholder="작성자" readonly value="${id}">
-		<input type="text" class="basic_input" placeholder="예약일자">
+		<input type="text" class="basic_input" placeholder="예약일자" value="${board.upddate!=null?board.upddate:board.regdate}" readonly="${board.upddate!=null?false:(board.regdate!=null)}">
 		<div class="basic_input" style="margin-bottom:30px;overflow: hidden;">
 			<button class="reset" onclick="$($('.fileList')[0]).find('button').trigger('click')">리셋</button>
     		<button class="fold">접기</button>
@@ -60,10 +60,9 @@
   		</select>
 		</div>
 		<div class="tag_form" placeholder="태그 입력"><input type="text" value="" maxlength="25" ></div>
-		<button type="button" class="basic_button" onclick="upload('P')">발행</button>
-		<button type="button" class="basic_button" onclick="upload('S')">임시저장</button>
+		<button type="button" class="basic_button" onclick="upload('P',${isNew!=false})">${isNew!=false?'발행':'수정완료'}</button>
+		<button type="button" class="basic_button" onclick="upload(${isNew!=false?'\'S\'':'\'N\''},${isNew!=false})">${isNew!=false?'임시저장':'삭제'}</button>
 	</div>
-	${attachment}
 </div>
 
 
@@ -82,4 +81,25 @@ CK_Config.isReadonly = false;
 <script src="/js/editor.js"></script>
 <script src="/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
 <script src="/js/ajax.js"></script>
+<script type="text/javascript">
+var bno  = "${board.no }";
+if(${board.tag!=null}){
+	var tags = '${board.tag}';
+	tags = tags.split("#");
+	tags.forEach(function(tag){
+		if(tag!=null&&tag!=''&&tag!=undefined){
+			addTag(tag);
+		}
+	});
+}
+
+if(${board.category!=null}){
+	var category = '${board.category}';
+	$("option[value="+category+"]").attr("selected","selected");
+}
+
+<c:forEach items="${attachment}" var="file">
+loadAttach("${file.path}","${file.name}",${file.image});
+</c:forEach>
+</script>
 </html>

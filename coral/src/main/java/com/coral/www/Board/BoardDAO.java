@@ -30,7 +30,6 @@ public class BoardDAO {
 		int result = sqlSession.insert(namespace+"write",dto);
 		return result==1;
 	}
-	
 	public BoardDTO detail(String no) {
 		return sqlSession.selectOne(namespace+"detail",no);
 	}
@@ -43,6 +42,10 @@ public class BoardDAO {
 	}
 	public boolean likeCntUpd(LikeDTO dto) {
 		int result = sqlSession.update(namespace+"likeCntUpd",dto);
+		return result==1;
+	}
+	public boolean update(BoardDTO dto) {
+		int result = sqlSession.update(namespace+"update",dto);
 		return result==1;
 	}
 }

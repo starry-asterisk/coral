@@ -53,4 +53,17 @@ public class BoardService {
 			return null;
 		}
 	}
+
+	public String update(BoardDTO dto) {
+		try {
+			if(dto.getContents().getBytes().length>1000) {
+				new JFileWriter("board\\"+dto.getNo()+".txt",dto.getContents());
+				dto.setContents("${linked}board\\"+dto.getNo()+".txt");
+			}
+			return dao.update(dto)?dto.getNo():null;
+		}catch(Exception e) {
+			new JFileWriter().delFile("board\\"+dto.getNo()+".txt");
+			return null;
+		}
+	}
 }

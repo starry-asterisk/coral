@@ -13,6 +13,7 @@ public class FileDTO {
 	private String size;
 	private int order;
 	private String path;
+	private boolean isImage;
 	public String getBno() {
 		return bno;
 	}
@@ -48,5 +49,11 @@ public class FileDTO {
 	}
 	public void setPath(String path) {
 		this.path = path;
+	}
+	public boolean isImage() {
+		return isImage;
+	}
+	public void setImage(boolean isImage) {
+		this.isImage = isImage;
 	}
 }

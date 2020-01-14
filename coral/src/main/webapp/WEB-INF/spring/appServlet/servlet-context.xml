@@ -44,7 +44,8 @@
 	<!-- Interceptor 설정 -->
 	<interceptors>
     	<interceptor>
-        	<mapping path="/board/write"/>         
+        	<mapping path="/board/write"/> 
+        	<mapping path="/board/edit"/>        
         	<mapping path="/mypage"/> 
         	<mapping path="/myApp/*"/> 
         	<mapping path="/ajax/like"/>

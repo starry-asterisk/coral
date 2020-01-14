@@ -163,4 +163,48 @@ public class FileService {
 		
 		return result;
 	}
+
+
+	public boolean update(String[] files, String[] filesType, String[] filesName, String bno) {
+		boolean result = true;
+		if(bno==null){
+			result = false;
+		}else if(files!=null&&filesName.length==filesType.length&&filesType.length==files.length) {
+			try {
+				int count = 0;
+				FileDTO dto;
+				List<FileDTO> list = getAttachment(bno);
+				String pattern = "^\\S+.(?i)(exe)$";
+				for(String file:files) {
+					if(filesType[count].equals("false")) {
+						delFile("/"+list.get(count).getKeyname());
+						dto=new FileDTO();
+						dto.setBno(bno);
+						dto.setOrder(count);
+						dao.delete(dto);
+					}else if(!filesType[count].equals("true")){
+						if(!Pattern.matches(pattern,filesType[count].replace(" ","_").toLowerCase())) {
+							dto = restore(filesName[count],Base64.getMimeDecoder().decode(file));
+							dto.setBno(bno);
+							dto.setOrder(count);
+							result = dao.insert(dto)&&result;
+						}else {
+							count--;
+						}
+					}
+					count++;
+				}
+			}catch(Exception e) {
+				e.printStackTrace(System.out);
+				result = false;
+				//실패시 파일 삭제 구현해 주세요
+			}
+		}else {
+			for(FileDTO dto:getAttachment(bno)) {
+				delFile(dto.getKeyname());
+				dao.delete(dto);
+			}
+		}
+		return result;
+	}
 }

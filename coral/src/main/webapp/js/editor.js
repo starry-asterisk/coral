@@ -76,10 +76,26 @@ function getTag(){
 	returnValue +="#";
 	return returnValue;
 }
-function upload(status){
-	var form = mkForm("/board/write","POST");
+function uploadeUrlReplace(contents){
+	if(contents.match(/alt=\"img\"/)!=null){
+		var idx = contents.match(/alt=\"img\"/).index;
+		while (idx !== -1) {
+			contents = contents.replaceAt(
+					contents.lastIndexOf('\"',contents.lastIndexOf('\"',idx)-1)+1,
+					contents.lastIndexOf('\"',idx)
+					,"<img:>");
+			idx = contents.lastIndexOf("<img:>");
+			idx = contents.indexOf("alt=\"img\"",idx)+1;
+			idx = contents.indexOf("alt=\"img\"",idx);
+			}
+	}
+	return contents;
+}
+function upload(status, isNew){
+	var form = mkForm("/board/"+(isNew?"write":"edit"),"POST");
 	form.attr("enctype","multipart/form-data");
 	var contents = myEditor.getData().replace(check.dataUrl,"<img:>");
+	contents = uploadeUrlReplace(contents);
 	if($(".title_area").val()==undefined||$(".title_area").val()==""){
 		alert("제목을 입력하세요");
 		$(".title_area").focus();
@@ -91,16 +107,21 @@ function upload(status){
 		alert("내용을 입력하세요");
 		return;
 	}
-	attachmentList.forEach(function(item,index){
+	var count = 0;
+	attachmentList.forEach(function(item){
 		if(item!=undefined){
 			form.addValue("filesName",item[0]);
 			form.addValue("filesType",item[1]);
 			form.addValue("files",item[2]);
 			if(item[3]){
-				contents = contents.replace("<img:>","<img:"+index+">");
+				contents = contents.replace("<img:>","<img:"+count+">");
 			}
+			count++;
 		}
 	});
+	if(bno!=""){
+		form.addValue("no",bno);
+	}
 	form.addValue("title",$(".title_area").val());
 	form.addValue("contents",contents);
 	form.addValue("tag",getTag());
@@ -137,16 +158,29 @@ $("input[name=files]").on("change",function(){
 function delAttach(button){
 	if(button==undefined){
 		$("div.fileList").html("");
+		for(i=0;i<attachmentList.length;i++){
+			if(attachmentList[i][3]){
+				var targetIdx = myEditor.getData().indexOf($("img[alt='img']").eq(0).attr("src"));
+				var toIdx = myEditor.getData().indexOf("figure",targetIdx);
+				var fromIdx = myEditor.getData().lastIndexOf("figure",targetIdx);
+				console.log(myEditor.getData().replaceAt(fromIdx,toIdx,""));
+				myEditor.setData(myEditor.getData().replaceAt(fromIdx,toIdx,""));
+			}
+		}
 		attachmentList = [];
 	}else{
 		var i = button.data("index")-1;
-		if(attachmentList[i][1].indexOf("image")>-1){
+		if(attachmentList[i][3]){
 			var targetIdx = myEditor.getData().indexOf($("img[alt='img']").eq(0).attr("src"));
 			var toIdx = myEditor.getData().indexOf("figure",targetIdx);
 			var fromIdx = myEditor.getData().lastIndexOf("figure",targetIdx);
 			myEditor.setData(myEditor.getData().replaceAt(fromIdx,toIdx,""));
 		}
-		attachmentList[i]=undefined;
+		if(attachmentList[i][1]==true){
+			attachmentList[i][1]=false;
+		}else{
+			attachmentList[i]=undefined;
+		}
 		button.prev().remove();
 		button.next().remove();
 		button.remove();
@@ -169,10 +203,15 @@ function addAttach(data_url, name, isImage){
 		fileListDiv.append("<hr>");
 	}
 	fileListDiv.append("<span>"+name+"</span><button tpye='button' style='float:right' onclick='delAttach($(this))' data-index="+attachmentList.length+"> × </button");
-	
-	
 }
-
+function loadAttach(url, name, isImage){
+	attachmentList.push([name,true,url,isImage]);
+	var fileListDiv = $("input[data-image="+isImage+"]").prev();
+	if(fileListDiv.html()!=""){
+		fileListDiv.append("<hr>");
+	}
+	fileListDiv.append("<span>"+name+"</span><button tpye='button' style='float:right' onclick='delAttach($(this))' data-index="+attachmentList.length+"> × </button");
+}
 $("button.fold").click(function(){
 	if($(this).next().hasClass('folded')){
 		$(this).next().removeClass('folded');
