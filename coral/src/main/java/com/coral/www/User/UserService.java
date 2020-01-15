@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 public interface UserService {
 	public UserDTO getInfo(UserDTO dto);
+	public UserDTO getInfo(String id);
 	public UserDTO login(UserDTO dto, HttpSession session);
 	public UserDTO insertHistory(UserDTO dto);
 	public boolean isId(String id);

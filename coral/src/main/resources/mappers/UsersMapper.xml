@@ -19,7 +19,10 @@
   			U_MAIL AS "mail",
   			U_PHONE AS "phone",
   			U_ADDRESS AS "address",
-  			U_COMPANY AS "company"
+  			U_COMPANY AS "company",
+  			U_BIRTH AS "birth",
+  			U_TEL AS "tel",
+  			U_PRIVACY AS "privacy"
   		from 
   			USERS WHERE U_ID=#{id}
   	</select>

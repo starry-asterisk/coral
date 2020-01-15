@@ -30,7 +30,19 @@ public class UserServiceImpl implements UserService {
 		}
 		return dto;
 	}
-	
+
+	@Override
+	public UserDTO getInfo(String id) {
+		UserDTO dto = new UserDTO();
+		dto.setId(id);
+		try {
+			dto = dao.getInfo(dto);
+		}catch(Exception e) {
+			e.printStackTrace();
+			dto = null;
+		}
+		return dto;
+	}
 	@Override
 	public UserDTO login(UserDTO dto, HttpSession session) {
 		try {

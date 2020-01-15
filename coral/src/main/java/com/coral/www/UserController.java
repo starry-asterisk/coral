@@ -1,6 +1,6 @@
 package com.coral.www;
 
-
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 import com.coral.www.Cookie.CookieService;
 import com.coral.www.File.FileDTO;
@@ -78,7 +79,10 @@ public class UserController {
 		}
 		return "redirect:/"+"?Code=alert('"+URLEncoder.encode("회원가입이 완료되었습니다. 인증메일이 발송 되었으니 인증을 해주시면 더 많은 서비스 이용이 가능합니다", "UTF-8")+"')";
 	}
-	
+	@RequestMapping("/googleLogin")
+	public String login(){
+		return "googleLogin";
+	}
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(UserDTO dto,
 						HttpServletRequest request,
@@ -171,9 +175,11 @@ public class UserController {
 	}
 	
 	@RequestMapping("/myApp/map")
-	public String map(HttpServletResponse response, HttpSession session) {
+	public String map(Model model, HttpServletResponse response, HttpSession session) {
 		if(session.getAttribute("id")==null) {
 			response.setStatus(401);
+		}else {
+			model.addAttribute("userInfo", userService.getInfo((String)session.getAttribute("id")));
 		}
 		return "myApplication/map";
 	}

@@ -69,6 +69,6 @@
 	<error-page>
 		<location>/error</location>
 		<exception-type>org.springframework.web.multipart.MaxUploadSizeExceededException</exception-type>
-    	<location>/error?error=aaa</location>
+    	<location>/error</location>
 	</error-page>
 </web-app>

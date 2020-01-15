@@ -7,3 +7,7 @@
 <hr/>
 <a href="/board" style='color:white'>게시글 목록보기</a>
 <hr/>
+
+
+
+<a href="#" onclick="signOut();">Sign out</a>

@@ -141,9 +141,6 @@
       <Host appBase="webapps" autoDeploy="true" name="www.coralprogram.com" unpackWARs="true">
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
       <Context docBase="coral" path="/" reloadable="true" source="org.eclipse.jst.jee.server:coral"/></Host>
-    	<Host appBase="webapps" autoDeploy="true" name="test.coralprogram.com" unpackWARs="true">
-        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
-      <Context docBase="test" path="/" reloadable="true" source="org.eclipse.jst.jee.server:test"/></Host>
     </Engine>
   </Service>
 </Server>
