@@ -19,6 +19,7 @@
 
 
 <head>
+<script data-ad-client="ca-pub-2023694770852226" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <meta charset="UTF-8">
 <title>Coral - Main</title>
 </head>

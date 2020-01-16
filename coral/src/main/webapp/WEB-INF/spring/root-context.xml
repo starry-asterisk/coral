@@ -54,5 +54,20 @@
 		<!-- defaultEncoding -->
 		<property name="defaultEncoding" value="utf-8" />
 	</bean>
-	
+	  <!-- google Class Bean설정 추가 -->
+  <!-- 클라이언트ID와 보안비밀 세팅 -->
+  <bean id="googleConnectionFactory"
+  class="org.springframework.social.google.connect.GoogleConnectionFactory">
+    <constructor-arg value="273138075636-a4r5k7hv9aa9uqb1fphcutatajt8na3l" />
+    <constructor-arg value="kJ1sGMEeayDDOzRcrd2cOSt8" />
+  </bean>
+
+  <!-- 승인된 자바스크립트 원본과 승인된 리디렉션 URI -->
+  <bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
+    <property name="scope">
+    	<value>https://www.googleapis.com/auth/user.birthday.read https://www.googleapis.com/auth/user.addresses.read https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/user.phonenumbers.read https://www.googleapis.com/auth/user.emails.read</value>
+    </property>
+    <property name="redirectUri" value="https://www.coralprogram.com/callBack" />
+  </bean>
+  <!-- google Class Bean설정 추가 -->
 </beans>
