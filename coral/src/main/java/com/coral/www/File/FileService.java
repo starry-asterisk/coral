@@ -163,7 +163,31 @@ public class FileService {
 		
 		return result;
 	}
-
+	public String newProfImg(String url, String id) {
+		String result = null;
+		try {
+			FileDTO dto = new FileDTO();
+			dto.setBno(id);
+			dto.setKeyname("");
+			dto.setName("profile");
+			dto.setOrder(0);
+			dto.setPath(url);
+			dto.setSize("0");
+			if(getAttachment(id).size()<1) {
+				result = dao.insert(dto)?dto.getPath():null;
+			}else {
+				for(FileDTO files :getAttachment(id)) {
+					delFile(files.getKeyname());
+				}
+				result = dao.update(dto)?dto.getPath():null;
+			}
+		}catch(Exception e) {
+			e.printStackTrace(System.out);
+			//실패시 파일 삭제 구현해 주세요
+		}
+		
+		return result;
+	}
 
 	public boolean update(String[] files, String[] filesType, String[] filesName, String bno) {
 		boolean result = true;

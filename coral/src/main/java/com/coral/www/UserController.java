@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -11,6 +12,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
@@ -38,7 +43,11 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.people.v1.PeopleService;
+import com.google.api.services.people.v1.model.Birthday;
+import com.google.api.services.people.v1.model.EmailAddress;
+import com.google.api.services.people.v1.model.Name;
 import com.google.api.services.people.v1.model.Person;
+import com.google.api.services.people.v1.model.Photo;
 
 @Controller
 public class UserController {
@@ -222,40 +231,84 @@ public class UserController {
 		return url;
 	}
 
-	@RequestMapping(value = "/callBack", method = {RequestMethod.GET})
-	public String gCallback(@RequestParam String code, HttpServletRequest request) throws IOException {
-		
-		String REFERER = request.getHeader("REFERER");
-		
-		JacksonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-				
-		NetHttpTransport httpTransport = new NetHttpTransport();
-		
-		GoogleTokenResponse tokenResponse = new GoogleAuthorizationCodeTokenRequest(httpTransport, jsonFactory,
-				"https://oauth2.googleapis.com/token", "273138075636-a4r5k7hv9aa9uqb1fphcutatajt8na3l",
-				"kJ1sGMEeayDDOzRcrd2cOSt8", code, "https://www.coralprogram.com/callBack")
-						.execute();
+	@RequestMapping(value = "/callBack", method = { RequestMethod.GET })
+	public String gCallback(@RequestParam String code, HttpServletRequest request) throws IOException, ParseException {
+		try {
+			if(request.getSession().getAttribute("id")!=null) {
+				return "redirect:/" + "?Code=alert('" + URLEncoder.encode("이미 로그인중 입니다", "UTF-8") + "')";
+			}
+			JacksonFactory jsonFactory = JacksonFactory.getDefaultInstance();
 
-		GoogleCredential credential = new GoogleCredential().setAccessToken(tokenResponse.getAccessToken());
-		List<String> scopes = new ArrayList<String>();
-		
-		scopes.add("https://www.googleapis.com/auth/user");
-		
-		credential.createScoped(scopes);
-		
-		PeopleService peopleService = new PeopleService(new NetHttpTransport(), JacksonFactory.getDefaultInstance(),credential);
-		
-		Person response = peopleService.people().get("people/me")
-				.setPersonFields("names,genders,emailAddresses,birthdays,addresses,photos,phoneNumbers")
-				.execute();
-		
-		System.out.println(response.get("names"));
-		System.out.println(response.get("genders"));
-		System.out.println(response.get("emailAddresses"));
-		System.out.println(response.get("birthdays"));
-		System.out.println(response.get("addresses"));
-		System.out.println(response.get("photos"));
-		System.out.println(response.get("phoneNumbers"));
+			NetHttpTransport httpTransport = new NetHttpTransport();
+
+			GoogleTokenResponse tokenResponse = new GoogleAuthorizationCodeTokenRequest(httpTransport, jsonFactory,
+					"https://oauth2.googleapis.com/token", "273138075636-a4r5k7hv9aa9uqb1fphcutatajt8na3l",
+					"kJ1sGMEeayDDOzRcrd2cOSt8", code, "https://www.coralprogram.com/callBack").execute();
+
+			GoogleCredential credential = new GoogleCredential().setAccessToken(tokenResponse.getAccessToken());
+			List<String> scopes = new ArrayList<String>();
+
+			scopes.add("https://www.googleapis.com/auth/user");
+			scopes.add("https://www.googleapis.com/auth/userinfo");
+
+			credential.createScoped(scopes);
+
+			PeopleService peopleService = new PeopleService(new NetHttpTransport(), JacksonFactory.getDefaultInstance(),
+					credential);
+
+			Person person = peopleService.people().get("people/me")
+					.setPersonFields("names,emailAddresses,birthdays,photos").execute();
+
+
+			UserDTO dto = new UserDTO();
+			if (person != null && person.size() > 0) {
+				List<Name> names = person.getNames();
+	            if (names != null && names.size() > 0) {
+	            	dto.setId(names.get(0).getMetadata().getSource().getId());
+	            	dto.setName(names.get(0).getDisplayName());
+	            	dto.setPw("{google}");
+	            	dto.setIp(request.getRemoteAddr());
+	    			dto.setPlatform(request.getHeader("user-agent"));
+	            	if(!userService.isId(dto.getId())) {
+	                	List<EmailAddress> emailAddress = person.getEmailAddresses();
+	                    if (emailAddress != null && emailAddress.size() > 0) {
+	                    	dto.setMail(emailAddress.get(0).getValue());
+	                    }
+	                    List<Birthday> birthday = person.getBirthdays();
+	                    if (birthday != null && birthday.size() > 0) {
+	                    	Date birth = new Date();
+	                    	birth.setYear(birthday.get(0).getDate().getYear());
+	                    	birth.setMonth(birthday.get(0).getDate().getMonth());
+	                    	birth.setDate(birthday.get(0).getDate().getDay());
+	                    	dto.setBirth(birth);
+	                    } 
+	                    dto.setPhone("000-0000-0000");
+	                    dto.setAddress("");
+	        			dto.setCompany("");
+	        			dto.setTel("");
+	        			dto.setPrivacy('X');
+	        			dto.setGender("et");
+	        			dto.setGrade("학생");
+	        			if(userService.addUser(dto)) {
+	        				dto.setLogin_status(1);
+	        				dto = userService.login(dto, request.getSession());
+	        			}
+	                }else {
+	                	dto.setLogin_status(1);
+	                	dto = userService.login(dto, request.getSession());
+	                }
+	            	List<Photo> photo = person.getPhotos();
+	                if (photo != null && photo.size() > 0) {
+	                	fileService.newProfImg(photo.get(0).getUrl(), dto.getId());
+	                }
+	            }
+	            
+	        } else {
+	            System.out.println("No connections found.");
+	        }
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return "redirect:/";
 	}
 

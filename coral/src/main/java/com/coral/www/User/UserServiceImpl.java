@@ -30,7 +30,6 @@ public class UserServiceImpl implements UserService {
 		}
 		return dto;
 	}
-
 	@Override
 	public UserDTO getInfo(String id) {
 		UserDTO dto = new UserDTO();
@@ -51,13 +50,12 @@ public class UserServiceImpl implements UserService {
 					dto.setLogin_status(0);
 					dao.insertHistory(dto);
 					dto.setMsg("비밀번호 오류");
-				}else if(session!=null){
+				}else if(dao.insertHistory(dto) && session!=null){
 					/*로그인 정보 저장*/
 					session.setAttribute("id", dto.getId());
 					session.setAttribute("user-agent", dto.getPlatform());
 					session.setAttribute("ip", dto.getIp());
 				}
-				dao.insertHistory(dto);
 			}else {
 				dto.setMsg("Id 오류");
 			}

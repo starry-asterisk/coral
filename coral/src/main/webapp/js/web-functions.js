@@ -16,8 +16,8 @@ var check = new Object;
 	check.date = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
 	check.tail = /([^\s]+(?=\.(jpeg|bmp|jpg|gif|png))\.\2)/;
 	check.exe = /([^\s]+(?=\.(exe))\.\2)/;
-	check.id = /(?=.*\d)(?=.*[a-zA-Z]).{8,15}/;
-	check.name = /[가-힣]{1,5}/;
+	check.id = /^(?=.*\d)(?=.*[a-zA-Z])(?!.*[^a-zA-Z0-9_]).{8,15}$/;
+	check.name = /^[가-힣]{1,5}$/;
 	check.dataUrl = /\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,[a-z0-9\!\$\&\'\,\(\)\*\+\,\;\=\-\.\_\~\:\@\/\?\%\s]*\s*/gi;
 
 function mkPageBtn(area,location,currentPage,EndPage,amount){
