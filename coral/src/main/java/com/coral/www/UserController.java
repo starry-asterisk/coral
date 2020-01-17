@@ -222,7 +222,7 @@ public class UserController {
 		return url;
 	}
 
-	@RequestMapping(value = "/callBack", method = {RequestMethod.POST})
+	@RequestMapping(value = "/callBack", method = {RequestMethod.GET})
 	public String gCallback(@RequestParam String code, HttpServletRequest request) throws IOException {
 		
 		String REFERER = request.getHeader("REFERER");
