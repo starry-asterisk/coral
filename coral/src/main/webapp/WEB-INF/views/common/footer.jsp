@@ -5,7 +5,7 @@
 
 <footer>
 	<div class="notice">
-	<a href="/" style="font-weight:600;line-height:37.34px;">공지사항</a>
+	<a href="/board?category=notice" style="line-height:37.34px;">공지사항</a>
 	</div>
 	<div class="external_link">
 		&#60;

@@ -1,27 +1,6 @@
 @charset "UTF-8";
 
-header {
-	height: 200px;
-}
 
-.logo {
-	height: 75%;
-	padding-top: 40px;
-}
-
-.bar {
-	height: 25%;
-	width: 100%;
-}
-
-.logo img:hover {
-	transform: rotate(720deg);
-	transition: all 3s;
-}
-
-.logo img {
-	transition: all 3s;
-}
 
 .base_ {
 	height: 1220px;

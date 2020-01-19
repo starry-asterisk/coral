@@ -3,18 +3,19 @@
 
 .profile_back{
 	width:250px;
-	background:grey;
+	background:white;
 	float:left;
 	position:fixed;
 	z-index:98;
 	min-height:100%;
-	box-shadow: 0 0 30px 20px rgba(60,64,66,0.1);
+	box-shadow: 0 0 30px 20px rgba(60,64,66,0.00);
+	border-right: 1px solid #ddd;
 }
 
 .profile{
-	width:230px;
+	width:200px;
 	height:580px;
-	margin:10px;
+	margin:25px;
 	margin-top:70px;
 	position:absolute;
 	z-index:99;
@@ -29,7 +30,7 @@
 	margin-bottom: 15px;
 	position: relative;
 	background:coral;
-	box-shadow: 0 0 30px 20px rgba(60,64,66,0.1);
+	box-shadow: 0 0 30px 20px rgba(60,64,66,0.05);
 }
 #profile_image button{
 	overflow: hidden;
@@ -76,17 +77,17 @@
     left: 50%;
     transform: translate(-50%,-50%);
 }
-.profile table{
+.profile table.inform{
 	width:100%;
-	height:100px;
-	position:absolute;
+	position:relative;
 }
-.profile table *{
-	font-size:1.1em;
-	font-weight: 900;
+.profile table.inform *{
+	text-align:left;
 }
-.profile table tr:first-child td{
-	font-size:1.2em;
+.profile table.inform .title{
+	color:#bbb;
+	font-size:0.8em;
+	padding-top:10px;
 }
 .background{
 	width:100%;
@@ -100,8 +101,9 @@
 	height:60px;
 	width:100%;
 	z-index:97;
-	background:coral;
-	box-shadow: 0 0 30px 20px rgba(60,64,66,0.1);
+	background:white;
+	box-shadow: 0 0 30px 20px rgba(60,64,66,0.02);
+	border-bottom: 1px solid #ddd;
 }
 .toolbar button{
 	position: relative;
@@ -155,7 +157,6 @@ footer:hover{
 	width: 50%;
 	border: 1px solid #ddd;
 	background: white;
-	box-shadow: 0 0 30px 20px rgba(60,64,66,0.05);
 	padding:40px;
 	position:relative;
 }
@@ -213,5 +214,23 @@ footer:hover{
 }
 .btn_area_btm button:active{
 	box-shadow: 0 0 10px 1px rgba(0,0,0,0.02) inset;
-	outline:skyblue;
+	outline: 1px solid skyblue; 
+}
+.profile_nav button{
+	margin: 2% 0 2% 0;
+	width: 100px;
+	height: 24px;
+	font-size:11px;
+	color:#aaa;
+	text-align:center;
+	border-radius: 12px;
+	border: 1px solid #ddd;
+	box-shadow: 0 0 10px 1px rgba(0,0,0,0.03);
+}
+.profile_nav button:hover, .profile_nav button:active{
+	border-color: skyblue;
+}
+.profile_nav button:active{
+	border-color: skyblue;
+	box-shadow: 0 0 10px 1px skyblue;
 }

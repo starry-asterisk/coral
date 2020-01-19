@@ -13,9 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
@@ -35,10 +32,8 @@ import com.coral.www.File.FileService;
 import com.coral.www.User.UserDTO;
 import com.coral.www.User.UserService;
 import com.coral.www.application.Sha;
-import com.fasterxml.jackson.core.JsonFactory;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -48,7 +43,6 @@ import com.google.api.services.people.v1.model.EmailAddress;
 import com.google.api.services.people.v1.model.Name;
 import com.google.api.services.people.v1.model.Person;
 import com.google.api.services.people.v1.model.Photo;
-
 @Controller
 public class UserController {
 
@@ -277,7 +271,7 @@ public class UserController {
 	                    List<Birthday> birthday = person.getBirthdays();
 	                    if (birthday != null && birthday.size() > 0) {
 	                    	Date birth = new Date();
-	                    	birth.setYear(birthday.get(0).getDate().getYear());
+	                    	birth.setYear(birthday.get(0).getDate().getYear()-1900);
 	                    	birth.setMonth(birthday.get(0).getDate().getMonth());
 	                    	birth.setDate(birthday.get(0).getDate().getDay());
 	                    	dto.setBirth(birth);
@@ -306,9 +300,7 @@ public class UserController {
 	        } else {
 	            System.out.println("No connections found.");
 	        }
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+		}catch(Exception e) {}
 		return "redirect:/";
 	}
 

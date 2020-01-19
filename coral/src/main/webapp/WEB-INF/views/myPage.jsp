@@ -51,33 +51,58 @@
 				</c:choose>
 				
 			</div>
-			<table>
+			<table class="inform">
 				<tr>
-					<td>${userInfo.name}</td>
+					<td class="title" style="padding:0;"><span style="float:left">회원명</span><span style="float:right">등급</span></td>
 				</tr>
 				<tr>
-					<td>${userInfo.id} / ${userInfo.grade}
-					<c:choose>
-						<c:when test="${userInfo.grade=='관리자'}">
-							<i class="fas fa-user-tie"></i>
-						</c:when>
-						<c:when test="${userInfo.grade=='교사'}">
-							<img alt="" src="/resources/icon/professor.svg" width="19em">
-						</c:when>
-						<c:otherwise>
-							<img alt="" src="/resources/icon/student.svg" width="19em">
-						</c:otherwise>
-					</c:choose>
+					<td><span style="float:left">${userInfo.name}</span>
+						<span style="float:right">${userInfo.grade}
+							<c:choose>
+								<c:when test="${userInfo.grade=='관리자'}">
+									<i class="fas fa-user-tie"></i>
+								</c:when>
+								<c:when test="${userInfo.grade=='교사'}">
+									<img alt="" src="/resources/icon/professor.svg" width="19em">
+								</c:when>
+								<c:otherwise>
+									<img alt="" src="/resources/icon/student.svg" width="19em">
+								</c:otherwise>
+							</c:choose>
+						</span>
 					</td>
+				</tr>
+				<tr>
+					<td class="title">아이디</td>
+				</tr>
+				<tr>
+					<td>${userInfo.id}</td>
+				</tr>
+				<tr>
+					<td class="title"></td>
+				</tr>
+				<tr>
+					<td>
+					
+					</td>
+				</tr>
+				<tr>
+					<td class="title">이메일</td>
 				</tr>
 				<tr>
 					<td>${userInfo.mail=="P"?"미인증 이메일":userInfo.mail}</td>
 				</tr>
 				<tr>
-					<td>${userInfo.phone}</td>
+					<td class="title">최근 접속 일시</td>
 				</tr>
 				<tr>
 					<td><fmt:formatDate pattern = "yyyy-MM-dd HH:mm:ss" value = "${userInfo.date}" /></td>
+				</tr>
+				<tr class="profile_nav">
+					<td>
+					<button onclick="location.href='/board'" style="text-align:center;">> 게시판　</button>
+					<button onclick="location.href=''" style="text-align:center;">> 강좌　　</button>
+					<button onclick="location.href='/'" style="text-align:center;">> 메인　　</button></td>
 				</tr>
 			</table>
 			<table id="clockKR">

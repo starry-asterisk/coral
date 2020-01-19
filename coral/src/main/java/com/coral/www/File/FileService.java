@@ -168,7 +168,7 @@ public class FileService {
 		try {
 			FileDTO dto = new FileDTO();
 			dto.setBno(id);
-			dto.setKeyname("");
+			dto.setKeyname(genSaveFileName(""));
 			dto.setName("profile");
 			dto.setOrder(0);
 			dto.setPath(url);
