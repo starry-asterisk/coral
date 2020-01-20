@@ -72,12 +72,12 @@ function report(identifier, identifier_type, reporter, resons){
 	}
 	button.html("신고");
 	body.html("");
-	body.append("<span style='line-height:46px;'>피 신고 대상</span>");
-	body.append("<input type='text' readonly value='"+identifier+"' class='basic_input' style='width:70%;margin-right:5%;margin-top:7px;margin-bottom:3px;float:right'>");
-	body.append("<br><span style='line-height:46px;'>신고자 아이디</span>");
-	body.append("<input type='text' readonly value='"+reporter+"' class='basic_input' style='width:70%;margin-right:5%;margin-top:7px;margin-bottom:3px;float:right'>");
-	body.append("<br><span style='line-height:46px;'>신고일시</span>");
-	body.append("<input type='text' readonly value='"+new Date()+"' class='basic_input' style='width:70%;margin-right:5%;margin-top:7px;margin-bottom:3px;float:right'>");
+	body.append("<span style='line-height:46px;display:inline-block;width:20%'>피 신고 대상</span>");
+	body.append("<input type='text' readonly value='"+identifier+"' class='basic_input' style='width:70%;margin-right:5%;margin-top:7px;margin-bottom:3px;'>");
+	body.append("<br><span style='line-height:46px;display:inline-block;width:20%'>신고자 아이디</span>");
+	body.append("<input type='text' readonly value='"+reporter+"' class='basic_input' style='width:70%;margin-right:5%;margin-top:7px;margin-bottom:3px;t'>");
+	body.append("<br><span style='line-height:46px;display:inline-block;width:20%'>신고일시</span>");
+	body.append("<input type='text' readonly value='"+new Date()+"' class='basic_input' style='width:70%;margin-right:5%;margin-top:7px;margin-bottom:3px;'>");
 	body.append("<div class='custom-select'></div>");
 	body.children(".custom-select").append("<select></select>");
 	body.find("select").append("<option value=''>사유를 선택해 주세요</option>");
@@ -386,14 +386,20 @@ $(document).ready(function(){
 			case "memo":
 				$(".Board_List:not(:nth-child(1))").css("display","none");
 				$(".Board_List:nth-child(1)").css("display","");
+				$("#codeRun").attr("title","코드작성기");
+				$("#codeRun").html("java");
 				break;
 			case "Boardlist":
 				$(".Board_List:not(:nth-child(2))").css("display","none");
 				$(".Board_List:nth-child(2)").css("display","");
+				boardList(50,1,$(".Board_List:nth-child(2)"));
+				$("#codeRun").attr("title","코드작성기");
+				$("#codeRun").html("Java");
 				break;
 			case "codeRun":
 				$(".Board_List:not(:nth-child(3))").css("display","none");
 				$(this).attr("title","한번 더 누르면 실행");
+				$("#codeRun").html("Run");
 				break;
 		}
 	});
@@ -707,10 +713,9 @@ if($("#clockKR").length!=0){
 	setInterval(function(){
 	    var timer = new Date();
 	    var on = clock(timer.getHours(),timer.getMinutes());
-	    $("#clockKR td").css("transition","color 1s");
-	    $("#clockKR td").css("color","#333");
+	    $("#clockKR td").removeClass("on");
 	    on.forEach(function(code){
-	    	$("#clockKR td."+code).css("color","white");
+	    	$("#clockKR td."+code).addClass("on");
 	    });
 	},1000);
 }

@@ -6,7 +6,7 @@
 <div class="C_side" style="width: 320px; height: 656px; left: 1476.5px; top: 60px; font-size: 16px;">
 	<table>
 		<tr>
-			<td><button onclick="$(&quot;.C_side&quot;).css(&quot;display&quot;,&quot;none&quot;)"> × </button></td>
+			<td><button onclick="$('.C_side').css('display', 'none')"> × </button></td>
 		</tr>
 		<tr>
 		<td></td>

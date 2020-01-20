@@ -145,8 +145,15 @@ footer{
 }
 .ScrollUpButton{
 	position:fixed;
-	bottom: 3vw;
-	right: 3vw;
+	bottom: 7px;
+	right: 7px;
+	background: black;
+    color: white;
+    font-size:1.2em;
+    width: 70px;
+    border-radius: 2px;
+    transition:opacity 0.3s;
+    z-index:101;
 }
 .circle_btn{
 	height:60px;
@@ -192,7 +199,7 @@ footer{
 	border:1px solid #ccc;
 	border-right-width:0;
 	margin: 5px 0 5px 0;
-	color:white;
+	color:grey;
 	background:white;
 }
 .btnRow button:active{
@@ -614,12 +621,15 @@ button.report:hover {
 #clockKR{
     width: 200px;
     height: 200px;
-    position: relative;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%);
+    position: absolute;
+    bottom:0;
 }
 #clockKR *{
     text-shadow: 0 0 5px rgba(0,0,0,0.5);
-    font-sise:1.2em;
+    font-size:1.05em;
+    transition:color 1s;
+    color: #333;
+}
+#clockKR td.on{
+    color: white;
 }

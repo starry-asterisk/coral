@@ -53,6 +53,7 @@ function execDaumPostcode() {
 
 $(function(){
 	$(".submit").on("click", function() {
+		$(".submit").attr("disabled",true);
 		var pass = true;
 		var input = ".form tr:not([style='display:none']) input, .form tr:not([style='display:none']) select";
 		$(input).each(function(index, item){
@@ -88,7 +89,8 @@ $(function(){
 			
 			form.submit();
 		} else {
-			alert("입구컷");
+			$(".submit").attr("disabled",false);
+			alert("옳바른 데이터를 입력하세요");
 		}
 		
 	});

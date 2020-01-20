@@ -18,17 +18,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.coral.www.Board.BoardDTO;
-import com.coral.www.Board.BoardService;
 import com.coral.www.File.FileDTO;
 import com.coral.www.File.FileService;
+import com.coral.www.Lecture.LectureDTO;
+import com.coral.www.Lecture.LectureService;
 import com.coral.www.application.JFileWriter;
 
-@RequestMapping("/board")
+@RequestMapping("/lecture")
 @Controller
-public class BoardController {
+public class LectureController {
 	@Inject
-	BoardService service;
+	LectureService service;
 
 	@Inject
 	FileService fileService;
@@ -45,7 +45,7 @@ public class BoardController {
 	}
 	@RequestMapping("/detail")
 	public String detail(Model model, @RequestParam String bno, @RequestHeader("user-agent") String agent) {
-		BoardDTO boarddto = service.detail(bno);
+		LectureDTO boarddto = service.detail(bno);
 		if(boarddto.getContents().contains("${linked}")) {
 			boarddto.setContents(new JFileWriter().readFile(boarddto.getContents().replace("${linked}", "")));
 		}
@@ -69,7 +69,6 @@ public class BoardController {
 	
 	@RequestMapping(value="/write",method = { RequestMethod.GET })
 	public String editor(Model model, HttpServletRequest request) {
-		model.addAttribute("Category", service.categorylist());
 		model.addAttribute("id", request.getSession().getAttribute("id"));
 		String agent = request.getHeader("user-agent");
 		if(agent.contains("MSIE")||agent.contains("Trident")) {
@@ -82,14 +81,14 @@ public class BoardController {
 	
 	@Transactional
 	@RequestMapping(value="/write",method = { RequestMethod.POST })
-	public String upload(BoardDTO dto,@RequestParam(required=false) String[] files,@RequestParam(required=false) String[] filesName,@RequestParam(required=false) String[] filesType, HttpServletRequest request) throws ParseException, UnsupportedEncodingException{
+	public String upload(LectureDTO dto,@RequestParam(required=false) String[] files,@RequestParam(required=false) String[] filesName,@RequestParam(required=false) String[] filesType, HttpServletRequest request) throws ParseException, UnsupportedEncodingException{
 		dto.setAttachment(files!=null?'P':'N');
 		dto.setId((String) request.getSession().getAttribute("id"));
 		return "redirect:/board"+"?Code=alert('"+URLEncoder.encode(fileService.insert(files , filesType , filesName , service.write(dto))?"게시글이 등록되었습니다":"등록에 실패했습니다", "UTF-8")+"');";
 	}
 	@RequestMapping(value="/edit",method = { RequestMethod.GET })
 	public String edit(Model model, @RequestParam String bno, @RequestHeader("user-agent") String agent, HttpSession session) throws UnsupportedEncodingException {
-		BoardDTO boarddto = service.detail(bno);
+		LectureDTO boarddto = service.detail(bno);
 		if(!boarddto.getId().equals(session.getAttribute("id"))) {
 			return "redirect:/"+"?Code=alert('"+URLEncoder.encode("타인의 게시물은 수정할 수 없습니다!", "UTF-8")+"');";
 		}
@@ -112,13 +111,12 @@ public class BoardController {
 		}else {
 			model.addAttribute("include", "include/ckEdit5");
 		}
-		model.addAttribute("Category", service.categorylist());
 		model.addAttribute("isNew", false);
 		return "editor";
 	}
 	@Transactional
 	@RequestMapping(value="/edit",method = { RequestMethod.POST })
-	public String uppdate(BoardDTO dto,@RequestParam(required=false) String[] files,@RequestParam(required=false) String[] filesName,@RequestParam(required=false) String[] filesType, HttpServletRequest request) throws ParseException, UnsupportedEncodingException{
+	public String uppdate(LectureDTO dto,@RequestParam(required=false) String[] files,@RequestParam(required=false) String[] filesName,@RequestParam(required=false) String[] filesType, HttpServletRequest request) throws ParseException, UnsupportedEncodingException{
 		dto.setAttachment(files!=null?'P':'N');
 		if(dto.getStatus()=='N') {
 			dto.setAttachment('N');

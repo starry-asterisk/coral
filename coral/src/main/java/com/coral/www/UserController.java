@@ -170,8 +170,18 @@ public class UserController {
 
 	@RequestMapping("/userpage")
 	public String userPage(@RequestParam String id, Model model) {
-
-		return "";
+		UserDTO dto = new UserDTO();
+		dto.setId(id);
+		dto = userService.getInfo(dto);
+		if (dto.getMail().contains("{verify-")) {
+			dto.setMail("P");
+		}
+		dto.setDate(userService.lastLogin(dto.getId()));
+		for (FileDTO profile : fileService.getAttachment(dto.getId())) {
+			model.addAttribute("prof_image", profile.getPath());
+		}
+		model.addAttribute("userInfo", dto);
+		return "myPage";
 	}
 
 	@RequestMapping("/mypage")

@@ -61,7 +61,7 @@
 		</div>
 		<div class="tag_form" placeholder="태그 입력"><input type="text" value="" maxlength="25" ></div>
 		<button type="button" class="basic_button" onclick="upload('P',${isNew!=false})">${isNew!=false?'발행':'수정완료'}</button>
-		<button type="button" class="basic_button" onclick="upload(${isNew!=false?'\'S\'':'\'N\''},${isNew!=false})">${isNew!=false?'임시저장':'삭제'}</button>
+		<button type="button" class="basic_button" onclick="if(confirm('게시글을 삭제 하시겠습니까?')){upload(${isNew!=false?'\'S\'':'\'N\''},${isNew!=false})}">${isNew!=false?'임시저장':'삭제'}</button>
 	</div>
 </div>
 

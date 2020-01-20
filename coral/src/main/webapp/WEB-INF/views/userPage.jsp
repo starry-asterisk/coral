@@ -155,17 +155,6 @@
 		<button type="button" onclick="" data-toggle="tooltip" data-placement="bottom" title="수강관리"><i class="fas fa-school"></i></button>
 		<button type="button" onclick="" data-toggle="tooltip" data-placement="bottom" title="활동기록"><i class="fas fa-history"></i></button>
 		<button type="button" onclick="" data-toggle="tooltip" data-placement="bottom" title="보안"><i class="fas fa-lock"></i></button>
-		<c:choose>
-			<c:when test="${userInfo.grade=='관리자'}">
-		<button type="button" onclick="" data-toggle="tooltip" data-placement="bottom" title="활동"><i class="fas fa-chart-line"></i></button>
-		<button type="button" onclick="" data-toggle="tooltip" data-placement="bottom" title="신청"><i class="fas fa-archive"></i></button>
-		<button type="button" onclick="" data-toggle="tooltip" data-placement="bottom" title="신고"><i class="fas fa-exclamation-triangle"></i></button>
-		<button type="button" onclick="" data-toggle="tooltip" data-placement="bottom" title="강좌"><i class="fas fa-chalkboard"></i></button>
-			</c:when>
-			<c:when test="${userInfo.grade=='교사'}">
-		<button type="button" onclick="" data-toggle="tooltip" data-placement="bottom" title="강좌"><i class="fas fa-chalkboard"></i></button>
-			</c:when>
-		</c:choose>
 		</div>
 		<div class="workSpace">
 		

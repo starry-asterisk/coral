@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<button class="ScrollUpButton circle_btn" title="맨 위로 이동">&#10514;</button>
+<button class="ScrollUpButton" title="맨 위로 이동">&#10514;</button>
 
 <footer>
 	<div class="notice">

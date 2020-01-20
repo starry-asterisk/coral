@@ -26,14 +26,14 @@
 
 <jsp:include page="\common\header1.jsp"></jsp:include>
 
-<button class="main_sub_sideBtn square_btn" id="codeRun" title="실행버튼" style='margin-top:160px'>Java</button>
-<button class="main_sub_sideBtn square_btn" id="Boardlist" title="게시글 목록" style='margin-top:80px'>게시글</button>
+<button class="main_sub_sideBtn square_btn" id="codeRun" title="실행버튼" style='margin-top:160px'>Run</button>
+<button class="main_sub_sideBtn square_btn" id="Boardlist" title="게시글 목록" style='margin-top:80px'>Board</button>
 <button class="main_sub_sideBtn square_btn" id="memo" title="메모장">Memo</button>
 
 <div class="base_">
 	<div class="main_sub">
-		<div class="Board_List" style="display:none">a</div>
-		<div class="Board_List" style="display:none">b</div>
+		<div class="Board_List" style="display:none;overflow-y:auto;" contenteditable="true"><hr>메모장 입니다. 페이지 새로고침시에는 삭제되기때문에 주의 해주세요<hr><br>-</div>
+		<div class="Board_List" style="display:none;overflow-y:auto;">b</div>
 		<div class="Board_List">
 			<!-- ACE에디터  -->
 			<pre id="editor">public class HelloWorld {
