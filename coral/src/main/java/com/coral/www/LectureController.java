@@ -34,28 +34,58 @@ public class LectureController {
 	FileService fileService;
 
 	@RequestMapping("")
-	public String board(Model model, HttpServletRequest request, @RequestParam(required=false) String isAjax) {
-		service.addList(model, request);
+	public String board(Model model, HttpServletRequest request, @RequestParam(required=false) String cl_no,  @RequestParam(required=false) String isAjax) {
+		service.addList(model, request, cl_no);
+		
 		if(isAjax!=null) {
-			return "include/board";
+			if(cl_no!=null) {
+				return "include/lecture";
+			}else {
+				return "include/class";
+			}
+		}else {
+			if(cl_no!=null) {
+				model.addAttribute("Board_type", "include/lecture");
+			}else {
+				model.addAttribute("Board_type", "include/class");
+			}
 		}
-		model.addAttribute("Board_type", "include/board");
+		
 		model.addAttribute("attachment", "common/blank");
 		return "list";
 	}
+	@Transactional
+	@RequestMapping(value="/create",method = { RequestMethod.POST })
+	public String create(LectureDTO dto,@RequestParam(required=false) String[] files,@RequestParam(required=false) String[] filesName,@RequestParam(required=false) String[] filesType, HttpServletRequest request) throws ParseException, UnsupportedEncodingException{
+		dto.setAttachment(files!=null?'P':'N');
+		dto.setId((String) request.getSession().getAttribute("id"));
+		return "redirect:/board"+"?Code=alert('"+URLEncoder.encode(fileService.insert(files , filesType , filesName , service.write(dto))?"게시글이 등록되었습니다":"등록에 실패했습니다", "UTF-8")+"');";
+	}
+	@Transactional
+	@RequestMapping(value="/update",method = { RequestMethod.POST })
+	public String uppdate(LectureDTO dto,@RequestParam(required=false) String[] files,@RequestParam(required=false) String[] filesName,@RequestParam(required=false) String[] filesType, HttpServletRequest request) throws ParseException, UnsupportedEncodingException{
+		dto.setAttachment(files!=null?'P':'N');
+		if(dto.getStatus()=='N') {
+			dto.setAttachment('N');
+			files=null;
+			filesName=null;
+			filesType=null;
+		}
+		dto.setId((String) request.getSession().getAttribute("id"));
+		return "redirect:/board"+"?Code=alert('"+URLEncoder.encode(fileService.update(files , filesType , filesName , service.update(dto))?(dto.getStatus()=='N'?"게시글이 삭제되었습니다":"게시글이 수정되었습니다"):"수정에 실패했습니다", "UTF-8")+"');";
+	}
+	
 	@RequestMapping("/detail")
 	public String detail(Model model, @RequestParam String bno, @RequestHeader("user-agent") String agent) {
 		LectureDTO boarddto = service.detail(bno);
-		if(boarddto.getContents().contains("${linked}")) {
-			boarddto.setContents(new JFileWriter().readFile(boarddto.getContents().replace("${linked}", "")));
+		if(boarddto.getContent().contains("${linked}")) {
+			boarddto.setContent(new JFileWriter().readFile(boarddto.getContent().replace("${linked}", "")));
 		}
 		if(boarddto.getAttachment()=='P') {
 			List<FileDTO> list = fileService.getAttachment(boarddto.getNo());
 			model.addAttribute("attachment", list);
 			for(FileDTO filedto:list) {
-				boarddto.setContents(boarddto.getContents().replaceFirst("<img:"+filedto.getOrder()+">", filedto.getPath()));
-				/*기존 게시물 때문에 달림 나중에 정식판에선 삭제할것*/
-				boarddto.setContents(boarddto.getContents().replaceFirst("<img:>", filedto.getPath()));
+				boarddto.setContent(boarddto.getContent().replaceFirst("<img:"+filedto.getOrder()+">", filedto.getPath()));
 			}
 		}
 		model.addAttribute("board", boarddto);
@@ -92,16 +122,16 @@ public class LectureController {
 		if(!boarddto.getId().equals(session.getAttribute("id"))) {
 			return "redirect:/"+"?Code=alert('"+URLEncoder.encode("타인의 게시물은 수정할 수 없습니다!", "UTF-8")+"');";
 		}
-		if(boarddto.getContents().contains("${linked}")) {
-			boarddto.setContents(new JFileWriter().readFile(boarddto.getContents().replace("${linked}", "")));
+		if(boarddto.getContent().contains("${linked}")) {
+			boarddto.setContent(new JFileWriter().readFile(boarddto.getContent().replace("${linked}", "")));
 		}
 		if(boarddto.getAttachment()=='P') {
 			List<FileDTO> list = fileService.getAttachment(boarddto.getNo());
 			model.addAttribute("attachment", list);
 			for(FileDTO filedto:list) {
-				if(boarddto.getContents().contains("<img:"+filedto.getOrder()+">")) {
+				if(boarddto.getContent().contains("<img:"+filedto.getOrder()+">")) {
 					filedto.setImage(true);
-					boarddto.setContents(boarddto.getContents().replaceFirst("<img:"+filedto.getOrder()+">", filedto.getPath()));
+					boarddto.setContent(boarddto.getContent().replaceFirst("<img:"+filedto.getOrder()+">", filedto.getPath()));
 				}
 			}
 		}
@@ -116,7 +146,7 @@ public class LectureController {
 	}
 	@Transactional
 	@RequestMapping(value="/edit",method = { RequestMethod.POST })
-	public String uppdate(LectureDTO dto,@RequestParam(required=false) String[] files,@RequestParam(required=false) String[] filesName,@RequestParam(required=false) String[] filesType, HttpServletRequest request) throws ParseException, UnsupportedEncodingException{
+	public String edit(LectureDTO dto,@RequestParam(required=false) String[] files,@RequestParam(required=false) String[] filesName,@RequestParam(required=false) String[] filesType, HttpServletRequest request) throws ParseException, UnsupportedEncodingException{
 		dto.setAttachment(files!=null?'P':'N');
 		if(dto.getStatus()=='N') {
 			dto.setAttachment('N');
@@ -127,5 +157,4 @@ public class LectureController {
 		dto.setId((String) request.getSession().getAttribute("id"));
 		return "redirect:/board"+"?Code=alert('"+URLEncoder.encode(fileService.update(files , filesType , filesName , service.update(dto))?(dto.getStatus()=='N'?"게시글이 삭제되었습니다":"게시글이 수정되었습니다"):"수정에 실패했습니다", "UTF-8")+"');";
 	}
-
 }

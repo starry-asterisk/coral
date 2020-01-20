@@ -39,6 +39,23 @@
 .login *{
 	vertical-align: middle;
 }
+.googleLogin{
+	color: white;
+    width: 353px;
+    height: 60px;
+    border: 1px solid;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 2.5em;
+}
+.googleLogin:hover:not(:active){
+	box-shadow: 0 0 20px 5px rgba(255,255,255,0.1) inset;
+}
+.googleLogin:active{
+	box-shadow: 0 0 20px 10px rgba(0,0,0,0.5) inset;
+    border-color: rgba(0,0,0,0.5);
+    color: black;
+}
 #remember-me{
 	margin:0;
 }

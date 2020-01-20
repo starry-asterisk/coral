@@ -282,7 +282,7 @@ public class UserController {
 	                    if (birthday != null && birthday.size() > 0) {
 	                    	Date birth = new Date();
 	                    	birth.setYear(birthday.get(0).getDate().getYear()-1900);
-	                    	birth.setMonth(birthday.get(0).getDate().getMonth());
+	                    	birth.setMonth(birthday.get(0).getDate().getMonth()-1);
 	                    	birth.setDate(birthday.get(0).getDate().getDay());
 	                    	dto.setBirth(birth);
 	                    } 

@@ -17,8 +17,33 @@ public class LectureDAO {
 	SqlSession sqlSession;
 	static final String namespace="com.coral.www.mappers.LectureMapper.";
 	
+	
+	public int total(String cl_no) {
+		return sqlSession.selectOne(namespace+"totalCL",cl_no);
+	}
+	public boolean updateCL(LectureDTO dto) {
+		int result = sqlSession.update(namespace+"updateCL",dto);
+		return result==1;
+	}
+	public List<LectureDTO> listPageCL(LectureDTO dto) {
+		return sqlSession.selectList(namespace+"listPageCL",dto);
+	}
+	public boolean create(LectureDTO dto) {
+		int result = sqlSession.insert(namespace+"create",dto);
+		return result==1;
+	}
+	public String newCLno() {
+		return sqlSession.selectOne(namespace+"newCLno");
+	}
+	
+	
+	
 	public int total() {
 		return sqlSession.selectOne(namespace+"total");
+	}
+	public boolean update(LectureDTO dto) {
+		int result = sqlSession.update(namespace+"update",dto);
+		return result==1;
 	}
 	public List<LectureDTO> listPage(LectureDTO dto) {
 		return sqlSession.selectList(namespace+"listPage",dto);
@@ -30,8 +55,8 @@ public class LectureDAO {
 	public LectureDTO detail(String no) {
 		return sqlSession.selectOne(namespace+"detail",no);
 	}
-	public String newBno() {
-		return sqlSession.selectOne(namespace+"newBno");
+	public String newLCno() {
+		return sqlSession.selectOne(namespace+"newLCno");
 	}
 	public boolean viewCntUpd(String no) {
 		int result = sqlSession.update(namespace+"viewCntUpd",no);
@@ -39,10 +64,6 @@ public class LectureDAO {
 	}
 	public boolean likeCntUpd(LikeDTO dto) {
 		int result = sqlSession.update(namespace+"likeCntUpd",dto);
-		return result==1;
-	}
-	public boolean update(LectureDTO dto) {
-		int result = sqlSession.update(namespace+"update",dto);
 		return result==1;
 	}
 }

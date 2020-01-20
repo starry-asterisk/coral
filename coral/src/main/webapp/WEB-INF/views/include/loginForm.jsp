@@ -17,7 +17,7 @@
 <br>
 <br>
 <br>
-<button type="button" onClick="onSign();" style='color: white'>구글로그인</button>
+<button type="button" onClick="onSign();" class='googleLogin'><i class="fab fa-google"></i></button>
 <br>
 <span style="color: white"><a href="/signUp?grade=teacher"
 	style="color: white">교사가입</a> | <a href="/signUp?grade=student"

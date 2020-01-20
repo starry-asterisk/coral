@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.coral.www.mappers.LectureMapper">
+  	<select id="totalCL" resultType="int" >
+  		select count(*) from B where B_STATUS = 'P'
+  	</select>
+  	<select id="listPageCL" parameterType="com.coral.www.Lecture.LectureDTO" resultType="com.coral.www.Lecture.LectureDTO" >
+  		SELECT 
+  			B_NO as "no", 
+  			B_TITLE AS "title", 
+  			B_UID AS "id", 
+  			B_REGDATE as "regdate", 
+  			B_VIEWS as "views", 
+  			B_STATUS as "status" ,
+  			B_RECOMMENDS as "recommends",
+  			"replyCnt" as "amount"
+		FROM (
+			SELECT  (RANK() OVER(ORDER BY B_NO DESC))ROWNUMS, BOARD_LIST.* 
+			FROM BOARD_LIST 
+			WHERE 
+				B_STATUS = 'P'
+			ORDER BY 
+				B_NO DESC) 
+		<![CDATA[
+		WHERE 
+			ROWNUMS > ((#{page}-1)*#{amount}) and ROWNUMS <= (#{page}*#{amount})
+		]]>
+  	</select>
+  	<select id="newCLno" resultType="java.lang.String">
+  		select 'C'||LPAD(B_SEQ.NEXTVAL,8,0) from dual
+  	</select>
+  	<select id="detail" resultType="com.coral.www.Lecture.LectureDTO">
+  		select B_NO as "no", B_CATEGORY as "category", B_REGDATE as "regdate", B_UID AS "id", B_TAG as "tag", B_TITLE as "title", B_CONTENTS as "contents", B_VIEWS as "views",B_RECOMMENDS as "recommends", B_ATTACHMENT as "attachment" from b where B_NO = #{no}
+  	</select>
+  	<insert id="create" parameterType="com.coral.www.Lecture.LectureDTO">
+  		INSERT INTO 
+  				B(
+  					CL_NO,
+  					CL_TAG,
+  					CL_TITLE,
+  					CL_DESCRIPTION,
+  					CL_UID
+  				) 
+  				VALUES(
+  					#{cl_no},
+  					#{cl_tag},
+  					#{cl_title},
+  					#{cl_description},
+  					#{id}
+  				)
+  	</insert>
+  	<update id="updateCL" parameterType="com.coral.www.Lecture.LectureDTO">
+  		UPDATE B SET 
+  			CL_TAG = #{cl_tag},
+  			CL_TITLE = #{cl_title},
+  			CL_DESCRIPTION = #{cl_description}
+  		WHERE 
+  			CL_UID = #{id} AND
+  			CL_NO = #{cl_no} AND
+  			CL_STATUS != 'N'
+  	</update>
+  	<select id="viewCntUpd">
+  		UPDATE LE SET LE_VIEWS = LE_VIEWS + 1 WHERE LE_NO = #{no} 
+  	</select>
+  	<update id="likeCntUpd" parameterType="com.coral.www.like.LikeDTO" >
+  		UPDATE LE SET LE_RECOMMENDS = LE_RECOMMENDS +(#{div}) WHERE LE_NO = #{no}
+  	</update>
+  </mapper>

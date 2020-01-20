@@ -16,15 +16,21 @@ import com.coral.www.like.LikeDTO;
 public class LectureService {
 	@Inject
 	LectureDAO dao;
-	public void addList(Model model, HttpServletRequest request) {
+	public void addList(Model model, HttpServletRequest request, String cl_no) {
 		LectureDTO dto = new LectureDTO();
 		dto.setPage(request.getParameter("page")==null?1:Integer.parseInt(request.getParameter("page")));
 		dto.setAmount(request.getParameter("amount")==null?50:Integer.parseInt(request.getParameter("amount")));
 		model.addAttribute("amount", dto.getAmount());
-		model.addAttribute("Endpage", (int) Math.ceil((double)dao.total()/(double)dto.getAmount()));
+		model.addAttribute("Endpage", (int) Math.ceil((double)(cl_no!=null?dao.total(cl_no):dao.total())/(double)dto.getAmount()));
 		model.addAttribute("Currentpage", dto.getPage());
-		model.addAttribute("BoardList", dao.listPage(dto));
+		if(cl_no!=null) {
+			dto.setCl_no(cl_no);
+			model.addAttribute("BoardList", dao.listPageCL(dto));
+		}else {
+			model.addAttribute("BoardList", dao.listPage(dto));
+		}
 	}
+	
 	public LectureDTO detail(String no) {
 		dao.viewCntUpd(no);
 		return dao.detail(no);
@@ -37,10 +43,10 @@ public class LectureService {
 	}
 	public String write(LectureDTO dto) {
 		try {
-			dto.setNo(dao.newBno());
-			if(dto.getContents().getBytes().length>1000) {
-				new JFileWriter("board\\"+dto.getNo()+".txt",dto.getContents());
-				dto.setContents("${linked}board\\"+dto.getNo()+".txt");
+			dto.setNo(dao.newLCno());
+			if(dto.getContent().getBytes().length>1000) {
+				new JFileWriter("board\\"+dto.getNo()+".txt",dto.getContent());
+				dto.setContent("${linked}board\\"+dto.getNo()+".txt");
 			}
 			return dao.write(dto)?dto.getNo():null;
 		}catch(Exception e) {
@@ -48,12 +54,21 @@ public class LectureService {
 			return null;
 		}
 	}
+	
+	public String create(LectureDTO dto) {
+		try {
+			dto.setNo(dao.newCLno());
+			return dao.write(dto)?dto.getNo():null;
+		}catch(Exception e) {
+			return null;
+		}
+	}
 
 	public String update(LectureDTO dto) {
 		try {
-			if(dto.getContents().getBytes().length>1000) {
-				new JFileWriter("board\\"+dto.getNo()+".txt",dto.getContents());
-				dto.setContents("${linked}board\\"+dto.getNo()+".txt");
+			if(dto.getContent().getBytes().length>1000) {
+				new JFileWriter("board\\"+dto.getNo()+".txt",dto.getContent());
+				dto.setContent("${linked}board\\"+dto.getNo()+".txt");
 			}
 			return dao.update(dto)?dto.getNo():null;
 		}catch(Exception e) {
