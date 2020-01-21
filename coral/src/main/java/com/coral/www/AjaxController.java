@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.coral.www.Board.BoardService;
 import com.coral.www.File.FileService;
+import com.coral.www.Lecture.LectureService;
 import com.coral.www.Report.ReasonDTO;
 import com.coral.www.Report.ReportDTO;
 import com.coral.www.Report.ReportService;
@@ -45,6 +46,8 @@ public class AjaxController {
 	ReplyService replyService;
 	@Inject
 	BoardService boardService;
+	@Inject
+	LectureService lectureService;
 	
 	@ResponseBody
 	@RequestMapping(value = "/search")
@@ -101,7 +104,12 @@ public class AjaxController {
 	public boolean like(HttpSession session,@RequestParam String bno, @RequestParam int thumb ) {
 		LikeDTO dto = likeService.isLiked(bno,(String)session.getAttribute("id"),thumb);
 		if(dto!=null) {
-			return likeService.insert(dto)&&boardService.likeUpd(bno, thumb);
+			if(lectureService.detail(bno,false)!=null) {
+				return likeService.insert(dto)&&lectureService.likeUpd(bno, thumb);
+			}else {
+				return likeService.insert(dto)&&boardService.likeUpd(bno, thumb);
+			}
+			
 		}
 		return false;
 	}

@@ -25,7 +25,7 @@
 		</tr>
 	</c:forEach>
 	<tr height="3em">
-		<td colspan="7" class="swipeBtnArea btnRow">
+		<td colspan="8" class="swipeBtnArea btnRow">
 		
 		</td>
 	</tr>

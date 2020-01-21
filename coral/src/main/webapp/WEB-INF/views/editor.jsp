@@ -66,8 +66,8 @@
   	<c:if test="${empty cl_no}">
 		<div class="tag_form" placeholder="태그 입력"><input type="text" value="" maxlength="25" ></div>
 	</c:if>
-		<button type="button" class="basic_button" onclick="upload('P',${isNew!=false})">${isNew!=false?'발행':'수정완료'}</button>
-		<button type="button" class="basic_button" onclick="if(confirm('강의글을 삭제 하시겠습니까?')){upload(${isNew!=false?'\'S\'':'\'N\''},${isNew!=false})}">${isNew!=false?'임시저장':'삭제'}</button>
+		<button type="button" class="basic_button" onclick="upload('P',${isNew!=false},'${(empty cl_no)?"board":"lecture"}')">${isNew!=false?'발행':'수정완료'}</button>
+		<button type="button" class="basic_button" onclick="if(confirm('강의글을 삭제 하시겠습니까?')){upload(${isNew!=false?'\'S\'':'\'N\''},${isNew!=false},'${(empty cl_no)?"board":"lecture"}')}">${isNew!=false?'임시저장':'삭제'}</button>
 	</div>
 </div>
 
@@ -88,8 +88,9 @@ CK_Config.isReadonly = false;
 <script src="/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
 <script src="/js/ajax.js"></script>
 <script type="text/javascript">
-var bno  = "${board.no }";
-if(${board.tag!=null}){
+var no  = "${board.no }";
+var cl_no  = "${cl_no }";
+if(${(empty cl_no)&&board.tag!=null}){
 	var tags = '${board.tag}';
 	tags = tags.split("#");
 	tags.forEach(function(tag){
@@ -99,13 +100,13 @@ if(${board.tag!=null}){
 	});
 }
 
-if(${board.category!=null}){
-	var category = '${board.category}';
+if(${(empty cl_no)&&board.category!=null}){
+	var category = '${(empty cl_no)?board.category:""}';
 	$("option[value="+category+"]").attr("selected","selected");
 }
 
 <c:forEach items="${attachment}" var="file">
-loadAttach("${file.path}","${file.name}",${file.image});
+loadAttach("${file.path}","${file.name}",${file.image},${file.order});
 </c:forEach>
 </script>
 </html>

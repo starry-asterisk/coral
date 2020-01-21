@@ -21,6 +21,9 @@ public class FileDAO {
 	public List<FileDTO> getList(String bno) {
 		return sqlSession.selectList(namespace+"selectList",bno);
 	}
+	public int newOrder(String bno) {
+		return sqlSession.selectOne(namespace+"newOrder",bno);
+	}
 	public boolean update(FileDTO dto) {
 		int result = sqlSession.update(namespace+"update",dto);
 		return result==1?true:false;

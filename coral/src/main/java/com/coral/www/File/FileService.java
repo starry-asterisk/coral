@@ -202,15 +202,12 @@ public class FileService {
 				for(String file:files) {
 					if(filesType[count].equals("false")) {
 						delFile("/"+list.get(count).getKeyname());
-						dto=new FileDTO();
-						dto.setBno(bno);
-						dto.setOrder(count);
-						dao.delete(dto);
+						dao.delete(list.get(count));
 					}else if(!filesType[count].equals("true")){
 						if(!Pattern.matches(pattern,filesType[count].replace(" ","_").toLowerCase())) {
 							dto = restore(filesName[count],Base64.getMimeDecoder().decode(file));
 							dto.setBno(bno);
-							dto.setOrder(count);
+							dto.setOrder(dao.newOrder(bno));
 							result = dao.insert(dto)&&result;
 						}else {
 							count--;

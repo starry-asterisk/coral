@@ -78,18 +78,18 @@ public class LectureController {
 	
 	@RequestMapping("/course")
 	public String course(Model model, @RequestParam String no, @RequestHeader("user-agent") String agent) {
-		LectureDTO boarddto = service.detail(no);
-		if(boarddto.getContent().contains("${linked}")) {
-			boarddto.setContent(new JFileWriter().readFile(boarddto.getContent().replace("${linked}", "")));
+		LectureDTO dto = service.detail(no,true);
+		if(dto.getContents().contains("${linked}")) {
+			dto.setContents(new JFileWriter().readFile(dto.getContents().replace("${linked}", "")));
 		}
-		if(boarddto.getAttachment()=='P') {
-			List<FileDTO> list = fileService.getAttachment(boarddto.getNo());
+		if(dto.getAttachment()=='P') {
+			List<FileDTO> list = fileService.getAttachment(dto.getNo());
 			model.addAttribute("attachment", list);
 			for(FileDTO filedto:list) {
-				boarddto.setContent(boarddto.getContent().replaceFirst("<img:"+filedto.getOrder()+">", filedto.getPath()));
+				dto.setContents(dto.getContents().replaceFirst("<img:"+filedto.getOrder()+">", filedto.getPath()));
 			}
 		}
-		model.addAttribute("board", boarddto);
+		model.addAttribute("board", dto);
 		if(agent.contains("MSIE")||agent.contains("Trident")) {
 			model.addAttribute("include", "include/ckEdit4");
 		}else {
@@ -99,7 +99,13 @@ public class LectureController {
 	}
 	
 	@RequestMapping(value="/write",method = { RequestMethod.GET })
-	public String editor(Model model, @RequestParam String cl_no, @RequestHeader("user-agent") String agent) {
+	public String editor(Model model, @RequestParam String cl_no, @RequestHeader("user-agent") String agent, HttpSession session) throws Exception {
+		LectureDTO dto = new LectureDTO();
+		dto.setCl_no(cl_no);
+		dto.setId((String)session.getAttribute("id"));
+		if(!service.CLExit(dto)){
+			return "redirect:/"+"?Code=alert('"+URLEncoder.encode("타인의 강좌에는 강의를 업로할 수가 없습니다!", "UTF-8")+"');";
+		}
 		if(agent.contains("MSIE")||agent.contains("Trident")) {
 			model.addAttribute("include", "include/ckEdit4");
 		}else {
@@ -109,33 +115,38 @@ public class LectureController {
 		return "editor";
 	}
 	
-	@Transactional
+	
 	@RequestMapping(value="/write",method = { RequestMethod.POST })
 	public String upload(LectureDTO dto,@RequestParam(required=false) String[] files,@RequestParam(required=false) String[] filesName,@RequestParam(required=false) String[] filesType, HttpServletRequest request) throws ParseException, UnsupportedEncodingException{
 		dto.setAttachment(files!=null?'P':'N');
 		dto.setId((String) request.getSession().getAttribute("id"));
-		return "redirect:/lecture?="+dto.getCl_no()+"&Code=alert('"+URLEncoder.encode(fileService.insert(files , filesType , filesName , service.write(dto))?"게시글이 등록되었습니다":"등록에 실패했습니다", "UTF-8")+"');";
+		if(!service.CLExit(dto)){
+			return "redirect:/"+"?Code=alert('"+URLEncoder.encode("타인의 강좌에는 강의를 업로할 수가 없습니다!", "UTF-8")+"');";
+		}
+		return "redirect:/lecture?cl_no="+dto.getCl_no()+"&Code=alert('"+URLEncoder.encode(fileService.insert(files , filesType , filesName , service.write(dto))?"게시글이 등록되었습니다":"강의 등록에 실패했습니다", "UTF-8")+"');";
+		
 	}
 	@RequestMapping(value="/edit",method = { RequestMethod.GET })
-	public String edit(Model model, @RequestParam String cl_no, @RequestHeader("user-agent") String agent, HttpSession session) throws UnsupportedEncodingException {
-		LectureDTO boarddto = service.detail(cl_no);
-		if(!boarddto.getId().equals(session.getAttribute("id"))) {
-			return "redirect:/lecture?cl_no="+cl_no+"&Code=alert('"+URLEncoder.encode("타인의 강의물은 수정할 수 없습니다!", "UTF-8")+"');";
+	public String edit(Model model, @RequestParam String no, @RequestHeader("user-agent") String agent, HttpSession session) throws UnsupportedEncodingException {
+		LectureDTO dto = service.detail(no,false);
+		if(!dto.getId().equals(session.getAttribute("id"))) {
+			return "redirect:/lecture?Code=alert('"+URLEncoder.encode("타인의 강의물은 수정할 수 없습니다!", "UTF-8")+"');";
 		}
-		if(boarddto.getContent().contains("${linked}")) {
-			boarddto.setContent(new JFileWriter().readFile(boarddto.getContent().replace("${linked}", "")));
+		if(dto.getContents().contains("${linked}")) {
+			dto.setContents(new JFileWriter().readFile(dto.getContents().replace("${linked}", "")));
 		}
-		if(boarddto.getAttachment()=='P') {
-			List<FileDTO> list = fileService.getAttachment(boarddto.getNo());
+		if(dto.getAttachment()=='P') {
+			List<FileDTO> list = fileService.getAttachment(dto.getNo());
 			model.addAttribute("attachment", list);
 			for(FileDTO filedto:list) {
-				if(boarddto.getContent().contains("<img:"+filedto.getOrder()+">")) {
+				if(dto.getContents().contains("<img:"+filedto.getOrder()+">")) {
 					filedto.setImage(true);
-					boarddto.setContent(boarddto.getContent().replaceFirst("<img:"+filedto.getOrder()+">", filedto.getPath()));
+					dto.setContents(dto.getContents().replaceFirst("<img:"+filedto.getOrder()+">", filedto.getPath()));
 				}
 			}
 		}
-		model.addAttribute("board", boarddto);
+		model.addAttribute("board", dto);
+		model.addAttribute("cl_no", dto.getCl_no());
 		if(agent.contains("MSIE")||agent.contains("Trident")) {
 			model.addAttribute("include", "include/ckEdit4");
 		}else {
@@ -147,6 +158,10 @@ public class LectureController {
 	@Transactional
 	@RequestMapping(value="/edit",method = { RequestMethod.POST })
 	public String edit(LectureDTO dto,@RequestParam(required=false) String[] files,@RequestParam(required=false) String[] filesName,@RequestParam(required=false) String[] filesType, HttpServletRequest request) throws ParseException, UnsupportedEncodingException{
+		dto.setId((String) request.getSession().getAttribute("id"));
+		if(!service.LExit(dto)) {
+			return "redirect:/lecture?Code=alert('"+URLEncoder.encode("타인의 강의물은 수정할 수 없습니다!", "UTF-8")+"');";
+		}
 		dto.setAttachment(files!=null?'P':'N');
 		if(dto.getStatus()=='N') {
 			dto.setAttachment('N');
@@ -154,7 +169,6 @@ public class LectureController {
 			filesName=null;
 			filesType=null;
 		}
-		dto.setId((String) request.getSession().getAttribute("id"));
 		return "redirect:/lecture?cl_no="+dto.getCl_no()+"&Code=alert('"+URLEncoder.encode(fileService.update(files , filesType , filesName , service.update(dto))?(dto.getStatus()=='N'?"강의글이 삭제되었습니다":"강의글이 수정되었습니다"):"수정에 실패했습니다", "UTF-8")+"');";
 	}
 }

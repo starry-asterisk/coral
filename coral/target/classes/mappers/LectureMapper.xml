@@ -47,8 +47,18 @@
   					#{id}
   				)
   	</insert>
+  	<select id="description" resultType="com.coral.www.Lecture.LectureDTO">
+  				SELECT
+  					CL_NO AS "cl_no",
+  					CL_TAG AS "cl_tag",
+  					CL_TITLE AS "cl_title",
+  					CL_DESCRIPTION AS "cl_description",
+  					CL_UID AS "id"
+  				FROM CL
+  				WHERE CL_NO = #{cl_no}
+  	</select>
   	<update id="updateCL" parameterType="com.coral.www.Lecture.LectureDTO">
-  		UPDATE B SET 
+  		UPDATE CL SET 
   			CL_TAG = #{cl_tag},
   			CL_TITLE = #{cl_title},
   			CL_DESCRIPTION = #{cl_description}
@@ -57,7 +67,12 @@
   			CL_NO = #{cl_no} AND
   			CL_STATUS != 'N'
   	</update>
-  	
+  	<select id="CLExit" resultType="int" parameterType="com.coral.www.Lecture.LectureDTO" >
+  		SELECT count(*) FROM CL WHERE CL_UID=#{id} AND CL_NO=#{cl_no}
+  	</select>
+  	<select id="LExit" resultType="int" parameterType="com.coral.www.Lecture.LectureDTO" >
+  		SELECT count(*) FROM CL LEFT OUTER JOIN LE ON CL_NO = LE_CLNO WHERE CL_UID = #{id} AND LE_NO = #{no} AND CL_NO = #{cl_no}
+  	</select>
   	<select id="viewCntUpd">
   		UPDATE LE SET LE_VIEWS = LE_VIEWS + 1 WHERE LE_NO = #{no} 
   	</select>
@@ -87,6 +102,22 @@
 			ROWNUMS > ((#{page}-1)*#{amount}) and ROWNUMS <= (#{page}*#{amount})
 		]]>
   	</select>
+  	<select id="detail" parameterType="com.coral.www.Lecture.LectureDTO" resultType="com.coral.www.Lecture.LectureDTO" >
+  		SELECT 
+  			LE_CLNO as "cl_no",
+  			LE_NO as "no", 
+  			LE_TITLE AS "title",
+  			LE_CONTENTS as "contents",
+  			LE_RECOMMENDS AS "recommends",
+  			LE_VIEWS AS "views",
+  			LE_REGDATE AS "regdate",
+  			LE_UPDDATE AS "upddate",
+  			LE_ATTACHMENT AS "attachment",
+  			LE_STATUS AS "status",
+  			CL_UID AS "id"
+		FROM LE LEFT OUTER JOIN CL ON CL_NO = LE_CLNO
+		WHERE LE_NO=#{no} AND LE_STATUS='P'
+  	</select>
   	<select id="newLEno" resultType="java.lang.String">
   		select 'L'||LPAD(L_SEQ.NEXTVAL,8,0) from dual
   	</select>
@@ -96,7 +127,7 @@
   					LE_CLNO,
   					LE_NO,
   					LE_TITLE,
-  					LE_CONTENT,
+  					LE_CONTENTS,
   					LE_ATTACHMENT,
                     LE_STATUS
   				) 
@@ -104,9 +135,30 @@
   					#{cl_no},
                     #{no},
   					#{title},
-  					#{content},
+  					#{contents},
   					#{attachment},
   					#{status}
   				)
   	</insert>
+  	<update id="update" parameterType="com.coral.www.Lecture.LectureDTO">
+  		UPDATE LE SET 
+  			LE_UPDDATE = SYSDATE
+  			<if test="title!=null">
+  			,
+  			LE_TITLE = #{title}
+  			</if>
+  			<if test="contents!=null">
+  			,
+  			LE_CONTENTS = #{contents}
+  			</if>
+  			<if test="attachment!=' '">
+  			,
+  			LE_ATTACHMENT = #{attachment}
+  			</if>
+  			,
+            LE_STATUS = #{status}
+  		WHERE 
+  			LE_NO = #{no} AND
+  			LE_STATUS != 'N'
+  	</update>
   </mapper>

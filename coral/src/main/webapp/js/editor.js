@@ -14,7 +14,7 @@ function addTag(value){
     	$(this).parent().remove();
     });
 }
-if($(".tag_form input").val()!=""){
+if($(".tag_form input").val()!=""&&$(".tag_form input").val()!=undefined){
 	var array = $(".tag_form input").val().split(" ");
 	for(i=0;i<array.length;i++){
 		addTag(array[i]);
@@ -91,8 +91,8 @@ function uploadeUrlReplace(contents){
 	}
 	return contents;
 }
-function upload(status, isNew){
-	var form = mkForm("/board/"+(isNew?"write":"edit"),"POST");
+function upload(status, isNew, servlet){
+	var form = mkForm("/"+servlet+"/"+(isNew?"write":"edit"),"POST");
 	form.attr("enctype","multipart/form-data");
 	var contents = myEditor.getData().replace(check.dataUrl,"<img:>");
 	contents = uploadeUrlReplace(contents);
@@ -110,22 +110,29 @@ function upload(status, isNew){
 	var count = 0;
 	attachmentList.forEach(function(item){
 		if(item!=undefined){
+			if(item.length>4){
+				count = item[4];
+			}
 			form.addValue("filesName",item[0]);
 			form.addValue("filesType",item[1]);
 			form.addValue("files",item[2]);
-			if(item[3]){
+			if(item[1]!=false&&item[3]){
 				contents = contents.replace("<img:>","<img:"+count+">");
 			}
 			count++;
 		}
 	});
-	if(bno!=""){
-		form.addValue("no",bno);
+	if(no!=""){
+		form.addValue("no",no);
+	}
+	if(cl_no!=""){
+		form.addValue("cl_no",cl_no);
+	}else{
+		form.addValue("tag",getTag());
+		form.addValue("category",$('.custom-select select option:selected').val());
 	}
 	form.addValue("title",$(".title_area").val());
 	form.addValue("contents",contents);
-	form.addValue("tag",getTag());
-	form.addValue("category",$('.custom-select select option:selected').val());
 	if(status!=undefined&&status!=""){
 		form.addValue("status",status);
 	}
@@ -204,8 +211,8 @@ function addAttach(data_url, name, isImage){
 	}
 	fileListDiv.append("<span>"+name+"</span><button tpye='button' style='float:right' onclick='delAttach($(this))' data-index="+attachmentList.length+"> × </button");
 }
-function loadAttach(url, name, isImage){
-	attachmentList.push([name,true,url,isImage]);
+function loadAttach(url, name, isImage,order){
+	attachmentList.push([name,true,url,isImage,order]);
 	var fileListDiv = $("input[data-image="+isImage+"]").prev();
 	if(fileListDiv.html()!=""){
 		fileListDiv.append("<hr>");
@@ -222,6 +229,7 @@ $("button.fold").click(function(){
 $('.user_sub').css({
     'transition': 'all 1.5s' 
 });
+
 $(window).scroll(function(){
     $('.user_sub').css({
         'top': $(this).scrollTop()

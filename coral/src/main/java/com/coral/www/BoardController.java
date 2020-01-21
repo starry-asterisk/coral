@@ -89,7 +89,7 @@ public class BoardController {
 	@RequestMapping(value="/edit",method = { RequestMethod.GET })
 	public String edit(Model model, @RequestParam String bno, @RequestHeader("user-agent") String agent, HttpSession session) throws UnsupportedEncodingException {
 		BoardDTO boarddto = service.detail(bno);
-		if(!boarddto.getId().equals(session.getAttribute("id"))) {
+		if(boarddto==null||!boarddto.getId().equals(session.getAttribute("id"))) {
 			return "redirect:/"+"?Code=alert('"+URLEncoder.encode("타인의 게시물은 수정할 수 없습니다!", "UTF-8")+"');";
 		}
 		if(boarddto.getContents().contains("${linked}")) {

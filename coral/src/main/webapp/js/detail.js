@@ -7,7 +7,7 @@ if(tags.length>1){
 			$("#tag").before("<a href='/ajax/search?keyword="+tag+"'style='margin-right:5px;color:#337ab7'>#"+tag+"</a>");
 		}
 	});
-}else{
+}else if($("#tag").length > 0){
 	$("#tag").before("#");
 }
 

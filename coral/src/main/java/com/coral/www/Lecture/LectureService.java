@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import com.coral.www.application.JFileWriter;
@@ -26,14 +27,14 @@ public class LectureService {
 		if(cl_no!=null) {
 			dto.setCl_no(cl_no);
 			model.addAttribute("LectureList", dao.listPage(dto));
+			model.addAttribute("class", dao.description(cl_no));
 			model.addAttribute("cl_no", cl_no);
 		}else {
 			model.addAttribute("ClassList", dao.listPageCL(dto));
 		}
 	}
-	
-	public LectureDTO detail(String no) {
-		dao.viewCntUpd(no);
+	public LectureDTO detail(String no, boolean isView) {
+		if(isView)dao.viewCntUpd(no);
 		return dao.detail(no);
 	}
 	public boolean likeUpd(String no, int div) {
@@ -42,20 +43,22 @@ public class LectureService {
 		dto.setNo(no);
 		return dao.likeCntUpd(dto);
 	}
+	@Transactional
 	public String write(LectureDTO dto) {
 		try {
-			dto.setNo(dao.newLCno());
-			if(dto.getContent().getBytes().length>1000) {
-				new JFileWriter("board\\"+dto.getNo()+".txt",dto.getContent());
-				dto.setContent("${linked}board\\"+dto.getNo()+".txt");
+			dto.setNo(dao.newLEno());
+			if(dto.getContents().getBytes().length>1000) {
+				new JFileWriter("board\\"+dto.getNo()+".txt",dto.getContents());
+				dto.setContents("${linked}board\\"+dto.getNo()+".txt");
 			}
 			return dao.write(dto)?dto.getNo():null;
 		}catch(Exception e) {
+			e.printStackTrace();
 			new JFileWriter().delFile("board\\"+dto.getNo()+".txt");
 			return null;
 		}
 	}
-	
+	@Transactional
 	public boolean create(LectureDTO dto) {
 		try {
 			dto.setCl_no(dao.newCLno());
@@ -64,17 +67,24 @@ public class LectureService {
 			return false;
 		}
 	}
-
+	@Transactional
 	public String update(LectureDTO dto) {
 		try {
-			if(dto.getContent().getBytes().length>1000) {
-				new JFileWriter("board\\"+dto.getNo()+".txt",dto.getContent());
-				dto.setContent("${linked}board\\"+dto.getNo()+".txt");
+			if(dto.getContents().getBytes().length>1000) {
+				new JFileWriter("board\\"+dto.getNo()+".txt",dto.getContents());
+				dto.setContents("${linked}board\\"+dto.getNo()+".txt");
 			}
 			return dao.update(dto)?dto.getNo():null;
 		}catch(Exception e) {
+			e.printStackTrace();
 			new JFileWriter().delFile("board\\"+dto.getNo()+".txt");
 			return null;
 		}
+	}
+	public boolean CLExit(LectureDTO dto) {
+		return dao.CLExit(dto);
+	}
+	public boolean LExit(LectureDTO dto) {
+		return dao.LExit(dto);
 	}
 }

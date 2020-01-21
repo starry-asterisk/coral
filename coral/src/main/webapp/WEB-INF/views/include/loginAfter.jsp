@@ -49,12 +49,16 @@
 	color: white;
 }
 .login button.prof_img{
-	overflow:hidden;
-	border-radius:50%;
-	border:1px solid #333;
-	width:110px;
-	height:110px;
-	margin:20px;
+	overflow: hidden;
+    border-radius: 50%;
+    border: 1px solid #333;
+    width: 110px;
+    height: 110px;
+    margin: 20px;
+    box-shadow: 0 0 15px 15px rgba(0,0,0,0.15);
+    color: white;
+    font-size: 5em;
+    font-weight: 900;
 }
 .inform{
 	border-bottom:1px solid white;

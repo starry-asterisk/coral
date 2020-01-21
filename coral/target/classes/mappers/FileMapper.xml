@@ -29,9 +29,13 @@
   	DELETE 
   	FROM AF
   	WHERE
-  		AF_BNO = #{bno}
-  	<if test="order!=-1">
-		AND AF_ORDER = #{order}
-  	</if>
+  		AF_KEYNAME = #{keyname}
   	</update>
+  	<select id="newOrder" resultType="int" parameterType="java.lang.String">
+  	SELECT
+  	NVL(MAX(AF_ORDER)+1,0) AS "order" 
+  	FROM AF
+  	WHERE
+  		AF_BNO = #{bno}
+  	</select>
   </mapper>

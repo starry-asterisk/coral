@@ -35,7 +35,13 @@ public class LectureDAO {
 	public String newCLno() {
 		return sqlSession.selectOne(namespace+"newCLno");
 	}
-	
+	public boolean CLExit(LectureDTO dto) {
+		int result = sqlSession.selectOne(namespace+"CLExit",dto);
+		return result==1;
+	}
+	public LectureDTO description(String cl_no) {
+		return sqlSession.selectOne(namespace+"description",cl_no);
+	}
 	
 	
 	public int total(String cl_no) {
@@ -55,8 +61,8 @@ public class LectureDAO {
 	public LectureDTO detail(String no) {
 		return sqlSession.selectOne(namespace+"detail",no);
 	}
-	public String newLCno() {
-		return sqlSession.selectOne(namespace+"newLCno");
+	public String newLEno() {
+		return sqlSession.selectOne(namespace+"newLEno");
 	}
 	public boolean viewCntUpd(String no) {
 		int result = sqlSession.update(namespace+"viewCntUpd",no);
@@ -64,6 +70,10 @@ public class LectureDAO {
 	}
 	public boolean likeCntUpd(LikeDTO dto) {
 		int result = sqlSession.update(namespace+"likeCntUpd",dto);
+		return result==1;
+	}
+	public boolean LExit(LectureDTO dto) {
+		int result = sqlSession.selectOne(namespace+"LExit",dto);
 		return result==1;
 	}
 }
