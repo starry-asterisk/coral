@@ -33,7 +33,7 @@
 <div class="base_">
 	<div class="main_sub">
 		<div class="Board_List" style="display:none;overflow-y:auto;" contenteditable="true"><hr>메모장 입니다. 페이지 새로고침시에는 삭제되기때문에 주의 해주세요<hr><br>-</div>
-		<div class="Board_List" style="display:none;overflow-y:auto;">b</div>
+		<div class="Board_List" style="display:none;overflow-y:auto;">게시글이 없습니다</div>
 		<div class="Board_List">
 			<!-- ACE에디터  -->
 			<pre id="editor">public class HelloWorld {

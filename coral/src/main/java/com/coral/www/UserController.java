@@ -279,13 +279,14 @@ public class UserController {
 	                    	dto.setMail(emailAddress.get(0).getValue());
 	                    }
 	                    List<Birthday> birthday = person.getBirthdays();
+	                    Date birth = new Date();
 	                    if (birthday != null && birthday.size() > 0) {
-	                    	Date birth = new Date();
 	                    	birth.setYear(birthday.get(0).getDate().getYear()-1900);
 	                    	birth.setMonth(birthday.get(0).getDate().getMonth()-1);
 	                    	birth.setDate(birthday.get(0).getDate().getDay());
-	                    	dto.setBirth(birth);
-	                    } 
+	                    	
+	                    }
+	                    dto.setBirth(birth);
 	                    dto.setPhone("000-0000-0000");
 	                    dto.setAddress("");
 	        			dto.setCompany("");

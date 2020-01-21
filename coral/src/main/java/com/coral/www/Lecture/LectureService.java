@@ -25,9 +25,9 @@ public class LectureService {
 		model.addAttribute("Currentpage", dto.getPage());
 		if(cl_no!=null) {
 			dto.setCl_no(cl_no);
-			model.addAttribute("BoardList", dao.listPageCL(dto));
-		}else {
 			model.addAttribute("BoardList", dao.listPage(dto));
+		}else {
+			model.addAttribute("BoardList", dao.listPageCL(dto));
 		}
 	}
 	
