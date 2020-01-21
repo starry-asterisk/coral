@@ -20,7 +20,7 @@ var check = new Object;
 	check.name = /^[가-힣]{1,5}$/;
 	check.dataUrl = /\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,[a-z0-9\!\$\&\'\,\(\)\*\+\,\;\=\-\.\_\~\:\@\/\?\%\s]*\s*/gi;
 
-function mkPageBtn(area,location,currentPage,EndPage,amount){
+function mkPageBtn(area,location,currentPage,EndPage,amount,add){
 	if(amount==undefined){
 		amount = "";
 	}
@@ -41,12 +41,12 @@ function mkPageBtn(area,location,currentPage,EndPage,amount){
 	area = $(area);
 	if(currentPage>1){
 		area.append(document.createElement("button"));
-		area.children().last().attr("onclick","location.href='"+location+"?page="+1+(amount==""?"":"&amount="+amount+"'"));
+		area.children().last().attr("onclick","location.href='"+location+"?page="+1+(amount==""?"":"&amount="+amount+(add==undefined?"":add)+"'"));
 		area.children().last().html("<");
 	}
 	for(i=start;i<=end;i++){
 		area.append(document.createElement("button"));
-		area.children().last().attr("onclick","location.href='"+location+"?page="+i+(amount==""?"":"&amount="+amount+"'"));
+		area.children().last().attr("onclick","location.href='"+location+"?page="+i+(amount==""?"":"&amount="+amount+(add==undefined?"":add)+"'"));
 		area.children().last().html(i);
 		if(i==currentPage){
 			area.children().last().attr("disabled","true");
@@ -54,7 +54,11 @@ function mkPageBtn(area,location,currentPage,EndPage,amount){
 	}
 	if(currentPage<EndPage){
 		area.append(document.createElement("button"));
-		area.children().last().attr("onclick","location.href='"+location+"?page="+EndPage+(amount==""?"":"&amount="+amount+"'"));
+		if(add!=undefined&&add!=""){
+			area.children().last().attr("onclick","location.href='"+location+"?page="+EndPage+(amount==""?"":"&amount="+amount)+add+"'");
+		}else{
+			area.children().last().attr("onclick","location.href='"+location+"?page="+EndPage+(amount==""?"":"&amount="+amount)+"'");
+		}
 		area.children().last().html(">");
 	}
 	$(area).find("button").height($(area).parent().width()/20);

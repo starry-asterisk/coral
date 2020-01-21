@@ -93,7 +93,7 @@
 				<tr class="profile_nav">
 					<td style="padding-top:10px;">
 					<button onclick="location.href='/board'" style="text-align:center;">> 게시판　</button>
-					<button onclick="location.href=''" style="text-align:center;">> 강좌　　</button>
+					<button onclick="location.href='/lecture'" style="text-align:center;">> 강좌　　</button>
 					<button onclick="location.href='/'" style="text-align:center;">> 메인　　</button></td>
 				</tr>
 			</table>

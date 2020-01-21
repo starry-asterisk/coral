@@ -40,7 +40,7 @@ public class BoardController {
 			return "include/board";
 		}
 		model.addAttribute("Board_type", "include/board");
-		model.addAttribute("attachment", "common/blank");
+		model.addAttribute("attachment", "include/Bside");
 		return "list";
 	}
 	@RequestMapping("/detail")
@@ -70,7 +70,6 @@ public class BoardController {
 	@RequestMapping(value="/write",method = { RequestMethod.GET })
 	public String editor(Model model, HttpServletRequest request) {
 		model.addAttribute("Category", service.categorylist());
-		model.addAttribute("id", request.getSession().getAttribute("id"));
 		String agent = request.getHeader("user-agent");
 		if(agent.contains("MSIE")||agent.contains("Trident")) {
 			model.addAttribute("include", "include/ckEdit4");

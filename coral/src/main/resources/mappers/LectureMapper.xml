@@ -32,7 +32,7 @@
   	</select>
   	<insert id="create" parameterType="com.coral.www.Lecture.LectureDTO">
   		INSERT INTO 
-  				B(
+  				CL(
   					CL_NO,
   					CL_TAG,
   					CL_TITLE,
@@ -64,4 +64,49 @@
   	<update id="likeCntUpd" parameterType="com.coral.www.like.LikeDTO" >
   		UPDATE LE SET LE_RECOMMENDS = LE_RECOMMENDS +(#{div}) WHERE LE_NO = #{no}
   	</update>
+  	<select id="total" resultType="int" >
+  		select count(*) from LE where LE_STATUS = 'P' AND LE_CLNO = #{cl_no}
+  	</select>
+  	<select id="listPage" parameterType="com.coral.www.Lecture.LectureDTO" resultType="com.coral.www.Lecture.LectureDTO" >
+  		SELECT 
+  			LE_CLNO as "cl_no",
+  			LE_NO as "no", 
+  			LE_TITLE AS "title",
+  			LE_RECOMMENDS AS "recommends",
+  			LE_VIEWS AS "views",
+  			LE_REGDATE AS "regdate",
+  			LE_UPDDATE AS "upddate"
+		FROM (SELECT (RANK() OVER(ORDER BY LE_NO DESC))ROWNUMS,  LE.* 
+			FROM LE 
+			WHERE 
+				LE_STATUS = 'P' AND LE_CLNO = #{cl_no}
+			ORDER BY 
+				LE_NO DESC) 
+		<![CDATA[
+		WHERE 
+			ROWNUMS > ((#{page}-1)*#{amount}) and ROWNUMS <= (#{page}*#{amount})
+		]]>
+  	</select>
+  	<select id="newLEno" resultType="java.lang.String">
+  		select 'L'||LPAD(L_SEQ.NEXTVAL,8,0) from dual
+  	</select>
+  	<insert id="write" parameterType="com.coral.www.Lecture.LectureDTO">
+  		INSERT INTO 
+  				LE(
+  					LE_CLNO,
+  					LE_NO,
+  					LE_TITLE,
+  					LE_CONTENT,
+  					LE_ATTACHMENT,
+                    LE_STATUS
+  				) 
+  				VALUES(
+  					#{cl_no},
+                    #{no},
+  					#{title},
+  					#{content},
+  					#{attachment},
+  					#{status}
+  				)
+  	</insert>
   </mapper>

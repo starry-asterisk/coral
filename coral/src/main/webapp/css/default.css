@@ -633,3 +633,15 @@ button.report:hover {
 #clockKR td.on{
     color: white;
 }
+
+.subbtn{
+	height: 56px;
+    width: 100%;
+    border: 0px solid #eee;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    color: #337ab7;
+}
+.subbtn:active{
+	box-shadow: 0 0 20px 5px rgba(0,0,0,0.02) inset;
+}

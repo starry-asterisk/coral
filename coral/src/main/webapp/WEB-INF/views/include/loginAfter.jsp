@@ -8,7 +8,7 @@
 		<td rowspan="2"><c:choose>
 				<c:when test="${empty prof_image}">
 					<button type="button" class="prof_img">
-						{fn:substring(userInfo.id, 0, 1)}</button>
+						${fn:substring(userInfo.id, 0, 1)}</button>
 				</c:when>
 				<c:otherwise>
 					<button type="button" class="prof_img">
@@ -41,7 +41,7 @@
 <table style="width:100%">
 	<tr>
 		<td onclick="location.href='/board'">게시글</td>
-		<td onclick="location.href='/'">강좌글</td>
+		<td onclick="location.href='/lecture'">강좌글</td>
 	</tr>
 </table>
 <style>

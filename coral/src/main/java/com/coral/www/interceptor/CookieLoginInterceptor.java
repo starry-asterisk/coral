@@ -55,6 +55,7 @@ public class CookieLoginInterceptor extends HandlerInterceptorAdapter{
         				session.setAttribute("id", dto.getId());
             			session.setAttribute("user-agent", request.getHeader("user-agent"));
             			session.setAttribute("ip", request.getRemoteAddr());
+            			session.setAttribute("grade", dto.getGrade());
             			/*쿠키갱신*/
             			
         			}else {

@@ -29,7 +29,9 @@
 	<context:component-scan base-package="com.coral.www" />
 	
 	<!-- 인터셉터 객체 생성 -->
-	<beans:bean id="LoginInterceptor" class="com.coral.www.interceptor.LoginInterceptor"/>
+	<beans:bean id="ManagerInterceptor" class="com.coral.www.interceptor.ManagerInterceptor"/>
+	<beans:bean id="TeacherInterceptor" class="com.coral.www.interceptor.TeacherInterceptor"/>
+	<beans:bean id="StudentInterceptor" class="com.coral.www.interceptor.StudentInterceptor"/>
 	
 	<beans:bean id="CookieLoginInterceptor" class="com.coral.www.interceptor.CookieLoginInterceptor"/>
 	<!-- Interceptor 설정 -->
@@ -51,7 +53,14 @@
         	<mapping path="/ajax/like"/>
         	<mapping path="/ajax/replySend"/> 
         	<mapping path="/ajax/replyUpd"/> 
-        	<beans:ref bean="LoginInterceptor"/>
+        	<beans:ref bean="StudentInterceptor"/>
+    	</interceptor>
+    	<interceptor>
+        	<mapping path="/lecture/create"/> 
+        	<mapping path="/lecture/update"/>    
+        	<mapping path="/lecture/write"/> 
+        	<mapping path="/lecture/edit"/>  
+        	<beans:ref bean="TeacherInterceptor"/>
     	</interceptor>
 	</interceptors>
 	

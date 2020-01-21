@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-public class LoginInterceptor extends HandlerInterceptorAdapter{
+public class TeacherInterceptor extends HandlerInterceptorAdapter{
 	
     // preHandle() : 컨트롤러보다 먼저 수행되는 메서드
     @Override
@@ -17,15 +17,25 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
             throws Exception {
     	/*선언*/
     	HttpSession session = request.getSession();
-    	Object obj =  session.getAttribute("id");
+    	String obj =  (String)session.getAttribute("grade");
     	/*생명주기 설정*/
     	session.setMaxInactiveInterval(3600);
         /*로그인 중 인가?*/
-        if ( obj == null ){
-        	if(!request.getServletPath().contains("ajax")) {
+    	if(obj==null) {
+    		if(!request.getServletPath().contains("ajax")) {
         		response.sendRedirect("/");
         	}
             return false; 
+    	}
+        switch(obj) {
+			case "관리자":
+			case "교사":
+				break;
+			default:
+				if(!request.getServletPath().contains("ajax")) {
+	        		response.sendRedirect("/");
+	        	}
+	            return false; 
         }
         return true;
     }

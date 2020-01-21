@@ -35,8 +35,10 @@
 		</textarea>
 	</div>
 	<div class="user_sub">
+	<c:if test="${!empty cl_no}">
+		<input type="text" class="basic_input" placeholder="강좌번호" name="cl_no" readonly value="${cl_no}">
+	</c:if>
 		<input type="text" class="basic_input" placeholder="작성자" readonly value="${id}">
-		<input type="text" class="basic_input" placeholder="예약일자" value="${board.upddate!=null?board.upddate:board.regdate}" readonly="${board.upddate!=null?false:(board.regdate!=null)}">
 		<div class="basic_input" style="margin-bottom:30px;overflow: hidden;">
 			<button class="reset" onclick="$($('.fileList')[0]).find('button').trigger('click')">리셋</button>
     		<button class="fold">접기</button>
@@ -51,7 +53,8 @@
 			<input name="files" type="file" placeholder="첨부파일" id="input-file" multiple data-image=false>
 			<label for="input-file">첨부파일 업로드</label>
 		</div>
-		<div class="custom-select">
+		<c:if test="${Category.size()>0}">
+  		<div class="custom-select">
   		<select>
     		<option value="">카테고리 선택:</option>
     		<c:forEach var= "list" items="${Category}">
@@ -59,9 +62,12 @@
 			</c:forEach>
   		</select>
 		</div>
+  		</c:if>
+  	<c:if test="${empty cl_no}">
 		<div class="tag_form" placeholder="태그 입력"><input type="text" value="" maxlength="25" ></div>
+	</c:if>
 		<button type="button" class="basic_button" onclick="upload('P',${isNew!=false})">${isNew!=false?'발행':'수정완료'}</button>
-		<button type="button" class="basic_button" onclick="if(confirm('게시글을 삭제 하시겠습니까?')){upload(${isNew!=false?'\'S\'':'\'N\''},${isNew!=false})}">${isNew!=false?'임시저장':'삭제'}</button>
+		<button type="button" class="basic_button" onclick="if(confirm('강의글을 삭제 하시겠습니까?')){upload(${isNew!=false?'\'S\'':'\'N\''},${isNew!=false})}">${isNew!=false?'임시저장':'삭제'}</button>
 	</div>
 </div>
 

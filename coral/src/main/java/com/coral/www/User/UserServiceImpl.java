@@ -55,6 +55,7 @@ public class UserServiceImpl implements UserService {
 					session.setAttribute("id", dto.getId());
 					session.setAttribute("user-agent", dto.getPlatform());
 					session.setAttribute("ip", dto.getIp());
+					session.setAttribute("grade", dao.getInfo(dto).getGrade());
 				}
 			}else {
 				dto.setMsg("Id 오류");

@@ -33,11 +33,9 @@
 	<jsp:include page="${Board_type}.jsp" ></jsp:include>
 	</div>
 	<div class="user_sub">
-	<hr>
-	<a href="/board/write">글쓰기</a>
-	<hr>
+		<jsp:include page="${attachment}.jsp" ></jsp:include>
 	</div>
-	<jsp:include page="${attachment}.jsp" ></jsp:include>
+	
 </div>
 
 <jsp:include page="\common\footer.jsp"></jsp:include>

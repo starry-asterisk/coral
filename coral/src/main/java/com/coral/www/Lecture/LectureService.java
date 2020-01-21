@@ -25,9 +25,10 @@ public class LectureService {
 		model.addAttribute("Currentpage", dto.getPage());
 		if(cl_no!=null) {
 			dto.setCl_no(cl_no);
-			model.addAttribute("BoardList", dao.listPage(dto));
+			model.addAttribute("LectureList", dao.listPage(dto));
+			model.addAttribute("cl_no", cl_no);
 		}else {
-			model.addAttribute("BoardList", dao.listPageCL(dto));
+			model.addAttribute("ClassList", dao.listPageCL(dto));
 		}
 	}
 	
@@ -55,12 +56,12 @@ public class LectureService {
 		}
 	}
 	
-	public String create(LectureDTO dto) {
+	public boolean create(LectureDTO dto) {
 		try {
-			dto.setNo(dao.newCLno());
-			return dao.write(dto)?dto.getNo():null;
+			dto.setCl_no(dao.newCLno());
+			return dao.create(dto)?true:false;
 		}catch(Exception e) {
-			return null;
+			return false;
 		}
 	}
 

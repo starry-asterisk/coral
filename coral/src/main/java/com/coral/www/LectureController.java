@@ -46,20 +46,21 @@ public class LectureController {
 		}else {
 			if(cl_no!=null) {
 				model.addAttribute("Board_type", "include/lecture");
+				model.addAttribute("attachment", "include/Lside");
 			}else {
 				model.addAttribute("Board_type", "include/class");
+				model.addAttribute("attachment", "include/Cside");
 			}
 		}
 		
-		model.addAttribute("attachment", "common/blank");
+		
 		return "list";
 	}
 	@Transactional
 	@RequestMapping(value="/create",method = { RequestMethod.POST })
-	public String create(LectureDTO dto,@RequestParam(required=false) String[] files,@RequestParam(required=false) String[] filesName,@RequestParam(required=false) String[] filesType, HttpServletRequest request) throws ParseException, UnsupportedEncodingException{
-		dto.setAttachment(files!=null?'P':'N');
+	public String create(LectureDTO dto, HttpServletRequest request) throws ParseException, UnsupportedEncodingException{
 		dto.setId((String) request.getSession().getAttribute("id"));
-		return "redirect:/board"+"?Code=alert('"+URLEncoder.encode(fileService.insert(files , filesType , filesName , service.write(dto))?"게시글이 등록되었습니다":"등록에 실패했습니다", "UTF-8")+"');";
+		return "redirect:/lecture"+"?Code=alert('"+URLEncoder.encode(service.create(dto)?"게시글이 등록되었습니다":"등록에 실패했습니다", "UTF-8")+"');";
 	}
 	@Transactional
 	@RequestMapping(value="/update",method = { RequestMethod.POST })
@@ -72,12 +73,12 @@ public class LectureController {
 			filesType=null;
 		}
 		dto.setId((String) request.getSession().getAttribute("id"));
-		return "redirect:/board"+"?Code=alert('"+URLEncoder.encode(fileService.update(files , filesType , filesName , service.update(dto))?(dto.getStatus()=='N'?"게시글이 삭제되었습니다":"게시글이 수정되었습니다"):"수정에 실패했습니다", "UTF-8")+"');";
+		return "redirect:/lecture"+"?Code=alert('"+URLEncoder.encode(fileService.update(files , filesType , filesName , service.update(dto))?(dto.getStatus()=='N'?"게시글이 삭제되었습니다":"게시글이 수정되었습니다"):"수정에 실패했습니다", "UTF-8")+"');";
 	}
 	
-	@RequestMapping("/detail")
-	public String detail(Model model, @RequestParam String bno, @RequestHeader("user-agent") String agent) {
-		LectureDTO boarddto = service.detail(bno);
+	@RequestMapping("/course")
+	public String course(Model model, @RequestParam String no, @RequestHeader("user-agent") String agent) {
+		LectureDTO boarddto = service.detail(no);
 		if(boarddto.getContent().contains("${linked}")) {
 			boarddto.setContent(new JFileWriter().readFile(boarddto.getContent().replace("${linked}", "")));
 		}
@@ -98,14 +99,13 @@ public class LectureController {
 	}
 	
 	@RequestMapping(value="/write",method = { RequestMethod.GET })
-	public String editor(Model model, HttpServletRequest request) {
-		model.addAttribute("id", request.getSession().getAttribute("id"));
-		String agent = request.getHeader("user-agent");
+	public String editor(Model model, @RequestParam String cl_no, @RequestHeader("user-agent") String agent) {
 		if(agent.contains("MSIE")||agent.contains("Trident")) {
 			model.addAttribute("include", "include/ckEdit4");
 		}else {
 			model.addAttribute("include", "include/ckEdit5");
 		}
+		model.addAttribute("cl_no", cl_no);
 		return "editor";
 	}
 	
@@ -114,13 +114,13 @@ public class LectureController {
 	public String upload(LectureDTO dto,@RequestParam(required=false) String[] files,@RequestParam(required=false) String[] filesName,@RequestParam(required=false) String[] filesType, HttpServletRequest request) throws ParseException, UnsupportedEncodingException{
 		dto.setAttachment(files!=null?'P':'N');
 		dto.setId((String) request.getSession().getAttribute("id"));
-		return "redirect:/board"+"?Code=alert('"+URLEncoder.encode(fileService.insert(files , filesType , filesName , service.write(dto))?"게시글이 등록되었습니다":"등록에 실패했습니다", "UTF-8")+"');";
+		return "redirect:/lecture?="+dto.getCl_no()+"&Code=alert('"+URLEncoder.encode(fileService.insert(files , filesType , filesName , service.write(dto))?"게시글이 등록되었습니다":"등록에 실패했습니다", "UTF-8")+"');";
 	}
 	@RequestMapping(value="/edit",method = { RequestMethod.GET })
-	public String edit(Model model, @RequestParam String bno, @RequestHeader("user-agent") String agent, HttpSession session) throws UnsupportedEncodingException {
-		LectureDTO boarddto = service.detail(bno);
+	public String edit(Model model, @RequestParam String cl_no, @RequestHeader("user-agent") String agent, HttpSession session) throws UnsupportedEncodingException {
+		LectureDTO boarddto = service.detail(cl_no);
 		if(!boarddto.getId().equals(session.getAttribute("id"))) {
-			return "redirect:/"+"?Code=alert('"+URLEncoder.encode("타인의 게시물은 수정할 수 없습니다!", "UTF-8")+"');";
+			return "redirect:/lecture?cl_no="+cl_no+"&Code=alert('"+URLEncoder.encode("타인의 강의물은 수정할 수 없습니다!", "UTF-8")+"');";
 		}
 		if(boarddto.getContent().contains("${linked}")) {
 			boarddto.setContent(new JFileWriter().readFile(boarddto.getContent().replace("${linked}", "")));
@@ -155,6 +155,6 @@ public class LectureController {
 			filesType=null;
 		}
 		dto.setId((String) request.getSession().getAttribute("id"));
-		return "redirect:/board"+"?Code=alert('"+URLEncoder.encode(fileService.update(files , filesType , filesName , service.update(dto))?(dto.getStatus()=='N'?"게시글이 삭제되었습니다":"게시글이 수정되었습니다"):"수정에 실패했습니다", "UTF-8")+"');";
+		return "redirect:/lecture?cl_no="+dto.getCl_no()+"&Code=alert('"+URLEncoder.encode(fileService.update(files , filesType , filesName , service.update(dto))?(dto.getStatus()=='N'?"강의글이 삭제되었습니다":"강의글이 수정되었습니다"):"수정에 실패했습니다", "UTF-8")+"');";
 	}
 }
