@@ -94,6 +94,11 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
+	public boolean isLogin(UserDTO dto) {
+		return dao.isLogin(dto);
+	}
+	
+	@Override
 	public boolean isMail(UserDTO dto) {
 		return dao.isMail(dto);
 	}
@@ -159,5 +164,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserDTO> historyList(String id) {
 		return dao.historyList(id);
+	}
+	@Override
+	public boolean update(UserDTO dto) {
+		return dao.update(dto);
 	}
 }

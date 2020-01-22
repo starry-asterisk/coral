@@ -219,20 +219,7 @@ function myExtend(servlet,div){
     });
 }
 
-function newInfo(obj){
-	$.ajax({
-        type: "POST",
-        url: "/ajax/newInfo",
-        data: obj,
-        dataType: "json",
-        success: function (data) {
-        	alert("수정에 성공하였습니다");
-        },
-        error: function (e) {
-        	alert("수정에 실패하였습니다");
-        }
-    });
-}
+
 
 function boardList(servlet,amount,page,div,keyword){
 	$.ajax({

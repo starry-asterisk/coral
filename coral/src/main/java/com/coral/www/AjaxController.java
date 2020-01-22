@@ -154,10 +154,4 @@ public class AjaxController {
 	public String updProfImg(HttpSession session,@RequestParam("file") MultipartFile file) {
 		return fileService.newProfImg(file, (String)session.getAttribute("id"));
 	}
-	@Transactional
-	@ResponseBody
-	@RequestMapping(value="/newInfo",method = { RequestMethod.POST })
-	public boolean newInfo(UserDTO dto) {
-		return true;
-	}
 }

@@ -22,7 +22,7 @@
 			<option value="019" ${userInfo.phone.split("-")[0] eq "019" ? "selected":""}>019</option>
 		</select> - <input value="${userInfo.phone.split("-")[1]}" type="text" maxlength="4" minlength="4" name="phone_middle" style="max-width: 70px;width: 70px;min-width: 60px;"> - 
 					<input value="${userInfo.phone.split("-")[2]}" type="text" maxlength="4" minlength="4" name="phone_behind" style="max-width: 70px;width: 70px;min-width: 60px;">:Phone
-    	<input value='${userInfo.mail.contains("{verify")?"":userInfo.mail.split("@")[0]}' style="max-width: 100px;min-width: 30%;" type="text" maxlength="40" minlength="1" name="email_front" spellcheck="false">@<input value='${userInfo.mail.contains("{verify")?"":userInfo.mail.split("@")[1]}' style="max-width: 100px;min-width: 30%;" type="text" maxlength="40" minlength="1" name="email_behind" spellcheck="false" value="　">:Email
+    	<input value='${userInfo.mail.contains("{verify")?"":userInfo.mail.split("@")[0]}' style="max-width: 100px;min-width: 30%;" type="text" maxlength="40" minlength="1" name="email_front" spellcheck="false">@<input value='${userInfo.mail.contains("{verify")?"         ":userInfo.mail.split("@")[1]}' style="max-width: 100px;min-width: 30%;" type="text" maxlength="40" minlength="1" name="email_behind" spellcheck="false" value="　">:Email
     	
     	
     	<div class="btn_area_btm">
@@ -114,33 +114,33 @@
 			}else if(active&&div.children("input").length==1){
 				active = active&&div.children("input").hasClass("pass");
 			}
-			var dto = new Object();
 			console.log(div.children("span").html()+" : "+active);
 			if(!active){
 				alert("옳바르게 수정내용을 작성하세요");
 				return;
 			}
+			var form = mkForm("/newInfo","POST");
 			switch(div.children("span").html()){
 				case "프로필":
-					dto.name = div.children("input").eq(1).val();
-					dto.birth = div.children("input").eq(2).val();
+					form.addValue("name",div.children("input").eq(1).val());
+					form.addValue("birth",div.children("input").eq(2).val());
 					break;
 				case "기본연락처":
-					dto.phone = $("option:selected").val()+"-"+div.children("input").eq(0).val()+"-"+div.children("input").eq(1).val();
-					dto.mail = div.children("input").eq(2).val()+"@"+div.children("input").eq(3).val();
+					form.addValue("phone",$("option:selected").val()+"-"+div.children("input").eq(0).val()+"-"+div.children("input").eq(1).val());
+					form.addValue("mail",div.children("input").eq(2).val()+"@"+div.children("input").eq(3).val());
 					break;
 				case "개인정보 공개여부":
-					dto.mail = $(div.children("input").eq(0)).is(":checked");
+					form.addValue("privacy",$(div.children("input").eq(0)).is(":checked")?'O':'X');
 					break;
 				case "비밀번호 변경":
-					dto.old = div.children("input").eq(0).val();
-					dto.pw = div.children("input").eq(1).val();
+					form.addValue("pw",div.children("input").eq(0).val());
+					form.addValue("newPw",div.children("input").eq(1).val());
 					break;
 				default:
 					return;
 					break;
 			}
-			newInfo(dto);
+			form.submit();
 		});
 
 		$(".map input, .map select").focusout(function(){

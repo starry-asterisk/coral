@@ -19,4 +19,6 @@ public interface UserService {
 	public boolean checkGrade(String id, String grade);
 	public Date lastLogin(String id);
 	public List<UserDTO> historyList(String id);
+	boolean isLogin(UserDTO dto);
+	public boolean update(UserDTO dto);
 }

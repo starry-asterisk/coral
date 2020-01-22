@@ -49,4 +49,8 @@ public class UserDAO {
 	public List<UserDTO> historyList(String id) {
 		return sqlSession.selectList(namespace+"historyList",id);
 	}
+	public boolean update(UserDTO dto) {
+		int result = sqlSession.update(namespace+"update", dto);
+		return result==1?true:false;
+	}
 }

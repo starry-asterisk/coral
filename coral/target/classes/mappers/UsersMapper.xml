@@ -9,6 +9,29 @@
   	<select id="isLogin" resultType="int" parameterType="com.coral.www.User.UserDTO">
   		select count(*) from USERS WHERE U_ID=#{id} AND U_PW=#{pw}
   	</select>
+  	<select id="update" parameterType="com.coral.www.User.UserDTO">
+  		UPDATE U SET 
+  		<if test="name!=null and name.length>0">
+  		U_NAME = #{name}, 
+  		</if>
+  		<if test="pw!=null and pw.length>0">
+  		U_PW = #{pw},
+  		</if>
+  		<if test="mail!=null and mail.length>0">
+  		U_MAIL = #{mail},
+  		</if>
+  		<if test="phone!=null and phone.length>0">
+  		U_PHONE = #{phone},
+  		</if>
+  		<if test="birth!=null">
+  		U_BIRTH = #{birth},
+  		</if>
+  		<if test="privacy=='O'||privacy=='X'">
+  		U_PRIVACY = #{privacy},
+  		</if>
+  		U_ID = U_ID
+  		where U_ID=#{id}
+  	</select>
   	<select id="getInfo" resultType="com.coral.www.User.UserDTO" parameterType="com.coral.www.User.UserDTO">
   		select 
   			U_ID AS "id", 

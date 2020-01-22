@@ -20,6 +20,7 @@ import org.springframework.social.oauth2.GrantType;
 import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -241,6 +242,32 @@ public class UserController {
 	@RequestMapping("/myApp/report")
 	public String report() {
 		return "myApplication/report";
+	}
+	@RequestMapping(value="/newInfo",method = { RequestMethod.POST })
+	public String newInfo(UserDTO dto, HttpServletRequest request,@RequestParam(required=false) String newPw) throws Exception {
+		dto.setId((String)request.getSession().getAttribute("id"));
+		System.out.println(dto.toString());
+		if(dto.getPw()!=null) {
+			dto.setPw(Sha.get256((String) dto.getPw(), dto.getId()));
+			if(!userService.isLogin(dto)||newPw==null||"".equals(newPw)) {
+				return "redirect:/mypage";
+			}else {
+				dto.setPw(Sha.get256(newPw, dto.getId()));
+			}
+		}
+		String mail = dto.getMail();
+		if(mail!=null) {
+			dto.setMail("{verify-" + Sha.get512(dto.getId(), dto.getMail()).substring(0, 16) + "}" + mail);
+		}
+		if(!userService.update(dto)) {
+			return "redirect:/mypage";
+		}
+		
+		if(mail!=null) {
+			dto.setMail(mail);
+			userService.mail(dto);
+		}
+		return "redirect:/mypage";
 	}
 	@Autowired
 	private GoogleConnectionFactory googleConnectionFactory;
