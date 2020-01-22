@@ -6,7 +6,7 @@
 <div id="form" style="display:none">
 <input name="title" type="text" class="basic_input" placeholder="제목">
 <div name="description" class="basic_input" contenteditable="true" style="margin-top: 0;padding: 7px;">설명을 입력하세요</div>
-<div name="tag" class="tag_form" placeholder="태그 입력" style="margin-top: 15px;"><input type="text" value="" maxlength="25"></div>
+<div class="tag_form" placeholder="태그 입력" style="margin-top: 15px;"><input type="text" value="" maxlength="25"></div>
 <button id="reset" type="button">취소</button>
 <button id="submit" type="button">개강</button>
 </div>
@@ -70,7 +70,7 @@ $("#submit").click(function(){
 }
 #submit{
 	margin-left:15px;
-	margin-right: 70%;
+	margin-right: 65%;
 }
 #form{
 	border-top: 1px solid #eee;

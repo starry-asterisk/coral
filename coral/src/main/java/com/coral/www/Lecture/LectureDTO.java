@@ -9,6 +9,7 @@ public class LectureDTO {
 	private String cl_title;
 	private String cl_tag;
 	private String cl_description;
+	private String cl_path;
 	private String id;
 	private String no;
 	private String title;
@@ -154,5 +155,13 @@ public class LectureDTO {
 
 	public String getTag() {
 		return tag;
+	}
+
+	public String getCl_path() {
+		return cl_path;
+	}
+
+	public void setCl_path(String cl_path) {
+		this.cl_path = cl_path;
 	}
 }

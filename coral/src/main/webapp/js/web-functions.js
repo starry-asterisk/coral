@@ -63,7 +63,7 @@ function mkPageBtn(area,location,currentPage,EndPage,amount,add){
 	}
 	$(area).find("button").height($(area).parent().width()/20);
 }
-function report(identifier, identifier_type, reporter, resons){
+function report(identifier, identifier_type, reporter, reasons){
 	$("#myModal").modal();
 	$("button.btn.btn-default").off("click");
 	var body = $(".modal-body");
@@ -85,13 +85,43 @@ function report(identifier, identifier_type, reporter, resons){
 	body.append("<div class='custom-select'></div>");
 	body.children(".custom-select").append("<select></select>");
 	body.find("select").append("<option value=''>사유를 선택해 주세요</option>");
-	for(i=0;i<resons.length;i++){
-		body.find("select").append("<option value='"+resons[i].code+"'>"+resons[i].content+"</option>");
+	for(i=0;i<reasons.length;i++){
+		body.find("select").append("<option value='"+reasons[i].code+"'>"+reasons[i].content+"</option>");
 	}
 	createSelect(body.children(".custom-select"));
 	return{
 		id:identifier,
 		type:identifier_type,
+		reason:function(){
+			return $('.custom-select select option:selected').val();
+		}
+	}
+}
+function closeApply(identifier, reporter, reasons){
+	$("#myModal").modal();
+	$("button.btn.btn-default").off("click");
+	var body = $(".modal-body");
+	var title = $(".modal-title");
+	var button = $("button.btn.btn-default");
+	title.html("강좌 폐강 하기");
+	button.html("폐강신청하기");
+	body.html("");
+	body.append("<span style='line-height:46px;display:inline-block;width:20%'>강좌 번호</span>");
+	body.append("<input type='text' readonly value='"+identifier+"' class='basic_input' style='width:70%;margin-right:5%;margin-top:7px;margin-bottom:3px;'>");
+	body.append("<br><span style='line-height:46px;display:inline-block;width:20%'>작성자 아이디</span>");
+	body.append("<input type='text' readonly value='"+reporter+"' class='basic_input' style='width:70%;margin-right:5%;margin-top:7px;margin-bottom:3px;t'>");
+	body.append("<br><span style='line-height:46px;display:inline-block;width:20%'>신청일시</span>");
+	body.append("<input type='text' readonly value='"+new Date()+"' class='basic_input' style='width:70%;margin-right:5%;margin-top:7px;margin-bottom:3px;'>");
+	body.append("<div class='custom-select'></div>");
+	body.children(".custom-select").append("<select></select>");
+	body.find("select").append("<option value=''>사유를 선택해 주세요</option>");
+	for(i=0;i<reasons.length;i++){
+		body.find("select").append("<option value='"+reasons[i].code+"'>"+reasons[i].content+"</option>");
+	}
+	createSelect(body.children(".custom-select"));
+	return{
+		id:identifier,
+		type:false,
 		reason:function(){
 			return $('.custom-select select option:selected').val();
 		}
@@ -396,7 +426,7 @@ $(document).ready(function(){
 			case "Boardlist":
 				$(".Board_List:not(:nth-child(2))").css("display","none");
 				$(".Board_List:nth-child(2)").css("display","");
-				boardList(50,1,$(".Board_List:nth-child(2)"));
+				boardList("board",50,1,$(".Board_List:nth-child(2)"),"");
 				$("#codeRun").attr("title","코드작성기");
 				$("#codeRun").html("Java");
 				break;

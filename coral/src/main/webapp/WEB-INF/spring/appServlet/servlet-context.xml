@@ -49,7 +49,11 @@
         	<mapping path="/board/write"/> 
         	<mapping path="/board/edit"/>        
         	<mapping path="/mypage"/> 
-        	<mapping path="/myApp/*"/> 
+        	<mapping path="/myApp/schedule"/>
+        	<mapping path="/myApp/private"/>
+        	<mapping path="/myApp/lecture"/>
+        	<mapping path="/myApp/history"/>
+        	<mapping path="/myApp/security"/> 
         	<mapping path="/ajax/like"/>
         	<mapping path="/ajax/replySend"/> 
         	<mapping path="/ajax/replyUpd"/> 
@@ -59,8 +63,15 @@
         	<mapping path="/lecture/create"/> 
         	<mapping path="/lecture/update"/>    
         	<mapping path="/lecture/write"/> 
-        	<mapping path="/lecture/edit"/>  
+        	<mapping path="/lecture/edit"/> 
+        	<mapping path="/myApp/teacher"/> 
         	<beans:ref bean="TeacherInterceptor"/>
+    	</interceptor>
+    	<interceptor>
+        	<mapping path="/myApp/active"/>
+        	<mapping path="/myApp/apply"/>
+        	<mapping path="/myApp/report"/>  
+        	<beans:ref bean="ManagerInterceptor"/>
     	</interceptor>
 	</interceptors>
 	

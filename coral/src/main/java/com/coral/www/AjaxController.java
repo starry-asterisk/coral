@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.coral.www.Board.BoardService;
 import com.coral.www.File.FileService;
+import com.coral.www.Lecture.LectureDTO;
 import com.coral.www.Lecture.LectureService;
 import com.coral.www.Report.ReasonDTO;
 import com.coral.www.Report.ReportDTO;
@@ -96,6 +98,16 @@ public class AjaxController {
 	@RequestMapping(value = "/report", produces="application/text;charset=utf-8")
 	public String report(ReportDTO dto,HttpSession session) {
 		dto.setId((String) session.getAttribute("id"));
+		if(lectureService.isCL(dto.getObject())) {
+			LectureDTO ldto = new LectureDTO();
+			ldto.setCl_no(dto.getObject());
+			ldto.setId(dto.getId());
+			if(lectureService.CLExit(ldto)) {
+				return (reportService.insertReport(dto)!=null)+"";
+			}else {
+				return "false";
+			}
+		}
 		return (reportService.insertReport(dto)!=null)+"";
 	}
 	@Transactional
@@ -142,5 +154,9 @@ public class AjaxController {
 	public String updProfImg(HttpSession session,@RequestParam("file") MultipartFile file) {
 		return fileService.newProfImg(file, (String)session.getAttribute("id"));
 	}
-	
+	@RequestMapping(value="/userHistory",method = { RequestMethod.POST })
+	public String userHistory(HttpSession session,Model model) {
+		model.addAttribute("List", userService.historyList((String)session.getAttribute("id")));
+		return "include/userHistory";
+	}
 }

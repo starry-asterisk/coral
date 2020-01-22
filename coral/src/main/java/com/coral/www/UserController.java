@@ -200,24 +200,40 @@ public class UserController {
 		return "myPage";
 	}
 
-	@RequestMapping("/myApp/map")
-	public String map(Model model, HttpServletResponse response, HttpSession session) {
-		if (session.getAttribute("id") == null) {
-			response.setStatus(401);
-		} else {
-			model.addAttribute("userInfo", userService.getInfo((String) session.getAttribute("id")));
-		}
-		return "myApplication/map";
-	}
-
 	@RequestMapping("/myApp/schedule")
-	public String schedule(HttpServletResponse response, HttpSession session) {
-		if (session.getAttribute("id") == null) {
-			response.setStatus(401);
-		}
+	public String schedule() {
 		return "myApplication/schedule";
 	}
-
+	@RequestMapping("/myApp/private")
+	public String map(Model model,  HttpSession session) {
+		model.addAttribute("userInfo", userService.getInfo((String) session.getAttribute("id")));
+		return "myApplication/private";
+	}
+	@RequestMapping("/myApp/lecture")
+	public String lecture() {
+		return "myApplication/lecture";
+	}
+	@RequestMapping("/myApp/history")
+	public String history() {
+		
+		return "myApplication/history";
+	}
+	@RequestMapping("/myApp/security")
+	public String security() {
+		return "myApplication/security";
+	}
+	@RequestMapping("/myApp/active")
+	public String active() {
+		return "myApplication/active";
+	}
+	@RequestMapping("/myApp/apply")
+	public String apply() {
+		return "myApplication/apply";
+	}
+	@RequestMapping("/myApp/report")
+	public String report() {
+		return "myApplication/report";
+	}
 	@Autowired
 	private GoogleConnectionFactory googleConnectionFactory;
 	@Autowired

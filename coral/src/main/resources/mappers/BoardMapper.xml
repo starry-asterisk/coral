@@ -3,8 +3,16 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.coral.www.mappers.BoardMapper">
-  	<select id="total" resultType="int" >
+  	<select id="total" resultType="int" parameterType="com.coral.www.Board.BoardDTO">
   		select count(*) from B where B_STATUS = 'P'
+  			<if test="no!=null">
+  			AND (
+				   B_NO LIKE '%'||#{no}||'%'
+				OR B_UID LIKE '%'||#{id}||'%'
+				OR B_TITLE LIKE '%'||#{title}||'%'
+				OR B_TAG LIKE '%'||#{tag}||'%'
+				)
+			</if>
   	</select>
   	<select id="listPage" parameterType="com.coral.www.Board.BoardDTO" resultType="com.coral.www.Board.BoardDTO" >
   		SELECT 
@@ -21,6 +29,14 @@
 			FROM BOARD_LIST 
 			WHERE 
 				B_STATUS = 'P'
+				<if test="no!=null">
+				AND (
+				   B_NO LIKE '%'||#{no}||'%'
+				OR B_UID LIKE '%'||#{id}||'%'
+				OR B_TITLE LIKE '%'||#{title}||'%'
+				OR B_TAG LIKE '%'||#{tag}||'%'
+				)
+				</if>
 			ORDER BY 
 				B_NO DESC) 
 		<![CDATA[

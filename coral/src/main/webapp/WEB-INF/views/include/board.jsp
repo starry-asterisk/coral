@@ -12,10 +12,10 @@
 		<td width="8%">추천수</td>
 	</tr>
 	<c:forEach var= "list" items="${BoardList}">
-		<tr>
+		<tr style="height: 2em;">
 			<td>${list.no }</td>
 			<td><a href="/board/detail?bno=${list.no }" title="${list.title }(${list.amount })">${list.title }(${list.amount })</a></td>
-			<td><span>${list.id }</span></td>
+			<td><span onClick="location.href='/userpage?id=${list.id }'">${list.id }</span></td>
 			<td><button class="report"></button></td>
 			<td><fmt:formatDate pattern = "MM-dd HH:mm" value = "${list.regdate }" /></td>
 			<td>${list.views }</td>
@@ -23,13 +23,13 @@
 		</tr>
 	</c:forEach>
 	<tr height="3em">
-		<td colspan="7" class="swipeBtnArea btnRow">
+		<td colspan="7" class="swipeBtnArea btnRow board_row">
 		
 		</td>
 	</tr>
 </table>
 <script>
-mkPageBtn(".swipeBtnArea","/board",${Currentpage},${Endpage},${amount});
+mkPageBtn(".board_row","/board",${Currentpage},${Endpage},${amount},'&keyword=${keyword}');
 var reporter = "${id}";
 $(".report").click(function(){
 	if(reporter!=undefined&&reporter!=""){

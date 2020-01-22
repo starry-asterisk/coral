@@ -17,12 +17,19 @@ import com.coral.www.like.LikeDTO;
 public class BoardService {
 	@Inject
 	BoardDAO dao;
-	public void addList(Model model, HttpServletRequest request) {
+	public void addList(Model model, HttpServletRequest request, String keyword) {
 		BoardDTO dto = new BoardDTO();
+		if(keyword!=null) {
+			model.addAttribute("keyword", keyword);
+			dto.setNo(keyword);
+			dto.setId(keyword);
+			dto.setTitle(keyword);
+			dto.setTag(keyword);
+		}
 		dto.setPage(request.getParameter("page")==null?1:Integer.parseInt(request.getParameter("page")));
 		dto.setAmount(request.getParameter("amount")==null?50:Integer.parseInt(request.getParameter("amount")));
 		model.addAttribute("amount", dto.getAmount());
-		model.addAttribute("Endpage", (int) Math.ceil((double)dao.total()/(double)dto.getAmount()));
+		model.addAttribute("Endpage", (int) Math.ceil((double)dao.total(dto)/(double)dto.getAmount()));
 		model.addAttribute("Currentpage", dto.getPage());
 		model.addAttribute("BoardList", dao.listPage(dto));
 	}

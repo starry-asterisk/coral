@@ -1,6 +1,7 @@
 package com.coral.www.User;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,4 +18,5 @@ public interface UserService {
 	boolean mailVerify(UserDTO dto) throws Exception;
 	public boolean checkGrade(String id, String grade);
 	public Date lastLogin(String id);
+	public List<UserDTO> historyList(String id);
 }

@@ -1,6 +1,8 @@
 package com.coral.www.User;
 
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -43,5 +45,8 @@ public class UserDAO {
 	}
 	public UserDTO lastLogin(String id) {
 		return sqlSession.selectOne(namespace+"lastLogin",id);
+	}
+	public List<UserDTO> historyList(String id) {
+		return sqlSession.selectList(namespace+"historyList",id);
 	}
 }

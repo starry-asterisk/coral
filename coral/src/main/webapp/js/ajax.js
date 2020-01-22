@@ -204,11 +204,10 @@ function myApp(servlet,div){
     });
 }
 
-function boardList(amount,page,div){
+function myExtend(servlet,div){
 	$.ajax({
-        type: "GET",
-        url: "/board?amount="+amount+"&page="+page,
-        data: {isAjax:true},
+        type: "POST",
+        url: "/"+servlet,
         success: function (data) {
         	console.log("SUCCESS : True");
         	/*addHtmlPage(data,div);*/
@@ -219,6 +218,34 @@ function boardList(amount,page,div){
         }
     });
 }
+
+function boardList(servlet,amount,page,div,keyword){
+	console.log("servlet : "+servlet);
+	console.log("amount : "+amount);
+	console.log("page : "+page);
+	console.log("div : "+div);
+	console.log("keyword : "+keyword);
+	$.ajax({
+        type: "GET",
+        url: "/"+servlet,
+        data: 
+        {	
+        	isAjax:true,
+        	"amount":amount,
+        	"page":page,
+        	"keyword":keyword,
+        },
+        success: function (data) {
+        	console.log("SUCCESS : True");
+        	/*addHtmlPage(data,div);*/
+        	$(div).html(data);
+        },
+        error: function (e) {
+            console.log("ERROR : ", e);
+        }
+    });
+}
+
 
 function thumb(no,value){
 	$.ajax({

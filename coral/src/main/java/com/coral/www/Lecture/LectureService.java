@@ -2,7 +2,6 @@ package com.coral.www.Lecture;
 
 
 
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,17 +16,25 @@ import com.coral.www.like.LikeDTO;
 public class LectureService {
 	@Inject
 	LectureDAO dao;
-	public void addList(Model model, HttpServletRequest request, String cl_no) {
+	public void addList(Model model, HttpServletRequest request, String cl_no, String keyword) {
 		LectureDTO dto = new LectureDTO();
+		if(cl_no==null&&keyword!=null) {
+			model.addAttribute("keyword", keyword);
+			dto.setCl_no(keyword);
+			dto.setCl_title(keyword);
+			dto.setCl_description(keyword);
+			dto.setId(keyword);
+			dto.setCl_tag(keyword);
+		}
 		dto.setPage(request.getParameter("page")==null?1:Integer.parseInt(request.getParameter("page")));
-		dto.setAmount(request.getParameter("amount")==null?50:Integer.parseInt(request.getParameter("amount")));
+		dto.setAmount(request.getParameter("amount")==null?20:Integer.parseInt(request.getParameter("amount")));
 		model.addAttribute("amount", dto.getAmount());
-		model.addAttribute("Endpage", (int) Math.ceil((double)(cl_no!=null?dao.total(cl_no):dao.total())/(double)dto.getAmount()));
+		model.addAttribute("Endpage", (int) Math.ceil((double)(cl_no!=null?dao.total(cl_no):dao.total(dto))/(double)dto.getAmount()));
 		model.addAttribute("Currentpage", dto.getPage());
 		if(cl_no!=null) {
 			dto.setCl_no(cl_no);
 			model.addAttribute("LectureList", dao.listPage(dto));
-			model.addAttribute("class", dao.description(cl_no));
+			model.addAttribute("Class", dao.description(cl_no));
 			model.addAttribute("cl_no", cl_no);
 		}else {
 			model.addAttribute("ClassList", dao.listPageCL(dto));
@@ -81,8 +88,15 @@ public class LectureService {
 			return null;
 		}
 	}
+	@Transactional
+	public boolean updateCL(LectureDTO dto) {
+		return dao.updateCL(dto);
+	}
 	public boolean CLExit(LectureDTO dto) {
 		return dao.CLExit(dto);
+	}
+	public boolean isCL(String cl_no) {
+		return dao.total(cl_no)>0;
 	}
 	public boolean LExit(LectureDTO dto) {
 		return dao.LExit(dto);

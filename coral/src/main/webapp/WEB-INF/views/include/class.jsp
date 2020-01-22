@@ -16,7 +16,7 @@
 		<tr>
 			<td>${list.cl_no }</td>
 			<td><a href="/lecture?cl_no=${list.cl_no }" title="${list.cl_title }">${list.cl_title }</a></td>
-			<td><span>${list.id }</span></td>
+			<td><button style="background-size: cover;width:70px;height:70px;background-image: url('${empty list.cl_path?'/upload/profile.png':list.cl_path}')" onClick="location.href='/userpage?id=${list.id }'"></button><span onClick="location.href='/userpage?id=${list.id }'">${list.id }</span></td>
 			<td><button class="report"></button></td>
 			<td><fmt:formatDate pattern = "MM-dd HH:mm" value = "${list.regdate}" /></td>
 			<td><fmt:formatDate pattern = "MM-dd HH:mm" value = "${list.upddate}" /></td>
@@ -25,13 +25,13 @@
 		</tr>
 	</c:forEach>
 	<tr height="3em">
-		<td colspan="8" class="swipeBtnArea btnRow">
+		<td colspan="8" class="swipeBtnArea btnRow class_row">
 		
 		</td>
 	</tr>
 </table>
 <script>
-mkPageBtn(".swipeBtnArea","/lecture",${Currentpage},${Endpage},${amount});
+mkPageBtn(".class_row","/lecture",${Currentpage},${Endpage},${amount},"&keyword=${keyword}");
 var reporter = "${id}";
 $(".report").click(function(){
 	if(reporter!=undefined&&reporter!=""){
@@ -45,3 +45,8 @@ $(".report").click(function(){
 	}
 });
 </script>
+<style>
+table.list_TYPE1 tr+tr {
+    border-top: 1px solid #eee;
+}
+</style>

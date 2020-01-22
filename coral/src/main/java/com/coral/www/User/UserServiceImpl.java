@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -154,5 +155,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Date lastLogin(String id) {
 		return dao.lastLogin(id).getDate();
+	}
+	@Override
+	public List<UserDTO> historyList(String id) {
+		return dao.historyList(id);
 	}
 }

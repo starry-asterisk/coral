@@ -22,7 +22,7 @@
 			<option value="019" ${userInfo.phone.split("-")[0] eq "019" ? "selected":""}>019</option>
 		</select> - <input value="${userInfo.phone.split("-")[1]}" type="text" maxlength="4" minlength="4" name="phone_middle" style="max-width: 70px;width: 70px;min-width: 60px;"> - 
 					<input value="${userInfo.phone.split("-")[2]}" type="text" maxlength="4" minlength="4" name="phone_behind" style="max-width: 70px;width: 70px;min-width: 60px;">:Phone
-    	<input value="${userInfo.mail.split("@")[0]}" style="max-width: 100px;min-width: 30%;" type="text" maxlength="40" minlength="1" name="email_front" spellcheck="false">@<input value="${userInfo.mail.split("@")[1]}" style="max-width: 100px;min-width: 30%;" type="text" maxlength="40" minlength="1" name="email_behind" spellcheck="false" value="　">:Email
+    	<input value='${userInfo.mail.contains("{verify")?"":userInfo.mail.split("@")[0]}' style="max-width: 100px;min-width: 30%;" type="text" maxlength="40" minlength="1" name="email_front" spellcheck="false">@<input value='${userInfo.mail.contains("{verify")?"":userInfo.mail.split("@")[1]}' style="max-width: 100px;min-width: 30%;" type="text" maxlength="40" minlength="1" name="email_behind" spellcheck="false" value="　">:Email
     	
     	
     	<div class="btn_area_btm">
@@ -97,7 +97,6 @@
 			});   
 		}
 		$(".updProf").on("click",function(){
-			console.log("---------------------------------");
 			var div = $(this).parent().parent();
 			var active = true;
 			div.children().trigger("focusout");
@@ -130,7 +129,6 @@
 					return;
 					break;
 			}
-			console.log("---------------------------------");
 		});
 
 		$(".map input, .map select").focusout(function(){

@@ -8,6 +8,7 @@
 <!-- JQuery -->
 <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/ajax.js" type="text/javascript" charset="utf-8"></script>
 
 <!-- 외부 css -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -28,12 +29,15 @@
 <jsp:include page="\common\header2.jsp"></jsp:include>
 
 <div class="base_">
+<c:if test="${empty cl_no}">
 	<div class="Search"><input type="text" name="key_word" placeholder="검색 키워드를 입력하세요!" spellcheck="false"><button  class="icon_search_btn" title="검색"></button></div>
+</c:if>
 	<div class="board">
 	<jsp:include page="${Board_type}.jsp" ></jsp:include>
 	</div>
 	<div class="user_sub">
 		<jsp:include page="${attachment}.jsp" ></jsp:include>
+		
 	</div>
 	
 </div>

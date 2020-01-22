@@ -18,8 +18,8 @@ public class LectureDAO {
 	static final String namespace="com.coral.www.mappers.LectureMapper.";
 	
 	
-	public int total() {
-		return sqlSession.selectOne(namespace+"totalCL");
+	public int total(LectureDTO dto) {
+		return sqlSession.selectOne(namespace+"totalCL",dto);
 	}
 	public boolean updateCL(LectureDTO dto) {
 		int result = sqlSession.update(namespace+"updateCL",dto);

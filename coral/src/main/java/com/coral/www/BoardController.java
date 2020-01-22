@@ -34,8 +34,8 @@ public class BoardController {
 	FileService fileService;
 
 	@RequestMapping("")
-	public String board(Model model, HttpServletRequest request, @RequestParam(required=false) String isAjax) {
-		service.addList(model, request);
+	public String board(Model model, HttpServletRequest request, @RequestParam(required=false) String keyword, @RequestParam(required=false) String isAjax) {
+		service.addList(model, request, keyword);
 		if(isAjax!=null) {
 			return "include/board";
 		}

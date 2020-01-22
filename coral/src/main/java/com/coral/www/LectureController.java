@@ -34,8 +34,8 @@ public class LectureController {
 	FileService fileService;
 
 	@RequestMapping("")
-	public String board(Model model, HttpServletRequest request, @RequestParam(required=false) String cl_no,  @RequestParam(required=false) String isAjax) {
-		service.addList(model, request, cl_no);
+	public String board(Model model, HttpServletRequest request, @RequestParam(required=false) String cl_no, @RequestParam(required=false) String keyword,  @RequestParam(required=false) String isAjax) {
+		service.addList(model, request, cl_no, keyword);
 		
 		if(isAjax!=null) {
 			if(cl_no!=null) {
@@ -64,16 +64,9 @@ public class LectureController {
 	}
 	@Transactional
 	@RequestMapping(value="/update",method = { RequestMethod.POST })
-	public String uppdate(LectureDTO dto,@RequestParam(required=false) String[] files,@RequestParam(required=false) String[] filesName,@RequestParam(required=false) String[] filesType, HttpServletRequest request) throws ParseException, UnsupportedEncodingException{
-		dto.setAttachment(files!=null?'P':'N');
-		if(dto.getStatus()=='N') {
-			dto.setAttachment('N');
-			files=null;
-			filesName=null;
-			filesType=null;
-		}
+	public String uppdate(LectureDTO dto , HttpServletRequest request) throws ParseException, UnsupportedEncodingException{
 		dto.setId((String) request.getSession().getAttribute("id"));
-		return "redirect:/lecture"+"?Code=alert('"+URLEncoder.encode(fileService.update(files , filesType , filesName , service.update(dto))?(dto.getStatus()=='N'?"게시글이 삭제되었습니다":"게시글이 수정되었습니다"):"수정에 실패했습니다", "UTF-8")+"');";
+		return "redirect:/lecture"+"?Code=alert('"+URLEncoder.encode((service.updateCL(dto)?(dto.getStatus()=='N'?"게시글이 삭제되었습니다":"게시글이 수정되었습니다"):"수정에 실패했습니다"), "UTF-8")+"');";
 	}
 	
 	@RequestMapping("/course")

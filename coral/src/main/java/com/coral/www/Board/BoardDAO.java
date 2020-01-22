@@ -17,8 +17,8 @@ public class BoardDAO {
 	SqlSession sqlSession;
 	static final String namespace="com.coral.www.mappers.BoardMapper.";
 	
-	public int total() {
-		return sqlSession.selectOne(namespace+"total");
+	public int total(BoardDTO dto) {
+		return sqlSession.selectOne(namespace+"total",dto);
 	}
 	public List<BoardDTO> listPage(BoardDTO dto) {
 		return sqlSession.selectList(namespace+"listPage",dto);
