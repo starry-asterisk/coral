@@ -28,9 +28,9 @@ public class BoardService {
 		}
 		dto.setPage(request.getParameter("page")==null?1:Integer.parseInt(request.getParameter("page")));
 		dto.setAmount(request.getParameter("amount")==null?50:Integer.parseInt(request.getParameter("amount")));
-		model.addAttribute("amount", dto.getAmount());
-		model.addAttribute("Endpage", (int) Math.ceil((double)dao.total(dto)/(double)dto.getAmount()));
-		model.addAttribute("Currentpage", dto.getPage());
+		model.addAttribute("B_amount", dto.getAmount());
+		model.addAttribute("B_Endpage", (int) Math.ceil((double)dao.total(dto)/(double)dto.getAmount()));
+		model.addAttribute("B_Currentpage", dto.getPage());
 		model.addAttribute("BoardList", dao.listPage(dto));
 	}
 	

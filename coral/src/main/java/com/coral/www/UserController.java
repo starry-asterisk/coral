@@ -26,9 +26,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
+
+import com.coral.www.Board.BoardService;
 import com.coral.www.Cookie.CookieService;
 import com.coral.www.File.FileDTO;
 import com.coral.www.File.FileService;
+import com.coral.www.Lecture.LectureService;
 import com.coral.www.User.UserDTO;
 import com.coral.www.User.UserService;
 import com.coral.www.application.Sha;
@@ -52,6 +55,10 @@ public class UserController {
 	CookieService cookieService;
 	@Inject
 	FileService fileService;
+	@Inject
+	LectureService lectureService;
+	@Inject
+	BoardService boardService;
 
 	@RequestMapping(value = "/signUp", method = { RequestMethod.GET })
 	public String signUp(HttpServletRequest request) {
@@ -199,7 +206,6 @@ public class UserController {
 		model.addAttribute("userInfo", dto);
 		return "myPage";
 	}
-
 	@RequestMapping("/myApp/schedule")
 	public String schedule() {
 		return "myApplication/schedule";
@@ -214,8 +220,10 @@ public class UserController {
 		return "myApplication/lecture";
 	}
 	@RequestMapping("/myApp/history")
-	public String history() {
-		
+	public String history(Model model, HttpServletRequest request) {
+		boardService.addList(model, request, (String) request.getSession().getAttribute("id"));
+		lectureService.addList(model, request, null, (String) request.getSession().getAttribute("id"));
+		model.addAttribute("List", userService.historyList((String) request.getSession().getAttribute("id")));
 		return "myApplication/history";
 	}
 	@RequestMapping("/myApp/security")

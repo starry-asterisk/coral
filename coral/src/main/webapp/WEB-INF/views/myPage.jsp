@@ -152,8 +152,8 @@
 		
 		<button type="button" onclick="myApp('schedule','.workSpace');" data-toggle="tooltip" data-placement="bottom" title="일정관리"><i class="fas fa-calendar-alt"></i></button>
 		<button type="button" onclick="myApp('private','.workSpace');" data-toggle="tooltip" data-placement="bottom" title="내 정보 관리"><i class="fas fa-users-cog"></i></button>
-		<button type="button" onclick="myApp('lecture','.workSpace');" data-toggle="tooltip" data-placement="bottom" title="수강관리"><i class="fas fa-school"></i></button>
-		<button type="button" onclick="myApp('history','.workSpace');" data-toggle="tooltip" data-placement="bottom" title="활동기록"><i class="fas fa-history"></i></button>
+		<!-- <button type="button" onclick="myApp('lecture','.workSpace');" data-toggle="tooltip" data-placement="bottom" title="수강관리"><i class="fas fa-school"></i></button> -->
+		<button type="button" onclick="myApp('history?page=1&amount=10','.workSpace');" data-toggle="tooltip" data-placement="bottom" title="활동기록"><i class="fas fa-history"></i></button>
 		<button type="button" onclick="myApp('security','.workSpace');" data-toggle="tooltip" data-placement="bottom" title="보안"><i class="fas fa-lock"></i></button>
 		<c:choose>
 			<c:when test="${userInfo.grade=='관리자'}">

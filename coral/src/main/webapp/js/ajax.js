@@ -219,12 +219,22 @@ function myExtend(servlet,div){
     });
 }
 
+function newInfo(obj){
+	$.ajax({
+        type: "POST",
+        url: "/ajax/newInfo",
+        data: obj,
+        dataType: "json",
+        success: function (data) {
+        	alert("수정에 성공하였습니다");
+        },
+        error: function (e) {
+        	alert("수정에 실패하였습니다");
+        }
+    });
+}
+
 function boardList(servlet,amount,page,div,keyword){
-	console.log("servlet : "+servlet);
-	console.log("amount : "+amount);
-	console.log("page : "+page);
-	console.log("div : "+div);
-	console.log("keyword : "+keyword);
 	$.ajax({
         type: "GET",
         url: "/"+servlet,

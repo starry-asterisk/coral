@@ -114,21 +114,33 @@
 			}else if(active&&div.children("input").length==1){
 				active = active&&div.children("input").hasClass("pass");
 			}
-			
+			var dto = new Object();
 			console.log(div.children("span").html()+" : "+active);
+			if(!active){
+				alert("옳바르게 수정내용을 작성하세요");
+				return;
+			}
 			switch(div.children("span").html()){
 				case "프로필":
+					dto.name = div.children("input").eq(1).val();
+					dto.birth = div.children("input").eq(2).val();
 					break;
 				case "기본연락처":
+					dto.phone = $("option:selected").val()+"-"+div.children("input").eq(0).val()+"-"+div.children("input").eq(1).val();
+					dto.mail = div.children("input").eq(2).val()+"@"+div.children("input").eq(3).val();
 					break;
 				case "개인정보 공개여부":
+					dto.mail = $(div.children("input").eq(0)).is(":checked");
 					break;
 				case "비밀번호 변경":
+					dto.old = div.children("input").eq(0).val();
+					dto.pw = div.children("input").eq(1).val();
 					break;
 				default:
 					return;
 					break;
 			}
+			newInfo(dto);
 		});
 
 		$(".map input, .map select").focusout(function(){

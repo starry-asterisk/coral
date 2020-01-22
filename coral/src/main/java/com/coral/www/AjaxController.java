@@ -154,9 +154,10 @@ public class AjaxController {
 	public String updProfImg(HttpSession session,@RequestParam("file") MultipartFile file) {
 		return fileService.newProfImg(file, (String)session.getAttribute("id"));
 	}
-	@RequestMapping(value="/userHistory",method = { RequestMethod.POST })
-	public String userHistory(HttpSession session,Model model) {
-		model.addAttribute("List", userService.historyList((String)session.getAttribute("id")));
-		return "include/userHistory";
+	@Transactional
+	@ResponseBody
+	@RequestMapping(value="/newInfo",method = { RequestMethod.POST })
+	public boolean newInfo(UserDTO dto) {
+		return true;
 	}
 }
