@@ -12,8 +12,8 @@
 	<c:when test="${!empty Class?(Class.id==id):false}">
 <div><div>강좌 제목</div><input type="text" value="${!empty Class?Class.cl_title:''}"  id="title"></div>
 <div><div>강좌 설명</div><div class="description" contenteditable='true'>${!empty Class?Class.cl_description:''}</div></div>
-<div><div class="tag_form" placeholder="태그 입력" style="margin-top: 15px;"><input type="text" value="" maxlength="25"></div></div>
-<div><div>교사 이름</div><input type="text" value="${!empty Class?Class.id:''}" readonly></div>
+<div class="tag_form" placeholder="태그 입력" style="margin-top: 15px;"><input type="text" value="" maxlength="25"></div>
+<div style="padding-top: 0;"><div>교사 이름</div><input type="text" value="${!empty Class?Class.id:''}" readonly></div>
 <div><button class="editClass">수정 완료</button><button class="closeApply">폐강 신청</button></div>
 <link rel="stylesheet" type="text/css" href="/css/Editor.css"/>
 	</c:when>
@@ -64,6 +64,9 @@
 	float:left;
 } 
 </style>
+
+<script src="/js/editor.js" type="text/javascript" charset="utf-8"></script>
+
 <script>
 var tags = '${!empty Class?Class.cl_tag:false}';
 if('${!empty Class?(Class.id==id):false}'!='false'){
@@ -86,8 +89,8 @@ if('${!empty Class?(Class.id==id):false}'!='false'){
 	}
 }
 </script>
+
 <c:if test="${!empty Class?(Class.id==id):false}">
-<script src="/js/editor.js" type="text/javascript" charset="utf-8"></script>
 
 <script>
 $(".tag_form input").trigger("click");
