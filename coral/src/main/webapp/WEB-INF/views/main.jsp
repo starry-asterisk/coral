@@ -43,7 +43,7 @@
 }</pre>
 			<!-- ACE에디터  -->
 		</div>
-		<div class="Search"><input type="text" name="key_word" placeholder="검색 키워드를 입력하세요!" spellcheck="false"><button  class="icon_search_btn" title="검색"></button></div>
+		<div class="Search"><input type="text" name="key_word" placeholder="검색 키워드를 입력하세요!" spellcheck="false"><button  class="icon_search_btn search" title="검색"></button></div>
 	</div>
 	<div class="user_sub">
 			<div class="login">
@@ -51,7 +51,10 @@
 			</div>
 	</div>
 	<div class="feed_sub">
-		<div class="feed_sub_main">
+		<div class="feed_sub_main" style="overflow-y: auto;">
+			<div style="min-height:250px;padding:30px 0 30px 0">게시판 검색 영역</div>
+			<div style="border-top:1px solid #eee;min-height:250px;padding:30px 0 30px 0">강좌 검색 영역</div>
+			<div style="border-top:1px solid #eee;min-height:230px;padding:30px 0 30px 0">회원 검색 영역</div>
 		</div>
 		<div class="feed_sub_side">
 			<div id="side1">
@@ -67,6 +70,8 @@
     			</table>
 			</div>
 			<div id="side2">
+				<img style="display:" src="http://cdn.news2day.co.kr/news-images/peg/news/201912/xTZUeZmNZSrGuk5bThPec9lPt94k3yq2tNEUfU74-1575447442.jpg" alt="광고1">
+				<img style="display:none" src="https://www.i-boss.co.kr/design/upload_file/__HTMLEDITOR__/dmaRzEoOQc/17ce9f5ce6fb8320c0501512da85749a_15789601923371.png" alt="광고2">
 			</div>
 			<div id="side3">
 			</div>
@@ -91,5 +96,11 @@
 <script src="/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
 <script src="/js/ajax.js" type="text/javascript" charset="utf-8"></script>
 <script src="/js/weather.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript">weather();</script>
+<script type="text/javascript">
+weather();
+setInterval(function(){
+	$("#side2 img:first-child").css("display",$("#side2 img:first-child").css("display")=="none"?"":"none");
+	$("#side2 img:last-child").css("display",$("#side2 img:last-child").css("display")=="none"?"":"none");
+},10000);
+</script>
 </html>

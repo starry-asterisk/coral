@@ -53,4 +53,11 @@
 	WHERE
 		RE_BNO = #{bno}
   	</select>
+  	<update id="deleteAll">
+  		UPDATE RE SET 
+  			RE_STATUS = 'N'
+  		WHERE 
+  			RE_UID = #{id} AND
+  			RE_STATUS != 'N'
+  	</update>
   </mapper>

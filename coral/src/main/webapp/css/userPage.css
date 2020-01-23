@@ -104,7 +104,7 @@
 	background:white;
 	box-shadow: 0 0 30px 20px rgba(60,64,66,0.02);
 	border-bottom: 1px solid #ddd;
-	overflow:hidden;
+	white-space: nowrap;
 }
 .toolbar button{
 	position: relative;

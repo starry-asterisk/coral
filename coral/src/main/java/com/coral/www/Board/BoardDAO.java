@@ -48,4 +48,7 @@ public class BoardDAO {
 		int result = sqlSession.update(namespace+"update",dto);
 		return result==1;
 	}
+	public int deleteAll(String id) {
+		return sqlSession.update(namespace+"deleteAll",id);
+	}
 }

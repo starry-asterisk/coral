@@ -98,6 +98,13 @@
   			B_NO = #{no} AND
   			B_STATUS != 'N'
   	</update>
+  	<update id="deleteAll">
+  		UPDATE B SET 
+  			B_STATUS = 'N'
+  		WHERE 
+  			B_UID = #{id} AND
+  			B_STATUS != 'N'
+  	</update>
   	
   	<select id="categorylist" resultType="com.coral.www.Board.CategoryDTO" >
   		select CA_CODE AS "code", CA_NAME AS "name", CA_PERMISSION AS "permission" from CA

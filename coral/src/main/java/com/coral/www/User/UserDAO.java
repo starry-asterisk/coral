@@ -53,4 +53,8 @@ public class UserDAO {
 		int result = sqlSession.update(namespace+"update", dto);
 		return result==1?true:false;
 	}
+	public boolean updateStatus(UserDTO dto) {
+		int result = sqlSession.update(namespace+"updateStatus", dto);
+		return result==1?true:false;
+	}
 }

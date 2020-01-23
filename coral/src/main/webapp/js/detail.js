@@ -4,7 +4,7 @@ if(tags.length>1){
 	tags = tags.split("#");
 	tags.forEach(function(tag){
 		if(tag.length!=0){
-			$("#tag").before("<a href='/ajax/search?keyword="+tag+"'style='margin-right:5px;color:#337ab7'>#"+tag+"</a>");
+			$("#tag").before("<a href='/board?keyword="+tag+"'style='margin-right:5px;color:#337ab7'>#"+tag+"</a>");
 		}
 	});
 }else if($("#tag").length > 0){

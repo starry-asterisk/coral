@@ -3,22 +3,10 @@
  */
 
 $(document).ready(function(){
-		$(".icon_search_btn").click(function(){
-			//<ajax> 사용하기
-			$.ajax({
-				// 전송방식을 지정한다(GET, POST)
-				type : "POST",
-				// 호출 URL을 설정한다.
-				// GET 방식일 경우 뒤에 파라미터를 붙여서 사용해도 된다.
-				url : "/ajax/search",
-				data : {json:"sample"},  // 전송할 내용(폼태그)
-				error : function(){
-					alert("통신상태가 완활하지 않습니다");
-				},
-				success : function(data){
-					alert(data.result);
-				}
-			});
+		$(".icon_search_btn.search").click(function(){
+			var keyword = $("input[name=key_word]").val();
+			boardList("board",50,1,$(".feed_sub_main div:nth-child(1)"),keyword);
+			boardList("lecture",50,1,$(".feed_sub_main div:nth-child(2)"),keyword);
 		});
 		
 		$("#codeRun").click(function(){

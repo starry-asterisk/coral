@@ -6,6 +6,28 @@
   <select id="reasonList" resultType="com.coral.www.Report.ReasonDTO">
   	SELECT RS_CODE AS "code", RS_CONTENT AS "content", RS_DUE AS "due" FROM RS WHERE RS_CODE LIKE #{identifier}||'%'
   </select>
+  
+  <select id="report_List" resultType="com.coral.www.Report.ReasonDTO">
+  	SELECT  
+  		RP_UID AS "id", 
+  		RP_OBJECT AS "object", 
+  		RP_CODE AS "code", 
+  		RP_RSCODE AS "rscode", 
+  		RP_REGDATE AS "regdate", 
+  		RP_STATUS AS "status", 
+  		RP_COMPLETEDATE AS "completedate"
+  	FROM 
+  		RP
+  	WHERE 
+  		RP_RSCODE LIKE '%'||#{rscode}||'%'
+  		<if test="object!=null">
+  		AND (
+  		RP_UID LIKE '%'||#{object}||'%' OR
+  		RP_OBJECT LIKE '%'||#{object}||'%' OR
+  		RP_RSCODE LIKE '%'||#{object}||'%' 
+  		)
+  		</if>
+  </select>
   <insert id="report_insert" parameterType="com.coral.www.Report.ReportDTO">
   insert into RP(RP_UID,RP_OBJECT,RP_CODE,RP_RSCODE) values(#{id},#{object},#{code},#{rscode})
   </insert>

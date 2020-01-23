@@ -32,6 +32,11 @@
   		U_ID = U_ID
   		where U_ID=#{id}
   	</select>
+  	<select id="updateStatus" parameterType="com.coral.www.User.UserDTO">
+  		UPDATE U SET 
+  		U_STATUS = #{status}
+  		where U_ID=#{id}
+  	</select>
   	<select id="getInfo" resultType="com.coral.www.User.UserDTO" parameterType="com.coral.www.User.UserDTO">
   		select 
   			U_ID AS "id", 
@@ -45,7 +50,8 @@
   			U_COMPANY AS "company",
   			U_BIRTH AS "birth",
   			U_TEL AS "tel",
-  			U_PRIVACY AS "privacy"
+  			U_PRIVACY AS "privacy",
+  			U_STATUS AS "status"
   		from 
   			USERS WHERE U_ID=#{id}
   	</select>

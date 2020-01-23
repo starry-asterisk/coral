@@ -7,21 +7,21 @@
 <button class="subbtn" type="button" style="border-top-width:0;" onclick="history.back()">돌아가기</button>
 
 <div class="classInfo">
-<div>강좌 번호<input type="text" value="${!empty Class?Class.cl_no:''}" readonly></div>
+<div><div>강좌 번호</div><input type="text" value="${!empty Class?Class.cl_no:''}" readonly></div>
 <c:choose>
 	<c:when test="${!empty Class?(Class.id==id):false}">
-<div>강좌 제목<input type="text" value="${!empty Class?Class.cl_title:''}"  id="title"></div>
-<div>강좌 설명<div class="description" contenteditable='true'>${!empty Class?Class.cl_description:''}</div></div>
+<div><div>강좌 제목</div><input type="text" value="${!empty Class?Class.cl_title:''}"  id="title"></div>
+<div><div>강좌 설명</div><div class="description" contenteditable='true'>${!empty Class?Class.cl_description:''}</div></div>
 <div><div class="tag_form" placeholder="태그 입력" style="margin-top: 15px;"><input type="text" value="" maxlength="25"></div></div>
-<div>교사 이름<input type="text" value="${!empty Class?Class.id:''}" readonly></div>
+<div><div>교사 이름</div><input type="text" value="${!empty Class?Class.id:''}" readonly></div>
 <div><button class="editClass">수정 완료</button><button class="closeApply">폐강 신청</button></div>
 <link rel="stylesheet" type="text/css" href="/css/Editor.css"/>
 	</c:when>
 	<c:otherwise>
-<div>강좌 제목<input type="text" value="${!empty Class?Class.cl_title:''}" readonly></div>
-<div>강좌 설명<div class="description">${!empty Class?Class.cl_description:''}</div></div>
-<div>태그 목록<input type="text" value="${!empty Class?Class.cl_tag:''}" readonly></div>
-<div>교사 이름<input type="text" value="${!empty Class?Class.id:''}" readonly></div>
+<div><div>강좌 제목</div><input type="text" value="${!empty Class?Class.cl_title:''}" readonly></div>
+<div><div>강좌 설명</div><div class="description">${!empty Class?Class.cl_description:''}</div></div>
+<div><div>태그 목록</div><div class="tag description"></div></div>
+<div><div>교사 이름</div><input type="text" value="${!empty Class?Class.id:''}" readonly></div>
 	</c:otherwise>
 </c:choose>
 </div>
@@ -46,27 +46,50 @@
 }
 .classInfo>div{
 	text-align:left;
+	position:relative;
 	padding:10px 20px 0 20px;
 }
 .classInfo>div>input, .description{
-	float:right;
 	text-align:left;
 	width:80%;
+	
+} 
+.description{
+	margin-left: 20%;
+}
+.classInfo>div>div:not(.description){
+    word-break: break-all;
+	text-align:center;
+	width:20%;
+	float:left;
 } 
 </style>
-<c:if test="${!empty Class?(Class.id==id):false}">
-<script src="/js/editor.js" type="text/javascript" charset="utf-8"></script>
-
 <script>
 var tags = '${!empty Class?Class.cl_tag:false}';
-if(tags!='false'){
+if('${!empty Class?(Class.id==id):false}'!='false'){
 	tags = tags.split("#");
 	tags.forEach(function(tag){
 		if(tag!=null&&tag!=''&&tag!=undefined){
 			addTag(tag);
 		}
 	});
+}else{
+	if(tags!="false"){
+		tags = tags.split("#");
+		tags.forEach(function(tag){
+			if(tag.length!=0){
+				$(".tag").append("<a href='/lecture?keyword="+tag+"'style='margin-right:5px;color:#337ab7'>#"+tag+"</a>");
+			}
+		});
+	}else if($(".tag").length > 0){
+		$(".tag").append("#");
+	}
 }
+</script>
+<c:if test="${!empty Class?(Class.id==id):false}">
+<script src="/js/editor.js" type="text/javascript" charset="utf-8"></script>
+
+<script>
 $(".tag_form input").trigger("click");
 $(".tag_form input").trigger("focusout");
 $(".editClass").click(function(){

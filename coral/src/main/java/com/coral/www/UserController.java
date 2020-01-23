@@ -33,6 +33,8 @@ import com.coral.www.Cookie.CookieService;
 import com.coral.www.File.FileDTO;
 import com.coral.www.File.FileService;
 import com.coral.www.Lecture.LectureService;
+import com.coral.www.Report.ReportDTO;
+import com.coral.www.Report.ReportService;
 import com.coral.www.User.UserDTO;
 import com.coral.www.User.UserService;
 import com.coral.www.application.Sha;
@@ -60,6 +62,8 @@ public class UserController {
 	LectureService lectureService;
 	@Inject
 	BoardService boardService;
+	@Inject
+	ReportService reportService;
 
 	@RequestMapping(value = "/signUp", method = { RequestMethod.GET })
 	public String signUp(HttpServletRequest request) {
@@ -164,6 +168,28 @@ public class UserController {
 
 		return "redirect:" + REFERER;
 	}
+	
+	@RequestMapping("/leave")
+	public String leave(UserDTO dto, HttpServletRequest request,@RequestParam(required=false) String newPw) throws Exception {
+		dto.setId((String)request.getSession().getAttribute("id"));
+		if(dto.getPw()!=null) {
+			dto.setPw(Sha.get256((String) dto.getPw(), dto.getId()));
+			if(!userService.isLogin(dto)) {
+				dto.setMsg("비밀번호가 틀렸습니다");
+			}else {
+				dto.setStatus("탈퇴됨");
+				if(!userService.updateStatus(dto)) {
+					dto.setMsg("정보 수정에 실패했습니다");
+				}else {
+					request.getSession().invalidate();
+					dto.setMsg("회원 탈퇴 처리 되었습니다");
+				}
+			}
+		}
+		
+		return "redirect:/" + "?Code=alert('"
+		+ URLEncoder.encode(dto.getMsg(), "UTF-8") + "')";
+	}
 
 	@RequestMapping("/emailConfirm")
 	public String emailConfirm(Model model, @RequestParam String id, @RequestParam String email,
@@ -240,17 +266,18 @@ public class UserController {
 		return "myApplication/apply";
 	}
 	@RequestMapping("/myApp/report")
-	public String report() {
+	public String report(Model model,HttpServletRequest request,@RequestParam(required=false)String keyword) {
+		reportService.addList(model, request, keyword);
 		return "myApplication/report";
 	}
 	@RequestMapping(value="/newInfo",method = { RequestMethod.POST })
 	public String newInfo(UserDTO dto, HttpServletRequest request,@RequestParam(required=false) String newPw) throws Exception {
 		dto.setId((String)request.getSession().getAttribute("id"));
-		System.out.println(dto.toString());
 		if(dto.getPw()!=null) {
 			dto.setPw(Sha.get256((String) dto.getPw(), dto.getId()));
 			if(!userService.isLogin(dto)||newPw==null||"".equals(newPw)) {
-				return "redirect:/mypage";
+				return "redirect:/mypage" + "?Code=alert('"
+						+ URLEncoder.encode("비밀번호가 틀렸습니다", "UTF-8") + "')";
 			}else {
 				dto.setPw(Sha.get256(newPw, dto.getId()));
 			}
@@ -260,14 +287,16 @@ public class UserController {
 			dto.setMail("{verify-" + Sha.get512(dto.getId(), dto.getMail()).substring(0, 16) + "}" + mail);
 		}
 		if(!userService.update(dto)) {
-			return "redirect:/mypage";
+			return "redirect:/mypage" + "?Code=alert('"
+					+ URLEncoder.encode("정보 수정에 실패했습니다", "UTF-8") + "')";
 		}
 		
 		if(mail!=null) {
 			dto.setMail(mail);
 			userService.mail(dto);
 		}
-		return "redirect:/mypage";
+		return "redirect:/mypage" + "?Code=alert('"
+		+ URLEncoder.encode("정보가 수정되었습니다", "UTF-8") + "')";
 	}
 	@Autowired
 	private GoogleConnectionFactory googleConnectionFactory;

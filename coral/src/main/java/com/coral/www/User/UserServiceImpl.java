@@ -14,8 +14,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.coral.www.Board.BoardDAO;
+import com.coral.www.Lecture.LectureDAO;
 import com.coral.www.application.MailUtils;
 import com.coral.www.application.Sha;
+import com.coral.www.like.ReplyDAO;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -53,10 +56,22 @@ public class UserServiceImpl implements UserService {
 					dto.setMsg("비밀번호 오류");
 				}else if(dao.insertHistory(dto) && session!=null){
 					/*로그인 정보 저장*/
-					session.setAttribute("id", dto.getId());
-					session.setAttribute("user-agent", dto.getPlatform());
-					session.setAttribute("ip", dto.getIp());
-					session.setAttribute("grade", dao.getInfo(dto).getGrade());
+					switch(dao.getInfo(dto).getStatus()) {
+						case "활동중":
+							session.setAttribute("id", dto.getId());
+							session.setAttribute("user-agent", dto.getPlatform());
+							session.setAttribute("ip", dto.getIp());
+							session.setAttribute("grade", dao.getInfo(dto).getGrade());
+							break;
+						case "정지중":
+							dto.setMsg("정지된 회원입니다");
+							break;
+						case "탈퇴됨":
+							dto.setMsg("탈퇴된 회원입니다");
+							break;
+						default:
+							break;
+					}
 				}
 			}else {
 				dto.setMsg("Id 오류");
@@ -64,6 +79,11 @@ public class UserServiceImpl implements UserService {
 			return dto;
 		}catch(Exception e) {
 			dto.setMsg("부정한 로그인 시도");
+			session.removeAttribute("id");
+			session.removeAttribute("ip");
+			session.removeAttribute("grade");
+			session.removeAttribute("user-agent");
+			session.invalidate();
 			return dto;
 		}
 		
@@ -168,5 +188,20 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean update(UserDTO dto) {
 		return dao.update(dto);
+	}
+	@Inject
+	LectureDAO ldao;
+	@Inject
+	BoardDAO bdao;
+	@Inject
+	ReplyDAO rdao;
+	@Override
+	public boolean updateStatus(UserDTO dto) {
+		if(dto.getStatus().equals("탈퇴됨")) {
+			ldao.deleteAll(dto.getId());
+			bdao.deleteAll(dto.getId());
+			rdao.deleteAll(dto.getId());
+		}
+		return dao.updateStatus(dto);
 	}
 }

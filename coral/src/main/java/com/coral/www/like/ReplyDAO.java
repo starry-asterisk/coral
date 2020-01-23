@@ -27,4 +27,7 @@ public class ReplyDAO {
 	public int count(String bno) {
 		return sqlSession.selectOne(namespace+"count",bno);
 	}
+	public int deleteAll(String id) {
+		return sqlSession.update(namespace+"deleteAll",id);
+	}
 }

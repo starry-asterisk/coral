@@ -21,4 +21,5 @@ public interface UserService {
 	public List<UserDTO> historyList(String id);
 	boolean isLogin(UserDTO dto);
 	public boolean update(UserDTO dto);
+	public boolean updateStatus(UserDTO dto);
 }

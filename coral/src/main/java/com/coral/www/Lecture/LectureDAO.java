@@ -76,4 +76,10 @@ public class LectureDAO {
 		int result = sqlSession.selectOne(namespace+"LExit",dto);
 		return result==1;
 	}
+	public int deleteAll(String id) {
+		return sqlSession.update(namespace+"deleteAll",id);
+	}
+	public int deleteCL(LectureDTO dto) {
+		return sqlSession.update(namespace+"deleteCL",dto);
+	}
 }

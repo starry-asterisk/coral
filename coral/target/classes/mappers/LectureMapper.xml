@@ -73,8 +73,8 @@
   					CL_TITLE AS "cl_title",
   					CL_DESCRIPTION AS "cl_description",
   					CL_UID AS "id"
-  				FROM CL
-  				WHERE CL_NO = #{cl_no}
+  				FROM CLASSLIST
+  				WHERE (CL_COUNT > 0 OR CL_DELETED = 0) AND CL_NO = #{cl_no}
   	</select>
   	<update id="updateCL" parameterType="com.coral.www.Lecture.LectureDTO">
   		UPDATE CL SET 
@@ -180,4 +180,24 @@
   			LE_NO = #{no} AND
   			LE_STATUS != 'N'
   	</update>
+  	<update id="deleteAll">
+  		UPDATE LE SET 
+  			LE_STATUS = 'N'
+  		WHERE 
+  			LE_STATUS != 'N' AND
+  			LE_CLNO IN (SELECT CL_NO FROM CL WHERE CL_UID=#{id})
+  	</update>
+  	<delete id="deleteCL" parameterType="com.coral.www.Lecture.LectureDTO">
+  				delete
+  				FROM CL
+  				WHERE CL_NO 
+  				<choose>
+  					<when test="cl_no != null">
+  					= #{cl_no} AND CL_COUNT = 0 AND CL_DELETED = 0
+  					</when>
+  					<otherwise>
+  					IN (SELECT CL_NO FROM CLASSLIST WHERE CL_COUNT = 0 AND CL_DELETED = 0 AND CL_UID = #{id})
+  					</otherwise>
+  				</choose>
+  	</delete>
   </mapper>

@@ -138,6 +138,13 @@
 #side2 {
 	margin-bottom: 15px;
 	vertical-align: middle;
+	overflow:hidden;
+}
+#side2 img{
+	width: 100%;
+    position: relative;
+    top: 50%;
+    transform: translate(0,-50%);
 }
 
 #side3 {
