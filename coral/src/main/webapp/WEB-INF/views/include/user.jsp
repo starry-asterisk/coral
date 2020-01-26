@@ -3,33 +3,21 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <table class="list_TYPE1">
 	<tr>
-		<td width="15%">NO</td>
-		<td width="47%">제목</td>
-		<td width="10%">작성자</td>
-		<td width="2%"></td>
-		<td width="10%">날짜</td>
-		<td width="8%">조회수</td>
-		<td width="8%">추천수</td>
+		<td>아이디</td>
 	</tr>
-	<c:forEach var= "list" items="${BoardList}">
+	<c:forEach var= "list" items="${UserList}">
 		<tr style="height: 2em;">
-			<td>${list.no }</td>
-			<td><a href="/board/detail?bno=${list.no }" title="${list.title }(${list.amount })">${list.title }(${list.amount })</a></td>
-			<td><span onClick="location.href='/userpage?id=${list.id }'">${list.id }</span></td>
-			<td><button class="report"></button></td>
-			<td><fmt:formatDate pattern = "MM-dd HH:mm" value = "${list.regdate }" /></td>
-			<td>${list.views }</td>
-			<td>${list.recommends }</td>
+			<td>${list.id }</td>
 		</tr>
 	</c:forEach>
 	<tr height="3em">
-		<td colspan="7" class="swipeBtnArea btnRow board_row">
+		<td class="swipeBtnArea btnRow user_row">
 		
 		</td>
 	</tr>
 </table>
 <script>
-mkPageBtn(".board_row","/board",${B_Currentpage},${B_Endpage},${B_amount},'&keyword=${keyword}');
+mkPageBtn(".user_row","/board",${U_Currentpage},${U_Endpage},${U_amount},'&keyword=${keyword}');
 var reporter = "${id}";
 $(".report").click(function(){
 	if(reporter!=undefined&&reporter!=""){

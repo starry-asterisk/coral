@@ -8,7 +8,7 @@
 		<td width="10%">작성자</td>
 		<td width="2%"></td>
 		<td width="10%">등록일</td>
-		<td width="10%">최근 업데이트</td>
+		<td width="10%">최근 수정일</td>
 		<td width="8%">조회수</td>
 		<td width="8%">추천수</td>
 	</tr>

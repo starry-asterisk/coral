@@ -15,6 +15,12 @@ public class UserDAO {
 	SqlSession sqlSession;
 	static final String namespace="com.coral.www.mappers.UsersMapper.";
 	
+	public int total(UserDTO dto) {
+		return sqlSession.selectOne(namespace+"total",dto);
+	}
+	public List<UserDTO> listPage(UserDTO dto) {
+		return sqlSession.selectList(namespace+"listPage",dto);
+	}
 	public boolean isLogin(UserDTO dto) {
 		int result = sqlSession.selectOne(namespace+"isLogin",dto);
 		return result==1?true:false;

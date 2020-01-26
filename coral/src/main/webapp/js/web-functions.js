@@ -474,7 +474,7 @@ function BuildCalendar(JqueryName, date){
 	//달력 객체 생성
 	var body = $(document.createElement("table"));
 	body.addClass("calendar");
-	$(".C_side").find("tr:nth-child(2) td").html("");
+	$(".C_side, .C_invert").find("tr:nth-child(2) td").html("");
 	
 	body.attr("width",width);
 	body.attr("data-header",header);
@@ -575,7 +575,7 @@ function BuildCalendar(JqueryName, date){
 			
 			/*클릭시의 이벤트를 지정가능합니다*/
 			var temp;
-			var contents = $(".C_side");
+			var contents = $(".C_side, .C_invert");
 			
 			if(contents.html()==undefined){
 				contents = mkSide(body, width, height);
@@ -657,7 +657,23 @@ function BuildCalendar(JqueryName, date){
 					}
 					move.setDate(move.getDate()+1);
 				}
-				contents.find("tr:nth-child(2) td").append((start_day.getMonth()+1)+"/"+start_day.getDate()+"-"+(end_day.getMonth()+1)+"/"+end_day.getDate()+":"+(sum+1)+"day<br/>");
+				if($(".C_invert").html()==undefined){
+					contents.find("tr:nth-child(2) td").append((start_day.getMonth()+1)+"/"+start_day.getDate()+"-"+(end_day.getMonth()+1)+"/"+end_day.getDate()+":"+(sum+1)+"day<br/>");
+				}else{
+					var row = $(document.createElement("div"));
+					row.attr("data-schedule",start_day.getFullYear()+"/"+start_day.getMonth()+"/"+start_day.getDate()+"/"+end_day.getFullYear()+"/"+end_day.getMonth()+"/"+end_day.getDate()+";");
+					row.append("<button type='button'><i class='fas fa-minus-circle'></i></button>");
+					row.append(start_day.getFullYear()+"-"+(start_day.getMonth()+1)+"-"+start_day.getDate());
+					row.append("<span>/</span>");
+					row.append(end_day.getFullYear()+"-"+(end_day.getMonth()+1)+"-"+end_day.getDate());
+					row.append("<span style='float:right'>"+(sum+1)+"일</span>");
+					row.children("button").on("click",function(){
+						console.log($(this).parent().data("schedule"));
+						$(".calendar").attr("schedule",$(".calendar").attr("schedule").replace($(this).parent().data("schedule"),""));
+						BuildCalendar(JqueryName,new Date(origin.Year,origin.Month));
+					});
+					contents.find("tr:nth-child(2) td").append(row);
+				}
 				body.attr("schedule",
 						(body.attr("schedule")!=undefined?body.attr("schedule"):"")+
 						start_day.getFullYear()+"/"+start_day.getMonth()+"/"+start_day.getDate()+

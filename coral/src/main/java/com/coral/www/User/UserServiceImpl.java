@@ -9,10 +9,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import com.coral.www.Board.BoardDAO;
 import com.coral.www.Lecture.LectureDAO;
@@ -25,6 +27,22 @@ public class UserServiceImpl implements UserService {
 	@Inject
 	UserDAO dao;
 	
+	@Override
+	public void addList(Model model, HttpServletRequest request, String keyword) {
+		UserDTO dto = new UserDTO();
+		if(keyword!=null) {
+			model.addAttribute("keyword", keyword);
+			dto.setId(keyword);
+			dto.setName(keyword);
+			dto.setGrade(keyword);
+		}
+		dto.setPage(request.getParameter("page")==null?1:Integer.parseInt(request.getParameter("page")));
+		dto.setAmount(request.getParameter("amount")==null?50:Integer.parseInt(request.getParameter("amount")));
+		model.addAttribute("U_amount", dto.getAmount());
+		model.addAttribute("U_Endpage", (int) Math.ceil((double)dao.total(dto)/(double)dto.getAmount()));
+		model.addAttribute("U_Currentpage", dto.getPage());
+		model.addAttribute("UserList", dao.listPage(dto));
+	}
 	@Override
 	public UserDTO getInfo(UserDTO dto) {
 		try {

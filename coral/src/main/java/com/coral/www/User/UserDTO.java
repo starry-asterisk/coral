@@ -21,7 +21,8 @@ public class UserDTO{
 	private String grade;
 	private char privacy;
 	private String status;
-	
+	private int page;
+	private int amount;
 	@DateTimeFormat(pattern="yy-MM-dd HH:mm:ss")
 	private Date regdate;
 	@DateTimeFormat(pattern="yy-MM-dd HH:mm:ss")
@@ -144,12 +145,24 @@ public class UserDTO{
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	public int getAmount() {
+		return amount;
+	}
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
 	@Override
 	public String toString() {
 		return "UserDTO [id=" + id + ", pw=" + pw + ", name=" + name + ", birth=" + birth + ", gender=" + gender
 				+ ", phone=" + phone + ", address=" + address + ", company=" + company + ", tel=" + tel + ", mail="
-				+ mail + ", regdate=" + regdate + ", grade=" + grade + ", privacy=" + privacy + ", status=" + status
-				+ ", date=" + date + ", ip=" + ip + ", platform=" + platform + ", login_status=" + login_status
-				+ ", msg=" + msg + "]";
+				+ mail + ", grade=" + grade + ", privacy=" + privacy + ", status=" + status + ", page=" + page
+				+ ", amount=" + amount + ", regdate=" + regdate + ", date=" + date + ", ip=" + ip + ", platform="
+				+ platform + ", login_status=" + login_status + ", msg=" + msg + "]";
 	}
 }

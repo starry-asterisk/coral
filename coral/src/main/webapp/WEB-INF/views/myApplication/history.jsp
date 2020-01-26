@@ -9,7 +9,7 @@
     </td>
   </tr>
   <tr>
-  	<td colspan="2">
+  	<td colspan="2" style="vertical-align:top;">
     	<jsp:include page="../include/class.jsp"></jsp:include>
     </td>
   </tr>

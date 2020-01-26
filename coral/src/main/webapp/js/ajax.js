@@ -7,6 +7,7 @@ $(document).ready(function(){
 			var keyword = $("input[name=key_word]").val();
 			boardList("board",50,1,$(".feed_sub_main div:nth-child(1)"),keyword);
 			boardList("lecture",50,1,$(".feed_sub_main div:nth-child(2)"),keyword);
+			boardList("userList",50,1,$(".feed_sub_main div:nth-child(3)"),keyword);
 		});
 		
 		$("#codeRun").click(function(){

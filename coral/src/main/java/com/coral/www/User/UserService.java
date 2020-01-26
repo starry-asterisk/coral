@@ -3,10 +3,14 @@ package com.coral.www.User;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.springframework.ui.Model;
 
 
 public interface UserService {
+	public void addList(Model model, HttpServletRequest request, String keyword);
 	public UserDTO getInfo(UserDTO dto);
 	public UserDTO getInfo(String id);
 	public UserDTO login(UserDTO dto, HttpSession session);

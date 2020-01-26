@@ -20,7 +20,6 @@ import org.springframework.social.oauth2.GrantType;
 import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,7 +32,6 @@ import com.coral.www.Cookie.CookieService;
 import com.coral.www.File.FileDTO;
 import com.coral.www.File.FileService;
 import com.coral.www.Lecture.LectureService;
-import com.coral.www.Report.ReportDTO;
 import com.coral.www.Report.ReportService;
 import com.coral.www.User.UserDTO;
 import com.coral.www.User.UserService;
@@ -64,6 +62,17 @@ public class UserController {
 	BoardService boardService;
 	@Inject
 	ReportService reportService;
+	
+	@RequestMapping("/userList")
+	public String board(Model model, HttpServletRequest request, @RequestParam(required=false) String keyword, @RequestParam(required=false) String isAjax) {
+		userService.addList(model, request, keyword);
+		if(isAjax!=null) {
+			return "include/user";
+		}
+		model.addAttribute("Board_type", "include/user");
+		model.addAttribute("attachment", "common/blank");
+		return "list";
+	}
 
 	@RequestMapping(value = "/signUp", method = { RequestMethod.GET })
 	public String signUp(HttpServletRequest request) {
