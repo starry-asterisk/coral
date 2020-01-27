@@ -23,8 +23,8 @@ public class BoardDAO {
 	public List<BoardDTO> listPage(BoardDTO dto) {
 		return sqlSession.selectList(namespace+"listPage",dto);
 	}
-	public List<CategoryDTO> categorylist() {
-		return sqlSession.selectList(namespace+"categorylist");
+	public List<CategoryDTO> categorylist(String permission) {
+		return sqlSession.selectList(namespace+"categorylist",permission);
 	}
 	public boolean write(BoardDTO dto) {
 		int result = sqlSession.insert(namespace+"write",dto);

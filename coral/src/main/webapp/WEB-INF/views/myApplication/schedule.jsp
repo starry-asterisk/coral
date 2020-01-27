@@ -4,11 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <div class="schedule" style="text-align:left">
-	<a class="calendar" width="400" data-header=true schedule="${ pre_schedule}"></a>
+	<a class="calendar" width="400" data-header=true schedule="${ pre_schedule}2020/0/2/2020/0/15/#1f32e8/GUTE/내용입니당 ㅎㅎ;"></a>
 	<div class="C_invert">
 		<table>
 			<tr>
-				<td><button onclick="$('.C_side').css('display', 'none')"> × </button></td>
+				<td><button>리셋</button> / <button>저장</button></td>
 			</tr>
 			<tr>
 			<td></td>

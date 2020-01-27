@@ -26,6 +26,7 @@ public class BoardService {
 			dto.setTitle(keyword);
 			dto.setTag(keyword);
 		}
+		dto.setCategory(request.getParameter("category"));
 		dto.setPage(request.getParameter("page")==null?1:Integer.parseInt(request.getParameter("page")));
 		dto.setAmount(request.getParameter("amount")==null?50:Integer.parseInt(request.getParameter("amount")));
 		model.addAttribute("B_amount", dto.getAmount());
@@ -34,8 +35,8 @@ public class BoardService {
 		model.addAttribute("BoardList", dao.listPage(dto));
 	}
 	
-	public List<CategoryDTO> categorylist() {
-		return dao.categorylist();
+	public List<CategoryDTO> categorylist(String permission) {
+		return dao.categorylist(permission);
 	}
 	public BoardDTO detail(String no) {
 		dao.viewCntUpd(no);

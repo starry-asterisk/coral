@@ -13,6 +13,9 @@
 				OR B_TAG LIKE '%'||#{tag}||'%'
 				)
 			</if>
+			<if test="category!=null">
+  			AND B_CATEGORY = #{category}
+			</if>
   	</select>
   	<select id="listPage" parameterType="com.coral.www.Board.BoardDTO" resultType="com.coral.www.Board.BoardDTO" >
   		SELECT 
@@ -36,6 +39,9 @@
 				OR B_TITLE LIKE '%'||#{title}||'%'
 				OR B_TAG LIKE '%'||#{tag}||'%'
 				)
+				</if>
+				<if test="category!=null">
+  				AND B_CATEGORY = #{category}
 				</if>
 			ORDER BY 
 				B_NO DESC) 
@@ -107,7 +113,14 @@
   	</update>
   	
   	<select id="categorylist" resultType="com.coral.www.Board.CategoryDTO" >
-  		select CA_CODE AS "code", CA_NAME AS "name", CA_PERMISSION AS "permission" from CA
+  	
+  		select CA_CODE AS "code", CA_NAME AS "name", CA_PERMISSION AS "permission" 
+  		from CA 
+  		<if test="value!=null">
+  		<![CDATA[
+  		WHERE LENGTH(CA_PERMISSION) <= LENGTH(#{value})
+  		]]>
+  		</if>
   	</select>
   	<select id="viewCntUpd">
   		UPDATE B SET B_VIEWS = B_VIEWS + 1 WHERE B_NO = #{no} 
