@@ -6,16 +6,21 @@
   <tr>
     <td>
     	<span></span>
-    	<div class="btn_area_btm"><button class="updProf"></button></div>
+    	<c:if test="${Category.size()>0}">
+    	<c:forEach var= "list" items="${Category}">
+			${list.code} / ${list.name} / ${list.permission} <br>
+		</c:forEach>
+  		</c:if>
+  		카테고리별 글 댓글 좋아요 조회수
     </td>
     <td>
-    	<span></span>
+    	<span>강좌활동지표</span>
     	<div class="btn_area_btm"><button class="updProf"></button></div>
     </td>
   </tr>
   <tr>
   	<td>
-  		<span></span>
+  		<span>유저활동지표</span>
   		<div class="btn_area_btm"><button class="updProf"></button></div>
   	</td>
     <td>

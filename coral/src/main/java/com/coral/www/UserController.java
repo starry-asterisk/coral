@@ -267,7 +267,8 @@ public class UserController {
 		return "myApplication/security";
 	}
 	@RequestMapping("/myApp/active")
-	public String active() {
+	public String active(Model model) {
+		model.addAttribute("Category", boardService.categorylist(null));
 		return "myApplication/active";
 	}
 	@RequestMapping("/myApp/apply")
