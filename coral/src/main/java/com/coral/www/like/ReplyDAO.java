@@ -30,4 +30,7 @@ public class ReplyDAO {
 	public int deleteAll(String id) {
 		return sqlSession.update(namespace+"deleteAll",id);
 	}
+	public int delete(ReplyDTO dto) {
+		return sqlSession.update(namespace+"delete",dto);
+	}
 }

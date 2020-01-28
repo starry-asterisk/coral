@@ -104,6 +104,13 @@
   			B_NO = #{no} AND
   			B_STATUS != 'N'
   	</update>
+  	<update id="delete">
+  		UPDATE B SET 
+  			B_STATUS = 'N'
+  		WHERE 
+  			B_NO = #{no} AND
+  			B_STATUS != 'N'
+  	</update>
   	<update id="deleteAll">
   		UPDATE B SET 
   			B_STATUS = 'N'

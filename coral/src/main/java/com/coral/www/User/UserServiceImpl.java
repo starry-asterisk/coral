@@ -36,6 +36,9 @@ public class UserServiceImpl implements UserService {
 			dto.setName(keyword);
 			dto.setGrade(keyword);
 		}
+		if(request.getSession().getAttribute("grade")!=null&&request.getSession().getAttribute("grade").equals("관리자")) {
+			dto.setPrivacy('O');
+		}
 		dto.setPage(request.getParameter("page")==null?1:Integer.parseInt(request.getParameter("page")));
 		dto.setAmount(request.getParameter("amount")==null?50:Integer.parseInt(request.getParameter("amount")));
 		model.addAttribute("U_amount", dto.getAmount());
@@ -76,13 +79,32 @@ public class UserServiceImpl implements UserService {
 					/*로그인 정보 저장*/
 					switch(dao.getInfo(dto).getStatus()) {
 						case "활동중":
-							session.setAttribute("id", dto.getId());
-							session.setAttribute("user-agent", dto.getPlatform());
-							session.setAttribute("ip", dto.getIp());
-							session.setAttribute("grade", dao.getInfo(dto).getGrade());
+							if(!dao.isBan(dto.getId())) {
+								session.setAttribute("id", dto.getId());
+								session.setAttribute("user-agent", dto.getPlatform());
+								session.setAttribute("ip", dto.getIp());
+								session.setAttribute("grade", dao.getInfo(dto).getGrade());
+							}else {
+								UserDTO Rdto = new UserDTO();
+								Rdto.setId(dto.getId());
+								Rdto.setStatus("정지중");
+								dao.update(Rdto);
+								dto.setMsg("정지된 회원입니다");
+							}
 							break;
 						case "정지중":
-							dto.setMsg("정지된 회원입니다");
+							if(dao.isBan(dto.getId())) {
+								dto.setMsg("정지된 회원입니다");
+							}else {
+								session.setAttribute("id", dto.getId());
+								session.setAttribute("user-agent", dto.getPlatform());
+								session.setAttribute("ip", dto.getIp());
+								session.setAttribute("grade", dao.getInfo(dto).getGrade());
+								UserDTO Rdto = new UserDTO();
+								Rdto.setId(dto.getId());
+								Rdto.setStatus("활동중");
+								dao.update(Rdto);
+							}
 							break;
 						case "탈퇴됨":
 							dto.setMsg("탈퇴된 회원입니다");

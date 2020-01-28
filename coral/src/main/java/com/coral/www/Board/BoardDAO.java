@@ -51,4 +51,8 @@ public class BoardDAO {
 	public int deleteAll(String id) {
 		return sqlSession.update(namespace+"deleteAll",id);
 	}
+	public boolean delete(String no) {
+		int result = sqlSession.update(namespace+"delete",no);
+		return result>0;
+	}
 }

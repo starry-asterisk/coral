@@ -46,6 +46,9 @@ public class BoardController {
 	@RequestMapping("/detail")
 	public String detail(Model model, @RequestParam String bno, @RequestHeader("user-agent") String agent) {
 		BoardDTO boarddto = service.detail(bno);
+		if(boarddto==null) {
+			return "blank";
+		}
 		if(boarddto.getContents().contains("${linked}")) {
 			boarddto.setContents(new JFileWriter().readFile(boarddto.getContents().replace("${linked}", "")));
 		}
@@ -69,21 +72,7 @@ public class BoardController {
 	
 	@RequestMapping(value="/write",method = { RequestMethod.GET })
 	public String editor(Model model, HttpServletRequest request) {
-		if(request.getSession().getAttribute("grade")!=null) {
-			switch((String)request.getSession().getAttribute("grade")) {
-			case "관리자":
-				model.addAttribute("Category", service.categorylist("MANAGER"));
-				break;
-			case "교사":
-				model.addAttribute("Category", service.categorylist("TEACH"));
-				break;
-			default:
-				model.addAttribute("Category", service.categorylist("ANY"));
-				break;
-			}
-		}else {
-			model.addAttribute("Category", service.categorylist(null));
-		}
+		model.addAttribute("Category", service.categorylist((String)request.getSession().getAttribute("grade")));
 		String agent = request.getHeader("user-agent");
 		if(agent.contains("MSIE")||agent.contains("Trident")) {
 			model.addAttribute("include", "include/ckEdit4");
@@ -125,21 +114,7 @@ public class BoardController {
 		}else {
 			model.addAttribute("include", "include/ckEdit5");
 		}
-		if(session.getAttribute("grade")!=null) {
-			switch((String)session.getAttribute("grade")) {
-			case "관리자":
-				model.addAttribute("Category", service.categorylist("MANAGER"));
-				break;
-			case "교사":
-				model.addAttribute("Category", service.categorylist("TEACH"));
-				break;
-			default:
-				model.addAttribute("Category", service.categorylist("ANY"));
-				break;
-			}
-		}else {
-			model.addAttribute("Category", service.categorylist(null));
-		}
+		model.addAttribute("Category", service.categorylist((String)session.getAttribute("grade")));
 		
 		model.addAttribute("isNew", false);
 		return "editor";

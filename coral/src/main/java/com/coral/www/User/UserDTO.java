@@ -31,6 +31,8 @@ public class UserDTO{
 	private String platform;
 	private int login_status;
 	private String msg;
+	private int views;
+	private int recommends;
 	public String getId() {
 		return id;
 	}
@@ -157,12 +159,25 @@ public class UserDTO{
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
+	public int getViews() {
+		return views;
+	}
+	public void setViews(int views) {
+		this.views = views;
+	}
+	public int getRecommends() {
+		return recommends;
+	}
+	public void setRecommends(int recommends) {
+		this.recommends = recommends;
+	}
 	@Override
 	public String toString() {
 		return "UserDTO [id=" + id + ", pw=" + pw + ", name=" + name + ", birth=" + birth + ", gender=" + gender
 				+ ", phone=" + phone + ", address=" + address + ", company=" + company + ", tel=" + tel + ", mail="
 				+ mail + ", grade=" + grade + ", privacy=" + privacy + ", status=" + status + ", page=" + page
 				+ ", amount=" + amount + ", regdate=" + regdate + ", date=" + date + ", ip=" + ip + ", platform="
-				+ platform + ", login_status=" + login_status + ", msg=" + msg + "]";
+				+ platform + ", login_status=" + login_status + ", msg=" + msg + ", views=" + views + ", recommends="
+				+ recommends + "]";
 	}
 }

@@ -12,5 +12,6 @@ public interface ReportService {
 	public List<ReasonDTO> reasonList(char identifier);
 	public List<ReportDTO> reportList(ReportDTO dto);
 	public ReportDTO insertReport(ReportDTO dto);
-	void addList(Model model, HttpServletRequest request, String keyword);
+	public boolean punishment(ReportDTO dto);
+	void addList(Model model, HttpServletRequest request, String keyword, String rscode);
 }

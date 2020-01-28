@@ -38,19 +38,18 @@ public class UserDAO {
 	}
 	public boolean insertHistory(UserDTO dto) {
 		return sqlSession.insert(namespace+"insertHistory", dto)==1?true:false;
-		
 	}
 	public boolean addUser(UserDTO dto) {
 		return sqlSession.insert(namespace+"insertUser", dto)==1?true:false;
-		
 	}
-	
 	public boolean mailVerify(UserDTO dto) {
 		return sqlSession.update(namespace+"mailVerify", dto)==1?true:false;
-		
 	}
 	public UserDTO lastLogin(String id) {
 		return sqlSession.selectOne(namespace+"lastLogin",id);
+	}
+	public boolean isBan(String id) {
+		return (int)sqlSession.selectOne(namespace+"isBan",id)>0;
 	}
 	public List<UserDTO> historyList(String id) {
 		return sqlSession.selectList(namespace+"historyList",id);

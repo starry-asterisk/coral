@@ -3,8 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.coral.www.mappers.UsersMapper">
+  	<select id="isBan" resultType="int">
+  	SELECT COUNT(*) FROM PN INNER JOIN RS ON RS_CODE = PN_RSCODE WHERE (PN_START + RS_DUE) > SYSDATE AND PN_UID = #{id}
+  	</select>
   	<select id="total" resultType="int" parameterType="com.coral.www.User.UserDTO">
-  		select count(*) from U where U_STATUS = '활동중'
+  		select count(*) from U where U_STATUS != '탈퇴됨'
+  			<if test="privacy!='O'">
+			AND U_PRIVACY = 'O'
+			</if>
   			<if test="id!=null">
   			AND (
 				   U_ID LIKE '%'||#{id}||'%'
@@ -17,22 +23,20 @@
   		SELECT 
   			U_ID AS "id", 
   			U_NAME AS "name", 
-  			U_GENDER AS "gender", 
-  			U_GRADE as "grade",
-  			U_PW AS "pw"  ,
-  			U_MAIL AS "mail",
-  			U_PHONE AS "phone",
-  			U_ADDRESS AS "address",
-  			U_COMPANY AS "company",
-  			U_BIRTH AS "birth",
-  			U_TEL AS "tel",
+  			U_GRADE AS "grade",
+  			U_REGDATE AS "regdate",
   			U_PRIVACY AS "privacy",
-  			U_STATUS AS "status"
+  			U_STATUS AS "status",
+  			U_RECOMMENDS AS "recommends",
+  			U_VIEWS AS "views"
 		FROM (
-			SELECT  (RANK() OVER(ORDER BY U_REGDATE DESC))ROWNUMS, U.* 
-			FROM U 
+			SELECT  (RANK() OVER(ORDER BY U_RECOMMENDS DESC,U_VIEWS DESC,U_REGDATE DESC))ROWNUMS, USERLIST.* 
+			FROM USERLIST 
 			WHERE 
-				U_STATUS = '활동중'
+				U_STATUS != '탈퇴됨'
+				<if test="privacy!='O'">
+				AND U_PRIVACY = 'O'
+				</if>
 				<if test="id!=null">
 				AND (
 				   U_ID LIKE '%'||#{id}||'%'
@@ -41,7 +45,7 @@
 				)
 				</if>
 			ORDER BY 
-				U_REGDATE DESC) 
+				U_RECOMMENDS DESC,U_VIEWS DESC,U_REGDATE DESC) 
 		<![CDATA[
 		WHERE 
 			ROWNUMS > ((#{page}-1)*#{amount}) and ROWNUMS <= (#{page}*#{amount})
@@ -72,6 +76,9 @@
   		</if>
   		<if test="privacy=='O'||privacy=='X'">
   		U_PRIVACY = #{privacy},
+  		</if>
+  		<if test="status!=null">
+  		U_STATUS = #{status},
   		</if>
   		U_ID = U_ID
   		where U_ID=#{id}

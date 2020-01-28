@@ -185,7 +185,15 @@
   			LE_STATUS = 'N'
   		WHERE 
   			LE_STATUS != 'N' AND
-  			LE_CLNO IN (SELECT CL_NO FROM CL WHERE CL_UID=#{id})
+  			LE_CLNO IN (SELECT CL_NO FROM CL 
+  			WHERE CL_UID=#{id})
+  	</update>
+  	<update id="deleteLE">
+  		UPDATE LE SET 
+  			LE_STATUS = 'N'
+  		WHERE 
+  			LE_STATUS != 'N' AND
+  			LE_CLNO = #{cl_no}
   	</update>
   	<delete id="deleteCL" parameterType="com.coral.www.Lecture.LectureDTO">
   				delete

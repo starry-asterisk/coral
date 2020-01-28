@@ -60,4 +60,11 @@
   			RE_UID = #{id} AND
   			RE_STATUS != 'N'
   	</update>
+  	<update id="delete">
+  		UPDATE RE SET 
+  			RE_STATUS = 'N'
+  		WHERE 
+  			RE_NO = #{no} AND
+  			RE_BNO = #{bno}
+  	</update>
   </mapper>

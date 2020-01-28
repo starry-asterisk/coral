@@ -36,7 +36,18 @@ public class BoardService {
 	}
 	
 	public List<CategoryDTO> categorylist(String permission) {
-		return dao.categorylist(permission);
+		if(permission!=null) {
+			switch(permission) {
+			case "관리자":
+				return dao.categorylist("MANAGER");
+			case "교사":
+				return dao.categorylist("TEACH");
+			default:
+				return dao.categorylist("ANY");
+			}
+		}else {
+			return dao.categorylist(null);
+		}
 	}
 	public BoardDTO detail(String no) {
 		dao.viewCntUpd(no);

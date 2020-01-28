@@ -16,6 +16,8 @@ public class ReportDTO {
 	private String status;//처리상태
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date completedate;//처리일자
+	private int page;
+	private int amount;
 	public String getId() {
 		return id;
 	}
@@ -57,5 +59,23 @@ public class ReportDTO {
 	}
 	public void setCompletedate(Date completedate) {
 		this.completedate = completedate;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	public int getAmount() {
+		return amount;
+	}
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+	@Override
+	public String toString() {
+		return "ReportDTO [id=" + id + ", object=" + object + ", code=" + code + ", rscode=" + rscode + ", regdate="
+				+ regdate + ", status=" + status + ", completedate=" + completedate + ", page=" + page + ", amount="
+				+ amount + "]";
 	}
 }

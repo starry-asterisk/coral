@@ -6,8 +6,17 @@
   <select id="reasonList" resultType="com.coral.www.Report.ReasonDTO">
   	SELECT RS_CODE AS "code", RS_CONTENT AS "content", RS_DUE AS "due" FROM RS WHERE RS_CODE LIKE #{identifier}||'%'
   </select>
-  
-  <select id="report_List" resultType="com.coral.www.Report.ReasonDTO">
+  <select id="total" resultType="int" parameterType="com.coral.www.Report.ReportDTO">
+  		select count(*) from RP where RP_RSCODE LIKE '%'||#{rscode}||'%'
+  		<if test="object!=null">
+  		AND (
+  		RP_UID LIKE '%'||#{object}||'%' OR
+  		RP_OBJECT LIKE '%'||#{object}||'%' OR
+  		RP_RSCODE LIKE '%'||#{object}||'%' 
+  		)
+  		</if>
+  	</select>
+  <select id="report_List" resultType="com.coral.www.Report.ReportDTO">
   	SELECT  
   		RP_UID AS "id", 
   		RP_OBJECT AS "object", 
@@ -16,10 +25,11 @@
   		RP_REGDATE AS "regdate", 
   		RP_STATUS AS "status", 
   		RP_COMPLETEDATE AS "completedate"
-  	FROM 
-  		RP
-  	WHERE 
-  		RP_RSCODE LIKE '%'||#{rscode}||'%'
+  	FROM (
+			SELECT  (RANK() OVER(ORDER BY RP_REGDATE DESC))ROWNUMS, RP.* 
+			FROM RP 
+			WHERE 
+				RP_RSCODE LIKE '%'||#{rscode}||'%'
   		<if test="object!=null">
   		AND (
   		RP_UID LIKE '%'||#{object}||'%' OR
@@ -27,13 +37,28 @@
   		RP_RSCODE LIKE '%'||#{object}||'%' 
   		)
   		</if>
+			ORDER BY 
+				RP_REGDATE DESC) 
+		<![CDATA[
+		WHERE 
+			ROWNUMS > ((#{page}-1)*#{amount}) and ROWNUMS <= (#{page}*#{amount})
+		]]>
   </select>
   <insert id="report_insert" parameterType="com.coral.www.Report.ReportDTO">
   insert into RP(RP_UID,RP_OBJECT,RP_CODE,RP_RSCODE) values(#{id},#{object},#{code},#{rscode})
   </insert>
+  <insert id="punish_insert" parameterType="com.coral.www.Report.ReportDTO">
+  insert into PN(PN_UID,PN_RSCODE,PN_START) values(#{id},#{rscode},SYSDATE)
+  </insert>
   <delete id="report_delete" parameterType="com.coral.www.Report.ReportDTO">
   delete from RP where RP_UID=#{id},RP_OBJECT=#{object}
   </delete>
+  <update id="report_update" parameterType="com.coral.www.Report.ReportDTO">
+  UPDATE RP SET RP_STATUS = #{status}, RP_COMPLETEDATE = SYSDATE WHERE RP_RSCODE = #{rscode} AND RP_OBJECT = #{object}
+  </update>
+  <update id="punish_update" parameterType="com.coral.www.Report.ReportDTO">
+  UPDATE PN SET PN_START = SYSDATE - 999 WHERE PN_UID = #{id}
+  </update>
 </mapper>
   
   

@@ -4,14 +4,22 @@
 <table class="list_TYPE1">
 	<tr>
 		<td>아이디</td>
+		<td>닉네임</td>
+		<td>등급</td>
+		<td>조회수</td>
+		<td>추천수</td>
 	</tr>
 	<c:forEach var= "list" items="${UserList}">
 		<tr style="height: 2em;">
-			<td>${list.id }</td>
+			<td onclick="location.href='/userpage?id=${list.id }'">${list.id }</td>
+			<td>${list.name }</td>
+			<td>${list.grade }</td>
+			<td>${list.views }</td>
+			<td>${list.recommends }</td>
 		</tr>
 	</c:forEach>
 	<tr height="3em">
-		<td class="swipeBtnArea btnRow user_row">
+		<td colspan="5" class="swipeBtnArea btnRow user_row">
 		
 		</td>
 	</tr>

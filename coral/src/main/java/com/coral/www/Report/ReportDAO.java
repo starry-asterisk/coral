@@ -7,8 +7,6 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.coral.www.Board.BoardDTO;
-
 
 @Repository
 public class ReportDAO {
@@ -27,8 +25,16 @@ public class ReportDAO {
 	public boolean insertReport(ReportDTO dto) {
 		return sqlSession.insert(namespace+"report_insert",dto) ==1? true:false;
 	}
-	public Object listPage(ReportDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean insertPunish(ReportDTO dto) {
+		return sqlSession.insert(namespace+"punish_insert",dto) ==1? true:false;
+	}
+	public boolean updateReport(ReportDTO dto) {
+		return sqlSession.update(namespace+"report_update",dto) > 0? true:false;
+	}
+	public boolean updatePunish(ReportDTO dto) {
+		return sqlSession.update(namespace+"punish_update",dto) > 0? true:false;
+	}
+	public int total(ReportDTO dto) {
+		return sqlSession.selectOne(namespace+"total",dto);
 	}
 }

@@ -82,4 +82,8 @@ public class LectureDAO {
 	public int deleteCL(LectureDTO dto) {
 		return sqlSession.update(namespace+"deleteCL",dto);
 	}
+	public boolean deleteLE(String cl_no) {
+		int result = sqlSession.update(namespace+"deleteLE",cl_no);
+		return result > 0;
+	}
 }

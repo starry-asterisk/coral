@@ -32,6 +32,7 @@ import com.coral.www.Cookie.CookieService;
 import com.coral.www.File.FileDTO;
 import com.coral.www.File.FileService;
 import com.coral.www.Lecture.LectureService;
+import com.coral.www.Report.ReportDTO;
 import com.coral.www.Report.ReportService;
 import com.coral.www.User.UserDTO;
 import com.coral.www.User.UserService;
@@ -212,10 +213,13 @@ public class UserController {
 	}
 
 	@RequestMapping("/userpage")
-	public String userPage(@RequestParam String id, Model model) {
+	public String userPage(HttpServletRequest request,@RequestParam String id, Model model) throws UnsupportedEncodingException {
 		UserDTO dto = new UserDTO();
 		dto.setId(id);
 		dto = userService.getInfo(dto);
+		if((request.getSession().getAttribute("grade")==null||!request.getSession().getAttribute("grade").equals("관리자"))&&dto.getPrivacy()!='O'&&!dto.getStatus().equals("탈퇴됨")) {
+			return "redirect:/" + "?Code=alert('"+ URLEncoder.encode("조회 할 수 없는 회원입니다.", "UTF-8") + "')";
+		}
 		if (dto.getMail().contains("{verify-")) {
 			dto.setMail("P");
 		}
@@ -224,7 +228,10 @@ public class UserController {
 			model.addAttribute("prof_image", profile.getPath());
 		}
 		model.addAttribute("userInfo", dto);
-		return "myPage";
+
+		boardService.addList(model, request, id);
+		lectureService.addList(model, request, null, id);
+		return "userPage";
 	}
 
 	@RequestMapping("/mypage")
@@ -272,13 +279,19 @@ public class UserController {
 		return "myApplication/active";
 	}
 	@RequestMapping("/myApp/apply")
-	public String apply() {
+	public String apply(Model model,HttpServletRequest request,@RequestParam(required=false)String keyword) {
+		reportService.addList(model, request, keyword,"F");
 		return "myApplication/apply";
 	}
-	@RequestMapping("/myApp/report")
-	public String report(Model model,HttpServletRequest request,@RequestParam(required=false)String keyword) {
-		reportService.addList(model, request, keyword);
+	@RequestMapping(value = "/myApp/report", method = RequestMethod.GET)
+	public String reportGET(Model model,HttpServletRequest request,@RequestParam(required=false)String keyword) {
+		reportService.addList(model, request, keyword,"R");
 		return "myApplication/report";
+	}
+	@RequestMapping(value = "/myApp/report", method = RequestMethod.POST)
+	public String reportPOST(ReportDTO dto) {
+		reportService.punishment(dto);
+		return "redirect:/mypage";
 	}
 	@RequestMapping(value="/newInfo",method = { RequestMethod.POST })
 	public String newInfo(UserDTO dto, HttpServletRequest request,@RequestParam(required=false) String newPw) throws Exception {
