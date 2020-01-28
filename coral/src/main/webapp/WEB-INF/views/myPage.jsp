@@ -194,6 +194,6 @@ $(window).scroll(function(){
     });
 });
 $('[data-toggle="tooltip"]').tooltip();
-myApp('private','.workSpace');
+myApp('${empty app?"private":app}','.workSpace');
 </script>
 </html>

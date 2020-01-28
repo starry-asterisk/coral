@@ -55,4 +55,16 @@ public class BoardDAO {
 		int result = sqlSession.update(namespace+"delete",no);
 		return result>0;
 	}
+	public boolean updateCA(CategoryDTO dto) {
+		return (int)sqlSession.update(namespace+"updateCA",dto)==1;
+	}
+	public boolean insertCA(CategoryDTO dto) {
+		return (int)sqlSession.update(namespace+"insertCA",dto)==1;
+	}
+	public boolean deleteCA(String code) {
+		return (int)sqlSession.update(namespace+"deleteCA",code)==1;
+	}
+	public boolean moveCA(CategoryDTO dto) {
+		return (int)sqlSession.update(namespace+"moveCA",dto)>0;
+	}
 }

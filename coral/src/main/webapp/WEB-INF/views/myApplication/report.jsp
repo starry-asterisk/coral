@@ -41,9 +41,17 @@ table.list_TYPE1 tr+tr {
 table.list_TYPE1 {
 	width:100%;
 }
+table.list_TYPE1 td:nth-child(7) button{
+	height: 24px;
+    width: 60px;
+    border: 1px solid #ddd;
+}
+table.list_TYPE1 td:nth-child(7) button:active{
+	background: #eee;
+}
 </style>
 <script>
-mkPageBtn(".report_row","/lecture",0${R_Currentpage},0${R_Endpage},0${R_amount});
+mkPageBtn(".report_row","/mypage?app=report",${R_Currentpage},${R_Endpage},${R_amount});
 function reportComplete(button, isPunish){
 	var form = mkForm("/myApp/report","POST");
 	form.addValue("object",button.parent().parent().find("td").eq(1).html());

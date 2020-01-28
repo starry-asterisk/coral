@@ -10,6 +10,8 @@
 	min-height:100%;
 	box-shadow: 0 0 30px 20px rgba(60,64,66,0.00);
 	border-right: 1px solid #ddd;
+	box-shadow: 0 -600px 600px -600px #ccc inset;
+    background: rgba(100,100,100,0.05);
 }
 
 .profile{
@@ -219,6 +221,7 @@ footer:hover{
 	outline: 1px solid skyblue; 
 }
 .profile_nav button{
+	background:white;
 	margin: 2% 0 2% 0;
 	width: 100px;
 	height: 24px;

@@ -5,9 +5,9 @@
 $(document).ready(function(){
 		$(".icon_search_btn.search").click(function(){
 			var keyword = $("input[name=key_word]").val();
-			boardList("board",50,1,$(".feed_sub_main div:nth-child(1)"),keyword);
-			boardList("lecture",50,1,$(".feed_sub_main div:nth-child(2)"),keyword);
-			boardList("userList",50,1,$(".feed_sub_main div:nth-child(3)"),keyword);
+			boardList("board",20,1,$(".feed_sub_main div:nth-child(1)"),keyword);
+			boardList("lecture",20,1,$(".feed_sub_main div:nth-child(2)"),keyword);
+			boardList("user",20,1,$(".feed_sub_main div:nth-child(3)"),keyword);
 		});
 		
 		$("#codeRun").click(function(){

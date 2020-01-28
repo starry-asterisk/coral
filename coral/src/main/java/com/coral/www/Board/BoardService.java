@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import com.coral.www.application.JFileWriter;
@@ -84,5 +85,32 @@ public class BoardService {
 			new JFileWriter().delFile("board\\"+dto.getNo()+".txt");
 			return null;
 		}
+	}
+
+	public boolean updateCA(CategoryDTO dto) {
+		return dao.updateCA(dto);
+	}
+
+	public boolean insertCA(CategoryDTO dto) {
+		return dao.insertCA(dto);
+	}
+	
+	@Transactional
+	public boolean deleteCA(String from, String to) {
+		CategoryDTO dto = new CategoryDTO();
+		dto.setCode(from);
+		dto.setName(to);
+		dao.moveCA(dto);
+		if(dao.deleteCA(dto.getCode())) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean moveCA(String from, String to) {
+		CategoryDTO dto = new CategoryDTO();
+		dto.setCode(from);
+		dto.setName(to);
+		return dao.moveCA(dto);
 	}
 }

@@ -201,7 +201,7 @@
   				WHERE CL_NO 
   				<choose>
   					<when test="cl_no != null">
-  					= #{cl_no} AND CL_COUNT = 0 AND CL_DELETED = 0
+  					= #{cl_no} AND 0 IN (SELECT CL_COUNT+CL_DELETED FROM CLASSLIST WHERE CL_NO = #{cl_no})
   					</when>
   					<otherwise>
   					IN (SELECT CL_NO FROM CLASSLIST WHERE CL_COUNT = 0 AND CL_DELETED = 0 AND CL_UID = #{id})

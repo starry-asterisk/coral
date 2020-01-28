@@ -14,4 +14,5 @@ public interface ReportService {
 	public ReportDTO insertReport(ReportDTO dto);
 	public boolean punishment(ReportDTO dto);
 	void addList(Model model, HttpServletRequest request, String keyword, String rscode);
+	boolean closeClass(ReportDTO dto);
 }

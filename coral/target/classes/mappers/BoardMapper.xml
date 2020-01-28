@@ -135,4 +135,17 @@
   	<update id="likeCntUpd" parameterType="com.coral.www.like.LikeDTO" >
   		UPDATE B SET B_RECOMMENDS = B_RECOMMENDS +(#{div}) WHERE B_NO = #{no}
   	</update>
+  	
+  	<update id="updateCA" parameterType="com.coral.www.like.LikeDTO" >
+  		UPDATE CA SET CA_NAME=#{name},CA_PERMISSION=#{permission} WHERE CA_CODE = #{code} AND CA_EDITABLE='O'
+  	</update>
+  	<insert id="insertCA" parameterType="com.coral.www.like.LikeDTO" >
+  		INSERT INTO CA(CA_NAME, CA_PERMISSION, CA_CODE) VALUES(#{name},#{permission},#{code})
+  	</insert>
+  	<delete id="deleteCA">
+  		DELETE FROM CA WHERE CA_CODE = #{code} AND CA_EDITABLE='O'
+  	</delete>
+  	<update id="moveCA" parameterType="com.coral.www.like.LikeDTO" >
+  		UPDATE B SET B_CATEGORY=#{name} WHERE B_CATEGORY=#{code}
+  	</update>
   </mapper>

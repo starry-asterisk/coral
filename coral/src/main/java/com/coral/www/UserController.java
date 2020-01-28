@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
 import com.coral.www.Board.BoardService;
+import com.coral.www.Board.CategoryDTO;
 import com.coral.www.Cookie.CookieService;
 import com.coral.www.File.FileDTO;
 import com.coral.www.File.FileService;
@@ -64,7 +65,7 @@ public class UserController {
 	@Inject
 	ReportService reportService;
 	
-	@RequestMapping("/userList")
+	@RequestMapping("/user")
 	public String board(Model model, HttpServletRequest request, @RequestParam(required=false) String keyword, @RequestParam(required=false) String isAjax) {
 		userService.addList(model, request, keyword);
 		if(isAjax!=null) {
@@ -235,7 +236,7 @@ public class UserController {
 	}
 
 	@RequestMapping("/mypage")
-	public String myPage(HttpSession session, Model model) {
+	public String myPage(HttpSession session, Model model, @RequestParam(required=false) String app) {
 		UserDTO dto = new UserDTO();
 		dto.setId((String) session.getAttribute("id"));
 		dto = userService.getInfo(dto);
@@ -247,6 +248,7 @@ public class UserController {
 			model.addAttribute("prof_image", profile.getPath());
 		}
 		model.addAttribute("userInfo", dto);
+		model.addAttribute("app", app);
 		return "myPage";
 	}
 	@RequestMapping("/myApp/schedule")
@@ -278,10 +280,35 @@ public class UserController {
 		model.addAttribute("Category", boardService.categorylist(null));
 		return "myApplication/active";
 	}
-	@RequestMapping("/myApp/apply")
-	public String apply(Model model,HttpServletRequest request,@RequestParam(required=false)String keyword) {
+	@RequestMapping("/category/insert")
+	public String insertCA(CategoryDTO dto) {
+		boardService.insertCA(dto);
+		return "redirect:/mypage?app=active";
+	}
+	@RequestMapping("/category/delete")
+	public String deleteCA(@RequestParam String from, @RequestParam String to) {
+		boardService.deleteCA(from,to);
+		return "redirect:/mypage?app=active";
+	}
+	@RequestMapping("/category/update")
+	public String updateCA(CategoryDTO dto) {
+		boardService.updateCA(dto);
+		return "redirect:/mypage?app=active";
+	}
+	@RequestMapping("/category/move")
+	public String moveCA(@RequestParam String from,@RequestParam String to) {
+		boardService.moveCA(from,to);
+		return "redirect:/mypage?app=active";
+	}
+	@RequestMapping(value = "/myApp/apply", method = RequestMethod.GET)
+	public String applyGET(Model model,HttpServletRequest request,@RequestParam(required=false)String keyword) {
 		reportService.addList(model, request, keyword,"F");
 		return "myApplication/apply";
+	}
+	@RequestMapping(value = "/myApp/apply", method = RequestMethod.POST)
+	public String applyPOST(ReportDTO dto) {
+		reportService.closeClass(dto);
+		return "redirect:/mypage?app=apply";
 	}
 	@RequestMapping(value = "/myApp/report", method = RequestMethod.GET)
 	public String reportGET(Model model,HttpServletRequest request,@RequestParam(required=false)String keyword) {
@@ -291,7 +318,7 @@ public class UserController {
 	@RequestMapping(value = "/myApp/report", method = RequestMethod.POST)
 	public String reportPOST(ReportDTO dto) {
 		reportService.punishment(dto);
-		return "redirect:/mypage";
+		return "redirect:/mypage?app=report";
 	}
 	@RequestMapping(value="/newInfo",method = { RequestMethod.POST })
 	public String newInfo(UserDTO dto, HttpServletRequest request,@RequestParam(required=false) String newPw) throws Exception {
@@ -414,8 +441,12 @@ public class UserController {
 	        } else {
 	            System.out.println("No connections found.");
 	        }
-		}catch(Exception e) {}
-		return "redirect:/";
+			if (dto.getMsg() != null) {
+				return "redirect:/" + "?Code=alert('" + URLEncoder.encode(dto.getMsg(), "UTF-8") + "')";
+			}
+			return "redirect:/";
+		}catch(Exception e) {return "redirect:/";}
+		
 	}
 
 }

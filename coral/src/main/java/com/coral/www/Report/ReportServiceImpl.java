@@ -63,7 +63,7 @@ public class ReportServiceImpl implements ReportService {
 		}
 		dto.setRscode(rscode);
 		dto.setPage(request.getParameter("page")==null?1:Integer.parseInt(request.getParameter("page")));
-		dto.setAmount(request.getParameter("amount")==null?50:Integer.parseInt(request.getParameter("amount")));
+		dto.setAmount(request.getParameter("amount")==null?20:Integer.parseInt(request.getParameter("amount")));
 		model.addAttribute("R_amount", dto.getAmount());
 		model.addAttribute("R_Endpage", (int) Math.ceil((double)dao.total(dto)/(double)dto.getAmount()));
 		model.addAttribute("R_Currentpage", dto.getPage());
@@ -106,6 +106,22 @@ public class ReportServiceImpl implements ReportService {
 					}
 				}
 				dao.insertPunish(dto);
+			}
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
+	@Transactional
+	@Override
+	public boolean closeClass(ReportDTO dto) {
+		if(dao.updateReport(dto)) {
+			if(dto.getStatus().equals("P")) {
+				LectureDTO ldto = new LectureDTO();
+				ldao.deleteLE(dto.getObject());
+				ldto.setCl_no(dto.getObject());
+				ldao.deleteCL(ldto);
 			}
 			return true;
 		}else {
