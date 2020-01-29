@@ -70,6 +70,7 @@
         	<beans:ref bean="TeacherInterceptor"/>
     	</interceptor>
     	<interceptor>
+    		<mapping path="/category/*"/>
         	<mapping path="/myApp/active"/>
         	<mapping path="/myApp/apply"/>
         	<mapping path="/myApp/report"/>  

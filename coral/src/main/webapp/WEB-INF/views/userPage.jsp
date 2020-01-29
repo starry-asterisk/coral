@@ -175,7 +175,7 @@ $(window).scroll(function(){
 $('[data-toggle="tooltip"]').tooltip();
 var container = document.getElementById('map');
 var options = {
-	center: new kakao.maps.LatLng(33.450701, 126.570667),
+	center: new kakao.maps.LatLng(37.438899, 126.675114),
 	level: 3
 };
 

@@ -628,10 +628,10 @@ button.report:hover {
     text-shadow: 0 0 5px rgba(0,0,0,0.5);
     font-size:1.05em;
     transition:color 1s;
-    color: #333;
+    color: white;
 }
 #clockKR td.on{
-    color: white;
+    color: #333;
 }
 
 .subbtn{

@@ -4,11 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <div class="schedule" style="text-align:left">
-	<a class="calendar" width="400" data-header=true schedule="${ pre_schedule}2020/0/2/2020/0/15/#1f32e8/GUTE/내용입니당 ㅎㅎ;"></a>
+	<a class="calendar" width="400" data-header=true schedule="${ pre_schedule}"></a>
 	<div class="C_invert">
 		<table>
 			<tr>
-				<td><button>리셋</button> / <button>저장</button></td>
+				<td><button name='reset' onclick="location.href='/mypage?app=schedule'">리셋</button> / <button name='save'>저장</button></td>
 			</tr>
 			<tr>
 			<td></td>
@@ -75,6 +75,9 @@
     line-height: 44px;
     text-align:left;
 }
+.C_invert tr:nth-child(2) td div>input{
+	margin-left: 10px;
+}
 .C_invert tr:nth-child(2) td div>span{
 	margin: 0 15px 0 15px;
 }
@@ -98,4 +101,19 @@
 </style>
 <script>
 var calendar = BuildCalendar(".calendar");
+$("button[name=save]").on("click",function(){
+	rows = $(".C_invert tr:nth-child(2) td div");
+	var newSC = "";
+	var updateSC = "";
+	for(i=0;i<rows.length;i++){
+		if(rows.eq(i).data("new")==true){
+			newSC+=rows.eq(i).attr("schedule");
+		}else if(rows.eq(i).data("update")==true){
+			updateSC+=rows.eq(i).attr("schedule");
+		}
+	}
+	console.log("new : "+newSC);
+	console.log("update : "+updateSC);
+	console.log("delete : "+deletedSC);
+});
 </script>

@@ -74,6 +74,7 @@
 				<img style="display:none" src="https://www.i-boss.co.kr/design/upload_file/__HTMLEDITOR__/dmaRzEoOQc/17ce9f5ce6fb8320c0501512da85749a_15789601923371.png" alt="광고2">
 			</div>
 			<div id="side3">
+				唱現
 			</div>
 		</div>
 	</div>

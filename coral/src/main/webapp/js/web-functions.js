@@ -444,7 +444,10 @@ if($(".calendar")!=undefined){
 	var calendar = BuildCalendar(".calendar");
 }
 
+var deletedSC = "";
+
 function BuildCalendar(JqueryName, date){
+	
 	//달력이 생길 위치의 기준이 되는 객체
 	var place = $(JqueryName).last();
 	
@@ -670,18 +673,25 @@ function BuildCalendar(JqueryName, date){
 					row.append(start_day.getFullYear()+"-"+(start_day.getMonth()+1)+"-"+start_day.getDate());
 					row.append("<span>/</span>");
 					row.append(end_day.getFullYear()+"-"+(end_day.getMonth()+1)+"-"+end_day.getDate());
-					row.append("<input type='text' name='name'>");
+					row.append("<input type='text' name='name' placeholder='일정명'>");
 					row.find("input[name=name]").on("keydown",function(key){
 						if(key.keyCode == 13){
 							var cont = prompt("새로운 일정내용을 입력해 주세요");
 							if(cont){
-								if(row.find("input[name=contents]").val()){
-									if(row.data("new")!=true){
+								var sc = $(this).parent().attr("schedule");
+								var newSC = sc.split("/");
+								newSC = newSC[0]+"/"+newSC[1]+"/"+newSC[2]+"/"+newSC[3]+"/"+newSC[4]+"/"+newSC[5]+"/"+newSC[6]+"/"+$(this).val()+"/"+cont;
+								console.log(sc);
+								console.log(newSC);
+								if(row.find("input[name=contents]").val()!=undefined&&row.find("input[name=contents]").val()!=""){
+									if(true!=row.data("new")){
 										row.attr("data-update",true);
 									}
 								}else{
 									row.attr("data-new",true);
 								}
+								$(".calendar").attr("schedule",$(".calendar").attr("schedule").replace(sc,newSC));
+								row.attr("schedule",newSC);
 								row.find("input[name=contents]").val(cont);
 								$(this).attr("title",cont);
 							}else{
@@ -690,19 +700,23 @@ function BuildCalendar(JqueryName, date){
 						}
 					});
 					row.append("<input type='hidden' name='contents'>");
-					row.attr("data-schedule",start_day.getFullYear()+"/"+start_day.getMonth()+"/"+start_day.getDate()+"/"+end_day.getFullYear()+"/"+end_day.getMonth()+"/"+end_day.getDate()+"/"+color);
 					if(title!=undefined){
-						row.attr("data-schedule",row.attr("data-schedule")+"/"+title+"/"+additional);
+						row.attr("schedule",row.attr("schedule")+"/"+title+"/"+additional);
 						row.find("input[name=name]").val(title);
 						row.find("input[name=name]").attr("title",additional);
 						row.find("input[name=contents]").val(additional);
+						row.attr("schedule",start_day.getFullYear()+"/"+start_day.getMonth()+"/"+start_day.getDate()+"/"+end_day.getFullYear()+"/"+end_day.getMonth()+"/"+end_day.getDate()+"/"+color+"/"+title+"/"+additional);
+					}else{
+						row.attr("schedule",start_day.getFullYear()+"/"+start_day.getMonth()+"/"+start_day.getDate()+"/"+end_day.getFullYear()+"/"+end_day.getMonth()+"/"+end_day.getDate()+"/"+color);
 					}
-					row.attr("data-schedule",row.attr("data-schedule")+";");
 					row.append("<span style='float:right'>"+(sum+1)+"일</span>");
 					row.append("<span style='float:right'>"+color+"</span>");
 					row.children("button").on("click",function(){
-						console.log($(this).parent().data("schedule"));
-						$(".calendar").attr("schedule",$(".calendar").attr("schedule").replace($(this).parent().data("schedule"),""));
+						console.log($(this).parent().attr("schedule"));
+						if($(this).parent().data("new")!=true&&row.find("input[name=contents]").val()){
+							deletedSC += $(this).parent().attr("schedule")+";";
+						}
+						$(".calendar").attr("schedule",$(".calendar").attr("schedule").replace($(this).parent().attr("schedule")+";",""));
 						calendar.move(origin.Year,origin.Month);
 					});
 					contents.find("tr:nth-child(2) td").append(row);
@@ -753,6 +767,7 @@ function BuildCalendar(JqueryName, date){
 			addSchedule(date);
 		},
 		ScheduleList: ScheduleList,
+		deletedList:deletedSC,
 		month: origin.Month,
 		year: origin.Year
 	}

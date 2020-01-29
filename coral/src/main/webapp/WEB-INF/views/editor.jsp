@@ -58,7 +58,7 @@
   		<select>
     		<option value="">카테고리 선택:</option>
     		<c:forEach var= "list" items="${Category}">
-				<option value="${list.code}">${list.name}</option>
+				<option value="${list.code}" ${board.tag.equals("false")?"":(board.category.equals(list.code)?"selected":"")}>${list.name}</option>
 			</c:forEach>
   		</select>
 		</div>
