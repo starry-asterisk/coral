@@ -105,15 +105,20 @@ $("button[name=save]").on("click",function(){
 	rows = $(".C_invert tr:nth-child(2) td div");
 	var newSC = "";
 	var updateSC = "";
+	var form = mkForm("/myApp/schedule","POST");
 	for(i=0;i<rows.length;i++){
 		if(rows.eq(i).data("new")==true){
-			newSC+=rows.eq(i).attr("schedule");
+			newSC+=rows.eq(i).attr("schedule")+";";
 		}else if(rows.eq(i).data("update")==true){
-			updateSC+=rows.eq(i).attr("schedule");
+			updateSC+=rows.eq(i).attr("schedule")+";";
 		}
 	}
 	console.log("new : "+newSC);
 	console.log("update : "+updateSC);
 	console.log("delete : "+deletedSC);
+	form.addValue("insert",newSC);
+	form.addValue("update",updateSC);
+	form.addValue("delete",deletedSC);
+	form.submit();
 });
 </script>

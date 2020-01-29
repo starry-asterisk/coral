@@ -62,4 +62,22 @@ public class UserDAO {
 		int result = sqlSession.update(namespace+"updateStatus", dto);
 		return result==1?true:false;
 	}
+	public boolean scheduleInsert(ScheduleDTO dto) {
+		int result = sqlSession.insert(namespace+"scheduleInsert", dto);
+		return result>0;
+	}
+	public boolean scheduleUpdate(ScheduleDTO dto) {
+		int result = sqlSession.update(namespace+"scheduleUpdate", dto);
+		return result>0;
+	}
+	public boolean scheduleDelete(ScheduleDTO dto) {
+		int result = sqlSession.delete(namespace+"scheduleDelete", dto);
+		return result>0;
+	}
+	public ScheduleDTO scheduleSelect(String id) {
+		return sqlSession.selectOne(namespace+"scheduleSelect", id);
+	}
+	public List<ScheduleDTO> scheduleSelectList(String id) {
+		return sqlSession.selectList(namespace+"scheduleSelectList", id);
+	}
 }

@@ -19,11 +19,16 @@ public interface UserService {
 	public boolean addUser(UserDTO dto);
 	public boolean isMail(UserDTO dto);
 	public void mail(UserDTO dto) throws Exception;
-	boolean mailVerify(UserDTO dto) throws Exception;
+	public boolean mailVerify(UserDTO dto) throws Exception;
 	public boolean checkGrade(String id, String grade);
 	public Date lastLogin(String id);
 	public List<UserDTO> historyList(String id);
-	boolean isLogin(UserDTO dto);
+	public boolean isLogin(UserDTO dto);
 	public boolean update(UserDTO dto);
 	public boolean updateStatus(UserDTO dto);
+	public boolean scheduleInsertList(String insert, String id);
+	public boolean scheduleUpdateList(String update, String id);
+	public boolean scheduleDeleteList(String delete, String id);
+	public ScheduleDTO scheduleSelect(String id);
+	public List<ScheduleDTO> scheduleSelectList(String id);
 }

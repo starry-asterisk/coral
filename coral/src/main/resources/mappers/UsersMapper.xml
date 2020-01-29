@@ -128,6 +128,22 @@
   		update USERS SET U_MAIL = #{mail}  WHERE U_MAIL = '{verify-'||#{msg}||'}'||#{mail} and U_ID = #{id}
   	</update>
   	
+  	<insert id="scheduleInsert" parameterType="com.coral.www.User.ScheduleDTO">
+  		INSERT INTO SC (SC_UID, SC_NAME, SC_CONTENTS, SC_NO, SC_START, SC_END, SC_COLOR) VALUES(#{id},#{name},#{contents},S_SEQ.NEXTVAL,#{start},#{end},#{color})
+  	</insert>
+  	<update id="scheduleUpdate" parameterType="com.coral.www.User.ScheduleDTO">
+  		UPDATE SC SET SC_NAME = #{name}, SC_CONTENTS = #{contents} WHERE SC_UID = #{id} AND SC_START = #{start} AND SC_END = #{end} AND SC_COLOR = #{color}
+  	</update>
+  	<delete id="scheduleDelete" parameterType="com.coral.www.User.ScheduleDTO">
+  		DELETE FROM SC WHERE SC_UID = #{id} AND SC_START = #{start} AND SC_END = #{end} AND SC_COLOR = #{color}
+  	</delete>
+  	<select id="scheduleSelect" resultType="com.coral.www.User.ScheduleDTO">
+  		select * from (select SC_UID AS "id", SC_NAME AS "name", SC_CONTENTS AS "contents", SC_NO AS "no", SC_START AS "start", SC_END AS "end", SC_COLOR AS "color" from sc where SC_UID = #{id} order by SC_START,SC_END) where rownum=1
+  	</select>
+  	<select id="scheduleSelectList" resultType="com.coral.www.User.ScheduleDTO">
+  		select SC_UID AS "id", SC_NAME AS "name", SC_CONTENTS AS "contents", SC_NO AS "no", SC_START AS "start", SC_END AS "end", SC_COLOR AS "color" from sc where SC_UID = #{id} order by SC_START,SC_END
+  	</select>
+  	
   </mapper>
   
   

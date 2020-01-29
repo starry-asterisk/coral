@@ -34,7 +34,7 @@
 		${board.title }
 		</div>
 		<textarea name="content" id="editor">
-		<p>추천수 : ${board.recommends } 조회수 : ${board.views } 작성일 : <fmt:formatDate pattern = "MM-dd HH:mm" value = "${board.regdate }" /></p>
+		<p>추천수 : ${board.recommends } / 조회수 : ${board.views } / 작성일 : <fmt:formatDate pattern = "MM-dd HH:mm" value = "${board.regdate }" />${board.tag.equals("false")?"":" / 카테고리 : "}${board.tag.equals("false")?"":board.category}</p>
 			${board.contents }
 		</textarea>
 	</div>

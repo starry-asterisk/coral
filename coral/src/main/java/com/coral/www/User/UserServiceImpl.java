@@ -3,6 +3,7 @@ package com.coral.www.User;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -243,5 +244,95 @@ public class UserServiceImpl implements UserService {
 			rdao.deleteAll(dto.getId());
 		}
 		return dao.updateStatus(dto);
+	}
+	
+	@Override
+	public boolean scheduleInsertList(String line, String id) {
+		boolean result = true;;
+		if(line!=null&&!line.equals("")) {
+			String[] lines = line.split(";");
+			System.out.println(line+": ins");
+			for(String one:lines) {
+				if(one.length()>1) {
+					ScheduleDTO dto = new ScheduleDTO();
+					Calendar cal = Calendar.getInstance();
+					String[] unit = one.split("/");
+					cal.set(Integer.parseInt(unit[0]), Integer.parseInt(unit[1]), Integer.parseInt(unit[2]), 0, 0, 0);
+					cal.setTimeInMillis(cal.getTimeInMillis()/1000*1000);
+					dto.setStart(new Date(cal.getTimeInMillis()));
+					cal.set(Integer.parseInt(unit[3]), Integer.parseInt(unit[4]), Integer.parseInt(unit[5]), 0, 0, 0);
+					cal.setTimeInMillis(cal.getTimeInMillis()/1000*1000);
+					dto.setEnd(new Date(cal.getTimeInMillis()));
+					dto.setColor(unit[6]);
+					dto.setName(unit[7]);
+					dto.setContents(unit[8]);
+					dto.setId(id);
+					result = result&&dao.scheduleInsert(dto);
+				}
+			}
+		}
+		return result;
+	}
+	@Override
+	public boolean scheduleUpdateList(String line, String id) {
+		boolean result = true;;
+		if(line!=null&&!line.equals("")) {
+			String[] lines = line.split(";");
+			System.out.println(line+": upd");
+			for(String one:lines) {
+				if(one.length()>1) {
+					ScheduleDTO dto = new ScheduleDTO();
+					Calendar cal = Calendar.getInstance();
+					String[] unit = one.split("/");
+					cal.set(Integer.parseInt(unit[0]), Integer.parseInt(unit[1]), Integer.parseInt(unit[2]), 0, 0, 0);
+					cal.setTimeInMillis(cal.getTimeInMillis()/1000*1000);
+					dto.setStart(new Date(cal.getTimeInMillis()));
+					cal.set(Integer.parseInt(unit[3]), Integer.parseInt(unit[4]), Integer.parseInt(unit[5]), 0, 0, 0);
+					cal.setTimeInMillis(cal.getTimeInMillis()/1000*1000);
+					dto.setEnd(new Date(cal.getTimeInMillis()));
+					dto.setColor(unit[6]);
+					dto.setName(unit[7]);
+					dto.setContents(unit[8]);
+					dto.setId(id);
+					result = result&&dao.scheduleUpdate(dto);
+				}
+			}
+		}
+		return result;
+	}
+	@Override
+	public boolean scheduleDeleteList(String line, String id) {
+		boolean result = true;;
+		if(line!=null&&!line.equals("")) {
+			String[] lines = line.split(";");
+			System.out.println(line+": del");
+			for(String one:lines) {
+				if(one.length()>1) {
+					ScheduleDTO dto = new ScheduleDTO();
+					Calendar cal = Calendar.getInstance();
+					String[] unit = one.split("/");
+					cal.set(Integer.parseInt(unit[0]), Integer.parseInt(unit[1]), Integer.parseInt(unit[2]), 0, 0, 0);
+					cal.setTimeInMillis(cal.getTimeInMillis()/1000*1000);
+					dto.setStart(new Date(cal.getTimeInMillis()));
+					cal.set(Integer.parseInt(unit[3]), Integer.parseInt(unit[4]), Integer.parseInt(unit[5]), 0, 0, 0);
+					cal.setTimeInMillis(cal.getTimeInMillis()/1000*1000);
+					dto.setEnd(new Date(cal.getTimeInMillis()));
+					dto.setColor(unit[6]);
+					dto.setName(unit[7]);
+					dto.setContents(unit[8]);
+					dto.setId(id);
+					result = result&&dao.scheduleDelete(dto);
+				}
+			}
+		}
+		return result;
+	}
+	@Override
+	public ScheduleDTO scheduleSelect(String id) {
+		return dao.scheduleSelect(id);
+	}
+	@Override
+	public List<ScheduleDTO> scheduleSelectList(String id) {
+		return dao.scheduleSelectList(id);
 	}
 }

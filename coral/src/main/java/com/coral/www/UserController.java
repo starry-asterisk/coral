@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -35,6 +36,7 @@ import com.coral.www.File.FileService;
 import com.coral.www.Lecture.LectureService;
 import com.coral.www.Report.ReportDTO;
 import com.coral.www.Report.ReportService;
+import com.coral.www.User.ScheduleDTO;
 import com.coral.www.User.UserDTO;
 import com.coral.www.User.UserService;
 import com.coral.www.application.Sha;
@@ -251,9 +253,21 @@ public class UserController {
 		model.addAttribute("app", app);
 		return "myPage";
 	}
-	@RequestMapping("/myApp/schedule")
-	public String schedule() {
+	@RequestMapping(value = "/myApp/schedule", method = RequestMethod.GET)
+	public String scheduleGET(Model model, HttpSession session) {
+		String schedule = "";
+		for(ScheduleDTO dto:userService.scheduleSelectList((String) session.getAttribute("id"))) {
+			schedule += dto.toString()+";";
+		} 
+		model.addAttribute("pre_schedule", schedule);
 		return "myApplication/schedule";
+	}
+	@RequestMapping(value = "/myApp/schedule", method = RequestMethod.POST)
+	public String schedulePOST(@RequestParam String insert, @RequestParam String update, @RequestParam String delete, HttpSession session) {
+		userService.scheduleInsertList(insert, (String) session.getAttribute("id"));
+		userService.scheduleUpdateList(update, (String) session.getAttribute("id"));
+		userService.scheduleDeleteList(delete, (String) session.getAttribute("id"));
+		return "redirect:/mypage?app=schedule";
 	}
 	@RequestMapping("/myApp/private")
 	public String map(Model model,  HttpSession session) {
@@ -411,10 +425,9 @@ public class UserController {
 	                    List<Birthday> birthday = person.getBirthdays();
 	                    Date birth = new Date();
 	                    if (birthday != null && birthday.size() > 0) {
-	                    	birth.setYear(birthday.get(0).getDate().getYear()-1900);
-	                    	birth.setMonth(birthday.get(0).getDate().getMonth()-1);
-	                    	birth.setDate(birthday.get(0).getDate().getDay());
-	                    	
+	                    	Calendar cal = Calendar.getInstance();
+	                    	cal.set(birthday.get(0).getDate().getYear(),birthday.get(0).getDate().getMonth(),birthday.get(0).getDate().getDay());
+	                    	birth = new Date(cal.getTimeInMillis());
 	                    }
 	                    dto.setBirth(birth);
 	                    dto.setPhone("000-0000-0000");

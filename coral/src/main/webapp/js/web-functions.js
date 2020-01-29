@@ -496,6 +496,10 @@ function BuildCalendar(JqueryName, date){
 	date.setDate(0);
 	var lastDay=date.getDate();
 	
+	date.setYear(origin.Year-1900);
+	date.setMonth(origin.Month);
+	date.setDate(origin.Date);
+	
 	//해당 월 달력 시작일
 	date.setDate(1);
 	date.setDate(1-(date.getDay()==0?7:date.getDay()));

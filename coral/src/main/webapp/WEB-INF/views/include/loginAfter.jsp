@@ -44,6 +44,13 @@
 		<td onclick="location.href='/lecture'">강좌글</td>
 	</tr>
 </table>
+<fmt:formatDate pattern = "yyyy-MM-dd HH:mm" value = "${schedule.start}" />
+<br>
+<fmt:formatDate pattern = "yyyy-MM-dd HH:mm" value = "${schedule.end}" />
+<br>
+${schedule.name}<br>
+${schedule.contents}<br>
+${schedule.color}<br>
 <style>
 .login * {
 	color: white;

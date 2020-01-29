@@ -35,6 +35,7 @@ public class HomeController {
 			for (FileDTO profile : fileService.getAttachment(dto.getId())) {
 				model.addAttribute("prof_image", profile.getPath());
 			}
+			model.addAttribute("schedule", userService.scheduleSelect((String)request.getSession().getAttribute("id")));
 			model.addAttribute("userInfo", dto);
 		}else {
 			request.setAttribute("loginform", "include/loginForm");
