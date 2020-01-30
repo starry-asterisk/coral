@@ -38,20 +38,58 @@
 		</td>
 	</tr>
 </table>
-<table style="width:100%">
+<table style="width:100%" class="div">
 	<tr>
-		<td onclick="location.href='/board'">게시글</td>
-		<td onclick="location.href='/lecture'">강좌글</td>
+		<td><div onclick="location.href='/board'">게시글</div></td>
+		<td><div onclick="location.href='/lecture'">강좌글</div></td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<div style="border-left: 5px solid ${schedule.color}">
+				<span class="s1"><fmt:formatDate pattern = "yyyy-MM-dd" value = "${schedule.start}" /> ~ <fmt:formatDate pattern = "yyyy-MM-dd" value = "${schedule.end}" /></span><button type='button' title='더보기' onclick="location.href='/mypage?app=schedule'"><i class='fas fa-ellipsis-h'></i></button><br>
+				<span class="s2">${empty schedule.name?"일정이 없습니다":schedule.name}</span><br>
+				<span class="s3">${schedule.contents}</span><br>
+			</div>
+		</td>
 	</tr>
 </table>
-<fmt:formatDate pattern = "yyyy-MM-dd HH:mm" value = "${schedule.start}" />
-<br>
-<fmt:formatDate pattern = "yyyy-MM-dd HH:mm" value = "${schedule.end}" />
-<br>
-${schedule.name}<br>
-${schedule.contents}<br>
-${schedule.color}<br>
 <style>
+.div tr:last-child td{
+	padding:10px;
+}
+.div tr:last-child td div{
+	background:white;
+	text-align:left;
+	padding:10px;
+}
+.div tr:last-child td div>button{
+	float:right;
+	font-size:1em;
+}
+.div tr:last-child td div>button *{
+	color:#aaa;
+}
+.div tr:last-child td div span.s1{
+	color: #bbb;
+    font-size: .9em;
+}
+.div tr:last-child td div span.s2{
+	color:grey;
+	font-size: 1.3em;
+}
+.div tr:last-child td div span.s3{
+	color:#aaa;
+	font-size: 1em;
+	margin-bottom:5px;
+}
+.div tr:first-child td>div{
+	cursor:pointer;
+	margin:0 5% 0 5%;
+	line-height:35px;
+}
+.div tr:first-child td>div:hover{
+	background:rgba(255,255,255,0.2)
+}
 .login * {
 	color: white;
 }

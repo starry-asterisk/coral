@@ -30,7 +30,7 @@
 
 <div class="base_">
 <c:if test="${empty cl_no}">
-	<div class="Search"><input type="text" name="key_word" placeholder="검색 키워드를 입력하세요!" spellcheck="false"><button  class="icon_search_btn" title="검색" onclick="location.href=('/${empty BoardList?"lecture":"board"}?keyword='+$('input[name=key_word]').val())"></button></div>
+	<div class="Search"><input type="text" name="key_word" placeholder="검색 키워드를 입력하세요!" spellcheck="false"><button  class="icon_search_btn" title="검색" onclick="location.href=('/${empty BoardList?(empty ClassList?"user":"lecture"):"board"}?keyword='+$('input[name=key_word]').val())"></button></div>
 </c:if>
 	<div class="board">
 	<jsp:include page="${Board_type}.jsp" ></jsp:include>
