@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.coral.www.mappers.LectureMapper">
-  	<!--  -->
+  	<!-- 총 강좌 수 -->
   	<select id="totalCL" resultType="int" parameterType="com.coral.www.Lecture.LectureDTO">
   		select count(*) from CLASSLIST where CL_COUNT > 0 OR CL_DELETED = 0
   			<if test="cl_no!=null">
@@ -17,7 +17,32 @@
 			</if>
   	</select>
   	
-  	<!--  -->
+  	<!-- 총 강의 수  -->
+  	<select id="total" resultType="int" >
+  		select count(*) from LE where LE_STATUS = 'P' AND LE_CLNO = #{cl_no}
+  	</select>
+  	
+  	<!-- 강좌 존재여부 -->
+  	<select id="CLExit" resultType="int" parameterType="com.coral.www.Lecture.LectureDTO" >
+  		SELECT count(*) FROM CL WHERE CL_UID=#{id} AND CL_NO=#{cl_no}
+  	</select>
+  	
+  	<!-- 강의 존재여부 -->
+  	<select id="LExit" resultType="int" parameterType="com.coral.www.Lecture.LectureDTO" >
+  		SELECT count(*) FROM CL LEFT OUTER JOIN LE ON CL_NO = LE_CLNO WHERE CL_UID = #{id} AND LE_NO = #{no} AND CL_NO = #{cl_no}
+  	</select>
+  	
+  	<!-- 새 강좌 번호 -->
+  	<select id="newCLno" resultType="java.lang.String">
+  		select 'C'||LPAD(C_SEQ.NEXTVAL,8,0) from dual
+  	</select>
+  	
+  	<!-- 새 강의 번호 -->
+  	<select id="newLEno" resultType="java.lang.String">
+  		select 'L'||LPAD(L_SEQ.NEXTVAL,8,0) from dual
+  	</select>
+  	
+  	<!-- 강좌 목록 -->
   	<select id="listPageCL" parameterType="com.coral.www.Lecture.LectureDTO" resultType="com.coral.www.Lecture.LectureDTO" >
   		SELECT 
   			CL_NO as "cl_no", 
@@ -50,79 +75,7 @@
 		]]>
   	</select>
   	
-  	<!--  -->
-  	<select id="newCLno" resultType="java.lang.String">
-  		select 'C'||LPAD(C_SEQ.NEXTVAL,8,0) from dual
-  	</select>
-  	
-  	<!--  -->
-  	<insert id="create" parameterType="com.coral.www.Lecture.LectureDTO">
-  		INSERT INTO 
-  				CL(
-  					CL_NO,
-  					CL_TAG,
-  					CL_TITLE,
-  					CL_DESCRIPTION,
-  					CL_UID
-  				) 
-  				VALUES(
-  					#{cl_no},
-  					#{cl_tag},
-  					#{cl_title},
-  					#{cl_description},
-  					#{id}
-  				)
-  	</insert>
-  	
-  	<!--  -->
-  	<select id="description" resultType="com.coral.www.Lecture.LectureDTO">
-  				SELECT
-  					CL_NO AS "cl_no",
-  					CL_TAG AS "cl_tag",
-  					CL_TITLE AS "cl_title",
-  					CL_DESCRIPTION AS "cl_description",
-  					CL_UID AS "id"
-  				FROM CLASSLIST
-  				WHERE (CL_COUNT > 0 OR CL_DELETED = 0) AND CL_NO = #{cl_no}
-  	</select>
-  	
-  	<!--  -->
-  	<update id="updateCL" parameterType="com.coral.www.Lecture.LectureDTO">
-  		UPDATE CL SET 
-  			CL_TAG = #{cl_tag},
-  			CL_TITLE = #{cl_title},
-  			CL_DESCRIPTION = #{cl_description}
-  		WHERE 
-  			CL_UID = #{id} AND
-  			CL_NO = #{cl_no}
-  	</update>
-  	
-  	<!--  -->
-  	<select id="CLExit" resultType="int" parameterType="com.coral.www.Lecture.LectureDTO" >
-  		SELECT count(*) FROM CL WHERE CL_UID=#{id} AND CL_NO=#{cl_no}
-  	</select>
-  	
-  	<!--  -->
-  	<select id="LExit" resultType="int" parameterType="com.coral.www.Lecture.LectureDTO" >
-  		SELECT count(*) FROM CL LEFT OUTER JOIN LE ON CL_NO = LE_CLNO WHERE CL_UID = #{id} AND LE_NO = #{no} AND CL_NO = #{cl_no}
-  	</select>
-  	
-  	<!--  -->
-  	<select id="viewCntUpd">
-  		UPDATE LE SET LE_VIEWS = LE_VIEWS + 1 WHERE LE_NO = #{no} 
-  	</select>
-  	
-  	<!--  -->
-  	<update id="likeCntUpd" parameterType="com.coral.www.like.LikeDTO" >
-  		UPDATE LE SET LE_RECOMMENDS = LE_RECOMMENDS +(#{div}) WHERE LE_NO = #{no}
-  	</update>
-  	
-  	<!--  -->
-  	<select id="total" resultType="int" >
-  		select count(*) from LE where LE_STATUS = 'P' AND LE_CLNO = #{cl_no}
-  	</select>
-  	
-  	<!--  -->
+  	<!-- 강의 목록 -->
   	<select id="listPage" parameterType="com.coral.www.Lecture.LectureDTO" resultType="com.coral.www.Lecture.LectureDTO" >
   		SELECT 
   			LE_CLNO as "cl_no",
@@ -145,7 +98,19 @@
 		]]>
   	</select>
   	
-  	<!--  -->
+  	<!-- 강좌 상세 -->
+  	<select id="description" resultType="com.coral.www.Lecture.LectureDTO">
+  				SELECT
+  					CL_NO AS "cl_no",
+  					CL_TAG AS "cl_tag",
+  					CL_TITLE AS "cl_title",
+  					CL_DESCRIPTION AS "cl_description",
+  					CL_UID AS "id"
+  				FROM CLASSLIST
+  				WHERE (CL_COUNT > 0 OR CL_DELETED = 0) AND CL_NO = #{cl_no}
+  	</select>
+  	
+  	<!-- 강의 상세 -->
   	<select id="detail" parameterType="com.coral.www.Lecture.LectureDTO" resultType="com.coral.www.Lecture.LectureDTO" >
   		SELECT 
   			LE_CLNO as "cl_no",
@@ -163,12 +128,26 @@
 		WHERE LE_NO=#{no} AND LE_STATUS='P'
   	</select>
   	
-  	<!--  -->
-  	<select id="newLEno" resultType="java.lang.String">
-  		select 'L'||LPAD(L_SEQ.NEXTVAL,8,0) from dual
-  	</select>
+  	<!-- 강좌 생성 -->
+  	<insert id="create" parameterType="com.coral.www.Lecture.LectureDTO">
+  		INSERT INTO 
+  				CL(
+  					CL_NO,
+  					CL_TAG,
+  					CL_TITLE,
+  					CL_DESCRIPTION,
+  					CL_UID
+  				) 
+  				VALUES(
+  					#{cl_no},
+  					#{cl_tag},
+  					#{cl_title},
+  					#{cl_description},
+  					#{id}
+  				)
+  	</insert>
   	
-  	<!--  -->
+  	<!-- 강의 업로드 -->
   	<insert id="write" parameterType="com.coral.www.Lecture.LectureDTO">
   		INSERT INTO 
   				LE(
@@ -189,7 +168,18 @@
   				)
   	</insert>
   	
-  	<!--  -->
+  	<!-- 강좌 수정 -->
+  	<update id="updateCL" parameterType="com.coral.www.Lecture.LectureDTO">
+  		UPDATE CL SET 
+  			CL_TAG = #{cl_tag},
+  			CL_TITLE = #{cl_title},
+  			CL_DESCRIPTION = #{cl_description}
+  		WHERE 
+  			CL_UID = #{id} AND
+  			CL_NO = #{cl_no}
+  	</update>
+  	
+  	<!-- 강의 수정 -->
   	<update id="update" parameterType="com.coral.www.Lecture.LectureDTO">
   		UPDATE LE SET 
   			LE_UPDDATE = SYSDATE
@@ -212,26 +202,17 @@
   			LE_STATUS != 'N'
   	</update>
   	
-  	<!--  -->
-  	<update id="deleteAll">
-  		UPDATE LE SET 
-  			LE_STATUS = 'N'
-  		WHERE 
-  			LE_STATUS != 'N' AND
-  			LE_CLNO IN (SELECT CL_NO FROM CL 
-  			WHERE CL_UID=#{id})
+  	<!-- 강의 조회수 -->
+  	<select id="viewCntUpd">
+  		UPDATE LE SET LE_VIEWS = LE_VIEWS + 1 WHERE LE_NO = #{no} 
+  	</select>
+  	
+  	<!-- 강의 좋아요수 -->
+  	<update id="likeCntUpd" parameterType="com.coral.www.like.LikeDTO" >
+  		UPDATE LE SET LE_RECOMMENDS = LE_RECOMMENDS +(#{div}) WHERE LE_NO = #{no}
   	</update>
   	
-  	<!--  -->
-  	<update id="deleteLE">
-  		UPDATE LE SET 
-  			LE_STATUS = 'N'
-  		WHERE 
-  			LE_STATUS != 'N' AND
-  			LE_CLNO = #{cl_no}
-  	</update>
-  	
-  	<!--  -->
+  	<!-- 강좌 삭제 -->
   	<delete id="deleteCL" parameterType="com.coral.www.Lecture.LectureDTO">
   				delete
   				FROM CL
@@ -245,4 +226,23 @@
   					</otherwise>
   				</choose>
   	</delete>
+  	
+  	<!-- 강의 전체 삭제 -->
+  	<update id="deleteAll">
+  		UPDATE LE SET 
+  			LE_STATUS = 'N'
+  		WHERE 
+  			LE_STATUS != 'N' AND
+  			LE_CLNO IN (SELECT CL_NO FROM CL 
+  			WHERE CL_UID=#{id})
+  	</update>
+  	
+  	<!-- 강의 삭제 -->
+  	<update id="deleteLE">
+  		UPDATE LE SET 
+  			LE_STATUS = 'N'
+  		WHERE 
+  			LE_STATUS != 'N' AND
+  			LE_CLNO = #{cl_no}
+  	</update>
   </mapper>

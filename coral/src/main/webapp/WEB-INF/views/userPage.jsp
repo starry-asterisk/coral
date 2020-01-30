@@ -133,17 +133,17 @@
 			<option value="016" ${userInfo.phone.split("-")[0] eq "016" ? "selected":""}>016</option>
 			<option value="017" ${userInfo.phone.split("-")[0] eq "017" ? "selected":""}>017</option>
 			<option value="019" ${userInfo.phone.split("-")[0] eq "019" ? "selected":""}>019</option>
-		</select> - <input value="${userInfo.phone.split("-")[1]}" type="text" maxlength="4" minlength="4" name="phone_middle" style="max-width: 70px;width: 70px;min-width: 60px;"> - 
-					<input value="${userInfo.phone.split("-")[2]}" type="text" maxlength="4" minlength="4" name="phone_behind" style="max-width: 70px;width: 70px;min-width: 60px;">:Phone
+		</select> - <input value='${userInfo.phone.split("-")[1]}' type="text" maxlength="4" minlength="4" name="phone_middle" style="max-width: 70px;width: 70px;min-width: 60px;"> - 
+					<input value='${userInfo.phone.split("-")[2]}' type="text" maxlength="4" minlength="4" name="phone_behind" style="max-width: 70px;width: 70px;min-width: 60px;">:Phone
     	<input value='${userInfo.mail=="P"?" ":userInfo.mail.split("@")[0]}' style="max-width: 100px;min-width: 30%;" type="text" maxlength="40" minlength="1" name="email_front" spellcheck="false">@<input value='${userInfo.mail=="P"?" ":userInfo.mail.split("@")[1]}' style="max-width: 100px;min-width: 30%;" type="text" maxlength="40" minlength="1" name="email_behind" spellcheck="false" value="　">:Email
     </td>
   </tr>
   <tr>
     <td>
   		<span>회사연락처</span>
-  		<input readonly type="text" value="${userInfo.address.split("/")[0]}">:Zip
-    	<input readonly type="text" value="${userInfo.address.split("/")[1]}">:Base
-    	<input readonly type="text" value="${userInfo.address.split("/")[2]}">:Detail
+  		<input readonly type="text" value='${userInfo.address.split("/")[0]}'>:Zip
+    	<input readonly type="text" value='${userInfo.address.split("/")[1]}'>:Base
+    	<input readonly type="text" value='${userInfo.address.split("/")[2]}'>:Detail
   	</td>
     <td><div id="map"></div></td>
   </tr>

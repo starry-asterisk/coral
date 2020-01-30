@@ -3,9 +3,8 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.coral.www.mappers.ReportMapper">
-  <select id="reasonList" resultType="com.coral.www.Report.ReasonDTO">
-  	SELECT RS_CODE AS "code", RS_CONTENT AS "content", RS_DUE AS "due" FROM RS WHERE RS_CODE LIKE #{identifier}||'%'
-  </select>
+
+  <!-- 총 신고 수 -->
   <select id="total" resultType="int" parameterType="com.coral.www.Report.ReportDTO">
   		select count(*) from RP where RP_RSCODE LIKE '%'||#{rscode}||'%'
   		<if test="object!=null">
@@ -16,6 +15,13 @@
   		)
   		</if>
   	</select>
+  	
+  <!-- 사유 목록 -->
+  <select id="reasonList" resultType="com.coral.www.Report.ReasonDTO">
+  	SELECT RS_CODE AS "code", RS_CONTENT AS "content", RS_DUE AS "due" FROM RS WHERE RS_CODE LIKE #{identifier}||'%'
+  </select>
+  	
+  <!-- 신고 목록 -->
   <select id="report_List" resultType="com.coral.www.Report.ReportDTO">
   	SELECT  
   		RP_UID AS "id", 
@@ -44,18 +50,23 @@
 			ROWNUMS > ((#{page}-1)*#{amount}) and ROWNUMS <= (#{page}*#{amount})
 		]]>
   </select>
+  
+  <!-- 신고 등록 -->
   <insert id="report_insert" parameterType="com.coral.www.Report.ReportDTO">
   insert into RP(RP_UID,RP_OBJECT,RP_CODE,RP_RSCODE) values(#{id},#{object},#{code},#{rscode})
   </insert>
+  
+  <!-- 처벌 등록 -->
   <insert id="punish_insert" parameterType="com.coral.www.Report.ReportDTO">
   insert into PN(PN_UID,PN_RSCODE,PN_START) values(#{id},#{rscode},SYSDATE)
   </insert>
-  <delete id="report_delete" parameterType="com.coral.www.Report.ReportDTO">
-  delete from RP where RP_UID=#{id},RP_OBJECT=#{object}
-  </delete>
+  
+  <!-- 신고 수정 -->
   <update id="report_update" parameterType="com.coral.www.Report.ReportDTO">
   UPDATE RP SET RP_STATUS = #{status}, RP_COMPLETEDATE = SYSDATE WHERE RP_RSCODE = #{rscode} AND RP_OBJECT = #{object}
   </update>
+  
+   <!-- 처벌 수정 -->
   <update id="punish_update" parameterType="com.coral.www.Report.ReportDTO">
   UPDATE PN SET PN_START = SYSDATE - 999 WHERE PN_UID = #{id}
   </update>

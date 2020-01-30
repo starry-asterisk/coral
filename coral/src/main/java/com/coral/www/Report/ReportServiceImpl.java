@@ -59,7 +59,7 @@ public class ReportServiceImpl implements ReportService {
 		ReportDTO dto = new ReportDTO();
 		if(keyword!=null) {
 			model.addAttribute("keyword", keyword);
-			dto.setId(keyword);
+			dto.setObject(keyword);
 		}
 		dto.setRscode(rscode);
 		dto.setPage(request.getParameter("page")==null?1:Integer.parseInt(request.getParameter("page")));

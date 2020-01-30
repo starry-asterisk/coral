@@ -209,7 +209,10 @@ header div.result>button:active{
 .main_sub_sideBtn{
 	position:absolute;
 }
-
+[contenteditable=true]:empty:before{
+  content: attr(placeholder);
+  display: block; /* For Firefox */
+}
 @media screen and (min-width: 1600px) {
 	.main_sub_sideBtn{
 		left:50%;

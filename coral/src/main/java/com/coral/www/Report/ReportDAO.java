@@ -23,16 +23,16 @@ public class ReportDAO {
 		return returns; 
 	}
 	public boolean insertReport(ReportDTO dto) {
-		return sqlSession.insert(namespace+"report_insert",dto) ==1? true:false;
+		return sqlSession.insert(namespace+"report_insert",dto) == 1;
 	}
 	public boolean insertPunish(ReportDTO dto) {
-		return sqlSession.insert(namespace+"punish_insert",dto) ==1? true:false;
+		return sqlSession.insert(namespace+"punish_insert",dto) == 1;
 	}
 	public boolean updateReport(ReportDTO dto) {
-		return sqlSession.update(namespace+"report_update",dto) > 0? true:false;
+		return sqlSession.update(namespace+"report_update",dto) > 0;
 	}
 	public boolean updatePunish(ReportDTO dto) {
-		return sqlSession.update(namespace+"punish_update",dto) > 0? true:false;
+		return sqlSession.update(namespace+"punish_update",dto) > 0;
 	}
 	public int total(ReportDTO dto) {
 		return sqlSession.selectOne(namespace+"total",dto);

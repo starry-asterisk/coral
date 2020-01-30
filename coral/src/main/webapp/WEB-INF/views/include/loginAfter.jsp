@@ -45,7 +45,7 @@
 	</tr>
 	<tr>
 		<td colspan="2">
-			<div style="border-left: 5px solid ${schedule.color}">
+			<div style='border-left: 5px solid ${empty schedule.color?"green":schedule.color}'>
 				<span class="s1"><fmt:formatDate pattern = "yyyy-MM-dd" value = "${schedule.start}" /> ~ <fmt:formatDate pattern = "yyyy-MM-dd" value = "${schedule.end}" /></span><button type='button' title='더보기' onclick="location.href='/mypage?app=schedule'"><i class='fas fa-ellipsis-h'></i></button><br>
 				<span class="s2">${empty schedule.name?"일정이 없습니다":schedule.name}</span><br>
 				<span class="s3">${schedule.contents}</span><br>
@@ -54,8 +54,7 @@
 	</tr>
 	<tr>
 		<td colspan="2" style="padding-top:0;">
-			<div style="border-left: 5px solid #ddd; height: 140px;" contenteditable="true">
-			</div>
+			<div style="border-left: 5px solid #ddd; height: 140px;" contenteditable="true" placeholder="수식을 작성하고 ENTER로 실행하세요"></div>
 		</td>
 	</tr>
 </table>
