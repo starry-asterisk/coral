@@ -25,7 +25,25 @@ $(document).ready(function(){
 						alert("통신상태가 완활하지 않습니다");
 					},
 					success : function(result){
-						alert(result);
+						if($("header div.result").length==0){
+							$("header").addClass("viewMode");
+							var timer = setTimeout(function() {    
+								$("header div.result").remove();
+								$("header").append("<div class='result'><pre>실행결과\n"+result+"</pre><button type='button'><i class='fas fa-times'></i></button></div>");
+								$("header div.result>button").on("click",function(){
+									$("header div.result").remove();
+									$("header").removeClass("viewMode");
+								});
+								clearTimeout(timer);     
+							}, 1500);
+						}else{
+							$("header div.result").remove();
+							$("header").append("<div class='result'><pre>실행결과\n"+result+"</pre><button type='button'><i class='fas fa-times'></i></button></div>");
+							$("header div.result>button").on("click",function(){
+								$("header div.result").remove();
+								$("header").removeClass("viewMode");
+							});
+						}
 					}
 				});
 			}else{

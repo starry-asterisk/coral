@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.coral.www.mappers.LectureMapper">
+  	<!--  -->
   	<select id="totalCL" resultType="int" parameterType="com.coral.www.Lecture.LectureDTO">
   		select count(*) from CLASSLIST where CL_COUNT > 0 OR CL_DELETED = 0
   			<if test="cl_no!=null">
@@ -15,6 +16,8 @@
 				)
 			</if>
   	</select>
+  	
+  	<!--  -->
   	<select id="listPageCL" parameterType="com.coral.www.Lecture.LectureDTO" resultType="com.coral.www.Lecture.LectureDTO" >
   		SELECT 
   			CL_NO as "cl_no", 
@@ -46,9 +49,13 @@
 			ROWNUMS > ((#{page}-1)*#{amount}) and ROWNUMS <= (#{page}*#{amount})
 		]]>
   	</select>
+  	
+  	<!--  -->
   	<select id="newCLno" resultType="java.lang.String">
   		select 'C'||LPAD(C_SEQ.NEXTVAL,8,0) from dual
   	</select>
+  	
+  	<!--  -->
   	<insert id="create" parameterType="com.coral.www.Lecture.LectureDTO">
   		INSERT INTO 
   				CL(
@@ -66,6 +73,8 @@
   					#{id}
   				)
   	</insert>
+  	
+  	<!--  -->
   	<select id="description" resultType="com.coral.www.Lecture.LectureDTO">
   				SELECT
   					CL_NO AS "cl_no",
@@ -76,6 +85,8 @@
   				FROM CLASSLIST
   				WHERE (CL_COUNT > 0 OR CL_DELETED = 0) AND CL_NO = #{cl_no}
   	</select>
+  	
+  	<!--  -->
   	<update id="updateCL" parameterType="com.coral.www.Lecture.LectureDTO">
   		UPDATE CL SET 
   			CL_TAG = #{cl_tag},
@@ -85,21 +96,33 @@
   			CL_UID = #{id} AND
   			CL_NO = #{cl_no}
   	</update>
+  	
+  	<!--  -->
   	<select id="CLExit" resultType="int" parameterType="com.coral.www.Lecture.LectureDTO" >
   		SELECT count(*) FROM CL WHERE CL_UID=#{id} AND CL_NO=#{cl_no}
   	</select>
+  	
+  	<!--  -->
   	<select id="LExit" resultType="int" parameterType="com.coral.www.Lecture.LectureDTO" >
   		SELECT count(*) FROM CL LEFT OUTER JOIN LE ON CL_NO = LE_CLNO WHERE CL_UID = #{id} AND LE_NO = #{no} AND CL_NO = #{cl_no}
   	</select>
+  	
+  	<!--  -->
   	<select id="viewCntUpd">
   		UPDATE LE SET LE_VIEWS = LE_VIEWS + 1 WHERE LE_NO = #{no} 
   	</select>
+  	
+  	<!--  -->
   	<update id="likeCntUpd" parameterType="com.coral.www.like.LikeDTO" >
   		UPDATE LE SET LE_RECOMMENDS = LE_RECOMMENDS +(#{div}) WHERE LE_NO = #{no}
   	</update>
+  	
+  	<!--  -->
   	<select id="total" resultType="int" >
   		select count(*) from LE where LE_STATUS = 'P' AND LE_CLNO = #{cl_no}
   	</select>
+  	
+  	<!--  -->
   	<select id="listPage" parameterType="com.coral.www.Lecture.LectureDTO" resultType="com.coral.www.Lecture.LectureDTO" >
   		SELECT 
   			LE_CLNO as "cl_no",
@@ -121,6 +144,8 @@
 			ROWNUMS > ((#{page}-1)*#{amount}) and ROWNUMS <= (#{page}*#{amount})
 		]]>
   	</select>
+  	
+  	<!--  -->
   	<select id="detail" parameterType="com.coral.www.Lecture.LectureDTO" resultType="com.coral.www.Lecture.LectureDTO" >
   		SELECT 
   			LE_CLNO as "cl_no",
@@ -137,9 +162,13 @@
 		FROM LE LEFT OUTER JOIN CL ON CL_NO = LE_CLNO
 		WHERE LE_NO=#{no} AND LE_STATUS='P'
   	</select>
+  	
+  	<!--  -->
   	<select id="newLEno" resultType="java.lang.String">
   		select 'L'||LPAD(L_SEQ.NEXTVAL,8,0) from dual
   	</select>
+  	
+  	<!--  -->
   	<insert id="write" parameterType="com.coral.www.Lecture.LectureDTO">
   		INSERT INTO 
   				LE(
@@ -159,6 +188,8 @@
   					#{status}
   				)
   	</insert>
+  	
+  	<!--  -->
   	<update id="update" parameterType="com.coral.www.Lecture.LectureDTO">
   		UPDATE LE SET 
   			LE_UPDDATE = SYSDATE
@@ -180,6 +211,8 @@
   			LE_NO = #{no} AND
   			LE_STATUS != 'N'
   	</update>
+  	
+  	<!--  -->
   	<update id="deleteAll">
   		UPDATE LE SET 
   			LE_STATUS = 'N'
@@ -188,6 +221,8 @@
   			LE_CLNO IN (SELECT CL_NO FROM CL 
   			WHERE CL_UID=#{id})
   	</update>
+  	
+  	<!--  -->
   	<update id="deleteLE">
   		UPDATE LE SET 
   			LE_STATUS = 'N'
@@ -195,6 +230,8 @@
   			LE_STATUS != 'N' AND
   			LE_CLNO = #{cl_no}
   	</update>
+  	
+  	<!--  -->
   	<delete id="deleteCL" parameterType="com.coral.www.Lecture.LectureDTO">
   				delete
   				FROM CL

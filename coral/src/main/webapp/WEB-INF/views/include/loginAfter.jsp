@@ -52,32 +52,42 @@
 			</div>
 		</td>
 	</tr>
+	<tr>
+		<td colspan="2" style="padding-top:0;">
+			<div style="border-left: 5px solid #ddd; height: 140px;" contenteditable="true">
+			</div>
+		</td>
+	</tr>
 </table>
 <style>
-.div tr:last-child td{
+.div tr:nth-child(2) td, .div tr:last-child td{
 	padding:10px;
 }
-.div tr:last-child td div{
+.div tr:nth-child(2) td div, .div tr:last-child td div{
+	color:black;
 	background:white;
 	text-align:left;
 	padding:10px;
+	word-break:break-all;
+	overflow-x:hidden;
+	overflow-y:auto;
 }
-.div tr:last-child td div>button{
+.div tr:nth-child(2) td div>button{
 	float:right;
 	font-size:1em;
 }
-.div tr:last-child td div>button *{
+.div tr:nth-child(2) td div>button *{
 	color:#aaa;
 }
-.div tr:last-child td div span.s1{
+.div tr:nth-child(2) td div span.s1{
 	color: #bbb;
     font-size: .9em;
 }
-.div tr:last-child td div span.s2{
+.div tr:nth-child(2) td div span.s2{
 	color:grey;
 	font-size: 1.3em;
 }
-.div tr:last-child td div span.s3{
+.div tr:nth-child(2) td div span.s3{
 	color:#aaa;
 	font-size: 1em;
 	margin-bottom:5px;
@@ -137,3 +147,47 @@
 	border-color: skyblue;
 }
 </style>
+<script>
+$(".div tr:last-child td div").on("keydown",function(key){
+	if(key.keyCode==13){
+		key.preventDefault();
+		try {
+			if(/^[-+]?[0-9(){}]+([-+*/%\^\=()]+[-+]?[0-9(){}]+)*$/gi.test($(this).html())){
+				alert("계산결과 : "+eval($(this).html()));
+			}else{
+				alert("수식을 입력하세요");
+			}
+		} catch (e) {
+			alert(e.message);
+		}
+		
+	}
+});
+function catchPaste(evt, elem, callback) {
+	  if (navigator.clipboard && navigator.clipboard.readText) {
+	    // modern approach with Clipboard API
+	    navigator.clipboard.readText().then(callback);
+	  } else if (evt.originalEvent && evt.originalEvent.clipboardData) {
+	    // OriginalEvent is a property from jQuery, normalizing the event object
+	    callback(evt.originalEvent.clipboardData.getData('text'));
+	  } else if (evt.clipboardData) {
+	    // used in some browsers for clipboardData
+	    callback(evt.clipboardData.getData('text/plain'));
+	  } else if (window.clipboardData) {
+	    // Older clipboardData version for Internet Explorer only
+	    callback(window.clipboardData.getData('Text'));
+	  } else {
+	    // Last resort fallback, using a timer
+	    setTimeout(function() {
+	      callback(elem.value)
+	    }, 100);
+	  }
+	}
+$(".div tr:last-child td div").on("paste",function(e){
+	e.preventDefault();
+	catchPaste(e, this, function(clipData) {
+		$(".div tr:last-child td div").html($(".div tr:last-child td div").html()+clipData);
+	  });
+});		
+
+</script>

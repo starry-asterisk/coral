@@ -3,18 +3,28 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.coral.www.mappers.CookieMapper">
+  	
+  	<!-- 쿠키 고유키 -->
   	<select id="selectSeries" resultType="int" parameterType="com.coral.www.Cookie.CookieDTO">
   		select count(*) from USER_persistent WHERE up_series=#{series}
   	</select>
+  	
+  	<!-- 쿠키 갱신키 -->
   	<select id="selectToken" resultType="com.coral.www.Cookie.CookieDTO" parameterType="com.coral.www.Cookie.CookieDTO">
   		select up_uid as "id" ,up_series as "series" ,up_token as "token" ,up_lastused as "lastused" from USER_persistent WHERE up_series=#{series} and up_token=#{token}
   	</select>
+  	
+  	<!-- 쿠키 생성 -->
   	<insert id="insert" parameterType="com.coral.www.Cookie.CookieDTO">
   		insert into USER_persistent(up_uid,up_series,up_token,up_lastused) values(#{id},#{series},#{token},SYSDATE)
   	</insert>
+  	
+  	<!-- 쿠키 갱신 -->
   	<update id="update">
   		update user_persistent SET up_lastused=SYSDATE, up_token=#{token} where up_series=#{series}
   	</update>
+  	
+  	<!-- 쿠키 삭제 -->
   	<delete id="delete">
   		delete from user_persistent where up_series = #{series}
   	</delete>

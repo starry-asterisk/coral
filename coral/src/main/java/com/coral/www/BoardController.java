@@ -38,6 +38,8 @@ public class BoardController {
 		service.addList(model, request, keyword);
 		if(isAjax!=null) {
 			return "include/board";
+		}else {
+			model.addAttribute("Category", service.categorylist(null));
 		}
 		model.addAttribute("Board_type", "include/board");
 		model.addAttribute("attachment", "include/Bside");
