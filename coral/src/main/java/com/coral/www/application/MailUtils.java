@@ -1,8 +1,10 @@
+/* 
+ * MailUtils.java		1.0.0 2020.01.31
+ * 
+ * Copyright all reserved coral
+ */
+
 package com.coral.www.application;
-
-
-
-
 
 import java.util.Date;
 import java.util.Properties;
@@ -20,12 +22,28 @@ import com.sun.mail.smtp.SMTPTransport;
 
 import java.security.Security;
 
+/**
+* @version			1.0.0 2020.01.31
+* @author			김현우, 이창현, 박승리, 백현욱, 장지수
+*/
 public class MailUtils {
-    
+    /* 메일 전송 기능을 제공합니다 */
+	
+	/** 연결세션 */
     private Session session;
+    
+    /** 전송할 메시지 게체 */
     private MimeMessage msg;
+    
+    /** 이메일 주소 */
     private InternetAddress to;
     
+    
+    /**
+     * 구글 메일 전송 세션 생성
+     * 
+     * @throws AddressException
+     */
     public MailUtils() throws AddressException{
     	
     	Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
@@ -48,23 +66,42 @@ public class MailUtils {
         
     }
     
+    /**
+     * 제목setter
+     * 
+     * @param subject
+     * @throws MessagingException
+     */
     public void setSubject(String subject) throws MessagingException {
     	// 이메일 제목
         msg.setSubject(subject, "UTF-8");
     }
     
+    /**
+     * 내용setter
+     * 
+     * @param htmlContent
+     * @throws MessagingException
+     */
     public void setText(String htmlContent) throws MessagingException {
         msg.setText(htmlContent, "UTF-8");
     }
     
-    
+    /**
+     * 수신자setter
+     * 
+     * @param email
+     * @throws MessagingException
+     */
     public void setTo(String email) throws MessagingException {
     	// 이메일 수신자
         to = new InternetAddress(email);
         msg.setRecipient(Message.RecipientType.TO, to);
     }
     
-    
+    /**
+     * 전송
+     */
     public void send() {
         
         try{

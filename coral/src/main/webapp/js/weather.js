@@ -79,7 +79,7 @@ function getIcon(resp) {
 	  icon = prefix + icon;
 	  return icon;
 };
-var weatherRule ={
+var weatherRule = {
   "200": {
     "label": "thunderstorm with light rain",
     "icon": "storm-showers"

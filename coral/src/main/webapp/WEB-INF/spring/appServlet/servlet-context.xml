@@ -58,6 +58,7 @@
         	<mapping path="/ajax/like"/>
         	<mapping path="/ajax/replySend"/> 
         	<mapping path="/ajax/replyUpd"/> 
+        	<mapping path="/ajax/newProfImg"/> 
         	<mapping path="/leave"/>
         	<beans:ref bean="StudentInterceptor"/>
     	</interceptor>

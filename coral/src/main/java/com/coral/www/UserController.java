@@ -1,3 +1,9 @@
+/* 
+ * UserController.java		1.0.0 2020.01.31
+ * 
+ * Copyright all reserved coral
+ */
+
 package com.coral.www;
 
 import java.io.IOException;
@@ -51,22 +57,49 @@ import com.google.api.services.people.v1.model.EmailAddress;
 import com.google.api.services.people.v1.model.Name;
 import com.google.api.services.people.v1.model.Person;
 import com.google.api.services.people.v1.model.Photo;
+
+/**
+ * @version			1.0.0 2020.01.31
+ * @author			김현우, 이창현, 박승리, 백현욱, 장지수
+ */
 @Controller
 public class UserController {
+	/* 사용자 관리 컨트롤러 입니다 */
 
+	/** 사용자 서비스 */
 	@Inject
 	UserService userService;
+	
+	/** 쿠키 서비스 */
 	@Inject
 	CookieService cookieService;
+	
+	/** 첨부파일 서비스 */
 	@Inject
 	FileService fileService;
+	
+	/** 사용자 서비스 */
 	@Inject
 	LectureService lectureService;
+	
+	/** 게시판 서비스 */
 	@Inject
 	BoardService boardService;
+	
+	/** 신고 서비스 */
 	@Inject
 	ReportService reportService;
 	
+	/**
+	 * 사용자 랭킹
+	 * 
+	 * @param model
+	 * @param request
+	 * @param keyword
+	 * 검색어
+	 * @param isAjax
+	 * @return
+	 */
 	@RequestMapping("/user")
 	public String board(Model model, HttpServletRequest request, @RequestParam(required=false) String keyword, @RequestParam(required=false) String isAjax) {
 		userService.addList(model, request, keyword);
@@ -78,11 +111,18 @@ public class UserController {
 		return "list";
 	}
 
+	/**
+	 * 회원가입 페이지로 이동
+	 * 
+	 * @param request
+	 * @param grade
+	 * @return
+	 */
 	@RequestMapping(value = "/signUp", method = { RequestMethod.GET })
-	public String signUp(HttpServletRequest request) {
+	public String signUp(HttpServletRequest request, @RequestParam(required=false) String grade) {
 		String page;
-		if (request.getParameter("grade") != null) {
-			switch (request.getParameter("grade")) {
+		if (grade != null) {
+			switch (grade) {
 			case "student":
 				request.setAttribute("is", "none");
 			case "teacher":
@@ -98,6 +138,14 @@ public class UserController {
 		return page;
 	}
 
+	/**
+	 * 회원 등록
+	 * 
+	 * @param dto
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/signUp", method = { RequestMethod.POST }, produces = "application/text;charset=utf-8")
 	public String signUpComplete(UserDTO dto, HttpServletRequest request) throws Exception {
 
@@ -123,6 +171,18 @@ public class UserController {
 				+ URLEncoder.encode("회원가입이 완료되었습니다. 인증메일이 발송 되었으니 인증을 해주시면 더 많은 서비스 이용이 가능합니다", "UTF-8") + "')";
 	}
 
+	/**
+	 * 로그인 처리
+	 * 
+	 * @param dto
+	 * 로그인 정보
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(UserDTO dto, HttpServletRequest request, HttpServletResponse response, HttpSession session)
 			throws ParseException, IOException {
@@ -157,6 +217,15 @@ public class UserController {
 		return "redirect:" + REFERER;
 	}
 
+	/**
+	 * 로그아웃 처리
+	 * 
+	 * @param request
+	 * @param reponse
+	 * @return
+	 * @throws ParseException
+	 * @throws UnsupportedEncodingException
+	 */
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse reponse)
 			throws ParseException, UnsupportedEncodingException {
@@ -182,6 +251,15 @@ public class UserController {
 		return "redirect:" + REFERER;
 	}
 	
+	/**
+	 * 회원 탈퇴 처리
+	 * 
+	 * @param dto
+	 * @param request
+	 * @param newPw
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/leave")
 	public String leave(UserDTO dto, HttpServletRequest request,@RequestParam(required=false) String newPw) throws Exception {
 		dto.setId((String)request.getSession().getAttribute("id"));
@@ -204,6 +282,16 @@ public class UserController {
 		+ URLEncoder.encode(dto.getMsg(), "UTF-8") + "')";
 	}
 
+	/**
+	 * 이메일 인증
+	 * 
+	 * @param model
+	 * @param id
+	 * @param email
+	 * @param authkey
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/emailConfirm")
 	public String emailConfirm(Model model, @RequestParam String id, @RequestParam String email,
 			@RequestParam String authkey) throws Exception {
@@ -215,6 +303,15 @@ public class UserController {
 				+ URLEncoder.encode("이메일 인증에 " + (userService.mailVerify(dto) ? "성공" : "실패") + "했습니다!", "UTF-8") + "')";
 	}
 
+	/**
+	 * 사용자 페이지
+	 * 
+	 * @param request
+	 * @param id
+	 * @param model
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
 	@RequestMapping("/userpage")
 	public String userPage(HttpServletRequest request,@RequestParam String id, Model model) throws UnsupportedEncodingException {
 		UserDTO dto = new UserDTO();
@@ -237,6 +334,14 @@ public class UserController {
 		return "userPage";
 	}
 
+	/**
+	 * 마이페이지
+	 * 
+	 * @param session
+	 * @param model
+	 * @param app
+	 * @return
+	 */
 	@RequestMapping("/mypage")
 	public String myPage(HttpSession session, Model model, @RequestParam(required=false) String app) {
 		UserDTO dto = new UserDTO();
@@ -253,6 +358,14 @@ public class UserController {
 		model.addAttribute("app", app);
 		return "myPage";
 	}
+	
+	/**
+	 * 스케쥴 페이지
+	 * 
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "/myApp/schedule", method = RequestMethod.GET)
 	public String scheduleGET(Model model, HttpSession session) {
 		String schedule = "";
@@ -262,6 +375,16 @@ public class UserController {
 		model.addAttribute("pre_schedule", schedule);
 		return "myApplication/schedule";
 	}
+	
+	/**
+	 * 스케쥴 등록/삭제/수정
+	 * 
+	 * @param insert
+	 * @param update
+	 * @param delete
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "/myApp/schedule", method = RequestMethod.POST)
 	public String schedulePOST(@RequestParam String insert, @RequestParam String update, @RequestParam String delete, HttpSession session) {
 		userService.scheduleInsertList(insert, (String) session.getAttribute("id"));
@@ -269,15 +392,37 @@ public class UserController {
 		userService.scheduleDeleteList(delete, (String) session.getAttribute("id"));
 		return "redirect:/mypage?app=schedule";
 	}
+	
+	/**
+	 * 개인정보 수정 페이지
+	 * 
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("/myApp/private")
 	public String map(Model model,  HttpSession session) {
 		model.addAttribute("userInfo", userService.getInfo((String) session.getAttribute("id")));
 		return "myApplication/private";
 	}
+	
+	/**
+	 * 강좌 관리 페이지
+	 * 
+	 * @return
+	 */
 	@RequestMapping("/myApp/lecture")
 	public String lecture() {
 		return "myApplication/lecture";
 	}
+	
+	/**
+	 * 활동 기록 페이지
+	 * 
+	 * @param model
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/myApp/history")
 	public String history(Model model, HttpServletRequest request) {
 		boardService.addList(model, request, (String) request.getSession().getAttribute("id"));
@@ -285,55 +430,140 @@ public class UserController {
 		model.addAttribute("List", userService.historyList((String) request.getSession().getAttribute("id")));
 		return "myApplication/history";
 	}
+	
+	/**
+	 * 보안 관리 페이지
+	 * 
+	 * @return
+	 */
 	@RequestMapping("/myApp/security")
 	public String security() {
 		return "myApplication/security";
 	}
+	
+	/**
+	 * 활동 관리 페이지
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/myApp/active")
 	public String active(Model model) {
 		model.addAttribute("Category", boardService.categorylist(null));
 		return "myApplication/active";
 	}
+	
+	/**
+	 * 카테고리 삽입
+	 * 
+	 * @param dto
+	 * @return
+	 */
 	@RequestMapping("/category/insert")
 	public String insertCA(CategoryDTO dto) {
 		boardService.insertCA(dto);
 		return "redirect:/mypage?app=active";
 	}
+	
+	/**
+	 * 카테고리 삭제
+	 * 
+	 * @param from
+	 * @param to
+	 * @return
+	 */
 	@RequestMapping("/category/delete")
 	public String deleteCA(@RequestParam String from, @RequestParam String to) {
 		boardService.deleteCA(from,to);
 		return "redirect:/mypage?app=active";
 	}
+	
+	/**
+	 * 카테고리 수정
+	 * 
+	 * @param dto
+	 * @return
+	 */
 	@RequestMapping("/category/update")
 	public String updateCA(CategoryDTO dto) {
 		boardService.updateCA(dto);
 		return "redirect:/mypage?app=active";
 	}
+	
+	/**
+	 * 카테고리 이전
+	 * 
+	 * @param from
+	 * @param to
+	 * @return
+	 */
 	@RequestMapping("/category/move")
 	public String moveCA(@RequestParam String from,@RequestParam String to) {
 		boardService.moveCA(from,to);
 		return "redirect:/mypage?app=active";
 	}
+	
+	/**
+	 * 폐강 신청관리 페이지
+	 * 
+	 * @param model
+	 * @param request
+	 * @param keyword
+	 * @return
+	 */
 	@RequestMapping(value = "/myApp/apply", method = RequestMethod.GET)
 	public String applyGET(Model model,HttpServletRequest request,@RequestParam(required=false)String keyword) {
 		reportService.addList(model, request, keyword,"F");
 		return "myApplication/apply";
 	}
+	
+	/**
+	 * 폐강 신청 처리
+	 * 
+	 * @param dto
+	 * @return
+	 */
 	@RequestMapping(value = "/myApp/apply", method = RequestMethod.POST)
 	public String applyPOST(ReportDTO dto) {
 		reportService.closeClass(dto);
 		return "redirect:/mypage?app=apply";
 	}
+	
+	/**
+	 * 신고 관리 페이지
+	 * 
+	 * @param model
+	 * @param request
+	 * @param keyword
+	 * @return
+	 */
 	@RequestMapping(value = "/myApp/report", method = RequestMethod.GET)
 	public String reportGET(Model model,HttpServletRequest request,@RequestParam(required=false)String keyword) {
 		reportService.addList(model, request, keyword,"R");
 		return "myApplication/report";
 	}
+	
+	/**
+	 * 신고 처리
+	 * 
+	 * @param dto
+	 * @return
+	 */
 	@RequestMapping(value = "/myApp/report", method = RequestMethod.POST)
 	public String reportPOST(ReportDTO dto) {
 		reportService.punishment(dto);
 		return "redirect:/mypage?app=report";
 	}
+	
+	/**
+	 * 사용자 정보 수정
+	 * 
+	 * @param dto
+	 * @param request
+	 * @param newPw
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/newInfo",method = { RequestMethod.POST })
 	public String newInfo(UserDTO dto, HttpServletRequest request,@RequestParam(required=false) String newPw) throws Exception {
 		dto.setId((String)request.getSession().getAttribute("id"));
@@ -362,11 +592,23 @@ public class UserController {
 		return "redirect:/mypage" + "?Code=alert('"
 		+ URLEncoder.encode("정보가 수정되었습니다", "UTF-8") + "')";
 	}
+	
+	/** 구글 API 사용 정보 */
 	@Autowired
 	private GoogleConnectionFactory googleConnectionFactory;
+	
+	/** 구글 OAuth2 인증용 라이브러리 */
 	@Autowired
 	private OAuth2Parameters googleOAuth2Parameters;
 
+	/**
+	 * 로그인 페이지 이동
+	 * 
+	 * @param model
+	 * @param session
+	 * @return
+	 * @throws Exception
+	 */
 	@ResponseBody
 	@RequestMapping("/googleLogin")
 	public String gLogin(Model model, HttpSession session) throws Exception {
@@ -379,6 +621,15 @@ public class UserController {
 		return url;
 	}
 
+	/**
+	 * 구글 로그인 & 회원가입 처리
+	 * 
+	 * @param code
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	@RequestMapping(value = "/callBack", method = { RequestMethod.GET })
 	public String gCallback(@RequestParam String code, HttpServletRequest request) throws IOException, ParseException {
 		try {
