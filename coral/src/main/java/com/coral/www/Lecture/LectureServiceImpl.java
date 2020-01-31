@@ -16,6 +16,8 @@ import com.coral.www.like.LikeDTO;
 public class LectureServiceImpl implements LectureService {
 	@Inject
 	LectureDAO dao;
+	
+	@Override
 	public void addList(Model model, HttpServletRequest request, String cl_no, String keyword) {
 		LectureDTO dto = new LectureDTO();
 		if(cl_no==null&&keyword!=null) {
@@ -40,16 +42,22 @@ public class LectureServiceImpl implements LectureService {
 			model.addAttribute("ClassList", dao.listPageCL(dto));
 		}
 	}
+	
+	@Override
 	public LectureDTO detail(String no, boolean isView) {
 		if(isView)dao.viewCntUpd(no);
 		return dao.detail(no);
 	}
+	
+	@Override
 	public boolean likeUpd(String no, int div) {
 		LikeDTO dto = new LikeDTO();
 		dto.setDiv(div);
 		dto.setNo(no);
 		return dao.likeCntUpd(dto);
 	}
+	
+	@Override
 	@Transactional
 	public String write(LectureDTO dto) {
 		try {
@@ -65,6 +73,8 @@ public class LectureServiceImpl implements LectureService {
 			return null;
 		}
 	}
+	
+	@Override
 	@Transactional
 	public boolean create(LectureDTO dto) {
 		try {
@@ -74,6 +84,8 @@ public class LectureServiceImpl implements LectureService {
 			return false;
 		}
 	}
+	
+	@Override
 	@Transactional
 	public String update(LectureDTO dto) {
 		try {
@@ -88,16 +100,24 @@ public class LectureServiceImpl implements LectureService {
 			return null;
 		}
 	}
+	
+	@Override
 	@Transactional
 	public boolean updateCL(LectureDTO dto) {
 		return dao.updateCL(dto);
 	}
+	
+	@Override
 	public boolean CLExit(LectureDTO dto) {
 		return dao.CLExit(dto);
 	}
+	
+	@Override
 	public boolean isCL(String cl_no) {
 		return dao.total(cl_no)>0;
 	}
+	
+	@Override
 	public boolean LExit(LectureDTO dto) {
 		return dao.LExit(dto);
 	}

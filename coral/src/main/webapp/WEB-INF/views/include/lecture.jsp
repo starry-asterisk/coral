@@ -34,5 +34,8 @@ table.list_TYPE1 tr+tr {
 }
 </style>
 <script>
-mkPageBtn(".lecture_row","/lecture",${Currentpage},${Endpage},${amount},'&cl_no=${cl_no}');
+var Currentpage = ${Currentpage};
+var Endpage = ${Endpage};
+var amount = ${amount};
+mkPageBtn(".lecture_row","/lecture",Currentpage,Endpage,amount,'&cl_no=${cl_no}');
 </script>

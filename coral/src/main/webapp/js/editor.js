@@ -1,18 +1,14 @@
-function addTag(value){
-	var span = $(document.createElement("span"));
-    var btn = $(document.createElement("button"));
-	span.attr("class","tag_element");
-	span.val("#"+value);
-    btn.attr("class","deleteBtn");
-    $(".tag_form input").before(span);
-    span.append(value);
-    span.append(btn);
-    btn.attr("type","button");
-    btn.html("&#215;");
-    $(".tag_form input").val("");
-    $(".deleteBtn").click(function(){
-    	$(this).parent().remove();
-    });
+
+
+var attachmentList = [];
+var placeholder = $(".tag_form").attr("placeholder");
+if(placeholder!=undefined&&placeholder!=""){
+	if($(".tag_form span").length=="0"){
+		$(".tag_form").append(document.createElement("a"));
+		$(".tag_form a").addClass("placeholder");
+		$(".tag_form a").html(placeholder);
+		$(".tag_form a").css("padding","0");
+	}
 }
 if($(".tag_form input").val()!=""&&$(".tag_form input").val()!=undefined){
 	var array = $(".tag_form input").val().split(" ");
@@ -23,16 +19,6 @@ if($(".tag_form input").val()!=""&&$(".tag_form input").val()!=undefined){
 $(".tag_form").click(function(){
 			$(".tag_form input").focus();
 });
-var placeholder = $(".tag_form").attr("placeholder");
-if(placeholder!=undefined&&placeholder!=""){
-	if($(".tag_form span").length=="0"){
-		$(".tag_form").append(document.createElement("a"));
-		$(".tag_form a").addClass("placeholder");
-		$(".tag_form a").html(placeholder);
-		$(".tag_form a").css("padding","0");
-	}
-}
-
 $(".tag_form input").focus(function(){
 	var tag = $(".tag_form");
 	tag.removeClass();
@@ -66,7 +52,61 @@ $(".tag_form input").keydown(function (key) {
 		}
 	}
 });
+$("input[name=files]").on("change",function(){
+	/*FileUpload();*/
+	var fileList = $(this)[0].files;
+	for(i=0;i<fileList.length;i++){
+		if(check.exe.test(fileList[i].name.toLowerCase())){
+			alert("exe파일은 사용할 수 없습니다!");
+			return;
+		}
+    }
+	// 읽기
+    for(i=0;i<fileList.length;i++){
+    	var reader = new FileReader();
+    	reader.readAsDataURL(fileList[i]);
+    	reader.name = fileList[i].name;
+    	reader.isImage = $(this).data("image");
+    	reader.onload = function(e){
+    		addAttach(e.target.result, e.target.name, e.target.isImage);
+    	}
+    }
+    this.type='text';
+    this.value='';
+    this.type='file';
+});
+$("button.fold").click(function(){
+	if($(this).next().hasClass('folded')){
+		$(this).next().removeClass('folded');
+	}else{
+		$(this).next().addClass('folded');
+	}
+});
+$('.user_sub').css({
+    'transition': 'all 1.5s' 
+});
 
+$(window).scroll(function(){
+    $('.user_sub').css({
+        'top': $(this).scrollTop()
+    });
+});
+function addTag(value){
+	var span = $(document.createElement("span"));
+    var btn = $(document.createElement("button"));
+	span.attr("class","tag_element");
+	span.val("#"+value);
+    btn.attr("class","deleteBtn");
+    $(".tag_form input").before(span);
+    span.append(value);
+    span.append(btn);
+    btn.attr("type","button");
+    btn.html("&#215;");
+    $(".tag_form input").val("");
+    $(".deleteBtn").click(function(){
+    	$(this).parent().remove();
+    });
+}
 function getTag(){
 	var values = $(".tag_form span");
 	var returnValue = "";
@@ -138,30 +178,6 @@ function upload(status, isNew, servlet){
 	}
 	form.submit();
 }
-var attachmentList = [];
-$("input[name=files]").on("change",function(){
-	/*FileUpload();*/
-	var fileList = $(this)[0].files;
-	for(i=0;i<fileList.length;i++){
-		if(check.exe.test(fileList[i].name.toLowerCase())){
-			alert("exe파일은 사용할 수 없습니다!");
-			return;
-		}
-    }
-	// 읽기
-    for(i=0;i<fileList.length;i++){
-    	var reader = new FileReader();
-    	reader.readAsDataURL(fileList[i]);
-    	reader.name = fileList[i].name;
-    	reader.isImage = $(this).data("image");
-    	reader.onload = function(e){
-    		addAttach(e.target.result, e.target.name, e.target.isImage);
-    	}
-    }
-    this.type='text';
-    this.value='';
-    this.type='file';
-});
 function delAttach(button){
 	if(button==undefined){
 		$("div.fileList").html("");
@@ -219,19 +235,3 @@ function loadAttach(url, name, isImage,order){
 	}
 	fileListDiv.append("<span>"+name+"</span><button tpye='button' style='float:right' onclick='delAttach($(this))' data-index="+attachmentList.length+"> × </button");
 }
-$("button.fold").click(function(){
-	if($(this).next().hasClass('folded')){
-		$(this).next().removeClass('folded');
-	}else{
-		$(this).next().addClass('folded');
-	}
-});
-$('.user_sub').css({
-    'transition': 'all 1.5s' 
-});
-
-$(window).scroll(function(){
-    $('.user_sub').css({
-        'top': $(this).scrollTop()
-    });
-});

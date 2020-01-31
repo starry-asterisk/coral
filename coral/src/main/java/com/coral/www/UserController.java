@@ -124,7 +124,7 @@ public class UserController {
 		if (grade != null) {
 			switch (grade) {
 			case "student":
-				request.setAttribute("is", "none");
+				request.setAttribute("display", "none");
 			case "teacher":
 				page = "signUp";
 				break;
@@ -609,7 +609,6 @@ public class UserController {
 	 * @return
 	 * @throws Exception
 	 */
-	@ResponseBody
 	@RequestMapping("/googleLogin")
 	public String gLogin(Model model, HttpSession session) throws Exception {
 		/* 구글code 발행 */
@@ -618,7 +617,7 @@ public class UserController {
 		/* 로그인페이지 이동 url생성 */
 		String url = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
 
-		return url;
+		return "redirect:"+url;
 	}
 
 	/**

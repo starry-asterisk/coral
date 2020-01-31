@@ -60,7 +60,7 @@
 		<hr class="tag">
 	</c:if>
 	<button id='${board.tag.equals("false")?"":"tag"}' type="button" onclick="history.back()" style="height:56px;width:100%;margin:20px 0 20px 0;border:0px solid #eee;border-top-width:1px;border-bottom-width:1px;color:#337ab7">돌아가기</button>
-	<div id="newReply" contenteditable style="min-height:90px;padding: 0 70px 0 70px;" placeholder="댓글을 입력해 주세요">댓글을 입력해 주세요</div>
+	<div id="newReply" contenteditable="true" style="min-height:90px;padding: 0 70px 0 70px;" placeholder="댓글을 입력해 주세요"></div>
 	<button type="button" title="글자수 재한" class="likeBtn" id="ReBytelimit" style="width:120px;margin-left: 20px;font-size:1.2em;font-weight:900;"><span>0</span>/200</button>
 	<button type="button" title="리셋 버튼" class="likeBtn" onclick="$('#newReply').html('');$('#ReBytelimit span').html(0);$('#ReBytelimit span').css('color','#333');" style="margin-left:44%;"><i class="fas fa-toilet-paper"></i></button>
 	<button type="button" title="덧글 전송" class="likeBtn" onclick="replySend(bno, $('#newReply'));"><i class="fas fa-paper-plane"></i></button>

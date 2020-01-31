@@ -74,26 +74,26 @@
 					<input type="text" maxlength="4" minlength="4" name="phone_behind">
 					</td><td></td>
 				</tr>
-				<tr style="display:${is}">
+				<tr style="display:${display}">
 					<td>회사 명</td>
 					<td><input type="text" maxlength="50" minlength="1"
 						name="company_name"></td><td></td>
 				</tr>
-				<tr style="display:${is}">
+				<tr style="display:${display}">
 					<td>회사 우편 번호</td>
 					<td><input type="text" readonly name="zipcode" value="" readonly> 
 					<button type="button" onclick="execDaumPostcode()">찾기</button></td><td></td>
 				</tr>
-				<tr style="display:${is}">
+				<tr style="display:${display}">
 					<td>회사 기본 주소</td>
 					<td><input type="text" readonly name="address" value="" readonly></td><td></td>
 				</tr>
-				<tr style="display:${is}">
+				<tr style="display:${display}">
 					<td>회사 주소 상세</td>
 					<td><input type="text" maxlength="50" minlength="0"
 						name="address_detail" value=""></td><td></td>
 				</tr>
-				<tr style="display:${is}">
+				<tr style="display:${display}">
 					<td>회사 연락처</td>
 					<td><select name="tel_front">
 							<option hidden="hidden" selected>----</option>
@@ -158,13 +158,6 @@
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <!-- 내부 js -->
-<script type="text/javascript">
-$(".reset").on("click",function(){
-	location.href='<%=(request.getHeader("referer") == null
-					? "https://www.coralprogram.com"
-					: request.getHeader("referer"))%>';
-					});
-</script>
 <script src="/js/web-functions.js" type="text/javascript" charset="utf-8"></script>
 <script src="/js/signUp.js" type="text/javascript" charset="utf-8"></script>
 <script src="/js/ajax.js" type="text/javascript" charset="utf-8"></script>

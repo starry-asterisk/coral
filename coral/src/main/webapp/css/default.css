@@ -20,6 +20,10 @@ a:link, a:visited, a:hover, a:active {
 a:hover{
 	cursor:pointer;
 }
+[contenteditable=true]:not(:focus):empty:before{
+  content: attr(placeholder);
+  display: block; /* For Firefox */
+}
 body{
 	background-color:#f1f3f3;
 }

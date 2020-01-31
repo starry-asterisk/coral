@@ -47,15 +47,13 @@
   </div>
   
   <script>
-  var isActive = "${Code}<%=request.getParameter("Code")%>";
-  isActive = isActive=='null'?false:true;
-  if(isActive){
+  var isActive = "<%=request.getParameter("Code")%>";
+  if(isActive!="null"){
 	  history.replaceState({}, '', '${servletPath}');
 	  window.onpopstate = function() {
-		  isActive = false;
+		  isActive = "null";
 		  history.back();
 		};
 	  <%=request.getParameter("Code")%>;
-	  ${Code};
   }
   </script>

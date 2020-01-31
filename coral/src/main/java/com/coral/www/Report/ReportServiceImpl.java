@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import com.coral.www.Board.BoardDAO;
-import com.coral.www.Board.BoardDTO;
 import com.coral.www.Lecture.LectureDAO;
 import com.coral.www.Lecture.LectureDTO;
 import com.coral.www.User.UserDAO;
@@ -38,6 +37,7 @@ public class ReportServiceImpl implements ReportService {
 	public List<ReasonDTO> reasonList(char identifier) {
 		return (ArrayList<ReasonDTO>) dao.reasonList(identifier);
 	}
+	
 	@Override
 	public ReportDTO insertReport(ReportDTO dto) {
 		try {
@@ -49,6 +49,7 @@ public class ReportServiceImpl implements ReportService {
 		}
 		return dto;
 	}
+	
 	@Override
 	public List<ReportDTO> reportList(ReportDTO dto) {
 		return dao.reportList(dto);
@@ -69,6 +70,7 @@ public class ReportServiceImpl implements ReportService {
 		model.addAttribute("R_Currentpage", dto.getPage());
 		model.addAttribute("reportList", dao.reportList(dto));
 	}
+	
 	@Transactional
 	@Override
 	public boolean punishment(ReportDTO dto) {
@@ -113,6 +115,7 @@ public class ReportServiceImpl implements ReportService {
 		}
 		
 	}
+	
 	@Transactional
 	@Override
 	public boolean closeClass(ReportDTO dto) {

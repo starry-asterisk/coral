@@ -201,23 +201,6 @@ function myApp(servlet,div){
         type: "GET",
         url: "/myApp/"+servlet,
         success: function (data) {
-        	console.log("SUCCESS : True");
-        	/*addHtmlPage(data,div);*/
-        	$(div).html(data);
-        },
-        error: function (e) {
-            console.log("ERROR : ", e);
-        }
-    });
-}
-
-function myExtend(servlet,div){
-	$.ajax({
-        type: "POST",
-        url: "/"+servlet,
-        success: function (data) {
-        	console.log("SUCCESS : True");
-        	/*addHtmlPage(data,div);*/
         	$(div).html(data);
         },
         error: function (e) {
@@ -266,23 +249,6 @@ function thumb(no,value){
             alert("통신오류!");
         }
     });
-}
-
-
-function addHtmlPage(data,div){
-	$(div).html("");
-    $(div).append(data.replaceAt(data.indexOf("<script"),data.lastIndexOf("</script>")+9,""));
-    while(data.includes("<script")){
-    	var line = data.substring(data.indexOf("<script"),data.indexOf("</script>")+9);
-    	data = data.replaceAt(data.indexOf("<script"),data.indexOf("</script>")+9);
-    	tag = document.createElement("script");
-    	if(line.indexOf("src=\"")>-1){
-    		tag.src = line.substring(line.indexOf("src=\"")+5, line.indexOf("\"",line.indexOf("src=\"")+5));
-    	}else{
-    		$(tag).html(line.substring(line.indexOf(">")+1,line.indexOf("</script",line.indexOf(">"))));
-    	}
-    	document.getElementsByTagName("head")[0].appendChild(tag);
-    }
 }
 function replyList(boardNum, callback){
 	$.ajax({

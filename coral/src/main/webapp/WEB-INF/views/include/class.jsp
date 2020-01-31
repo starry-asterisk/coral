@@ -31,7 +31,10 @@
 	</tr>
 </table>
 <script>
-mkPageBtn(".class_row","/lecture",${Currentpage},${Endpage},${amount},"&keyword=${keyword}");
+var Currentpage = ${Currentpage};
+var Endpage = ${Endpage};
+var amount = ${amount};
+mkPageBtn(".class_row","/lecture",Currentpage,Endpage,amount,"&keyword=${keyword}");
 var reporter = "${id}";
 $(".report").click(function(){
 	if(reporter!=undefined&&reporter!=""){

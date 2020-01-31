@@ -11,6 +11,7 @@ public class ReplyServiceImpl implements ReplyService{
 	@Inject
 	ReplyDAO dao;
 	
+	@Override
 	public boolean send(String bno, String id, String content) {
 		ReplyDTO dto = new ReplyDTO();
 		dto.setBno(bno);
@@ -20,10 +21,12 @@ public class ReplyServiceImpl implements ReplyService{
 		return dao.insert(dto);
 	}
 
+	@Override
 	public List<ReplyDTO> getList(String bno) {
 		return dao.select(bno);
 	}
 
+	@Override
 	public boolean update(ReplyDTO dto) {
 		return dao.update(dto);
 	}

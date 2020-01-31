@@ -19,6 +19,7 @@ public class CookieServiceImpl implements CookieService {
 	private CookieDAO dao;
 	private CookieDTO dto ;
 	private JSONObject json;
+	
 	@Override
 	public Boolean delete(HttpServletResponse response, Cookie loginCookie) {
 		try {

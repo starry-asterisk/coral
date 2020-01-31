@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService {
 		model.addAttribute("U_Currentpage", dto.getPage());
 		model.addAttribute("UserList", dao.listPage(dto));
 	}
+	
 	@Override
 	public UserDTO getInfo(UserDTO dto) {
 		try {
@@ -56,6 +57,7 @@ public class UserServiceImpl implements UserService {
 		}
 		return dto;
 	}
+	
 	@Override
 	public UserDTO getInfo(String id) {
 		UserDTO dto = new UserDTO();
@@ -68,6 +70,7 @@ public class UserServiceImpl implements UserService {
 		}
 		return dto;
 	}
+	
 	@Override
 	public UserDTO login(UserDTO dto, HttpSession session) {
 		try {
@@ -222,20 +225,24 @@ public class UserServiceImpl implements UserService {
 	public Date lastLogin(String id) {
 		return dao.lastLogin(id).getDate();
 	}
+	
 	@Override
 	public List<UserDTO> historyList(String id) {
 		return dao.historyList(id);
 	}
+	
 	@Override
 	public boolean update(UserDTO dto) {
 		return dao.update(dto);
 	}
+	
 	@Inject
 	LectureDAO ldao;
 	@Inject
 	BoardDAO bdao;
 	@Inject
 	ReplyDAO rdao;
+	
 	@Override
 	public boolean updateStatus(UserDTO dto) {
 		if(dto.getStatus().equals("탈퇴됨")) {
@@ -273,6 +280,7 @@ public class UserServiceImpl implements UserService {
 		}
 		return result;
 	}
+	
 	@Override
 	public boolean scheduleUpdateList(String line, String id) {
 		boolean result = true;;
@@ -300,6 +308,7 @@ public class UserServiceImpl implements UserService {
 		}
 		return result;
 	}
+	
 	@Override
 	public boolean scheduleDeleteList(String line, String id) {
 		boolean result = true;;
@@ -327,10 +336,12 @@ public class UserServiceImpl implements UserService {
 		}
 		return result;
 	}
+	
 	@Override
 	public ScheduleDTO scheduleSelect(String id) {
 		return dao.scheduleSelect(id);
 	}
+	
 	@Override
 	public List<ScheduleDTO> scheduleSelectList(String id) {
 		return dao.scheduleSelectList(id);
