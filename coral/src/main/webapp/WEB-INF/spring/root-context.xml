@@ -19,9 +19,9 @@
 		<property value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"
 			name="driverClassName" />
 		<property
-			value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe" name="url" />
+			value="jdbc:log4jdbc:oracle:thin:@192.168.0.216:1521:xe" name="url" />
 		<!-- <property value="oracle.jdbc.driver.OracleDriver" name="driverClassName" 
-			/> <property value="jdbc:oracle:thin:@192.168.0.216:1521:xe" name="url" /> -->
+			/> <property value="jdbc:oracle:thin:@localhost:1521:xe" name="url" /> -->
 		<!-- 오라클 사용자 이름 -->
 		<property value="CORAL_DBA" name="username" />
 		<!-- 오라클 사용자 비밀번호 -->
