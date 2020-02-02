@@ -1,3 +1,9 @@
+/* 
+ * FileServiceImpl.java		1.0.0 2020.02.02
+ * 
+ * Copyright all reserved coral
+ */
+
 package com.coral.www.File;
 
 import java.io.File;
@@ -14,14 +20,25 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+* @version			1.0.0 2020.01.31
+* @author			김현우, 이창현, 박승리, 백현욱, 장지수
+*/
 @Service
 public class FileServiceImpl implements FileService{
-	// 리눅스 기준으로 파일 경로를 작성 ( 루트 경로인 /으로 시작한다. )
-	// 윈도우라면 workspace의 드라이브를 파악하여 JVM이 알아서 처리해준다.
-	// 따라서 workspace가 C드라이브에 있다면 C드라이브에 upload 폴더를 생성해 놓아야 한다.
+	/* 첨부파일 서비스  */
+	
+	/* 리눅스 기준으로 파일 경로를 작성 ( 루트 경로인 /으로 시작한다. )
+	     윈도우라면 workspace의 드라이브를 파악하여 JVM이 알아서 처리해준다.
+	     따라서 workspace가 C드라이브에 있다면 C드라이브에 upload 폴더를 생성해 놓아야 한다.*/
+	
+	/** 저장경로 */
 	private static final String SAVE_PATH = "C:/coding/upload";
+	
+	/** URL 맵핑 */
 	private static final String PREFIX_URL = "/upload/";
 	
+	/** DAO */
 	@Inject
 	FileDAO dao;
 	
@@ -56,6 +73,21 @@ public class FileServiceImpl implements FileService{
 		return dto;
 	}
 	
+	@Override
+	public boolean writeToFile(String filename, byte[] file){
+		boolean result = false;
+	    if(file != null){
+	    	try{
+		        FileOutputStream lFileOutputStream = new FileOutputStream(SAVE_PATH + "/" + filename);
+		        lFileOutputStream.write(file);
+		        lFileOutputStream.close();
+		        result = true;
+		    }catch(Throwable e){
+		        e.printStackTrace(System.out);
+		    }
+	    }
+	    return result;
+	}
 	
 	// 현재 시간을 기준으로 파일 이름 생성
 	@Override
@@ -74,22 +106,6 @@ public class FileServiceImpl implements FileService{
 		fileName += extName;
 		
 		return fileName;
-	}
-	
-	@Override
-	public boolean writeToFile(String filename, byte[] file){
-		boolean result = false;
-	    if(file != null){
-	    	try{
-		        FileOutputStream lFileOutputStream = new FileOutputStream(SAVE_PATH + "/" + filename);
-		        lFileOutputStream.write(file);
-		        lFileOutputStream.close();
-		        result = true;
-		    }catch(Throwable e){
-		        e.printStackTrace(System.out);
-		    }
-	    }
-	    return result;
 	}
 	
 	@Override

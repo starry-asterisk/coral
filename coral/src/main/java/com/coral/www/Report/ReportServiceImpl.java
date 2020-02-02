@@ -1,5 +1,10 @@
-package com.coral.www.Report;
+/* 
+ * ReportServiceImpl.java		1.0.0 2020.02.02
+ * 
+ * Copyright all reserved coral
+ */
 
+package com.coral.www.Report;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,18 +23,31 @@ import com.coral.www.User.UserDAO;
 import com.coral.www.like.ReplyDAO;
 import com.coral.www.like.ReplyDTO;
 
-
+/**
+* @version			1.0.0 2020.01.31
+* @author			김현우, 이창현, 박승리, 백현욱, 장지수
+*/
 @Service
 public class ReportServiceImpl implements ReportService {
+	/* 신고 서비스  */
 	
+	/** 신고 DAO */
 	@Inject
 	ReportDAO dao;
+	
+	/** 계정 DAO */
 	@Inject
 	UserDAO udao;
+	
+	/** 게시판 DAO */
 	@Inject
 	BoardDAO bdao;
+	
+	/** 강좌&강의  DAO */
 	@Inject
 	LectureDAO ldao;
+	
+	/** 댓글 DAO */
 	@Inject
 	ReplyDAO rdao;
 	
@@ -48,11 +66,6 @@ public class ReportServiceImpl implements ReportService {
 			e.printStackTrace();
 		}
 		return dto;
-	}
-	
-	@Override
-	public List<ReportDTO> reportList(ReportDTO dto) {
-		return dao.reportList(dto);
 	}
 	
 	@Override

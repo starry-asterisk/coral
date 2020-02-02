@@ -19,6 +19,7 @@
 
 
 <head>
+<script data-ad-client="ca-pub-2023694770852226" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <meta charset="UTF-8">
 <title>Coral - Main</title>
 </head>
@@ -70,11 +71,11 @@
     			</table>
 			</div>
 			<div id="side2">
-				<img style="display:" src="http://cdn.news2day.co.kr/news-images/peg/news/201912/xTZUeZmNZSrGuk5bThPec9lPt94k3yq2tNEUfU74-1575447442.jpg" alt="광고1">
-				<img style="display:none" src="https://www.i-boss.co.kr/design/upload_file/__HTMLEDITOR__/dmaRzEoOQc/17ce9f5ce6fb8320c0501512da85749a_15789601923371.png" alt="광고2">
+				<img style="display:" src="/resources/광고1.png" alt="광고1">
+				<img style="display:none" src="/resources/광고2.jpg" alt="광고2">
 			</div>
 			<div id="side3" style="overflow-y:hidden">
-				<img width="100%" src="https://sellers.coupang.com/wp-content/uploads/2018/11/cover_sellers.jpg" alt="광고3">
+				<img width="100%" src="/resources/광고3.jpg" alt="광고3">
 			</div>
 		</div>
 	</div>

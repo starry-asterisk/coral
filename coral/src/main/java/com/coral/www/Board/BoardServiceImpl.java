@@ -1,6 +1,10 @@
+/* 
+ * BoardServiceImpl.java		1.0.0 2020.02.02
+ * 
+ * Copyright all reserved coral
+ */
+
 package com.coral.www.Board;
-
-
 
 import java.util.List;
 
@@ -14,8 +18,15 @@ import org.springframework.ui.Model;
 import com.coral.www.application.JFileWriter;
 import com.coral.www.like.LikeDTO;
 
+/**
+* @version			1.0.0 2020.01.31
+* @author			김현우, 이창현, 박승리, 백현욱, 장지수
+*/
 @Service
 public class BoardServiceImpl implements BoardService{
+	/* 게시판 서비스  */
+	
+	/** DAO */
 	@Inject
 	BoardDAO dao;
 	

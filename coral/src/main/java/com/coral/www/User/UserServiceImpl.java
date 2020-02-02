@@ -1,3 +1,9 @@
+/* 
+ * UserServiceImpl.java		1.0.0 2020.02.02
+ * 
+ * Copyright all reserved coral
+ */
+
 package com.coral.www.User;
 
 import java.io.BufferedReader;
@@ -5,9 +11,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -23,10 +27,29 @@ import com.coral.www.application.MailUtils;
 import com.coral.www.application.Sha;
 import com.coral.www.like.ReplyDAO;
 
+/**
+* @version			1.0.0 2020.01.31
+* @author			김현우, 이창현, 박승리, 백현욱, 장지수
+*/
 @Service
 public class UserServiceImpl implements UserService {
+	/* 유저 서비스  */
+	
+	/** 계정 DAO */
 	@Inject
 	UserDAO dao;
+	
+	/** 강좌&강의 DAO */
+	@Inject
+	LectureDAO ldao;
+	
+	/** 게시판 DAO */
+	@Inject
+	BoardDAO bdao;
+	
+	/** 댓글 DAO */
+	@Inject
+	ReplyDAO rdao;
 	
 	@Override
 	public void addList(Model model, HttpServletRequest request, String keyword) {
@@ -62,13 +85,7 @@ public class UserServiceImpl implements UserService {
 	public UserDTO getInfo(String id) {
 		UserDTO dto = new UserDTO();
 		dto.setId(id);
-		try {
-			dto = dao.getInfo(dto);
-		}catch(Exception e) {
-			e.printStackTrace();
-			dto = null;
-		}
-		return dto;
+		return getInfo(dto);
 	}
 	
 	@Override
@@ -209,17 +226,6 @@ public class UserServiceImpl implements UserService {
 	public boolean mailVerify(UserDTO dto) throws Exception{
 		return dao.mailVerify(dto);
 	}
-	
-	@Override
-	public boolean checkGrade(String id, String grade) {
-		UserDTO dto = new UserDTO();
-		dto.setId(id);
-		Map<String,Integer> gradeMap = new HashMap<String,Integer>();
-		gradeMap.put("관리자", 3);
-		gradeMap.put("교사", 2);
-		gradeMap.put("학생", 1);
-		return gradeMap.get(dao.getInfo(dto).getGrade())>=gradeMap.get(grade);
-	}
 
 	@Override
 	public Date lastLogin(String id) {
@@ -235,13 +241,6 @@ public class UserServiceImpl implements UserService {
 	public boolean update(UserDTO dto) {
 		return dao.update(dto);
 	}
-	
-	@Inject
-	LectureDAO ldao;
-	@Inject
-	BoardDAO bdao;
-	@Inject
-	ReplyDAO rdao;
 	
 	@Override
 	public boolean updateStatus(UserDTO dto) {
