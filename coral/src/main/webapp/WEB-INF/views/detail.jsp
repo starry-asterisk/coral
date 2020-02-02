@@ -34,7 +34,7 @@
 		${board.title }
 		</div>
 		<textarea name="content" id="editor">
-		<p>추천수 : ${board.recommends } / 조회수 : ${board.views } / 작성일 : <fmt:formatDate pattern = "MM-dd HH:mm" value = "${board.regdate }" />${board.tag.equals("false")?"":" / 카테고리 : "}${board.tag.equals("false")?"":board.category}</p>
+		추천수 : ${board.recommends } / 조회수 : ${board.views } / 작성일 : <fmt:formatDate pattern = "MM-dd HH:mm" value = "${board.regdate }" />${board.tag.equals("false")?"":" / 카테고리 : "}${board.tag.equals("false")?"":board.category}
 			${board.contents }
 		</textarea>
 	</div>
@@ -42,7 +42,7 @@
 	<br>
 	
 	<span style="float:left;text-align:left;margin-left:10px">게시글 번호 : ${board.no }<br>작성자: <a href="/userpage?id=${board.id }">${board.id }</a></span>
-	<button type="button" title="수정" class="likeBtn" onclick="${id==board.id}?location.href='/${board.tag.equals("false")?"lecture/edit?no":"board/edit?bno"}=${board.no}':alert('본인의 게시물만 수정가능합니다.');" style="margin-left: 19%;"><i class="fas fa-edit"></i></button>
+	<button type="button" title="수정" class="likeBtn" onclick='${id==board.id}?location.href="/${board.tag.equals("false")?"lecture/edit?no":"board/edit?bno"}=${board.no}":alert("본인의 게시물만 수정가능합니다.");' style="margin-left: 19%;"><i class="fas fa-edit"></i></button>
 	<button type="button" title="신고" class="likeBtn" id="report"><i class="fas fa-exclamation-triangle"></i></button>
 	<button type="button" title="추천" class="likeBtn" id="like"><i class="far fa-thumbs-up"></i></button>
 	<button type="button" title="비추천" class="likeBtn" id="unlike"><i class="far fa-thumbs-down"></i></button>

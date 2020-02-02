@@ -13,7 +13,7 @@
 	</tr>
 	<c:forEach var= "list" items="${LectureList}">
 		<tr>
-			<td><button style="background-size: cover;width:${empty list.cl_path?"70":"100"}px;height:70px;background-image: url('${empty list.cl_path?'/upload/image.png':list.cl_path}')"></button>${list.no }</td>
+			<td><button style='background-size: cover;width:${empty list.cl_path?"70":"100"}px;height:70px;background-image: url("${empty list.cl_path?"/upload/image.png":list.cl_path}")'></button>${list.no }</td>
 			<td></td>
 			<td><a href="/lecture/course?no=${list.no }" title="${list.title }">${list.title }</a></td>
 			<td><fmt:formatDate pattern = "MM-dd HH:mm" value = "${list.regdate}" /></td>

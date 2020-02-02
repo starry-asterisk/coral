@@ -59,7 +59,7 @@
 		</div>
 		<div class="feed_sub_side">
 			<div id="side1">
-				<table width="100%" height="100%">
+				<table style='width:100%;height:100%'>
         			<tr height="80%">
             			<td width="25%"></td>
             			<td></td>

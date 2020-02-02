@@ -2,6 +2,22 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<style>
+table.list_TYPE1 tr+tr {
+    border-top: 1px solid #eee;
+}
+table.list_TYPE1 {
+	width:100%;
+}
+table.list_TYPE1 td:nth-child(7) button{
+	height: 24px;
+    width: 60px;
+    border: 1px solid #ddd;
+}
+table.list_TYPE1 td:nth-child(7) button:active{
+	background: #eee;
+}
+</style>
 <table class="map">
   <tr>
     <td colspan="2">
@@ -34,22 +50,6 @@
 		</td>
 	</tr>
 </table>
-<style>
-table.list_TYPE1 tr+tr {
-    border-top: 1px solid #eee;
-}
-table.list_TYPE1 {
-	width:100%;
-}
-table.list_TYPE1 td:nth-child(7) button{
-	height: 24px;
-    width: 60px;
-    border: 1px solid #ddd;
-}
-table.list_TYPE1 td:nth-child(7) button:active{
-	background: #eee;
-}
-</style>
 <script>
 mkPageBtn(".report_row","/mypage?app=report",${R_Currentpage},${R_Endpage},${R_amount});
 function reportComplete(button, isPunish){
