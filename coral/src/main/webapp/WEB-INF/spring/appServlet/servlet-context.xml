@@ -16,7 +16,6 @@
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources mapping="/css/**" location="/css/" />
 	<resources mapping="/js/**" location="/js/" />
-	<resources mapping="/.well-known/**" location="/ssl/" />
 	<resources mapping="/favicon.ico" location="/resources/favicon.ico" />
 	<resources location="file:C:/coding/upload/" mapping="/upload/*"/>
 
@@ -58,6 +57,7 @@
         	<mapping path="/ajax/like"/>
         	<mapping path="/ajax/replySend"/> 
         	<mapping path="/ajax/replyUpd"/> 
+        	<mapping path="/ajax/newProfImg"/> 
         	<mapping path="/leave"/>
         	<beans:ref bean="StudentInterceptor"/>
     	</interceptor>

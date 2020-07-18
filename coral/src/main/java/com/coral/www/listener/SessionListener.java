@@ -17,7 +17,7 @@ import javax.servlet.http.*;
 public class SessionListener implements HttpSessionListener {
 	private UserService userService;
 	/**
-     * Initialize the UserService once the application has started
+     * 세션 Listener 로그아웃은 여기서 처리됨
      */
 	
 	@Override

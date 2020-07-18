@@ -52,6 +52,9 @@ function execDaumPostcode() {
 }
 
 $(function(){
+	$(".reset").on("click",function(){
+		location.href="https://www.coralprogram.com";
+	});
 	$(".submit").on("click", function() {
 		$(".submit").attr("disabled",true);
 		var pass = true;

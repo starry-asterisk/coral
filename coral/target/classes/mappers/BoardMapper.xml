@@ -3,6 +3,8 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.coral.www.mappers.BoardMapper">
+  	
+  	<!-- 정상 게시물 총계 -->
   	<select id="total" resultType="int" parameterType="com.coral.www.Board.BoardDTO">
   		select count(*) from B where B_STATUS = 'P'
   			<if test="no!=null">
@@ -17,6 +19,8 @@
   			AND B_CATEGORY = #{category}
 			</if>
   	</select>
+  	
+  	<!-- 게시물 목록 -->
   	<select id="listPage" parameterType="com.coral.www.Board.BoardDTO" resultType="com.coral.www.Board.BoardDTO" >
   		SELECT 
   			B_NO as "no", 
@@ -50,9 +54,13 @@
 			ROWNUMS > ((#{page}-1)*#{amount}) and ROWNUMS <= (#{page}*#{amount})
 		]]>
   	</select>
+  	
+  	<!-- 새로운 글번호  -->
   	<select id="newBno" resultType="java.lang.String">
   		select 'B'||LPAD(B_SEQ.NEXTVAL,8,0) from dual
   	</select>
+  	
+  	<!-- 게시글 상세 -->
   	<select id="detail" resultType="com.coral.www.Board.BoardDTO">
   		select 
   			B_NO as "no", 
@@ -68,6 +76,8 @@
   		from b 
   		where B_NO = #{no} AND B_STATUS !='N'
   	</select>
+  	
+  	<!-- 게시물 작성 -->
   	<insert id="write" parameterType="com.coral.www.Board.BoardDTO">
   		INSERT INTO 
   				B(
@@ -91,6 +101,8 @@
   					#{attachment}
   				)
   	</insert>
+  	
+  	<!-- 게시물 수정 -->
   	<update id="update" parameterType="com.coral.www.Board.BoardDTO">
   		UPDATE B SET 
   			B_CATEGORY = #{category},
@@ -104,6 +116,8 @@
   			B_NO = #{no} AND
   			B_STATUS != 'N'
   	</update>
+  	
+  	<!-- 게시물 삭제 -->
   	<update id="delete">
   		UPDATE B SET 
   			B_STATUS = 'N'
@@ -111,6 +125,8 @@
   			B_NO = #{no} AND
   			B_STATUS != 'N'
   	</update>
+  	
+  	<!-- 계정단위 게시물 삭제 -->
   	<update id="deleteAll">
   		UPDATE B SET 
   			B_STATUS = 'N'
@@ -119,6 +135,18 @@
   			B_STATUS != 'N'
   	</update>
   	
+  	<!-- 조회수 수정 -->
+  	<select id="viewCntUpd">
+  		UPDATE B SET B_VIEWS = B_VIEWS + 1 WHERE B_NO = #{no} 
+  	</select>
+  	
+  	<!-- 추천수 수정 -->
+  	<update id="likeCntUpd" parameterType="com.coral.www.like.LikeDTO" >
+  		UPDATE B SET B_RECOMMENDS = B_RECOMMENDS +(#{div}) WHERE B_NO = #{no}
+  	</update>
+  	
+  	
+  	<!-- 카테고리 목록 -->
   	<select id="categorylist" resultType="com.coral.www.Board.CategoryDTO" >
   	
   		select CA_CODE AS "code", CA_NAME AS "name", CA_PERMISSION AS "permission" 
@@ -129,22 +157,23 @@
   		]]>
   		</if>
   	</select>
-  	<select id="viewCntUpd">
-  		UPDATE B SET B_VIEWS = B_VIEWS + 1 WHERE B_NO = #{no} 
-  	</select>
-  	<update id="likeCntUpd" parameterType="com.coral.www.like.LikeDTO" >
-  		UPDATE B SET B_RECOMMENDS = B_RECOMMENDS +(#{div}) WHERE B_NO = #{no}
-  	</update>
   	
+  	<!-- 카테고리 수정 -->
   	<update id="updateCA" parameterType="com.coral.www.like.LikeDTO" >
   		UPDATE CA SET CA_NAME=#{name},CA_PERMISSION=#{permission} WHERE CA_CODE = #{code} AND CA_EDITABLE='O'
   	</update>
+  	
+  	<!-- 카테고리 생성 -->
   	<insert id="insertCA" parameterType="com.coral.www.like.LikeDTO" >
   		INSERT INTO CA(CA_NAME, CA_PERMISSION, CA_CODE) VALUES(#{name},#{permission},#{code})
   	</insert>
+  	
+  	<!-- 카테고리 삭제 -->
   	<delete id="deleteCA">
   		DELETE FROM CA WHERE CA_CODE = #{code} AND CA_EDITABLE='O'
   	</delete>
+  	
+  	<!-- 카테고리 이동 -->
   	<update id="moveCA" parameterType="com.coral.www.like.LikeDTO" >
   		UPDATE B SET B_CATEGORY=#{name} WHERE B_CATEGORY=#{code}
   	</update>

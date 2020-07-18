@@ -3,6 +3,17 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.coral.www.mappers.ReplyMapper">
+  	<!-- 새 댓글 번호 -->
+  	<select id="count" resultType="int">
+  	SELECT 
+  		count(*)
+	FROM
+		RE
+	WHERE
+		RE_BNO = #{bno}
+  	</select>
+  	
+  	<!-- 댓글 작성 -->
   	<insert id="insert" parameterType="com.coral.www.like.ReplyDTO">
   	INSERT INTO 
   		RE(
@@ -13,6 +24,8 @@
 		RE_STATUS)
 	VALUES(#{bno},#{no},#{id},#{content},'P')
   	</insert>
+  	
+  	<!-- 댓글 수정 -->
   	<update id="update" parameterType="com.coral.www.like.ReplyDTO">
   	UPDATE RE SET 
   	RE_UPDDATE = SYSDATE
@@ -27,6 +40,26 @@
   	RE_NO = #{no} AND
   	RE_UID = #{id}
   	</update>
+  	
+  	<!-- 전체 댓글 삭제 -->
+  	<update id="deleteAll">
+  		UPDATE RE SET 
+  			RE_STATUS = 'N'
+  		WHERE 
+  			RE_UID = #{id} AND
+  			RE_STATUS != 'N'
+  	</update>
+  	
+  	<!-- 댓글 삭제 -->
+  	<update id="delete">
+  		UPDATE RE SET 
+  			RE_STATUS = 'N'
+  		WHERE 
+  			RE_NO = #{no} AND
+  			RE_BNO = #{bno}
+  	</update>
+  	
+  	<!-- 댓글 목록 -->
   	<select id="select" resultType="com.coral.www.like.ReplyDTO">
   	SELECT 
   		RE_BNO AS "bno",
@@ -45,26 +78,4 @@
 		RE_STATUS = 'P'
 	ORDER BY RE_REGDATE
   	</select>
-  	<select id="count" resultType="int">
-  	SELECT 
-  		count(*)
-	FROM
-		RE
-	WHERE
-		RE_BNO = #{bno}
-  	</select>
-  	<update id="deleteAll">
-  		UPDATE RE SET 
-  			RE_STATUS = 'N'
-  		WHERE 
-  			RE_UID = #{id} AND
-  			RE_STATUS != 'N'
-  	</update>
-  	<update id="delete">
-  		UPDATE RE SET 
-  			RE_STATUS = 'N'
-  		WHERE 
-  			RE_NO = #{no} AND
-  			RE_BNO = #{bno}
-  	</update>
   </mapper>

@@ -3,11 +3,23 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.coral.www.mappers.FileMapper">
+  	<!-- 신규파일의 순번 지정 -->
+  	<select id="newOrder" resultType="int" parameterType="java.lang.String">
+  	SELECT
+  	NVL(MAX(AF_ORDER)+1,0) AS "order" 
+  	FROM AF
+  	WHERE
+  		AF_BNO = #{bno}
+  	</select>
+  	
+  	<!-- 첨부파일 등록 -->
   	<insert id="insert" parameterType="com.coral.www.File.FileDTO">
   	INSERT INTO 
   	AF(AF_BNO,AF_KEYNAME,AF_NAME,AF_SIZE,AF_ORDER,AF_PATH)
   	VALUES(#{bno},#{keyname},#{name},#{size},#{order},#{path})
   	</insert>
+  	
+  	<!-- 첨부파일 수정 -->
   	<update id="update" parameterType="com.coral.www.File.FileDTO">
   	UPDATE AF  
   	SET  
@@ -18,24 +30,21 @@
   	AF_PATH = #{path}
   	WHERE AF_BNO = #{bno}
   	</update>
+  	
+  	<!-- 첨부파일 삭제 -->
+  	<delete id="delete">
+  	DELETE 
+  	FROM AF
+  	WHERE
+  		AF_KEYNAME = #{keyname}
+  	</delete>
+  	
+  	<!-- 첨부파일 목록 -->
   	<select id="selectList" resultType="com.coral.www.File.FileDTO">
   	SELECT 
   	AF_BNO AS "bno",AF_KEYNAME AS "keyname",AF_NAME AS "name",AF_SIZE AS "size",AF_ORDER AS "order",AF_PATH AS "path" 
   	FROM AF
   	WHERE AF_BNO = #{bno}
   	ORDER BY "order"
-  	</select>
-  	<update id="delete">
-  	DELETE 
-  	FROM AF
-  	WHERE
-  		AF_KEYNAME = #{keyname}
-  	</update>
-  	<select id="newOrder" resultType="int" parameterType="java.lang.String">
-  	SELECT
-  	NVL(MAX(AF_ORDER)+1,0) AS "order" 
-  	FROM AF
-  	WHERE
-  		AF_BNO = #{bno}
   	</select>
   </mapper>

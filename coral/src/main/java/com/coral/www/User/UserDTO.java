@@ -1,3 +1,9 @@
+/* 
+ * UserDTO.java		1.0.0 2020.02.02
+ * 
+ * Copyright all reserved coral
+ */
+
 package com.coral.www.User;
 
 import java.util.Date;
@@ -5,6 +11,10 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
+/**
+* @version			1.0.0 2020.01.31
+* @author			김현우, 이창현, 박승리, 백현욱, 장지수
+*/
 @Repository
 public class UserDTO{
 	private String id;

@@ -29,7 +29,10 @@
 	</tr>
 </table>
 <script>
-mkPageBtn(".board_row","/board",${B_Currentpage},${B_Endpage},${B_amount},'&keyword=${keyword}');
+var B_Currentpage = ${B_Currentpage};
+var B_Endpage = ${B_Endpage};
+var B_amount = ${B_amount};
+mkPageBtn(".board_row","/board",B_Currentpage,B_Endpage,B_amount,'&keyword=${keyword}');
 var reporter = "${id}";
 $(".report").click(function(){
 	if(reporter!=undefined&&reporter!=""){

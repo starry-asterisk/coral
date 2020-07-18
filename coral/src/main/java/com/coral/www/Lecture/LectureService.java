@@ -1,104 +1,103 @@
+/* 
+ * LectureService.java		1.0.0 2020.02.02
+ * 
+ * Copyright all reserved coral
+ */
+
 package com.coral.www.Lecture;
 
-
-
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
-import com.coral.www.application.JFileWriter;
-import com.coral.www.like.LikeDTO;
-
-@Service
-public class LectureService {
-	@Inject
-	LectureDAO dao;
-	public void addList(Model model, HttpServletRequest request, String cl_no, String keyword) {
-		LectureDTO dto = new LectureDTO();
-		if(cl_no==null&&keyword!=null) {
-			model.addAttribute("keyword", keyword);
-			dto.setCl_no(keyword);
-			dto.setCl_title(keyword);
-			dto.setCl_description(keyword);
-			dto.setId(keyword);
-			dto.setCl_tag(keyword);
-		}
-		dto.setPage(request.getParameter("page")==null?1:Integer.parseInt(request.getParameter("page")));
-		dto.setAmount(request.getParameter("amount")==null?20:Integer.parseInt(request.getParameter("amount")));
-		model.addAttribute("amount", dto.getAmount());
-		model.addAttribute("Endpage", (int) Math.ceil((double)(cl_no!=null?dao.total(cl_no):dao.total(dto))/(double)dto.getAmount()));
-		model.addAttribute("Currentpage", dto.getPage());
-		if(cl_no!=null) {
-			dto.setCl_no(cl_no);
-			model.addAttribute("LectureList", dao.listPage(dto));
-			model.addAttribute("Class", dao.description(cl_no));
-			model.addAttribute("cl_no", cl_no);
-		}else {
-			model.addAttribute("ClassList", dao.listPageCL(dto));
-		}
-	}
-	public LectureDTO detail(String no, boolean isView) {
-		if(isView)dao.viewCntUpd(no);
-		return dao.detail(no);
-	}
-	public boolean likeUpd(String no, int div) {
-		LikeDTO dto = new LikeDTO();
-		dto.setDiv(div);
-		dto.setNo(no);
-		return dao.likeCntUpd(dto);
-	}
-	@Transactional
-	public String write(LectureDTO dto) {
-		try {
-			dto.setNo(dao.newLEno());
-			if(dto.getContents().getBytes().length>1000) {
-				new JFileWriter("board\\"+dto.getNo()+".txt",dto.getContents());
-				dto.setContents("${linked}board\\"+dto.getNo()+".txt");
-			}
-			return dao.write(dto)?dto.getNo():null;
-		}catch(Exception e) {
-			e.printStackTrace();
-			new JFileWriter().delFile("board\\"+dto.getNo()+".txt");
-			return null;
-		}
-	}
-	@Transactional
-	public boolean create(LectureDTO dto) {
-		try {
-			dto.setCl_no(dao.newCLno());
-			return dao.create(dto)?true:false;
-		}catch(Exception e) {
-			return false;
-		}
-	}
-	@Transactional
-	public String update(LectureDTO dto) {
-		try {
-			if(dto.getContents().getBytes().length>1000) {
-				new JFileWriter("board\\"+dto.getNo()+".txt",dto.getContents());
-				dto.setContents("${linked}board\\"+dto.getNo()+".txt");
-			}
-			return dao.update(dto)?dto.getNo():null;
-		}catch(Exception e) {
-			e.printStackTrace();
-			new JFileWriter().delFile("board\\"+dto.getNo()+".txt");
-			return null;
-		}
-	}
-	@Transactional
-	public boolean updateCL(LectureDTO dto) {
-		return dao.updateCL(dto);
-	}
-	public boolean CLExit(LectureDTO dto) {
-		return dao.CLExit(dto);
-	}
-	public boolean isCL(String cl_no) {
-		return dao.total(cl_no)>0;
-	}
-	public boolean LExit(LectureDTO dto) {
-		return dao.LExit(dto);
-	}
+/**
+* @version			1.0.0 2020.01.31
+* @author			김현우, 이창현, 박승리, 백현욱, 장지수
+*/
+public interface LectureService {
+	/* 강좌&강의 서비스 인터페이스  */
+	
+	/**
+	 * 강좌&강의 목록 불러오기
+	 * 
+	 * @param model
+	 * @param request
+	 * @param cl_no
+	 * @param keyword
+	 */
+	public void addList(Model model, HttpServletRequest request, String cl_no, String keyword);
+	
+	/**
+	 * 강의 상세보기
+	 * 
+	 * @param no
+	 * @param isView
+	 * @return
+	 */
+	public LectureDTO detail(String no, boolean isView);
+	
+	/**
+	 * 좋아요 수정
+	 * 
+	 * @param no
+	 * @param div
+	 * @return
+	 */
+	public boolean likeUpd(String no, int div);
+	
+	/**
+	 * 강의 업로드
+	 * 
+	 * @param dto
+	 * @return
+	 */
+	public String write(LectureDTO dto);
+	
+	/**
+	 * 강좌 개설
+	 * 
+	 * @param dto
+	 * @return
+	 */
+	public boolean create(LectureDTO dto);
+	
+	/**
+	 * 강의 수정
+	 * 
+	 * @param dto
+	 * @return
+	 */
+	public String update(LectureDTO dto);
+	
+	/**
+	 * 강좌 정보 수정
+	 * 
+	 * @param dto
+	 * @return
+	 */
+	public boolean updateCL(LectureDTO dto);
+	
+	/**
+	 * 본인 강좌 존재 여부
+	 * 
+	 * @param dto
+	 * @return
+	 */
+	public boolean CLExit(LectureDTO dto);
+	
+	/**
+	 * 전체 강좌 존재 여부
+	 * 
+	 * @param cl_no
+	 * @return
+	 */
+	public boolean isCL(String cl_no);
+	
+	/**
+	 * 본인 강의 존재여부
+	 * 
+	 * @param dto
+	 * @return
+	 */
+	public boolean LExit(LectureDTO dto);
 }

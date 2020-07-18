@@ -3,9 +3,28 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.coral.www.mappers.UsersMapper">
+  
+  	<!-- 유저 등록 -->
+  	<insert id="insertUser" parameterType="com.coral.www.User.UserDTO">
+  		insert into u(U_ID,U_PW,U_NAME,U_BIRTH,U_GENDER,U_PHONE,U_ADDRESS,U_COMPANY,U_TEL,U_GRADE,U_MAIL,U_PRIVACY) values(#{id},#{pw},#{name},#{birth},#{gender},#{phone},#{address},#{company},#{tel},#{grade},#{mail},#{privacy})
+  	</insert>
+  	
+  	<!-- 메일 중복 검사 -->
+  	<select id="isMail" resultType="int" parameterType="com.coral.www.User.UserDTO">
+  		select count(*) from USERS WHERE U_MAIL=#{mail} or U_MAIL LIKE '{verify-%}'||#{mail}
+  	</select>
+  	
+  	<!-- 메일 인증 활성화-->
+  	<update id="mailVerify" parameterType="com.coral.www.User.UserDTO">
+  		update USERS SET U_MAIL = #{mail}  WHERE U_MAIL = '{verify-'||#{msg}||'}'||#{mail} and U_ID = #{id}
+  	</update>
+  
+  	<!-- 정지 여부 확인 -->
   	<select id="isBan" resultType="int">
   	SELECT COUNT(*) FROM PN INNER JOIN RS ON RS_CODE = PN_RSCODE WHERE (PN_START + RS_DUE) > SYSDATE AND PN_UID = #{id}
   	</select>
+  	
+  	<!-- 전체 유저 수 -->
   	<select id="total" resultType="int" parameterType="com.coral.www.User.UserDTO">
   		select count(*) from U where U_STATUS != '탈퇴됨'
   			<if test="privacy!='O'">
@@ -19,6 +38,8 @@
 				)
 			</if>
   	</select>
+  	
+  	<!-- 유저 목록 -->
   	<select id="listPage" parameterType="com.coral.www.User.UserDTO" resultType="com.coral.www.User.UserDTO" >
   		SELECT 
   			U_ID AS "id", 
@@ -51,12 +72,18 @@
 			ROWNUMS > ((#{page}-1)*#{amount}) and ROWNUMS <= (#{page}*#{amount})
 		]]>
   	</select>
+  	
+  	<!-- 아이디 조회 -->
   	<select id="isId" resultType="int" parameterType="com.coral.www.User.UserDTO">
   		select count(*) from USERS WHERE U_ID=#{id}
   	</select>
+  	
+  	<!-- 유효 로그인 조회 -->
   	<select id="isLogin" resultType="int" parameterType="com.coral.www.User.UserDTO">
   		select count(*) from USERS WHERE U_ID=#{id} AND U_PW=#{pw}
   	</select>
+  	
+  	<!-- 회원 정보 수정 -->
   	<select id="update" parameterType="com.coral.www.User.UserDTO">
   		UPDATE U SET 
   		<if test="name!=null and name.length>0">
@@ -83,11 +110,15 @@
   		U_ID = U_ID
   		where U_ID=#{id}
   	</select>
+  	
+  	<!-- 회원 상태 업데이트 -->
   	<select id="updateStatus" parameterType="com.coral.www.User.UserDTO">
   		UPDATE U SET 
   		U_STATUS = #{status}
   		where U_ID=#{id}
   	</select>
+  	
+  	<!-- 유저 정보 조회 -->
   	<select id="getInfo" resultType="com.coral.www.User.UserDTO" parameterType="com.coral.www.User.UserDTO">
   		select 
   			U_ID AS "id", 
@@ -106,40 +137,43 @@
   		from 
   			USERS WHERE U_ID=#{id}
   	</select>
+  	
+  	<!-- 로그인 기록 목록 -->
   	<select id="historyList" resultType="com.coral.www.User.UserDTO">
   		SELECT * FROM (SELECT UH_DATE as "date", UH_IP as "ip",UH_STATUS as "login_status" FROM UH WHERE UH_UID=#{id} ORDER BY UH_DATE DESC) WHERE <![CDATA[ ROWNUM<11 ]]>
   	</select>
+  	
+  	<!-- 로그인 기록 삽입 -->
   	<insert id="insertHistory" parameterType="com.coral.www.User.UserDTO">
   		insert into user_history(uh_uid,uh_ip,uh_platform,uh_status) values(#{id},#{ip},#{platform},#{login_status})
   	</insert>
+  	
+  	<!-- 마지막 로그인 시간 -->
   	<select id="lastLogin" parameterType="java.lang.String" resultType="com.coral.www.User.UserDTO">
   		SELECT UH_UID as "id", MAX(UH_DATE) as "date" FROM UH WHERE UH_UID=#{id} GROUP BY UH_UID
   	</select>
-  	<select id="getHistory" resultType="com.coral.www.User.UserDTO" parameterType="com.coral.www.User.UserDTO">
-  		SELECT UH_UID, UH_DATE, UH_IP, UH_PLATFORM, UH_STATUS FROM UH WHERE UH_UID=#{id} ORDER BY UH_DATE DESC
-  	</select>
-  	<insert id="insertUser" parameterType="com.coral.www.User.UserDTO">
-  		insert into u(U_ID,U_PW,U_NAME,U_BIRTH,U_GENDER,U_PHONE,U_ADDRESS,U_COMPANY,U_TEL,U_GRADE,U_MAIL,U_PRIVACY) values(#{id},#{pw},#{name},#{birth},#{gender},#{phone},#{address},#{company},#{tel},#{grade},#{mail},#{privacy})
-  	</insert>
-  	<select id="isMail" resultType="int" parameterType="com.coral.www.User.UserDTO">
-  		select count(*) from USERS WHERE U_MAIL=#{mail} or U_MAIL LIKE '{verify-%}'||#{mail}
-  	</select>
-  	<update id="mailVerify" parameterType="com.coral.www.User.UserDTO">
-  		update USERS SET U_MAIL = #{mail}  WHERE U_MAIL = '{verify-'||#{msg}||'}'||#{mail} and U_ID = #{id}
-  	</update>
   	
+  	<!-- 스케쥴 생성 -->
   	<insert id="scheduleInsert" parameterType="com.coral.www.User.ScheduleDTO">
   		INSERT INTO SC (SC_UID, SC_NAME, SC_CONTENTS, SC_NO, SC_START, SC_END, SC_COLOR) VALUES(#{id},#{name},#{contents},S_SEQ.NEXTVAL,#{start},#{end},#{color})
   	</insert>
+  	
+  	<!-- 스케쥴 수정 -->
   	<update id="scheduleUpdate" parameterType="com.coral.www.User.ScheduleDTO">
   		UPDATE SC SET SC_NAME = #{name}, SC_CONTENTS = #{contents} WHERE SC_UID = #{id} AND SC_START = #{start} AND SC_END = #{end} AND SC_COLOR = #{color}
   	</update>
+  	
+  	<!-- 스케쥴 삭제 -->
   	<delete id="scheduleDelete" parameterType="com.coral.www.User.ScheduleDTO">
   		DELETE FROM SC WHERE SC_UID = #{id} AND SC_START = #{start} AND SC_END = #{end} AND SC_COLOR = #{color}
   	</delete>
+  	
+  	<!-- 최신 스케쥴-->
   	<select id="scheduleSelect" resultType="com.coral.www.User.ScheduleDTO">
   		select * from (select SC_UID AS "id", SC_NAME AS "name", SC_CONTENTS AS "contents", SC_NO AS "no", SC_START AS "start", SC_END AS "end", SC_COLOR AS "color" from sc where SC_UID = #{id} order by SC_START,SC_END) where rownum=1
   	</select>
+  	
+  	<!-- 스케쥴 목록 -->
   	<select id="scheduleSelectList" resultType="com.coral.www.User.ScheduleDTO">
   		select SC_UID AS "id", SC_NAME AS "name", SC_CONTENTS AS "contents", SC_NO AS "no", SC_START AS "start", SC_END AS "end", SC_COLOR AS "color" from sc where SC_UID = #{id} order by SC_START,SC_END
   	</select>

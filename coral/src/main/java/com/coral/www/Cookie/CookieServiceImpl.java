@@ -1,3 +1,9 @@
+/* 
+ * CookieServiceImpl.java		1.0.0 2020.02.02
+ * 
+ * Copyright all reserved coral
+ */
+
 package com.coral.www.Cookie;
 
 import java.net.URLDecoder;
@@ -13,12 +19,24 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Service;
 
+/**
+* @version			1.0.0 2020.01.31
+* @author			김현우, 이창현, 박승리, 백현욱, 장지수
+*/
 @Service
 public class CookieServiceImpl implements CookieService {
+	/* 쿠키 서비스  */
+	
+	/** DAO */
 	@Inject
 	private CookieDAO dao;
+	
+	/** DTO */
 	private CookieDTO dto ;
+	
+	/** JSon Object */
 	private JSONObject json;
+	
 	@Override
 	public Boolean delete(HttpServletResponse response, Cookie loginCookie) {
 		try {

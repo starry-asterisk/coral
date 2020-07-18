@@ -25,7 +25,10 @@
 	</tr>
 </table>
 <script>
-mkPageBtn(".user_row","/board",${U_Currentpage},${U_Endpage},${U_amount},'&keyword=${keyword}');
+var U_Currentpage = ${U_Currentpage};
+var U_Endpage = ${U_Endpage};
+var U_amount = ${U_amount};
+mkPageBtn(".user_row", "/board", U_Currentpage, U_Endpage, U_amount, '&keyword=${keyword}');
 var reporter = "${id}";
 $(".report").click(function(){
 	if(reporter!=undefined&&reporter!=""){

@@ -42,17 +42,17 @@
     	<div class="btn_area_btm"><button class="updProf" onclick="moveCA()">이전</button></div>
     </td>
     <td>
-    	<span>카테고리별 글 댓글 좋아요 조회수</span>
+    	<span><!-- 카테고리별 글 댓글 좋아요 조회수 --></span>
     	<div class="btn_area_btm"><button class="updProf"></button></div>
     </td>
   </tr>
   <tr>
     <td>
-  		<span>강좌활동지표</span>
+  		<span><!-- 강좌활동지표 --></span>
   		<div class="btn_area_btm"><button disabled></button></div>
   	</td>
     <td>
-  		<span>유저활동지표</span>
+  		<span><!-- 유저활동지표 --></span>
   		<div class="btn_area_btm"><button class="updProf"></button></div>
   	</td>
   </tr>

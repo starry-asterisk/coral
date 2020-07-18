@@ -34,7 +34,7 @@
 		${board.title }
 		</div>
 		<textarea name="content" id="editor">
-		<p>추천수 : ${board.recommends } / 조회수 : ${board.views } / 작성일 : <fmt:formatDate pattern = "MM-dd HH:mm" value = "${board.regdate }" />${board.tag.equals("false")?"":" / 카테고리 : "}${board.tag.equals("false")?"":board.category}</p>
+		추천수 : ${board.recommends } / 조회수 : ${board.views } / 작성일 : <fmt:formatDate pattern = "MM-dd HH:mm" value = "${board.regdate }" />${board.tag.equals("false")?"":" / 카테고리 : "}${board.tag.equals("false")?"":board.category}
 			${board.contents }
 		</textarea>
 	</div>
@@ -42,7 +42,7 @@
 	<br>
 	
 	<span style="float:left;text-align:left;margin-left:10px">게시글 번호 : ${board.no }<br>작성자: <a href="/userpage?id=${board.id }">${board.id }</a></span>
-	<button type="button" title="수정" class="likeBtn" onclick="${id==board.id}?location.href='/${board.tag.equals("false")?"lecture/edit?no":"board/edit?bno"}=${board.no}':alert('본인의 게시물만 수정가능합니다.');" style="margin-left: 19%;"><i class="fas fa-edit"></i></button>
+	<button type="button" title="수정" class="likeBtn" onclick='${id==board.id}?location.href="/${board.tag.equals("false")?"lecture/edit?no":"board/edit?bno"}=${board.no}":alert("본인의 게시물만 수정가능합니다.");' style="margin-left: 19%;"><i class="fas fa-edit"></i></button>
 	<button type="button" title="신고" class="likeBtn" id="report"><i class="fas fa-exclamation-triangle"></i></button>
 	<button type="button" title="추천" class="likeBtn" id="like"><i class="far fa-thumbs-up"></i></button>
 	<button type="button" title="비추천" class="likeBtn" id="unlike"><i class="far fa-thumbs-down"></i></button>
@@ -60,7 +60,7 @@
 		<hr class="tag">
 	</c:if>
 	<button id='${board.tag.equals("false")?"":"tag"}' type="button" onclick="history.back()" style="height:56px;width:100%;margin:20px 0 20px 0;border:0px solid #eee;border-top-width:1px;border-bottom-width:1px;color:#337ab7">돌아가기</button>
-	<div id="newReply" contenteditable style="min-height:90px;padding: 0 70px 0 70px;" placeholder="댓글을 입력해 주세요">댓글을 입력해 주세요</div>
+	<div id="newReply" contenteditable="true" style="min-height:90px;padding: 0 70px 0 70px;" placeholder="댓글을 입력해 주세요"></div>
 	<button type="button" title="글자수 재한" class="likeBtn" id="ReBytelimit" style="width:120px;margin-left: 20px;font-size:1.2em;font-weight:900;"><span>0</span>/200</button>
 	<button type="button" title="리셋 버튼" class="likeBtn" onclick="$('#newReply').html('');$('#ReBytelimit span').html(0);$('#ReBytelimit span').css('color','#333');" style="margin-left:44%;"><i class="fas fa-toilet-paper"></i></button>
 	<button type="button" title="덧글 전송" class="likeBtn" onclick="replySend(bno, $('#newReply'));"><i class="fas fa-paper-plane"></i></button>
