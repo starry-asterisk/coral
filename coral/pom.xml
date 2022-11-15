@@ -13,7 +13,7 @@
 		<org.springframework-version>4.3.3.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
-		<jackson.version>2.10.1</jackson.version>
+		<jackson.version>2.12.7.1</jackson.version>
 	</properties>
 	<!-- 사설 저장소 등록 -->
 	<!-- (추가)OJDBC -->
